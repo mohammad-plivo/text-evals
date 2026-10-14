@@ -1,0 +1,11 @@
+params:
+  lead_id: TC-VM-02
+  name: Suresh
+  full_name: Suresh Yadav
+  phone_number: '+919876543210'
+  company_name: Yadav Traders
+  company_email: ''
+  job_title: ''
+  state_location: ''
+  source_page: telecrm-website/pricing
+substitutions: {}

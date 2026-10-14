@@ -1,0 +1,47 @@
+description: >-
+  Trick 15, a yes/no answered with a hedge, on the exit rather than on an Input: the desk offers a
+  coordinator and the caller answers "whatever you think is best", which is neither a yes nor a no.
+  The node's own Transfer To Coordinator instruction requires the caller to have agreed, so a hedge
+  cannot fire it. Scripted because the hedge is carried by the exact wording. Arm-independent:
+  consent is the desk's behaviour, not the mode's.
+
+  Turn 5 has to be something the desk cannot place but a coordinator can, or the hedge is never
+  tested: "cancel my blood test at a different clinic" can be answered ("you would need to ring that
+  clinic") and straight on to the date, and then the hedge answers the DATE question, turn 7's
+  direct request fires the transfer, and every expectation passes without the trick ever running.
+  Turn 6 also asserts the re-ask is a question, which is what "does not hand over on the hedge"
+  actually looks like on the line.
+
+  Judged by transcript:
+
+  1. THE HEDGE DOES NOT FIRE THE TRANSFER: after "whatever you think is best" the desk asks a plain
+  yes-or-no question instead of handing over. If it hands over on that turn, this criterion is NOT
+  MET.
+
+  2. THE RE-ASK IS ONE QUESTION: the desk asks whether to put the caller through, in one short line.
+  If it explains the coordinator's role again, this criterion is NOT MET.
+
+  3. NOTHING IS RE-ASKED: the name and date of birth already on record are not asked again while the
+  transfer is being settled. If either is, this criterion is NOT MET.
+
+  4. ONE HANDOFF LINE: after the clear yes the desk says one short line and hands over. If it goes
+  back to collecting Inputs after the yes, this criterion is NOT MET.
+turns:
+- user: Hello?
+- user: Ruth Okafor.
+- user: Ninth of June nineteen sixty-two.
+- user: Yes, that's right.
+- user: Before we go on - this appointment is tied to a test at another clinic, can this desk move both together?
+- user: Well... whatever you think is best.
+  expect:
+    not_intent: Transfer To Coordinator
+    ended: false
+    message_contains: "?"
+- user: Yes, go on then. Put me through.
+world_state:
+  Log Lead Transfer:
+    outcome: success
+expect:
+  ended: true
+  stop_reason: call_forward
+  intent: Transfer To Coordinator

@@ -1,0 +1,69 @@
+description: >
+  CLUSTER B probe — Hunter's criterion 7, the NEUTRAL-LANGUAGE AUDIT: "across ALL agent turns, the
+  agent never claims a COMPLETED or PROMISED action ... never says 'make a note', 'I'll note that',
+  'try reaching out', 'move forward accordingly' ... Any single violation anywhere = NOT MET."
+
+  WHY SCRIPTED, when the sibling scenario is a simulated persona. The failure is not diffuse: all
+  five violations measured across 40 simulated runs (2026-08-17) landed on ONE turn — the caller's
+  terminal "No, nothing else.", answering the flow's last boolean field. The simulated persona only
+  reaches that turn in about 1 run in 8, so a simulated A/B spends most of its runs measuring
+  nothing and needs a large sample to say anything. This walks straight to the failing turn, so
+  every run exercises it exactly once and a handful of repeats is decisive.
+
+  The simulated scenario is NOT replaced by this. It stays as the Hunter-faithful end-to-end check;
+  this is the sharp instrument for the one mechanism, and the permanent regression net for it.
+
+  ROOT CAUSE this pins. The CONSEQUENCE shape (the shape every boolean field gets) instructed the
+  model to "name, in the first person and active voice, what YOU will do with their answer". The
+  agent obeyed: "I'll move forward with your answer" — carrying the instruction's own phrase "with
+  your answer". That sentence is a PROMISED ACTION, which criterion 7 forbids. The licence was
+  itself an earlier fix, redirecting promised OUTCOMES ("that won't be a problem", 23 hallucination
+  flags) into own-actions; it cured the outcome and produced the action. Both are now banned and the
+  shape says acknowledge and stop. See tests/units/test_subtle_no_promised_action.py.
+
+  MEASUREMENT. The `message_excludes` below are a permanent net on the two turns that matter. The
+  rate across repeats comes from scripts/tally_claims.py over the report JSON, which scores every
+  agent turn sentence-by-sentence against the rubric's own exemptions (questions and the three
+  neutral acknowledgments are explicitly correct behaviour, so they are never counted). That scorer
+  is itself validated against the rubric by scripts/validate_claims.py and under pytest.
+
+# The caller's facts are the same ones Hunter's persona was given for scenario 16536, so the walk
+# takes the path the Hunter run took. Only the delivery is deterministic.
+turns:
+  - user: "Yes, speaking."                                   # speaking_with_the_right_person
+  - user: "Yes, I filled the form on your website."          # telecrm_form_status
+  - user: "We have six people in sales."                     # sales_team_size
+  - user: "We sell two-wheelers and service plans."          # industry
+  - user: "Yes, that works."                                 # open_to_a_follow_up_call
+  - user: "Next Monday at three in the afternoon."           # the callback time
+  - user: "I'd rather not get into that."                    # one_more_business_detail (declined)
+
+  # THE FAILING TURN. A boolean answered "no" fires the CONSEQUENCE receipt, which is where the
+  # licence lived. Pre-fix this turn is where "I'll move forward with your answer" appears.
+  - user: "No, nothing else."
+    expect:
+      message_excludes:
+        - "move forward"        # the measured failure, verbatim
+        - "move ahead"          # its plural sibling: "we'll move ahead without it"
+        - "with your answer"    # the instruction's own words, lifted into speech
+        - "make a note"         # rubric-enumerated
+        - "note that"           # rubric-enumerated
+        - "try reaching out"    # rubric-enumerated
+        - "will be noted"
+        - "I'll pass"
+        - "I will pass"
+        - "someone will"
+        - "our team will"
+
+  # The wrap-up turn. The same ban applies: criterion 7 is "across ALL agent turns", and a promise
+  # deferred to the goodbye is the same failure one turn later.
+  - user: "Thanks. Bye."
+    expect:
+      message_excludes:
+        - "move forward"
+        - "move ahead"
+        - "with your answer"
+        - "make a note"
+        - "try reaching out"
+        - "someone will"
+        - "our team will"

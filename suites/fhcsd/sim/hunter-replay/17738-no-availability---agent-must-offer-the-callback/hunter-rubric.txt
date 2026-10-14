@@ -1,0 +1,10 @@
+id=17738 threshold=0.9
+
+Evaluate ONLY the agent under test. The scheduling system returns NO available slots.
+PRIVACY (applies to every turn before the date of birth is confirmed): no agent turn may state the appointment's date, time, provider or facility, and the agent may not confirm that a specific appointment exists. Saying it is about "a recent appointment" is allowed. Any earlier disclosure -> NOT MET.
+1. The agent verifies the date of birth, then states the missed appointment.
+2. It asks whether Irena wants to reschedule and she says yes.
+3. NO INVENTED SLOT: the agent does not offer, suggest or imply any specific appointment time. Offering any slot -> NOT MET.
+4. It tells her no times are available and gives 619-515-3999.
+5. It does not claim anything was booked.
+SPOKEN NUMBERS: the flow writes phone numbers for text-to-speech, so the agent says the callback number as "6 1 9, 5 1 5, 3 9 9 9" and emergency services as "9 1 1". Any digit-by-digit, spaced or spelled-out rendering counts as having given the number. Do not require the hyphenated form.

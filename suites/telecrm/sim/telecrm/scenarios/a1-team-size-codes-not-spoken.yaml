@@ -1,0 +1,295 @@
+description: '[pattern A] present_options is FALSE, so the seven sales_team_size labels are internal codes
+  the agent must
+
+  neither read out nor echo back. Asserted on EVERY turn — the defect is position-independent and
+
+  scripted alignment drifts.
+
+  Replay of Hunter ''TeleCRM P0 - Small Team Wording No Inference'' (run a2e04e7d): caller lines verbatim
+  from the handoff on.'
+turns:
+- user: Yes, speaking.
+  expect:
+    message_excludes:
+    - Upto 2
+    - up to two
+    - upto two
+    - 3-5
+    - three to five
+    - 6-10
+    - six to ten
+    - 11-20
+    - eleven to twenty
+    - 21-50
+    - twenty one to fifty
+    - 51-100
+    - fifty one to one hundred
+    - 100plus
+    - 100 plus
+    - more than one hundred
+- user: Yes, go ahead.
+  expect:
+    message_excludes:
+    - Upto 2
+    - up to two
+    - upto two
+    - 3-5
+    - three to five
+    - 6-10
+    - six to ten
+    - 11-20
+    - eleven to twenty
+    - 21-50
+    - twenty one to fifty
+    - 51-100
+    - fifty one to one hundred
+    - 100plus
+    - 100 plus
+    - more than one hundred
+- user: Yes, I did.
+  expect:
+    message_excludes:
+    - Upto 2
+    - up to two
+    - upto two
+    - 3-5
+    - three to five
+    - 6-10
+    - six to ten
+    - 11-20
+    - eleven to twenty
+    - 21-50
+    - twenty one to fifty
+    - 51-100
+    - fifty one to one hundred
+    - 100plus
+    - 100 plus
+    - more than one hundred
+- user: Oh, we're a small team, small setup — mostly spreadsheets, you know.
+  expect:
+    message_excludes:
+    - Upto 2
+    - up to two
+    - upto two
+    - 3-5
+    - three to five
+    - 6-10
+    - six to ten
+    - 11-20
+    - eleven to twenty
+    - 21-50
+    - twenty one to fifty
+    - 51-100
+    - fifty one to one hundred
+    - 100plus
+    - 100 plus
+    - more than one hundred
+- user: Five people handle admissions calls.
+  expect:
+    message_excludes:
+    - Upto 2
+    - up to two
+    - upto two
+    - 3-5
+    - three to five
+    - 6-10
+    - six to ten
+    - 11-20
+    - eleven to twenty
+    - 21-50
+    - twenty one to fifty
+    - 51-100
+    - fifty one to one hundred
+    - 100plus
+    - 100 plus
+    - more than one hundred
+- user: I run a coaching institute for engineering entrance prep.
+  expect:
+    message_excludes:
+    - Upto 2
+    - up to two
+    - upto two
+    - 3-5
+    - three to five
+    - 6-10
+    - six to ten
+    - 11-20
+    - eleven to twenty
+    - 21-50
+    - twenty one to fifty
+    - 51-100
+    - fifty one to one hundred
+    - 100plus
+    - 100 plus
+    - more than one hundred
+- user: Yes, that's right.
+  expect:
+    message_excludes:
+    - Upto 2
+    - up to two
+    - upto two
+    - 3-5
+    - three to five
+    - 6-10
+    - six to ten
+    - 11-20
+    - eleven to twenty
+    - 21-50
+    - twenty one to fifty
+    - 51-100
+    - fifty one to one hundred
+    - 100plus
+    - 100 plus
+    - more than one hundred
+- user: On spreadsheets today, and we keep losing follow-ups.
+  expect:
+    message_excludes:
+    - Upto 2
+    - up to two
+    - upto two
+    - 3-5
+    - three to five
+    - 6-10
+    - six to ten
+    - 11-20
+    - eleven to twenty
+    - 21-50
+    - twenty one to fifty
+    - 51-100
+    - fifty one to one hundred
+    - 100plus
+    - 100 plus
+    - more than one hundred
+- user: Yes, that's right.
+  expect:
+    message_excludes:
+    - Upto 2
+    - up to two
+    - upto two
+    - 3-5
+    - three to five
+    - 6-10
+    - six to ten
+    - 11-20
+    - eleven to twenty
+    - 21-50
+    - twenty one to fifty
+    - 51-100
+    - fifty one to one hundred
+    - 100plus
+    - 100 plus
+    - more than one hundred
+- user: Yes, I'm open to that.
+  expect:
+    message_excludes:
+    - Upto 2
+    - up to two
+    - upto two
+    - 3-5
+    - three to five
+    - 6-10
+    - six to ten
+    - 11-20
+    - eleven to twenty
+    - 21-50
+    - twenty one to fifty
+    - 51-100
+    - fifty one to one hundred
+    - 100plus
+    - 100 plus
+    - more than one hundred
+- user: Yes.
+  expect:
+    message_excludes:
+    - Upto 2
+    - up to two
+    - upto two
+    - 3-5
+    - three to five
+    - 6-10
+    - six to ten
+    - 11-20
+    - eleven to twenty
+    - 21-50
+    - twenty one to fifty
+    - 51-100
+    - fifty one to one hundred
+    - 100plus
+    - 100 plus
+    - more than one hundred
+- user: I'd rather not get into that.
+  expect:
+    message_excludes:
+    - Upto 2
+    - up to two
+    - upto two
+    - 3-5
+    - three to five
+    - 6-10
+    - six to ten
+    - 11-20
+    - eleven to twenty
+    - 21-50
+    - twenty one to fifty
+    - 51-100
+    - fifty one to one hundred
+    - 100plus
+    - 100 plus
+    - more than one hundred
+- user: No, that's all.
+  expect:
+    message_excludes:
+    - Upto 2
+    - up to two
+    - upto two
+    - 3-5
+    - three to five
+    - 6-10
+    - six to ten
+    - 11-20
+    - eleven to twenty
+    - 21-50
+    - twenty one to fifty
+    - 51-100
+    - fifty one to one hundred
+    - 100plus
+    - 100 plus
+    - more than one hundred
+- user: No.
+  expect:
+    message_excludes:
+    - Upto 2
+    - up to two
+    - upto two
+    - 3-5
+    - three to five
+    - 6-10
+    - six to ten
+    - 11-20
+    - eleven to twenty
+    - 21-50
+    - twenty one to fifty
+    - 51-100
+    - fifty one to one hundred
+    - 100plus
+    - 100 plus
+    - more than one hundred
+- user: No.
+  expect:
+    message_excludes:
+    - Upto 2
+    - up to two
+    - upto two
+    - 3-5
+    - three to five
+    - 6-10
+    - six to ten
+    - 11-20
+    - eleven to twenty
+    - 21-50
+    - twenty one to fifty
+    - 51-100
+    - fifty one to one hundred
+    - 100plus
+    - 100 plus
+    - more than one hundred

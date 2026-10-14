@@ -1,0 +1,9 @@
+description: 'language switching: hinglish-questions'
+turns:
+- user: Hello?
+- user: Haan, bolo.
+- user: Haan, time hai.
+- user: Ye kis baare mein hai? Main abhi Rapido nahi chalata.
+- user: Abhi Uber chalata hoon, full time.
+- user: Kitna paisa milega is plan mein?
+- user: Theek hai, interested hoon.

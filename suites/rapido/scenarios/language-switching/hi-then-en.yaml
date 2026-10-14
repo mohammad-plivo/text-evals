@@ -1,0 +1,9 @@
+description: 'language switching: hi-then-en'
+turns:
+- user: हेलो?
+- user: हाँ, बोल रहा हूँ।
+- user: हाँ, बोलिए।
+- user: Sorry, can we talk in English? I drive for Uber now.
+- user: I was full time.
+- user: I stopped because the incentives were cut.
+- user: Yes, tell me more about the plan.

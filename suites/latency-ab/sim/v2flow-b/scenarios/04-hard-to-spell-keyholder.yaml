@@ -1,0 +1,14 @@
+description: "Key holder name is hard to spell; caller spells it when asked."
+simulated_user:
+  persona: "Priya Sharma, 34. A real customer on a phone call about a home cleaning booking."
+  goal: |
+    CALL OPENING (get through this quickly, it is not what is being tested): answer with a simple 'Hello?'. When the caller asks whether they are speaking with Priya Sharma, say yes. If they ask whether now is a good time, say yes. Then the real conversation begins.
+    
+    WHAT YOU KNOW (say each only when asked): Standard cleaning; budget 180 dollars; no gate code; no pets; email priya.sharma@example.com. The key holder is your neighbour Siobhan Ni Mhaille — if asked to spell it, say S-I-O-B-H-A-N, N-I, M-H-A-I-L-L-E. If the agent reads the name back wrongly or leaves out the Ni, correct just that part.
+    
+    WHAT YOU WANT: confirm the booking and make sure the key holder's name is right.
+    
+    BEHAVIOUR RULES: stay in character as a real customer on a phone call. Answer only what you are actually asked, one thing at a time, in short spoken sentences. Never list information the agent has not asked for, and never recite several details in one breath. Do not summarise the booking back to the agent. If you are asked something you were not told, say you do not know.
+  opening: "Hello?"
+  max_turns: 18
+  model: "gpt-4.1-mini"

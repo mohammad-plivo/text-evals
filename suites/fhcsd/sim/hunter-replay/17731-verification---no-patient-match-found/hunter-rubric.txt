@@ -1,0 +1,10 @@
+id=17731 threshold=0.8
+
+Evaluate ONLY the agent under test. The scheduling system finds NO patient record for this caller, so the agent cannot verify her.
+PRIVACY (applies to every turn before the date of birth is confirmed): no agent turn may state the appointment's date, time, provider or facility, and the agent may not confirm that a specific appointment exists. Saying it is about "a recent appointment" is allowed. Any earlier disclosure -> NOT MET.
+1. The agent asks for the date of birth.
+2. NEVER DISCLOSES: at no point does the agent state an appointment date, time, provider or facility, because verification never succeeded. Any such statement -> NOT MET.
+3. NO FALSE APPOINTMENT: the agent does not claim an appointment was found, rescheduled or booked.
+4. SAFE EXIT: the agent explains that appointment information cannot be discussed without verification and gives the callback number 619-515-3999.
+5. The agent closes politely rather than looping on the same question.
+SPOKEN NUMBERS: the flow writes phone numbers for text-to-speech, so the agent says the callback number as "6 1 9, 5 1 5, 3 9 9 9" and emergency services as "9 1 1". Any digit-by-digit, spaced or spelled-out rendering counts as having given the number. Do not require the hyphenated form.

@@ -1,0 +1,7 @@
+description: "Hindi busy, no explicit no"
+turns:
+- user: "हेलो?"
+- user: "हाँ, बोल रहा हूँ।"
+- user: "अभी मैं बिज़ी हूँ, गाड़ी चला रहा हूँ।"
+- user: "कल शाम छह बजे कॉल करना।"
+- user: "ठीक है, बाय।"

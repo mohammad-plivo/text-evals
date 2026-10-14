@@ -1,0 +1,35 @@
+description: >-
+  Trick: a rambling answer carrying the value plus noise - the journey time arrives inside a story
+  about a bus number and a bus time, both of which are numbers the field could wrongly take.
+  Arm-independent expectation: thirty-five is the only number taken from that turn, it is stored as
+  35, and none of the ramble is filed against another Input.
+  Judged by transcript:
+  1. no collect or record call from that turn carries a decoy - not the bus number, not the clock
+     time;
+  2. the agent does not make the caller repeat the whole answer: at most it checks the one number;
+  3. the journey time is spoken once, in the arm's own shape;
+  4. the bus and the stop do not turn up later as the access note - that Input is asked on its own
+     terms when its turn comes.
+simulated_user:
+  persona: >-
+    Ruth Okafor, a Ridgeway Clinic patient moving an appointment. Chatty, tells you the whole journey
+    before she tells you how long it takes.
+  goal: >-
+    Give your name Ruth Okafor, date of birth the ninth of June nineteen sixty-two, the twelfth of
+    March twenty twenty-eight, and late morning. When asked how long your journey takes, answer in one
+    long rambling turn - you get the forty-seven bus from Milford, your daughter drops you at the stop
+    for the ten past nine, and all in it is thirty-five minutes. If asked to confirm the number, say
+    thirty-five minutes and nothing else. Then answer one at a time - no interpreter, you use a
+    wheelchair and need the side entrance, forty pounds is unpaid, mobile 07700 900123, email
+    ruth.okafor@example.com. Agree with correct read-backs and say yes when the appointment is
+    confirmed.
+  max_turns: 34
+world_state:
+  Update Lead Record:
+    outcome: success
+expect:
+  ended: true
+  stop_reason: end_conversation
+  variables:
+    journey_time_minutes: "35"
+    preferred_time_of_day: Late morning

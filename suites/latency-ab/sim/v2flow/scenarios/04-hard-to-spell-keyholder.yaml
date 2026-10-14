@@ -1,0 +1,7 @@
+description: Key holder name is hard to spell; caller spells it when asked.
+simulated_user:
+  persona: "Priya Sharma, patient, used to spelling things out."
+  goal: "Confirm everything as booked (date, phone). Email if asked: priya.sharma@example.com. Standard cleaning, budget 180 dollars. The key holder is your neighbour Siobhan Ni Mhaille — when asked, spell it out: S-I-O-B-H-A-N, N-I, M-H-A-I-L-L-E, and correct the agent if they read it back wrong. Gate code 77A3. No pets."
+  opening: "Hello?"
+  max_turns: 20
+  model: "gpt-4.1-mini"

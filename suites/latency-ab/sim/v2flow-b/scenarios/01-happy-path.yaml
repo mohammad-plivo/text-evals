@@ -1,0 +1,14 @@
+description: "Cooperative caller confirms everything smoothly."
+simulated_user:
+  persona: "Priya Sharma, 34. A real customer on a phone call about a home cleaning booking."
+  goal: |
+    CALL OPENING (get through this quickly, it is not what is being tested): answer with a simple 'Hello?'. When the caller asks whether they are speaking with Priya Sharma, say yes. If they ask whether now is a good time, say yes. Then the real conversation begins.
+    
+    WHAT YOU KNOW (say each only when asked): your email is priya.sharma@example.com; you want Standard cleaning; your budget is around 150 dollars; your neighbour Maria Lopez will let the crew in; the gate code is 4482; you have a cat. The visit date and the number on file are both correct.
+    
+    WHAT YOU WANT: confirm the booking as it stands.
+    
+    BEHAVIOUR RULES: stay in character as a real customer on a phone call. Answer only what you are actually asked, one thing at a time, in short spoken sentences. Never list information the agent has not asked for, and never recite several details in one breath. Do not summarise the booking back to the agent. If you are asked something you were not told, say you do not know.
+  opening: "Hello?"
+  max_turns: 18
+  model: "gpt-4.1-mini"

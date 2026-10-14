@@ -1,0 +1,2052 @@
+{
+  "task": "number",
+  "tier": "subtle",
+  "description": "CollectNumber: counts and quantities said aloud on a call, party size, nights, boxes, passengers, headcount, pallets, square footage. Numbers are recoverable, a wrong count shows up in the summary or the price, so they should ride into the next question rather than earning a confirmation round trip. The one exception is a genuinely colliding pair like fifteen and fifty or thirteen and thirty, which earns a single crisp check.",
+  "style_rules": {
+    "subtle": [
+      "Echo-and-advance is the default: fold the count into the next question and keep moving",
+      "Do the arithmetic aloud instead of asking again, twenty four rooms minus eight twins is sixteen doubles",
+      "Turn vague quantities into working numbers in one beat, a couple becomes twice, half a dozen becomes six",
+      "Pin a range by making a decision, hold the top and release later, not by interrogating the caller",
+      "Large numbers come back in groups, one four zero, four two hundred",
+      "Explicit digit check only where the numbers genuinely collide on a phone line, fifty versus fifteen, thirty versus thirteen",
+      "Corrections and revisions are absorbed in one beat, the new number opens the next sentence",
+      "Bare value-as-question and silent accept both used, never the same strategy twice in a row",
+      "Contractions throughout, short clauses, commas not dashes, no praise, no status phrases",
+      "Strict fields inside the same call keep full ceremony, phone and card digits in groups, codes and names character by character, addresses read back in full, consent asked outright"
+    ],
+    "non_subtle_tells": [
+      "One template on every field, I have noted X is that correct, confirming X is that correct, you have selected X please confirm",
+      "A confirm round trip on counts nobody would stop for, a stack height, a fish tank, a floor number",
+      "Refusing ordinary spoken vagueness, I am unable to record a range, and pushing the work back on the caller",
+      "Praise on trivial answers, status phrases, no contractions, kindly and I will now proceed to",
+      "I heard on every readback, chatbot closer at the end",
+      "Wrong direction: over-casual agent that keeps the warmth but drops the fidelity floors, leaves a fifty versus fifteen collision unchecked, waves away an offered spelling, or assumes consent"
+    ]
+  },
+  "conversations": [
+    {
+      "id": "number_01_subtle",
+      "pair_id": "number_01",
+      "label": "subtle",
+      "language": "en",
+      "scenario": "Restaurant private-room booking; the caller corrects the party size mid-sentence and says fifty for the canapes, which is the one number in the call that genuinely needs a fifty-versus-fifteen check.",
+      "fields": [
+        {
+          "name": "party_size",
+          "value": "six",
+          "tier": "subtle",
+          "strategy": "one-beat correction, the new number opens the next question"
+        },
+        {
+          "name": "canape_portions",
+          "value": "fifty",
+          "tier": "subtle",
+          "strategy": "explicit fifty-versus-fifteen disambiguation, one line, no ceremony round it"
+        },
+        {
+          "name": "wine_bottles",
+          "value": "twelve",
+          "tier": "subtle",
+          "strategy": "resolved from 'a dozen' and split six and six aloud, no round trip"
+        },
+        {
+          "name": "vegetarian_mains",
+          "value": "three",
+          "tier": "subtle",
+          "strategy": "bare echo with the dairy detail carried, no tag"
+        },
+        {
+          "name": "mobile_number",
+          "value": "07700 900 382",
+          "tier": "strict",
+          "strategy": "digit by digit in groups"
+        }
+      ],
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Thanks for holding, it's Marla at Fenwick's. Private room for Friday, wasn't it?"
+        },
+        {
+          "speaker": "caller",
+          "text": "That's right. Eight of us. Well, uh, hang on. Actually six. Two dropped out this morning."
+        },
+        {
+          "speaker": "agent",
+          "text": "Six it is. You'd ticked canapes on the enquiry, how many portions?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Fifty."
+        },
+        {
+          "speaker": "agent",
+          "text": "Fifty as in five zero, or fifteen, one five?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Five zero. Fifty."
+        },
+        {
+          "speaker": "agent",
+          "text": "Five zero, that's about eight a head. Wine, do you want anything open when you sit down?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Yeah, a dozen bottles maybe? Half red half white."
+        },
+        {
+          "speaker": "agent",
+          "text": "Twelve, six and six, and we only bill what you drink. Any vegetarians?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Three. And one of them doesn't do dairy."
+        },
+        {
+          "speaker": "agent",
+          "text": "Three mains, one of those dairy free. Anything else the kitchen should know?"
+        },
+        {
+          "speaker": "caller",
+          "text": "No, that's it."
+        },
+        {
+          "speaker": "agent",
+          "text": "Right, and a mobile for the day itself?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Oh seven nine four one, double two six, three eight two."
+        },
+        {
+          "speaker": "agent",
+          "text": "Zero seven seven zero zero, nine zero zero, three eight two. Yeah?",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "That's it."
+        },
+        {
+          "speaker": "agent",
+          "text": "So six of you, three veggie, canapes out at eight. Deposit's forty, now or on the night?"
+        },
+        {
+          "speaker": "caller",
+          "text": "On the night's easier."
+        },
+        {
+          "speaker": "agent",
+          "text": "You're in the back room from seven on Friday. See you then."
+        }
+      ],
+      "notes": "Five values, five different moves: the correction is absorbed in one beat, the canape count earns the only explicit check because fifty and fifteen collide on a phone line, the dozen is converted aloud instead of queried, the vegetarian count is echoed bare with no tag, and the phone keeps its full digit readback. Ten agent turns, ten different opening words, one 'yeah?' in the call."
+    },
+    {
+      "id": "number_01_non_subtle",
+      "pair_id": "number_01",
+      "label": "non_subtle",
+      "language": "en",
+      "scenario": "Same private-room booking with the same correction and the same fifty-versus-fifteen moment, but the agent runs 'I have noted X, is that correct?' on every value.",
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Thank you for holding. My name is Marla and I will now assist you with your private room reservation on Friday."
+        },
+        {
+          "speaker": "caller",
+          "text": "That's right. Eight of us. Well, uh, hang on. Actually six. Two dropped out this morning."
+        },
+        {
+          "speaker": "agent",
+          "text": "I have noted six guests. Is that correct? You have selected canapes on your enquiry form. Please state the number of portions."
+        },
+        {
+          "speaker": "caller",
+          "text": "Fifty."
+        },
+        {
+          "speaker": "agent",
+          "text": "For accuracy, is that five zero, fifty, or one five, fifteen?",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "Five zero. Fifty."
+        },
+        {
+          "speaker": "agent",
+          "text": "I have noted fifty portions. Is that correct? Please state whether you require wine to be opened on arrival."
+        },
+        {
+          "speaker": "caller",
+          "text": "Yeah, a dozen bottles maybe? Half red half white."
+        },
+        {
+          "speaker": "agent",
+          "text": "I have noted twelve bottles, six red and six white. Is that correct? That is a wonderful selection. Please state the number of vegetarian guests."
+        },
+        {
+          "speaker": "caller",
+          "text": "Three. And one of them doesn't do dairy."
+        },
+        {
+          "speaker": "agent",
+          "text": "I have noted three vegetarian main courses, one of which is dairy free. Is that correct? Please state any further kitchen requirements."
+        },
+        {
+          "speaker": "caller",
+          "text": "No, that's it."
+        },
+        {
+          "speaker": "agent",
+          "text": "Excellent. I will now proceed to take a contact number. Kindly provide your mobile number."
+        },
+        {
+          "speaker": "caller",
+          "text": "Oh seven nine four one, double two six, three eight two."
+        },
+        {
+          "speaker": "agent",
+          "text": "I heard zero seven seven zero zero, nine zero zero, three eight two. Is that correct?",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "That's it."
+        },
+        {
+          "speaker": "agent",
+          "text": "Your contact number has been recorded. A deposit of forty pounds is required. Kindly confirm whether you will pay now or on the night."
+        },
+        {
+          "speaker": "caller",
+          "text": "On the night's easier."
+        },
+        {
+          "speaker": "agent",
+          "text": "Your booking has been registered in the system. Is there anything else I can help you with today?"
+        }
+      ],
+      "notes": "One template on all five values, 'I have noted X, is that correct?' four times in ten turns, praise on a wine order, status phrases, no contractions, 'I heard' on the phone readback and a chatbot closer. Caller turns are identical to the twin."
+    },
+    {
+      "id": "number_02_subtle",
+      "pair_id": "number_02",
+      "label": "subtle",
+      "language": "en",
+      "scenario": "Removals quote; the caller volunteers two numbers in one breath, then answers 'a few' for the box count and has to be pinned down without an interrogation.",
+      "fields": [
+        {
+          "name": "bedrooms",
+          "value": "three",
+          "tier": "subtle",
+          "strategy": "two values taken at once, both returned in one clause"
+        },
+        {
+          "name": "floor_number",
+          "value": "fourth",
+          "tier": "subtle",
+          "strategy": "echoed in the same breath as the bedrooms, then advanced"
+        },
+        {
+          "name": "box_count",
+          "value": "thirty",
+          "tier": "subtle",
+          "strategy": "vague 'a few' anchored with a single either-or, then turned into a van size"
+        },
+        {
+          "name": "crew_size",
+          "value": "three",
+          "tier": "subtle",
+          "strategy": "caller asks a question back, agent answers and lets the choice land with no confirmation"
+        },
+        {
+          "name": "mobile_number",
+          "value": "07700 900 410",
+          "tier": "strict",
+          "strategy": "digit by digit in groups"
+        }
+      ],
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Hartley and Sons, this is Dev. You're after a quote?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Yeah, moving end of August. Three bedrooms, and we're on the fourth floor."
+        },
+        {
+          "speaker": "agent",
+          "text": "Three bed, fourth floor. Lift or stairs?"
+        },
+        {
+          "speaker": "caller",
+          "text": "There's a lift but it's tiny. The sofa won't go in it."
+        },
+        {
+          "speaker": "agent",
+          "text": "Stairs for the big stuff then. How many boxes, roughly?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Oh, a few. I haven't counted."
+        },
+        {
+          "speaker": "agent",
+          "text": "A few as in ten, or more like thirty?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Thirty. Probably thirty, yeah. Maybe a bit more."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thirty plus, so I'll book the van for forty and we don't charge for empty space. Do you want two men or three?"
+        },
+        {
+          "speaker": "caller",
+          "text": "What's the difference?"
+        },
+        {
+          "speaker": "agent",
+          "text": "Two's cheaper by about ninety quid, three gets you out by lunch. Fourth floor, I'd go three."
+        },
+        {
+          "speaker": "caller",
+          "text": "Go on then, three."
+        },
+        {
+          "speaker": "agent",
+          "text": "Book three. Best number for the driver?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Zero seven seven zero zero, nine zero zero, four one zero."
+        },
+        {
+          "speaker": "agent",
+          "text": "Zero seven seven zero zero, nine zero zero, four one zero. That right?",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "Yep."
+        },
+        {
+          "speaker": "agent",
+          "text": "You'll get a text the night before, and the quote's in your email within the hour."
+        }
+      ],
+      "notes": "The two numbers that arrive together come back in one clause rather than two round trips. 'A few' is closed with a single either-or and then spent on a decision, forty foot of van, so the caller never feels quizzed. The crew size is chosen after a question back and taken silently. Only the driver's number gets a readback."
+    },
+    {
+      "id": "number_02_non_subtle",
+      "pair_id": "number_02",
+      "label": "non_subtle",
+      "language": "en",
+      "scenario": "Same removals quote with the same 'a few' and the same question back, but the agent stops on every value with 'Just to confirm, X. Is that correct?'",
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Good afternoon, you have reached Hartley and Sons Removals. My name is Dev. How may I assist you today?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Yeah, moving end of August. Three bedrooms, and we're on the fourth floor."
+        },
+        {
+          "speaker": "agent",
+          "text": "Just to confirm, three bedrooms. Is that correct? And just to confirm, the fourth floor. Is that correct?"
+        },
+        {
+          "speaker": "caller",
+          "text": "There's a lift but it's tiny. The sofa won't go in it."
+        },
+        {
+          "speaker": "agent",
+          "text": "Just to confirm, the lift is not suitable for large items. Is that correct? Kindly state the number of boxes."
+        },
+        {
+          "speaker": "caller",
+          "text": "Oh, a few. I haven't counted."
+        },
+        {
+          "speaker": "agent",
+          "text": "I am unable to process an approximate quantity. Kindly state whether the number of boxes is ten or thirty."
+        },
+        {
+          "speaker": "caller",
+          "text": "Thirty. Probably thirty, yeah. Maybe a bit more."
+        },
+        {
+          "speaker": "agent",
+          "text": "Just to confirm, thirty boxes. Is that correct? Kindly state whether you require two operatives or three operatives."
+        },
+        {
+          "speaker": "caller",
+          "text": "What's the difference?"
+        },
+        {
+          "speaker": "agent",
+          "text": "I will now explain. Two operatives is cheaper by approximately ninety pounds. Three operatives will complete the move by lunchtime. Kindly state your selection."
+        },
+        {
+          "speaker": "caller",
+          "text": "Go on then, three."
+        },
+        {
+          "speaker": "agent",
+          "text": "Just to confirm, three operatives. Is that correct? That is a great choice for a fourth floor property. I will now proceed to take your contact number."
+        },
+        {
+          "speaker": "caller",
+          "text": "Zero seven seven zero zero, nine zero zero, four one zero."
+        },
+        {
+          "speaker": "agent",
+          "text": "I heard zero seven seven zero zero, nine zero zero, four one zero. Is that correct?",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "Yep."
+        },
+        {
+          "speaker": "agent",
+          "text": "Your contact number has been recorded and your quotation has been registered in the system. Is there anything else I can help you with today?"
+        }
+      ],
+      "notes": "'Just to confirm, X. Is that correct?' five times across five values, a robotic refusal to accept an estimate that pushes the work back on the caller, praise on a crew size, status phrases, no contractions, chatbot closer."
+    },
+    {
+      "id": "number_03_subtle",
+      "pair_id": "number_03",
+      "label": "subtle",
+      "language": "en",
+      "scenario": "Hotel group booking for a wedding party; the caller gives a range for the room count and won't narrow it, so the agent settles it with a decision instead of pushing.",
+      "fields": [
+        {
+          "name": "room_count",
+          "value": "twenty four",
+          "tier": "subtle",
+          "strategy": "range closed by holding the top and releasing later, caller agrees and the number rides on"
+        },
+        {
+          "name": "nights",
+          "value": "three",
+          "tier": "subtle",
+          "strategy": "echo-and-advance with the checkout day added"
+        },
+        {
+          "name": "twin_rooms",
+          "value": "eight",
+          "tier": "subtle",
+          "strategy": "agent does the subtraction aloud, sixteen doubles, no round trip"
+        },
+        {
+          "name": "breakfast_covers",
+          "value": "forty",
+          "tier": "subtle",
+          "strategy": "approximate accepted, consequence given instead of a confirmation"
+        },
+        {
+          "name": "group_code",
+          "value": "MRB 447",
+          "tier": "strict",
+          "strategy": "phonetic alphabet, character by character"
+        }
+      ],
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Marbury Hotel, reservations, this is Nita. What can I do for you?"
+        },
+        {
+          "speaker": "caller",
+          "text": "I've got a wedding party coming in October and I need a block of rooms."
+        },
+        {
+          "speaker": "agent",
+          "text": "Block booking in October. How many rooms?"
+        },
+        {
+          "speaker": "caller",
+          "text": "That's the thing, I don't know yet. Somewhere between twenty and twenty four."
+        },
+        {
+          "speaker": "agent",
+          "text": "I'll hold twenty four and you drop what you don't need by the first of October, no charge. Does that suit?"
+        },
+        {
+          "speaker": "caller",
+          "text": "That suits. Yeah, do that."
+        },
+        {
+          "speaker": "agent",
+          "text": "Twenty four held. How many nights?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Three. Friday to Monday."
+        },
+        {
+          "speaker": "agent",
+          "text": "Three nights, out on the Monday. How many of them want twins?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Eight twins, rest doubles."
+        },
+        {
+          "speaker": "agent",
+          "text": "Eight twins, sixteen doubles then. Rough head count for breakfast?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Forty. Forty give or take."
+        },
+        {
+          "speaker": "agent",
+          "text": "Forty covers, we'll set the long room rather than the terrace. There's a group code on this, it's MRB four four seven."
+        },
+        {
+          "speaker": "caller",
+          "text": "Say the letters again?"
+        },
+        {
+          "speaker": "agent",
+          "text": "M for Mike, R for Romeo, B for Bravo, then four, four, seven.",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "M R B four four seven. Got it."
+        },
+        {
+          "speaker": "agent",
+          "text": "Guests quote that when they book direct and it holds the rate."
+        },
+        {
+          "speaker": "caller",
+          "text": "And the deposit?"
+        },
+        {
+          "speaker": "agent",
+          "text": "Two hundred holds the block. Email's coming today with the block sheet."
+        }
+      ],
+      "notes": "The range is closed by a decision rather than a demand, hold the top and hand rooms back later, which is the whole friction beat kept intact. After that nothing gets a round trip: the nights pick up a weekday, the twins get the doubles worked out aloud, the breakfast estimate turns into a room choice. Only the group code is spelled. No check tags anywhere in the call."
+    },
+    {
+      "id": "number_03_non_subtle",
+      "pair_id": "number_03",
+      "label": "non_subtle",
+      "language": "en",
+      "scenario": "Same wedding block booking with the same unnarrowed range, but the agent refuses the range outright and runs 'You have selected X, please confirm' on every field.",
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Good morning and thank you for calling the Marbury Hotel reservations department. My name is Nita. How may I assist you today?"
+        },
+        {
+          "speaker": "caller",
+          "text": "I've got a wedding party coming in October and I need a block of rooms."
+        },
+        {
+          "speaker": "agent",
+          "text": "You have selected a group block booking in October. Please confirm. Kindly state the number of rooms required."
+        },
+        {
+          "speaker": "caller",
+          "text": "That's the thing, I don't know yet. Somewhere between twenty and twenty four."
+        },
+        {
+          "speaker": "agent",
+          "text": "I am unable to record a range. Kindly state one exact number of rooms."
+        },
+        {
+          "speaker": "caller",
+          "text": "Twenty four then, I suppose."
+        },
+        {
+          "speaker": "agent",
+          "text": "You have selected twenty four rooms. Please confirm. Your room quantity has been recorded."
+        },
+        {
+          "speaker": "caller",
+          "text": "Yes. Three nights, Friday to Monday."
+        },
+        {
+          "speaker": "agent",
+          "text": "You have selected three nights. Please confirm. Kindly state the number of twin rooms required."
+        },
+        {
+          "speaker": "caller",
+          "text": "Eight twins, rest doubles."
+        },
+        {
+          "speaker": "agent",
+          "text": "You have selected eight twin rooms. Please confirm. You have selected sixteen double rooms. Please confirm."
+        },
+        {
+          "speaker": "caller",
+          "text": "Yes, both. Forty for breakfast, roughly."
+        },
+        {
+          "speaker": "agent",
+          "text": "You have indicated forty breakfast covers. Please confirm. That is an impressive number of guests."
+        },
+        {
+          "speaker": "caller",
+          "text": "It's a wedding. Is there a code or something for the guests?"
+        },
+        {
+          "speaker": "agent",
+          "text": "Affirmative. Your group code has been generated. The code is MRB four four seven."
+        },
+        {
+          "speaker": "caller",
+          "text": "Say the letters again?"
+        },
+        {
+          "speaker": "agent",
+          "text": "M for Mike, R for Romeo, B for Bravo, then four, four, seven. Is that correct?",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "M R B four four seven. Got it."
+        },
+        {
+          "speaker": "agent",
+          "text": "Your block booking has been registered in the system. Is there anything else I can help you with today?"
+        }
+      ],
+      "notes": "'You have selected X, please confirm' six times in nine agent turns, a flat refusal to hold a range that makes the caller do the agent's job, praise on a head count, status phrases, no contractions, chatbot closer. Caller turns match the twin apart from the number the refusal forces out of her."
+    },
+    {
+      "id": "number_04_subtle",
+      "pair_id": "number_04",
+      "label": "subtle",
+      "language": "en",
+      "scenario": "Warehouse restock over the trade desk; the caller fires two order lines at once, one digit of the account number is lost to line noise, and he cuts the order down after hearing about a price rise.",
+      "fields": [
+        {
+          "name": "case_quantity",
+          "value": "sixteen, cut to twelve",
+          "tier": "subtle",
+          "strategy": "case-to-box conversion done aloud, then a late revision taken in one beat"
+        },
+        {
+          "name": "pallet_quantity",
+          "value": "three",
+          "tier": "subtle",
+          "strategy": "second value from the same sentence echoed alongside the first"
+        },
+        {
+          "name": "account_number",
+          "value": "D4976211",
+          "tier": "strict",
+          "strategy": "partial replay, single targeted ask for the missing digit, then full readback"
+        },
+        {
+          "name": "bay_number",
+          "value": "seven",
+          "tier": "subtle",
+          "strategy": "bare echo, two words, then straight on"
+        },
+        {
+          "name": "bin_quantity",
+          "value": "ninety",
+          "tier": "subtle",
+          "strategy": "echo with the stacking maths attached, no tag"
+        }
+      ],
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Draycott Supplies, trade desk. Go ahead."
+        },
+        {
+          "speaker": "caller",
+          "text": "Hiya, need to top up. Sixteen cases of the blue nitrile gloves and three pallets of the shrink wrap."
+        },
+        {
+          "speaker": "agent",
+          "text": "Sixteen cases of blue nitrile, three pallets of wrap. Cases are ten boxes, so that's a hundred and sixty boxes, is that what you're after?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Yeah. A hundred and sixty boxes. That's right."
+        },
+        {
+          "speaker": "agent",
+          "text": "Account number when you're ready."
+        },
+        {
+          "speaker": "caller",
+          "text": "It's D four nine, seven [crackle] two, one one."
+        },
+        {
+          "speaker": "agent",
+          "text": "Went a bit funny in the middle there. I've got D, four, nine, seven, then what?",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "Six. D four nine seven six, two one one."
+        },
+        {
+          "speaker": "agent",
+          "text": "D, four, nine, seven, six, two, one, one. That's coming up as Pallister Hygiene, is that you?",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "That's us."
+        },
+        {
+          "speaker": "agent",
+          "text": "Which bay do you want it on?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Seven. Same as last time."
+        },
+        {
+          "speaker": "agent",
+          "text": "Bay seven. Anything else off the list?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Ninety of the yellow bins. The forty litre ones."
+        },
+        {
+          "speaker": "agent",
+          "text": "Ninety forty litre bins, they come nine to a stack so that's ten stacks, fine on the wagon. One thing before I put it through, the blue nitrile's gone up eight percent since March. Still want sixteen cases?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Eight percent? Ugh. Go on, make it twelve then."
+        },
+        {
+          "speaker": "agent",
+          "text": "Twelve cases, a hundred and twenty boxes. Rest of it stands."
+        },
+        {
+          "speaker": "caller",
+          "text": "Yeah, leave the rest."
+        },
+        {
+          "speaker": "agent",
+          "text": "That's the order in, bay seven, out to you Thursday."
+        }
+      ],
+      "notes": "Two order lines from one sentence come back in one clause with the case-to-box conversion done aloud, so the ambiguity dies without a quiz. The garbled digit gets a partial replay and one targeted ask, which is strict-field behaviour, not a habit applied to everything else. The late cut from sixteen to twelve is absorbed in a beat with the box maths redone. Ten agent turns, ten different openers, no check tags."
+    },
+    {
+      "id": "number_04_non_subtle",
+      "pair_id": "number_04",
+      "label": "non_subtle",
+      "language": "en",
+      "scenario": "Same restock call with the same garbled digit and the same late cut from sixteen cases to twelve, but the agent runs 'I heard X, is that correct?' on every value.",
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Good afternoon and welcome to the Draycott Supplies trade desk. How may I assist you today?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Hiya, need to top up. Sixteen cases of the blue nitrile gloves and three pallets of the shrink wrap."
+        },
+        {
+          "speaker": "agent",
+          "text": "I heard sixteen cases of blue nitrile gloves. Is that correct? I heard three pallets of shrink wrap. Is that correct?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Yeah. A hundred and sixty boxes. That's right."
+        },
+        {
+          "speaker": "agent",
+          "text": "I heard one hundred and sixty boxes. Is that correct? I will now proceed to take your account number."
+        },
+        {
+          "speaker": "caller",
+          "text": "It's D four nine, seven [crackle] two, one one."
+        },
+        {
+          "speaker": "agent",
+          "text": "I was unable to capture the full account number. Kindly repeat the account number in its entirety.",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "Six. D four nine seven six, two one one."
+        },
+        {
+          "speaker": "agent",
+          "text": "I heard D, four, nine, seven, six, two, one, one. Is that correct?",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "That's us."
+        },
+        {
+          "speaker": "agent",
+          "text": "Your account has been verified as Pallister Hygiene. Kindly state the delivery bay number."
+        },
+        {
+          "speaker": "caller",
+          "text": "Seven. Same as last time."
+        },
+        {
+          "speaker": "agent",
+          "text": "I heard bay seven. Is that correct? Kindly state any further items."
+        },
+        {
+          "speaker": "caller",
+          "text": "Ninety of the yellow bins. The forty litre ones."
+        },
+        {
+          "speaker": "agent",
+          "text": "I heard ninety yellow bins. Is that correct? I heard a capacity of forty litres. Is that correct? Please be advised that blue nitrile gloves have increased by eight percent since March."
+        },
+        {
+          "speaker": "caller",
+          "text": "Eight percent? Ugh. Go on, make it twelve then."
+        },
+        {
+          "speaker": "agent",
+          "text": "I heard an amendment from sixteen cases to twelve cases. Is that correct?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Yeah, leave the rest."
+        },
+        {
+          "speaker": "agent",
+          "text": "Your order has been registered in the system. Is there anything else I can help you with today?"
+        }
+      ],
+      "notes": "'I heard X, is that correct?' eight times in nine agent turns, twice inside single turns. The garbled digit gets a lazy full-repeat demand instead of a partial replay, so the caller reads the whole account number again. Status phrases, no contractions, chatbot closer."
+    },
+    {
+      "id": "number_05_subtle",
+      "pair_id": "number_05",
+      "label": "subtle",
+      "language": "en",
+      "scenario": "Corporate gym membership; the headcount lands as 'thirty', the one number worth an explicit check against thirteen, and the caller drops it to twenty five once she hears the monthly figure.",
+      "fields": [
+        {
+          "name": "staff_headcount",
+          "value": "thirty, revised to twenty five",
+          "tier": "subtle",
+          "strategy": "explicit thirty-versus-thirteen check in one line, later revision taken in a single beat"
+        },
+        {
+          "name": "site_count",
+          "value": "two",
+          "tier": "subtle",
+          "strategy": "bare echo with the useful consequence attached"
+        },
+        {
+          "name": "contract_months",
+          "value": "twelve",
+          "tier": "subtle",
+          "strategy": "caller asks a question back, agent answers, the number rides into the next question"
+        },
+        {
+          "name": "peak_passes",
+          "value": "eight",
+          "tier": "subtle",
+          "strategy": "agent does the subtraction aloud, twenty two off peak, no round trip"
+        },
+        {
+          "name": "marketing_consent",
+          "value": "yes",
+          "tier": "strict",
+          "strategy": "explicit ask, explicit answer"
+        }
+      ],
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Steelworks, corporate line, Priya speaking."
+        },
+        {
+          "speaker": "caller",
+          "text": "We're looking at memberships for the staff. I'm not sure how it works."
+        },
+        {
+          "speaker": "agent",
+          "text": "Simplest is a block rate off your headcount. How many people?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Thirty."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thirty, three zero, or thirteen, one three?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Three zero. Thirty."
+        },
+        {
+          "speaker": "agent",
+          "text": "Three zero puts you in the mid band. All at one site?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Two. Head office and the depot out at Tresham."
+        },
+        {
+          "speaker": "agent",
+          "text": "Two sites, and Tresham's ours as well, so they can use both. How long do you want to commit for?"
+        },
+        {
+          "speaker": "caller",
+          "text": "A year, I suppose. Is there a shorter one?"
+        },
+        {
+          "speaker": "agent",
+          "text": "Six months exists but it's dearer a head. Twelve gets you the eighteen pound rate."
+        },
+        {
+          "speaker": "caller",
+          "text": "Twelve then."
+        },
+        {
+          "speaker": "agent",
+          "text": "Twelve months. Do many of them want peak hours, five till eight?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Maybe eight of them. The rest are daytime."
+        },
+        {
+          "speaker": "agent",
+          "text": "Eight peak passes, twenty two off peak. That's five forty a month all in."
+        },
+        {
+          "speaker": "caller",
+          "text": "Oh. Hang on. Can I do twenty five heads and add the rest later?"
+        },
+        {
+          "speaker": "agent",
+          "text": "Twenty five works, same band all the way down to twenty. The others can join any time at that rate."
+        },
+        {
+          "speaker": "caller",
+          "text": "Twenty five then."
+        },
+        {
+          "speaker": "agent",
+          "text": "Last thing, are you happy for us to email your staff directly with the sign up link? Yes or no is fine.",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "Yes, that's fine."
+        },
+        {
+          "speaker": "agent",
+          "text": "You'll have the agreement by five, and the link goes out once you've signed it."
+        }
+      ],
+      "notes": "Thirty earns its explicit check because thirty and thirteen collide on a phone line, and the check is one line with no apology round it. Everything else rides into the next question: two sites, twelve months, eight peak with the twenty two worked out aloud, then the revision down to twenty five taken without comment. Consent is asked outright and answered outright, which stays strict in both labels."
+    },
+    {
+      "id": "number_05_non_subtle",
+      "pair_id": "number_05",
+      "label": "non_subtle",
+      "language": "en",
+      "scenario": "Same gym membership call, but the agent is over-casual: thirty goes through with no thirteen check, the peak count becomes 'a handful', and consent to mail the staff is announced rather than asked.",
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Steelworks, corporate line, Priya speaking."
+        },
+        {
+          "speaker": "caller",
+          "text": "We're looking at memberships for the staff. I'm not sure how it works."
+        },
+        {
+          "speaker": "agent",
+          "text": "Easy, we just do a block rate off your headcount. How many people?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Thirty."
+        },
+        {
+          "speaker": "agent",
+          "text": "Cool, thirty. All at one site?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Two. Head office and the depot out at Tresham."
+        },
+        {
+          "speaker": "agent",
+          "text": "Nice, Tresham's ours too so they can use both. How long do you want to commit for?"
+        },
+        {
+          "speaker": "caller",
+          "text": "A year, I suppose. Is there a shorter one?"
+        },
+        {
+          "speaker": "agent",
+          "text": "There's a six but honestly a year's better value. I'll stick you down for twelve."
+        },
+        {
+          "speaker": "caller",
+          "text": "Twelve then."
+        },
+        {
+          "speaker": "agent",
+          "text": "Do many of them want peak hours, five till eight?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Maybe eight of them. The rest are daytime."
+        },
+        {
+          "speaker": "agent",
+          "text": "Yeah, I'll just put a handful on peak and we can sort the rest later. That's five forty a month all in."
+        },
+        {
+          "speaker": "caller",
+          "text": "Oh. Hang on. Can I do twenty five heads and add the rest later?"
+        },
+        {
+          "speaker": "agent",
+          "text": "Course you can, twenty five's the same band."
+        },
+        {
+          "speaker": "caller",
+          "text": "Twenty five then."
+        },
+        {
+          "speaker": "agent",
+          "text": "Sorted. I'll fire the sign up link out to all your staff this afternoon and the agreement's coming by five."
+        },
+        {
+          "speaker": "caller",
+          "text": "Right. Okay."
+        },
+        {
+          "speaker": "agent",
+          "text": "Any bother, ring me."
+        }
+      ],
+      "notes": "Wrong-direction: over-casual, dropped a fidelity floor. The one number in the call that genuinely collides, thirty against thirteen, goes through unchecked, 'a handful' replaces the peak-pass count so the order is wrong before it starts, and consent to email twenty five employees is announced instead of asked. Warm is not the same as subtle: subtle drops the ceremony and keeps the floors."
+    },
+    {
+      "id": "number_06_subtle",
+      "pair_id": "number_06",
+      "label": "subtle",
+      "language": "en",
+      "scenario": "Airline group check-in; one character of the booking reference is lost to a garbled line and the caller stops mid-call to ask what the extra bags will cost.",
+      "fields": [
+        {
+          "name": "passenger_count",
+          "value": "nine",
+          "tier": "subtle",
+          "strategy": "value volunteered, echoed in two words and used to open the next field"
+        },
+        {
+          "name": "booking_reference",
+          "value": "K2HR4L",
+          "tier": "strict",
+          "strategy": "partial replay, single targeted ask for the missing character, then full readback"
+        },
+        {
+          "name": "checked_bags",
+          "value": "fourteen",
+          "tier": "subtle",
+          "strategy": "echo with the allowance subtracted aloud, five extra"
+        },
+        {
+          "name": "assistance_passengers",
+          "value": "two",
+          "tier": "subtle",
+          "strategy": "value arrives out of order inside another answer, taken with the code the agent will use"
+        },
+        {
+          "name": "sports_items",
+          "value": "three",
+          "tier": "subtle",
+          "strategy": "echo with the price consequence, no tag"
+        }
+      ],
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Northvale Air, group desk, Callum here."
+        },
+        {
+          "speaker": "caller",
+          "text": "We're flying Thursday, nine of us, and I want to sort the bags before we get to the airport."
+        },
+        {
+          "speaker": "agent",
+          "text": "Nine travelling. Booking reference first?"
+        },
+        {
+          "speaker": "caller",
+          "text": "It's K two, uh, K two H [garbled] four L."
+        },
+        {
+          "speaker": "agent",
+          "text": "Lost you on the one after the H. K, two, H, then what, then four, L?",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "R. K two H R four L."
+        },
+        {
+          "speaker": "agent",
+          "text": "K, two, H, R, four, L. That's the Alicante flight, NV two one six, Thursday morning.",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "That's us."
+        },
+        {
+          "speaker": "agent",
+          "text": "How many bags are going in the hold?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Fourteen."
+        },
+        {
+          "speaker": "agent",
+          "text": "Fourteen checked. Nine of you means nine included, so five extra."
+        },
+        {
+          "speaker": "caller",
+          "text": "How much is that going to cost me?"
+        },
+        {
+          "speaker": "agent",
+          "text": "Thirty a bag booked now, fifty at the airport. A hundred and fifty if you do it today."
+        },
+        {
+          "speaker": "caller",
+          "text": "Do it now then. Oh, and two of them need help getting to the gate. My mum and her sister."
+        },
+        {
+          "speaker": "agent",
+          "text": "Two to the gate, both walking, I'll put them down as WCHR. Costs nothing. Golf clubs, skis, anything oversized?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Three sets of clubs."
+        },
+        {
+          "speaker": "agent",
+          "text": "Three golf bags go on separately at twenty five each, so seventy five on top."
+        },
+        {
+          "speaker": "caller",
+          "text": "Fine. Book it."
+        },
+        {
+          "speaker": "agent",
+          "text": "Bags and clubs come to two twenty five. Payment link's going to the email on the booking."
+        }
+      ],
+      "notes": "Four counts and not one round trip: nine, fourteen, two and three all come back inside the next question with the arithmetic or the rule attached, and the assistance pair is picked up out of order without the agent flagging that it arrived early. The only ceremony is on the PNR, where one character is missing and the agent replays what it has rather than making the caller start again. No check tags."
+    },
+    {
+      "id": "number_06_non_subtle",
+      "pair_id": "number_06",
+      "label": "non_subtle",
+      "language": "en",
+      "scenario": "Same group check-in with the same garbled reference and the same price question, but the agent confirms every count with an identical two-sentence template.",
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Thank you for calling Northvale Air group services. My name is Callum. How may I assist you today?"
+        },
+        {
+          "speaker": "caller",
+          "text": "We're flying Thursday, nine of us, and I want to sort the bags before we get to the airport."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you. I have recorded nine passengers. Please confirm that this is correct. I will now proceed to take your booking reference."
+        },
+        {
+          "speaker": "caller",
+          "text": "It's K two, uh, K two H [garbled] four L."
+        },
+        {
+          "speaker": "agent",
+          "text": "I was unable to capture the booking reference. Kindly repeat the booking reference in full.",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "R. K two H R four L."
+        },
+        {
+          "speaker": "agent",
+          "text": "I heard K, two, H, R, four, L. Is that correct?",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "That's us."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you. Your booking has been verified. Kindly state the number of hold bags."
+        },
+        {
+          "speaker": "caller",
+          "text": "Fourteen."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you. I have recorded fourteen hold bags. Please confirm that this is correct."
+        },
+        {
+          "speaker": "caller",
+          "text": "How much is that going to cost me?"
+        },
+        {
+          "speaker": "agent",
+          "text": "The charge is thirty pounds per bag in advance and fifty pounds at the airport. The total is one hundred and fifty pounds. Kindly confirm that you wish to proceed."
+        },
+        {
+          "speaker": "caller",
+          "text": "Do it now then. Oh, and two of them need help getting to the gate. My mum and her sister."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you. I have recorded two assistance passengers. Please confirm that this is correct. That is very considerate of you. Kindly state whether any oversized sporting equipment will be carried."
+        },
+        {
+          "speaker": "caller",
+          "text": "Three sets of clubs."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you. I have recorded three sets of golf clubs. Please confirm that this is correct. The charge is twenty five pounds per item."
+        },
+        {
+          "speaker": "caller",
+          "text": "Fine. Book it."
+        },
+        {
+          "speaker": "agent",
+          "text": "Your group check in has been registered in the system. Is there anything else I can help you with today?"
+        }
+      ],
+      "notes": "'Thank you. I have recorded X. Please confirm that this is correct.' four times in nine agent turns, praise for booking assistance for a relative, a full-repeat demand on the garbled reference instead of a partial replay, status phrases, no contractions, chatbot closer."
+    },
+    {
+      "id": "number_07_subtle",
+      "pair_id": "number_07",
+      "label": "subtle",
+      "language": "en",
+      "scenario": "Self storage enquiry; the caller drops a size once he hears the price and answers 'a couple' when asked how often he'll visit.",
+      "fields": [
+        {
+          "name": "unit_size_sqft",
+          "value": "seventy five",
+          "tier": "subtle",
+          "strategy": "size derived from a van description, revised down after the price and taken in one beat"
+        },
+        {
+          "name": "rental_months",
+          "value": "six",
+          "tier": "subtle",
+          "strategy": "echo-and-advance with the free month folded in"
+        },
+        {
+          "name": "visits_per_week",
+          "value": "two",
+          "tier": "subtle",
+          "strategy": "'a couple' turned into a number aloud and spent on the access type, no round trip"
+        },
+        {
+          "name": "access_cards",
+          "value": "three",
+          "tier": "subtle",
+          "strategy": "bare echo plus the cost, no tag"
+        },
+        {
+          "name": "home_address",
+          "value": "14 Bramhall Rise, Oakworth, BD22 6RL",
+          "tier": "strict",
+          "strategy": "full readback with the postcode character by character"
+        }
+      ],
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Kestrel Storage, Tom speaking."
+        },
+        {
+          "speaker": "caller",
+          "text": "I need a unit. House sale fell through, so everything's in the garage."
+        },
+        {
+          "speaker": "agent",
+          "text": "How much stuff, a car's worth or a van's worth?"
+        },
+        {
+          "speaker": "caller",
+          "text": "A big van. Luton, full."
+        },
+        {
+          "speaker": "agent",
+          "text": "That's usually a hundred and fifty square foot, ten by fifteen. Hundred and eighty a month."
+        },
+        {
+          "speaker": "caller",
+          "text": "Ooh. What's the next one down?"
+        },
+        {
+          "speaker": "agent",
+          "text": "Seventy five foot's ninety five. You'd be stacking to the roof, but people do."
+        },
+        {
+          "speaker": "caller",
+          "text": "Seventy five then. I'll stack."
+        },
+        {
+          "speaker": "agent",
+          "text": "Right, how long do you think you'll need it for?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Six months. Hopefully less."
+        },
+        {
+          "speaker": "agent",
+          "text": "Six months gets you the fourth one free, and you can leave early on two weeks' notice. How often will you be coming in?"
+        },
+        {
+          "speaker": "caller",
+          "text": "A couple of times a week."
+        },
+        {
+          "speaker": "agent",
+          "text": "Twice a week, so you want the twenty four hour access rather than the day pass. How many people need cards?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Three. Me, my wife, and my son's got the van."
+        },
+        {
+          "speaker": "agent",
+          "text": "Three cards. First one's free, other two are a fiver each. I need your address for the agreement."
+        },
+        {
+          "speaker": "caller",
+          "text": "Fourteen Bramhall Rise, Oakworth. B D twenty two, six R L."
+        },
+        {
+          "speaker": "agent",
+          "text": "Fourteen Bramhall Rise, Oakworth, postcode B, D, two, two, six, R, L.",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "That's it."
+        },
+        {
+          "speaker": "agent",
+          "text": "Ninety five a month, unit's B eleven, and the cards'll be waiting Saturday."
+        }
+      ],
+      "notes": "'A couple' becomes 'twice a week' inside the next question rather than being handed back to the caller, and the size revision after the price is absorbed with no comment on the change. The months and the cards are echoed bare with the useful consequence attached. The address is the only full readback, postcode character by character."
+    },
+    {
+      "id": "number_07_non_subtle",
+      "pair_id": "number_07",
+      "label": "non_subtle",
+      "language": "en",
+      "scenario": "Same storage enquiry with the same downsizing and the same 'a couple', but the agent runs 'Understood. To confirm, X, correct?' on every value.",
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Thank you for calling Kestrel Self Storage. My name is Tom. How may I assist you today?"
+        },
+        {
+          "speaker": "caller",
+          "text": "I need a unit. House sale fell through, so everything's in the garage."
+        },
+        {
+          "speaker": "agent",
+          "text": "Understood. To confirm, you require a storage unit, correct? Kindly state the volume of goods."
+        },
+        {
+          "speaker": "caller",
+          "text": "A big van. Luton, full."
+        },
+        {
+          "speaker": "agent",
+          "text": "Understood. To confirm, one full Luton van, correct? This corresponds to one hundred and fifty square feet at one hundred and eighty pounds per month."
+        },
+        {
+          "speaker": "caller",
+          "text": "Ooh. What's the next one down?"
+        },
+        {
+          "speaker": "agent",
+          "text": "The next size is seventy five square feet at ninety five pounds per month."
+        },
+        {
+          "speaker": "caller",
+          "text": "Seventy five then. I'll stack."
+        },
+        {
+          "speaker": "agent",
+          "text": "Understood. To confirm, seventy five square feet, correct? Your unit size has been recorded. Kindly state the rental duration."
+        },
+        {
+          "speaker": "caller",
+          "text": "Six months. Hopefully less."
+        },
+        {
+          "speaker": "agent",
+          "text": "Understood. To confirm, six months, correct? Kindly state the frequency of access."
+        },
+        {
+          "speaker": "caller",
+          "text": "A couple of times a week."
+        },
+        {
+          "speaker": "agent",
+          "text": "I am unable to process an approximate frequency. Kindly state the exact number of visits per week."
+        },
+        {
+          "speaker": "caller",
+          "text": "Two, then. Twice."
+        },
+        {
+          "speaker": "agent",
+          "text": "Understood. To confirm, two visits per week, correct? Kindly state the number of access cards."
+        },
+        {
+          "speaker": "caller",
+          "text": "Three. Me, my wife, and my son's got the van."
+        },
+        {
+          "speaker": "agent",
+          "text": "Understood. To confirm, three access cards, correct? That is a very organised family. I will now proceed to take your address."
+        },
+        {
+          "speaker": "caller",
+          "text": "Fourteen Bramhall Rise, Oakworth. B D twenty two, six R L."
+        },
+        {
+          "speaker": "agent",
+          "text": "I have recorded fourteen Bramhall Rise, Oakworth, postcode B, D, two, two, six, R, L. Is that correct?",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "That's it."
+        },
+        {
+          "speaker": "agent",
+          "text": "Your rental has been registered in the system. Is there anything else I can help you with today?"
+        }
+      ],
+      "notes": "'Understood. To confirm, X, correct?' six times in ten agent turns, a refusal to handle ordinary vagueness that pushes the work back on the caller, praise on a family owning three door cards, status phrases, no contractions, chatbot closer. Only the address readback matches what the good twin does."
+    },
+    {
+      "id": "number_08_subtle",
+      "pair_id": "number_08",
+      "label": "subtle",
+      "language": "en",
+      "scenario": "Rewire estimate; the caller answers the wrong question first and then gets interrupted by his wife in the middle of counting sockets.",
+      "fields": [
+        {
+          "name": "room_count",
+          "value": "nine",
+          "tier": "subtle",
+          "strategy": "value arrives out of order, agent lets him finish and takes the total he lands on"
+        },
+        {
+          "name": "storeys",
+          "value": "two",
+          "tier": "subtle",
+          "strategy": "echo with the loft exclusion attached, no round trip"
+        },
+        {
+          "name": "socket_count",
+          "value": "twenty two",
+          "tier": "subtle",
+          "strategy": "value arrives after an interruption, echoed once with the sanity check said as a statement"
+        },
+        {
+          "name": "radiator_count",
+          "value": "seven",
+          "tier": "subtle",
+          "strategy": "echo-and-advance into who actually does the work"
+        },
+        {
+          "name": "mobile_number",
+          "value": "07700 900 965",
+          "tier": "strict",
+          "strategy": "digit by digit in groups"
+        }
+      ],
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Pemberton Builders, Sal on the phone."
+        },
+        {
+          "speaker": "caller",
+          "text": "Hi, yeah, I've been given your number for a rewire. It's a whole house."
+        },
+        {
+          "speaker": "agent",
+          "text": "Whole house rewire. How many rooms, counting the hall and landing?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Four bedrooms. Sorry, that's not what you asked, is it. Four bed, two reception, kitchen, two bathrooms. Nine with the hall."
+        },
+        {
+          "speaker": "agent",
+          "text": "Nine spaces over how many floors?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Two. There's a loft but it's not boarded."
+        },
+        {
+          "speaker": "agent",
+          "text": "Two floors, loft left out of it. Sockets, are you keeping the existing positions?"
+        },
+        {
+          "speaker": "caller",
+          "text": "No, we want more. There's like eight at the minute, we want, hang on [muffled] sorry, my wife says twenty two."
+        },
+        {
+          "speaker": "agent",
+          "text": "Twenty two sockets, so about two and a half a room. Are you touching the heating?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Seven radiators, all being replaced. And the boiler."
+        },
+        {
+          "speaker": "agent",
+          "text": "Seven rads and a boiler is a plumber, not me, but I've got one I use. Want him on the same quote?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Please. Saves me ringing round."
+        },
+        {
+          "speaker": "agent",
+          "text": "Right, best mobile for the morning I come round?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Oh seven seven one two, double four eight, nine six five."
+        },
+        {
+          "speaker": "agent",
+          "text": "Zero seven seven zero zero, nine zero zero, nine six five.",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "That's me."
+        },
+        {
+          "speaker": "agent",
+          "text": "I'll be there Tuesday about nine, and I'll bring the plumber if he's free."
+        }
+      ],
+      "notes": "The out-of-order answer is allowed to finish and only the total gets echoed, with no remark about the false start. The interrupted socket count comes back once with a sanity check phrased as a statement rather than a question. The radiators ride straight into who does the work. The mobile is the only readback, and there are no check tags in the call."
+    },
+    {
+      "id": "number_08_non_subtle",
+      "pair_id": "number_08",
+      "label": "non_subtle",
+      "language": "en",
+      "scenario": "Same rewire estimate with the same out-of-order answer and the same interruption, but the agent stops on every value with 'I have noted X, is that right?'",
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Good morning, you have reached Pemberton Builders. My name is Sal. How may I assist you today?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Hi, yeah, I've been given your number for a rewire. It's a whole house."
+        },
+        {
+          "speaker": "agent",
+          "text": "I have noted a full property rewire, is that right? Kindly state the number of rooms including hall and landing."
+        },
+        {
+          "speaker": "caller",
+          "text": "Four bedrooms. Sorry, that's not what you asked, is it. Four bed, two reception, kitchen, two bathrooms. Nine with the hall."
+        },
+        {
+          "speaker": "agent",
+          "text": "I have noted four bedrooms, is that right? I have noted nine rooms in total, is that right?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Two. There's a loft but it's not boarded."
+        },
+        {
+          "speaker": "agent",
+          "text": "I have noted two floors, is that right? I have noted one unboarded loft, is that right? Kindly state whether existing socket positions are being retained."
+        },
+        {
+          "speaker": "caller",
+          "text": "No, we want more. There's like eight at the minute, we want, hang on [muffled] sorry, my wife says twenty two."
+        },
+        {
+          "speaker": "agent",
+          "text": "I have noted twenty two sockets, is that right? That is an excellent number for a property of this size. Kindly state your heating requirements."
+        },
+        {
+          "speaker": "caller",
+          "text": "Seven radiators, all being replaced. And the boiler."
+        },
+        {
+          "speaker": "agent",
+          "text": "I have noted seven radiators, is that right? I have noted one boiler replacement, is that right?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Please. Saves me ringing round."
+        },
+        {
+          "speaker": "agent",
+          "text": "Your plumbing requirement has been recorded. I will now proceed to take your mobile number."
+        },
+        {
+          "speaker": "caller",
+          "text": "Oh seven seven one two, double four eight, nine six five."
+        },
+        {
+          "speaker": "agent",
+          "text": "I heard zero seven seven zero zero, nine zero zero, nine six five. Is that correct?",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "That's me."
+        },
+        {
+          "speaker": "agent",
+          "text": "Your site visit has been registered in the system. Is there anything else I can help you with today?"
+        }
+      ],
+      "notes": "'I have noted X, is that right?' nine times across five values, doubling up inside single turns, including a confirmation of an unboarded loft that nobody would stop for. Praise on a socket count, status phrases, no contractions, chatbot closer."
+    },
+    {
+      "id": "number_09_subtle",
+      "pair_id": "number_09",
+      "label": "subtle",
+      "language": "en",
+      "scenario": "Event catering headcount; the caller speaks in rough numbers throughout, give or take five, about ten maybe twelve, half a dozen, and the agent turns each into a working figure without a quiz.",
+      "fields": [
+        {
+          "name": "guest_headcount",
+          "value": "a hundred and forty",
+          "tier": "subtle",
+          "strategy": "large number said back in groups, buffer added aloud instead of a confirmation"
+        },
+        {
+          "name": "vegetarian_meals",
+          "value": "twelve",
+          "tier": "subtle",
+          "strategy": "'about ten, maybe twelve' resolved by taking the higher with a one-clause reason"
+        },
+        {
+          "name": "childrens_meals",
+          "value": "eight",
+          "tier": "subtle",
+          "strategy": "bare echo with the menu suggestion attached, no tag"
+        },
+        {
+          "name": "serving_staff",
+          "value": "six",
+          "tier": "subtle",
+          "strategy": "caller asks a question back, 'half a dozen' comes home as six inside the next sentence"
+        },
+        {
+          "name": "marketing_consent",
+          "value": "yes",
+          "tier": "strict",
+          "strategy": "explicit ask, explicit answer"
+        }
+      ],
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Larkspur Catering, this is Bea."
+        },
+        {
+          "speaker": "caller",
+          "text": "Hi, I'm doing the food for our company do in November. Big one this year."
+        },
+        {
+          "speaker": "agent",
+          "text": "How big?"
+        },
+        {
+          "speaker": "caller",
+          "text": "A hundred and forty. Give or take five."
+        },
+        {
+          "speaker": "agent",
+          "text": "One four zero, so we'll cook for a hundred and forty five and nobody's counting. Vegetarians, do you know yet?"
+        },
+        {
+          "speaker": "caller",
+          "text": "About ten. Maybe twelve."
+        },
+        {
+          "speaker": "agent",
+          "text": "I'll cook twelve, the extra two get eaten either way. Kids coming?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Eight. They'll want something plain."
+        },
+        {
+          "speaker": "agent",
+          "text": "Eight children's plates, and chicken and chips usually wins. How many of my staff do you want on the night?"
+        },
+        {
+          "speaker": "caller",
+          "text": "What do you normally do?"
+        },
+        {
+          "speaker": "agent",
+          "text": "Rule of thumb's one server per twenty five seated, so six for a hundred and forty."
+        },
+        {
+          "speaker": "caller",
+          "text": "Half a dozen, fine."
+        },
+        {
+          "speaker": "agent",
+          "text": "Six on, and they'll clear as well as serve."
+        },
+        {
+          "speaker": "caller",
+          "text": "That's everything, I think."
+        },
+        {
+          "speaker": "agent",
+          "text": "Last thing before I let you go, can we add you to the list for menu updates and offers? Yes or no is fine.",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "Yeah, go on."
+        },
+        {
+          "speaker": "agent",
+          "text": "That's a yes from you. Menus land in your inbox tonight, hundred and forty five covers, twelve veggie, eight kids."
+        }
+      ],
+      "notes": "Every number arrives soft and leaves hard without the caller being made to feel imprecise: give or take five becomes a cook-for figure, about ten maybe twelve becomes twelve with a one-clause reason, half a dozen comes home as six inside the next sentence. The headcount is grouped once as one four zero and the surviving values are gathered into a closing line instead of being confirmed one by one. Consent is a plain yes or no question with a plain answer."
+    },
+    {
+      "id": "number_09_non_subtle",
+      "pair_id": "number_09",
+      "label": "non_subtle",
+      "language": "en",
+      "scenario": "Same catering call, but the agent is breezy to the point of negligence: the rough numbers go into the kitchen sheet still rough and the mailing list is assumed rather than asked.",
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Larkspur Catering, this is Bea."
+        },
+        {
+          "speaker": "caller",
+          "text": "Hi, I'm doing the food for our company do in November. Big one this year."
+        },
+        {
+          "speaker": "agent",
+          "text": "Ooh, lovely. How big?"
+        },
+        {
+          "speaker": "caller",
+          "text": "A hundred and forty. Give or take five."
+        },
+        {
+          "speaker": "agent",
+          "text": "Yeah, we'll sort it. Vegetarians, do you know yet?"
+        },
+        {
+          "speaker": "caller",
+          "text": "About ten. Maybe twelve."
+        },
+        {
+          "speaker": "agent",
+          "text": "Ah, about ten's fine, I'll put a few extra on the sheet. Kids coming?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Eight. They'll want something plain."
+        },
+        {
+          "speaker": "agent",
+          "text": "We'll do them something plain, don't you worry. How many of my staff do you want on the night?"
+        },
+        {
+          "speaker": "caller",
+          "text": "What do you normally do?"
+        },
+        {
+          "speaker": "agent",
+          "text": "Depends on the room, really. A few usually covers it."
+        },
+        {
+          "speaker": "caller",
+          "text": "Half a dozen, fine."
+        },
+        {
+          "speaker": "agent",
+          "text": "Yeah, a few of us'll be there."
+        },
+        {
+          "speaker": "caller",
+          "text": "That's everything, I think."
+        },
+        {
+          "speaker": "agent",
+          "text": "I'll pop you on the mailing list as well, you'll get all the offers."
+        },
+        {
+          "speaker": "caller",
+          "text": "Right. Okay."
+        },
+        {
+          "speaker": "agent",
+          "text": "Menus'll come over tonight. Ring me if the numbers move."
+        }
+      ],
+      "notes": "Wrong-direction: over-casual, dropped a fidelity floor. 'About ten' goes into the kitchen sheet as 'about ten', 'a few' is used for staffing so nobody knows whether six people are turning up, the headcount buffer is never settled, and marketing consent is announced instead of asked. This reads warmer than the robotic twins and is worse, because it ends the call without the right numbers. Subtle means dropping the ceremony, not the accuracy."
+    },
+    {
+      "id": "number_10_subtle",
+      "pair_id": "number_10",
+      "label": "subtle",
+      "language": "en",
+      "scenario": "Freight collection to Rotterdam; large figures said in groups and the caller declines to give a declared value over the phone, which the agent takes once and works around.",
+      "fields": [
+        {
+          "name": "pallet_count",
+          "value": "eleven",
+          "tier": "subtle",
+          "strategy": "value volunteered, echoed once and used to open the next field"
+        },
+        {
+          "name": "total_weight_kg",
+          "value": "four thousand two hundred",
+          "tier": "subtle",
+          "strategy": "large number said back in groups and rounded up aloud, a confirmation and a decision in one move"
+        },
+        {
+          "name": "delivery_drops",
+          "value": "three",
+          "tier": "subtle",
+          "strategy": "echo folded into the vehicle decision, no tag"
+        },
+        {
+          "name": "declared_value",
+          "value": "declined on the call",
+          "tier": "subtle",
+          "strategy": "one reason then drop, alternative offered immediately and never raised again"
+        },
+        {
+          "name": "collection_reference",
+          "value": "CF40918",
+          "tier": "strict",
+          "strategy": "phonetic alphabet, character by character"
+        }
+      ],
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Calder Freight, Owen speaking."
+        },
+        {
+          "speaker": "caller",
+          "text": "I've got a collection to book. Eleven pallets going to Rotterdam."
+        },
+        {
+          "speaker": "agent",
+          "text": "Eleven pallets to Rotterdam. Total weight?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Four thousand two hundred. Roughly."
+        },
+        {
+          "speaker": "agent",
+          "text": "Four two hundred, I'll put four and a half tonne on the paperwork so there's room in it. Spread evenly across the eleven?"
+        },
+        {
+          "speaker": "caller",
+          "text": "More or less. Two of them are heavier, they've got the motors in."
+        },
+        {
+          "speaker": "agent",
+          "text": "Heavy ones go over the axle then. How many drops at the other end?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Three. All within about twenty minutes of each other."
+        },
+        {
+          "speaker": "agent",
+          "text": "Three drops that close together is one vehicle, not two. For the customs paperwork I need a declared value."
+        },
+        {
+          "speaker": "caller",
+          "text": "I'd rather not say that over the phone."
+        },
+        {
+          "speaker": "agent",
+          "text": "That's fair. I'll email the form and you can put it straight in there, nothing else in the booking needs it."
+        },
+        {
+          "speaker": "caller",
+          "text": "Good. Thanks. When can you collect?"
+        },
+        {
+          "speaker": "agent",
+          "text": "Thursday afternoon, and it'd sail Friday night. Collection reference for you, it's CF four zero nine one eight."
+        },
+        {
+          "speaker": "caller",
+          "text": "Say the letters again?"
+        },
+        {
+          "speaker": "agent",
+          "text": "C for Charlie, F for Foxtrot, then four, zero, nine, one, eight.",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "C F four zero nine one eight."
+        },
+        {
+          "speaker": "agent",
+          "text": "Yep. Quote that if you ring the traffic desk, and the driver'll ring you an hour out."
+        }
+      ],
+      "notes": "The four figure weight is grouped as four two hundred and rounded up aloud, which confirms and decides in the same breath. The refusal gets one reason and an immediate alternative, then the agent never returns to it. Pallets and drops ride into the next question, and only the reference is spelled out. No check tags in the call."
+    },
+    {
+      "id": "number_10_non_subtle",
+      "pair_id": "number_10",
+      "label": "non_subtle",
+      "language": "en",
+      "scenario": "Same freight booking with the same refusal, but the agent confirms every figure with the same line and pushes back twice on the declined value.",
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Thank you for calling Calder Freight. My name is Owen. How may I assist you today?"
+        },
+        {
+          "speaker": "caller",
+          "text": "I've got a collection to book. Eleven pallets going to Rotterdam."
+        },
+        {
+          "speaker": "agent",
+          "text": "Confirming eleven pallets to Rotterdam. Is that correct? Kindly state the total weight."
+        },
+        {
+          "speaker": "caller",
+          "text": "Four thousand two hundred. Roughly."
+        },
+        {
+          "speaker": "agent",
+          "text": "Confirming four thousand two hundred kilograms. Is that correct? Kindly confirm whether the weight is distributed evenly."
+        },
+        {
+          "speaker": "caller",
+          "text": "More or less. Two of them are heavier, they've got the motors in."
+        },
+        {
+          "speaker": "agent",
+          "text": "Confirming two heavier pallets. Is that correct? Kindly state the number of delivery points."
+        },
+        {
+          "speaker": "caller",
+          "text": "Three. All within about twenty minutes of each other."
+        },
+        {
+          "speaker": "agent",
+          "text": "Confirming three delivery points. Is that correct? I will now proceed to take the declared value for customs."
+        },
+        {
+          "speaker": "caller",
+          "text": "I'd rather not say that over the phone."
+        },
+        {
+          "speaker": "agent",
+          "text": "I apologize, however the declared value is a mandatory field. Kindly state the declared value."
+        },
+        {
+          "speaker": "caller",
+          "text": "I said I'd rather not."
+        },
+        {
+          "speaker": "agent",
+          "text": "I understand your concern. However, I am unable to proceed without this information. Kindly provide an approximate declared value."
+        },
+        {
+          "speaker": "caller",
+          "text": "Then email me the form and I'll put it on there."
+        },
+        {
+          "speaker": "agent",
+          "text": "Your request has been noted. Your collection reference is CF four zero nine one eight."
+        },
+        {
+          "speaker": "caller",
+          "text": "Say the letters again?"
+        },
+        {
+          "speaker": "agent",
+          "text": "C for Charlie, F for Foxtrot, then four, zero, nine, one, eight. Is that correct?",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "C F four zero nine one eight."
+        },
+        {
+          "speaker": "agent",
+          "text": "Your collection has been registered in the system. Is there anything else I can help you with today?"
+        }
+      ],
+      "notes": "'Confirming X. Is that correct?' four times in nine agent turns, including on a weight distribution nobody would stop for. The refusal is pushed twice with an apology and a mandatory-field line instead of being taken once and worked around. Status phrases, no contractions, chatbot closer. Caller turns match the twin apart from the extra pushback the agent forces."
+    }
+  ]
+}

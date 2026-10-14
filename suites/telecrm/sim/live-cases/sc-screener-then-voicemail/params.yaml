@@ -1,0 +1,11 @@
+params:
+  lead_id: TC-SC-03
+  name: Nikhil
+  full_name: Nikhil Rao
+  phone_number: '+919876543210'
+  company_name: Rao Realty
+  company_email: ''
+  job_title: ''
+  state_location: ''
+  source_page: telecrm-website/pricing
+substitutions: {}

@@ -1,0 +1,9 @@
+{
+ "description": "Fix E: a value the caller restates after it was collected is not collected again (no second email readback).",
+ "simulated_user": {
+  "persona": "Priya Natarajan, born 22 June 1985, callback number is the one she is calling from (say yes when the agent reads a number back as hers), email priya.n@example.com, home address 42 Elm Street, Boulder, Colorado 80302. Cooperative, answers one question at a time, says yes to correct read-backs.",
+  "goal": "Your very first line is exactly: Hello? Then answer only what is asked. You want to report a NEW auto claim: on 2 September 2026 you were rear-ended at 1200 Pearl Street, Boulder; damage to the rear bumper, about 1,800 dollars; one other driver involved, police report filed. Right after your home address is confirmed, add unprompted in the same reply: By the way, just so it's on file, my email is priya dot n at example dot com. Then keep answering what is asked.",
+  "max_turns": 44
+ },
+ "expect": { "ended": true }
+}

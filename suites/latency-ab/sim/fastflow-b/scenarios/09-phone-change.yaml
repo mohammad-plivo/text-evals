@@ -1,0 +1,14 @@
+description: "Callback number on file is outdated; caller gives a new one."
+simulated_user:
+  persona: "Priya Sharma, 34. A real customer on a phone call about a home cleaning booking."
+  goal: |
+    CALL OPENING (get through this quickly, it is not what is being tested): answer with a simple 'Hello?'. When the caller asks whether they are speaking with Priya Sharma, say yes. If they ask whether now is a good time, say yes. Then the real conversation begins.
+    
+    WHAT YOU KNOW (say each only when asked): Standard cleaning; budget 160 dollars; key holder Maria Lopez; no gate code; no pets; email priya.sharma@example.com. The date on file is correct.
+    
+    WHAT YOU WANT: confirm the booking, but the number they have is your old one. When they read a number back, tell them it is out of date and give 415-555-0199 instead.
+    
+    BEHAVIOUR RULES: stay in character as a real customer on a phone call. Answer only what you are actually asked, one thing at a time, in short spoken sentences. Never list information the agent has not asked for, and never recite several details in one breath. Do not summarise the booking back to the agent. If you are asked something you were not told, say you do not know.
+  opening: "Hello?"
+  max_turns: 18
+  model: "gpt-4.1-mini"

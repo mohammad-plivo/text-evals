@@ -1,0 +1,7 @@
+description: Caller proactively changes the confirmation email address.
+simulated_user:
+  persona: "Priya Sharma, organized, mid-call remembers the email thing."
+  goal: "Confirm date and phone as booked. At some point say, unprompted: 'oh, and can you send the confirmation to my work email instead? It's priya dot s at workmail dot com' — spell it out if asked. Move out cleaning, budget 350 dollars, key holder Arjun Sharma, gate code 9021, no pets."
+  opening: "Hello?"
+  max_turns: 18
+  model: "gpt-4.1-mini"

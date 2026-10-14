@@ -1,0 +1,38 @@
+description: >-
+  Trick: a correction one turn LATE. The caller lets the appointment date stand when it is spoken -
+  stated inside the next question in BOTH arms, since date is a shaped type and the router passes
+  require_confirmation=False either way (collect_input.py:1005) - answers the question that came
+  with it, and only then says the date was wrong. The corrected date IS read back and does wait for
+  a yes: a correction re-enters with require_confirmation=True (collect_input.py:1012-1018). Arm-independent expectation: a correction
+  that arrives a turn late is still a correction: the date ends as the nineteenth, the part of the day
+  answered in between survives untouched, and the corrected date is spoken back before the call ends,
+  because a corrected record is never clean and never silent.
+  Judged by transcript:
+  1. change_earlier_value, or a second collect_date call, names new_appointment_date one turn after the
+     part of the day was collected;
+  2. the corrected date is said back to the caller in the agent's own next turn - in either arm;
+  3. preferred_time_of_day is not re-asked or re-confirmed because of the date correction;
+  4. the agent does not ask the caller to start the appointment details again.
+simulated_user:
+  persona: >-
+    Ruth Okafor, a Ridgeway Clinic patient moving an appointment. Brisk, and checks her calendar a
+    beat too late.
+  goal: >-
+    Answer one item at a time - your name Ruth Okafor, date of birth the ninth of June nineteen
+    sixty-two, then ask for the twelfth of March twenty twenty-eight. Let that date stand when you
+    hear it, and answer the next question - late morning suits you. Then, on your next turn, say the
+    date should be the nineteenth of March, not the twelfth, and hold to it. Then answer the rest once
+    each - the journey takes thirty-five minutes, no interpreter, reception should know you use a
+    wheelchair and need the side entrance, forty pounds is unpaid, mobile 07700 900123, email
+    ruth.okafor@example.com. Agree with correct read-backs and say yes when the appointment is
+    confirmed.
+  max_turns: 32
+world_state:
+  Update Lead Record:
+    outcome: success
+expect:
+  ended: true
+  stop_reason: end_conversation
+  variables:
+    new_appointment_date: "2028-03-19"
+    preferred_time_of_day: Late morning

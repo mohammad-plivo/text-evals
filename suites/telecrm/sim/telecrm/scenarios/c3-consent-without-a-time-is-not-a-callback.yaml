@@ -1,0 +1,21 @@
+description: '[pattern C] Willingness with no time is NOT a callback. Control for c2 — guards against
+  a fix that fires
+
+  Callback Time Provided on bare consent.
+
+  Replay of Hunter ''TeleCRM P1 - What Is TeleCRM Gets Definition'' (run a2e04e7d): caller lines verbatim
+  from the handoff on.'
+turns:
+- user: Yes, speaking.
+- user: Yes, go ahead.
+- user: Maybe — but first tell me, what is TeleCRM exactly? What does it do?
+- user: Okay, that makes sense. Yes, I did fill something on your site.
+- user: Three coordinators handle the calls.
+- user: I run a home-tuition network.
+- user: I want parent enquiries followed up on time.
+- user: Yes, I’m open to a follow-up.
+- user: I don't have that information.
+- user: I don't have that information.
+- user: No, that’s it.
+expect:
+  not_intent: Callback Time Provided

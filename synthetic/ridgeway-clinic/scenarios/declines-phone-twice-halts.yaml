@@ -1,0 +1,45 @@
+description: >-
+  Trick: a decline on the phone that holds. The mobile is REQUIRED and this caller refuses it twice,
+  so the step ends there: unusable turn number 1 is answered by decline_phone_number_capture, the
+  parent gets one _REQUIRED_RETRY ("say in one short sentence why it is needed" + re-open), and the
+  second refusal is _REQUIRED_HALT (collect_input.py:94-105, 1147-1156). The halt directive says to
+  follow the Task's failure route - hand back / human / the configured exit - and the only human
+  route this Task has is Transfer To Coordinator, which the caller accepts. That is now DECLARED
+  rather than hedged: the scenario used to leave the exit to an "if", while declaring no `ended`,
+  which the judge reads as "the call must end" (judge.py:263-266) with no exit that could end it.
+
+  Judged by transcript - prose, not a measurement (judge.py reads `expect:` only):
+
+  1. no collect_email call after the second refusal - the walk does not step over the halted field;
+
+  2. the agent never tells the caller the appointment is booked, moved or confirmed;
+
+  3. the reason the mobile is needed is given once, on the first refusal - the one short sentence
+     _REQUIRED_RETRY mandates, not a lecture and not a third ask;
+
+  4. the caller is asked before being put through, and the offer is not dressed up as the
+     appointment being done.
+simulated_user:
+  persona: >-
+    Ruth Okafor, a Ridgeway Clinic patient moving an appointment. Will not give a mobile number to
+    anyone over the phone, and does not change her mind.
+  goal: >-
+    Answer one item at a time - your name Ruth Okafor, date of birth the ninth of June nineteen
+    sixty-two, the nineteenth of March twenty twenty-eight, late morning, a journey of thirty-five
+    minutes, no interpreter, reception should know you use a wheelchair and need the side entrance,
+    forty pounds is unpaid. When asked for your mobile number, say you do not give it out over the
+    phone. If you are asked again, refuse again and say you will not give it however it is asked;
+    never give a number, and never give an email either. If you are offered a person to speak to,
+    say yes clearly.
+  max_turns: 26
+world_state:
+  Log Lead Transfer:
+    outcome: success
+expect:
+  ended: true
+  stop_reason: call_forward
+  intent: Transfer To Coordinator
+  not_intent: Reschedule Booked
+  variables_absent:
+    - mobile_number
+    - confirmation_email

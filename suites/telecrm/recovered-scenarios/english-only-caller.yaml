@@ -1,0 +1,30 @@
+description: >
+  The Hunter language criterion, reproduced locally.
+
+  Hunter run 4ee2410e (2026-08-13) failed 17 of 20 scenarios on one recurring judge
+  line: "The agent uses Hindi/Hinglish in multiple turns ... before the caller ever
+  speaks Hindi. The caller only speaks English throughout." Nine of those calls failed
+  on NOTHING ELSE — the judge's own summaries say "All other criteria are fully met".
+
+  Observed openers, to an English-only caller:
+      T1  Hello. I am नेहा from Tele CRM. क्या मैं मनोज से बात कर रही हूं?
+      T1  Hi, main Neha hotel is RM se. Kya main Amit se baat kar rahi hoon?
+
+  ROOT CAUSE (flags.pack_for_language): the console multi-select "en-IN,hi" was read as
+  an UNORDERED set meaning "this call code-switches", resolving to the hinglish pack,
+  whose language line said "Speak Hinglish." unconditionally. Selecting en-IN first had
+  no effect — the code said so outright: "Order is deliberately ignored".
+
+  This scenario holds the caller to English for the whole call, which is exactly what
+  those Hunter personas did. The measurement is not in `expect:` — a YAML matcher cannot
+  express "no Hindi anywhere before the caller uses it" — it is done over the report JSON
+  by scripts/tally_language.py, which scans every agent turn for Devanagari and for the
+  pack's own romanised ack particles.
+turns:
+  - user: "Hello?"
+  - user: "Yes, speaking."
+  - user: "Yes, I filled out the form on your website."
+  - user: "We have about twelve people in the sales team."
+  - user: "We run a travel agency."
+  - user: "Yes, tomorrow evening works for a follow-up call."
+  - user: "No, nothing else. Thanks."

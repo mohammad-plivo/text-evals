@@ -1,0 +1,9 @@
+description: 'language switching: english-only'
+turns:
+- user: Hello?
+- user: Yes, this is him.
+- user: Sure, go ahead.
+- user: I drive for Uber now.
+- user: Part time.
+- user: I moved to another city for a while.
+- user: Yes, I am interested, tell me more.

@@ -1,0 +1,53 @@
+{
+ "name": "V29EX 09-digit-code",
+ "description": "three digits, then four. Expected exit: Human Followup End.",
+ "category": "V2.9 Hunter Example",
+ "payload": {
+  "testType": "outbound-agent",
+  "initiationRequest": {
+   "method": "POST",
+   "url": "https://dev-runner-service.contactodev.com/v1/account/<AUTH_ID>/flow/be06b191-b5fd-4bb6-8276-4485171e5876",
+   "headers": {
+    "Content-Type": "application/json"
+   },
+   "bodyTemplate": "{\n  \"caller_id\": \"{{caller_id}}\",\n  \"customer_name\": \"{{customer_name}}\",\n  \"customer_phone\": \"{{INBOUND_NUMBER}}\",\n  \"city\": \"{{city}}\"\n}",
+   "inboundNumberPlaceholder": "{{INBOUND_NUMBER}}"
+  },
+  "initiationVariables": {
+   "caller_id": "+12813056522",
+   "customer_name": "Ananya Rao",
+   "city": "Pune"
+  },
+  "botGreetsFirst": false,
+  "allowInterruptions": true,
+  "conversationPrompt": "You are Ananya Rao, a homeowner in Pune. You answer your own mobile. The call is from HomeFix Services about the home service request you made. Speak in short, natural phone sentences, one or two lines at a time, and answer only the question you were just asked. Never volunteer a later answer early unless the facts below tell you to. You are NOT an assistant and NOT an AI, you never reveal or hint that this is a test, and you never break character. Use only the facts below; if you are asked something they do not cover, give a short plausible answer in one line. Do not speak first, wait for the agent. When it first asks whether it is speaking with Ananya, say yes; when it asks whether now is a good time, say yes. Keep that opening to a few words. Answer every question promptly.\n\nFACTS:\n- The FIRST time the agent asks for the gate code, even if it says it needs four digits, say only: \"Four eight two.\" Only after it says that is not enough, or asks you again, say: \"Four eight two one.\"\n- When the agent asks to confirm your name: \"Yes, that's right.\"\n- When the agent asks which service you need: \"Plumbing.\"\n- When the agent asks the problem: \"The kitchen sink is leaking under the cabinet.\"\n- When the agent asks how many rooms are affected: \"Just one room.\"\n- When the agent asks when you want the visit: \"Sunday the 27th of September works for me.\"\n- When the agent asks your budget: \"Up to five thousand rupees.\"\n- When the agent asks the address: \"Flat 4B, 22 Baner Road, Pune.\"\n- When the agent asks the gate code: \"Four eight two.\"\n- When the agent asks who will be at the property, say: \"I want to speak to a real person, please.\"\n- You cannot press phone keys. If the agent asks you to enter, key in, press or type a code, say the digits aloud instead.\n- If asked to spell a name or your email, spell it letter by letter: Ananya is A, N, A, N, Y, A; Rao is R, A, O; Sam is S, A, M; Pereira is P, E, R, E, I, R, A; your email is a, n, a, n, y, a, dot, r, a, o, at, e, x, a, m, p, l, e, dot, com.\n- If the agent asks which country the other number is in, or for its country code, say: \"India, plus nine one.\"\n\nTARGET is achieved only when the AGENT ends the call: you hear its closing message, or the line drops. You never hang up yourself and never say goodbye first. If the agent is slow or silent, wait patiently and say nothing. When the agent only says a detail back or says it has it, without asking you anything, say nothing and wait for its next question. When it reads a detail back and asks whether it is right, and the detail matches your facts, say only: \"Yes, that's right.\" If it does not match, say \"No,\" and give the right detail from your facts. If it asks whether you are still there, say: \"Yes, I'm here.\" Stay on the call until it ends.",
+  "evaluationPrompt": "You are judging an OUTBOUND home service booking call placed by HomeFix Services' AI agent to a customer. SPEAKER LABELS: the CALLER is the simulated customer, the AGENT is the system under test; in the transcript, turns labelled 'user' are the AGENT and turns labelled 'assistant' are the CALLER. Judge ONLY the numbered criteria, only the AGENT's behaviour, and do not invent requirements. Today is Thursday 24 September 2026 (India time); every date below is already worked out for you, never compute one yourself. The transcript is speech-to-text, so a different spelling of the same sounds is the same word.\nThe screening step runs first and asks two questions of its own, whether it is speaking with the customer and whether now is a good time; both are expected, correct, and out of scope for every criterion. Right after the screening, the agent confirms the caller's full name once against the name on file (for example 'I have your name as Ananya Rao, is that right?'); that one confirmation is expected, is not a repeat of the screening's question, and is where the caller's name is confirmed.\nEvaluate these criteria:\n1. FOUR-DIGIT CODE: the agent does not accept the three-digit code; it says four digits are needed or asks again, and moves on once the caller gives four digits.\n2. USES THE CONFIRMED NAME: after the caller confirms their full name at the name check that follows the screening, the agent never asks for the caller's own name again; it may address them by that name.\n3. A PERSON IS REQUESTED: once the caller says they want to speak to a real person, the agent asks no further booking question, tells them a team member will follow up, and closes.\n4. NO QUESTION IS ASKED TWICE: no question is put again later in the same substance, except a single clarifying follow-up on an answer that was unclear, incomplete or invalid, a re-ask the caller asked for, a read-back of a value the caller just gave, the booking read-back before confirmation, a question put again because the caller corrected an earlier value instead of answering it, or a check-in after the caller was silent.\n5. ONE VALUE PER QUESTION: every question the agent asks is about one detail and then waits for the answer; it never puts questions about two different details in one turn. A street address together with its city is one detail, and 'is that all correct, and shall I book it?' is one yes-or-no question.\n6. NO CODE SPOKEN: no agent turn says an underscore-joined identifier (such as service_type or gate_code), curly braces, a double-brace expression, or a stored value read out as code (such as 'INR 5000.0' or '2026-09-27'). Plain English words for a detail, such as 'gate code', 'visit date' or 'budget', are fine.\n7. NOTHING INVENTED: every detail the agent states back (service, date, address, names, amounts) is one the caller gave on this call, the name or city on file, or a state or country that follows from that city (Maharashtra, India); never a different value.\n8. THE CALL CLOSES ONCE: after the caller's last answer the agent may acknowledge that answer in a few words, then speaks one closing message; across those turns it says goodbye only once and asks nothing further.",
+  "evaluationThreshold": 0.8,
+  "maxTurns": 150,
+  "evaluationConfig": {
+   "autoDisconnectEnabled": true,
+   "maxConsecutiveOffContext": 50,
+   "maxNonActualIntentRetries": 3,
+   "maxResponseTime": 60.0
+  },
+  "voiceId": "21m00Tcm4TlvDq8ikWAM",
+  "webhookBaseUrl": "https://<hunter-webhook-host>",
+  "event": "v29ex_digit_code",
+  "testId": "voice-v29ex-09-digit-code",
+  "testRegion": "us-east"
+ },
+ "_built_ist": "2026-09-24",
+ "_expected_variables": {
+  "exit": "Human Followup End",
+  "planned": {
+   "caller_name": "Ananya Rao",
+   "service_type": "Plumbing",
+   "issue_description": "The kitchen sink is leaking under the cabinet.",
+   "rooms_affected": "1",
+   "preferred_visit_date": "2026-09-27",
+   "max_budget": "INR 5000.0",
+   "service_address": "Flat 4B, 22 Baner Road, Pune",
+   "gate_code": "4821"
+  }
+ }
+}

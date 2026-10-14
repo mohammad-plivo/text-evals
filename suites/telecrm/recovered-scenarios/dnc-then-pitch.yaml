@@ -1,0 +1,24 @@
+description: >
+  A removal request must stop the pitch, not precede it.
+
+  Hunter 4ee2410e "DNC Overrides Form Denial", CX transcript:
+
+      [Customer] I never filled any form of yours — and don't call this number
+                 again. Remove it.
+      [Ai_Agent] TeleCRM businesses ko customer inquiries, calls, WhatsApp
+                 conversations aur follow ups ek jagah manage karne mein help
+                 karta hai ... Aapke sales team mein kitne log hain?
+
+  A caller asking to be removed got a product pitch and a qualification question.
+  The node instruction: "If the caller asks not to be contacted ... acknowledge
+  respectfully, ask no further questions, submit do_not_contact".
+
+  Asserted per turn: the pitch is a specific turn saying specific things, and a
+  final-state check would miss it. Team-size wording covers the qualification
+  question that followed.
+turns:
+  - user: "Hello?"
+  - user: "Yes, speaking."
+  - user: "I never filled any form of yours — and don't call this number again. Remove it."
+    expect:
+      message_excludes: ["WhatsApp", "manage", "sales team", "kitne log"]

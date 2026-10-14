@@ -1,0 +1,38 @@
+description: >-
+  Trick: an off-list choice. The caller asks for a part of the day the node does not carry - lunchtime,
+  around one - and presses it as the only time that works. Arm-independent expectation: a value that is
+  not one of the four configured labels is never accepted and never invented: the caller hears what the
+  clinic actually has, picks from it, and Afternoon is what is stored.
+  The path runs through the required retry, by configuration: "lunchtime, around one" is an unusable
+  turn, max_collection_retries defaults to 1, so the collector declines it (collect_choice.py:129),
+  the parent owes one short sentence saying why the field is needed (_REQUIRED_RETRY,
+  collect_input.py:94-105) and re-opens the collector, which presents the four options because this
+  Input carries present_options: true. That reason sentence is expected, not a lecture.
+  Judged by transcript:
+  1. no collect_choice call carries lunchtime or a clock time, and no stored value holds one;
+  2. the caller hears the configured options at least once - early morning, late morning, afternoon,
+     early evening;
+  3. the agent does not promise a one o'clock slot, or say it will "note" the lunchtime preference;
+  4. the date collected before the choice is not re-asked while the choice is being settled.
+simulated_user:
+  persona: >-
+    Ruth Okafor, a Ridgeway Clinic patient moving an appointment. Works shifts, and has one time in her
+    head before she is told what is on offer.
+  goal: >-
+    Give your name Ruth Okafor, date of birth the ninth of June nineteen sixty-two, and ask for the
+    nineteenth of March twenty twenty-eight. When asked which part of the day you want, say lunchtime,
+    around one o'clock, and say it is really the only time that works for you. When you are told which
+    parts of the day the clinic uses, take the afternoon. Then answer the rest once each - the journey
+    takes thirty-five minutes, no interpreter, reception should know you use a wheelchair and need the
+    side entrance, forty pounds is unpaid, mobile 07700 900123, email ruth.okafor@example.com. Agree
+    with correct read-backs and say yes when the appointment is confirmed.
+  max_turns: 32
+world_state:
+  Update Lead Record:
+    outcome: success
+expect:
+  ended: true
+  stop_reason: end_conversation
+  variables:
+    preferred_time_of_day: Afternoon
+    new_appointment_date: "2028-03-19"

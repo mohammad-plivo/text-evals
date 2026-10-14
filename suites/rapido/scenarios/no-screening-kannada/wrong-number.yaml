@@ -1,0 +1,5 @@
+description: 'Kannada no-screening: wrong-number'
+turns:
+- user: ಹಲೋ?
+- user: ಯಾರು? ರಾಂಗ್ ನಂಬರ್.
+- user: ಸರಿ, ಬೈ.

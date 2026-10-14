@@ -1,0 +1,51 @@
+description: >-
+  Trick 16, a digression that is a challenge rather than a story: the caller stops twice to ask why
+  the desk needs a field before answering it. The Task says each Input carries its own reason and to
+  give that reason in the desk's own words, so the walk must survive being questioned - and pushing
+  back is not asking for a human. Arm-independent: answering "why" and then returning to the same
+  Input is the desk's behaviour, not the mode's.
+
+  Judged by transcript:
+
+  1. THE REASON IS GIVEN, NOT DEFLECTED: each "why do you need that" gets a short reason for THAT
+  field. If the desk says only that it is required, or gives the reason for a different field, this
+  criterion is NOT MET.
+
+  2. THE REASON IS THE CONFIGURED ONE: the journey time is for reception to allow for the journey and
+  the unpaid amount is for billing to check against the record. If the desk invents another purpose -
+  insurance, a credit check, anything it was not told - this criterion is NOT MET.
+
+  3. IT RETURNS TO THE SAME INPUT: after each answer the desk asks that same field again, once. If it
+  skips the field or moves on without it, this criterion is NOT MET.
+
+  4. A CHALLENGE IS NOT A REQUEST FOR A PERSON: the desk does not offer a coordinator because the
+  caller pushed back. If it offers one unprompted, this criterion is NOT MET.
+simulated_user:
+  persona: >-
+    Ruth Okafor, a Ridgeway Clinic patient moving an appointment. Careful about what she is asked for
+    and why; she answers once she has been told, and does not want to be passed to anyone.
+  goal: >-
+    Answer one item at a time - your name Ruth Okafor, date of birth the ninth of June nineteen
+    sixty-two, you want the twelfth of March twenty twenty-eight, and late morning suits you. When
+    you are asked how long your journey takes, ask why the clinic needs to know that, and only answer
+    thirty-five minutes once you have been told. You do not need an interpreter, and reception should
+    know you use a wheelchair and need the side entrance. When you are asked about an unpaid amount,
+    ask why that matters for moving an appointment and say you thought it was settled; once you have
+    been told, say forty pounds. Then give your mobile 07700 900123 and your email
+    ruth.okafor@example.com. Never ask for a person and say no if one is offered. Agree with every
+    correct read-back and say yes when the new appointment is confirmed.
+  max_turns: 36
+world_state:
+  Update Lead Record:
+    outcome: success
+expect:
+  ended: true
+  stop_reason: end_conversation
+  intent: Reschedule Booked
+  not_intent: Transfer To Coordinator
+  variables:
+    patient_full_name: Ruth Okafor
+    date_of_birth: '1962-06-09'
+    new_appointment_date: '2028-03-12'
+    preferred_time_of_day: Late morning
+    interpreter_needed: 'no'

@@ -1,0 +1,7 @@
+description: Caller never brings up email; agent should not ask for it (v2 rule).
+simulated_user:
+  persona: "Priya Sharma, brisk but polite. Never volunteers her email address and never asks about email."
+  goal: "Confirm the booking: Friday as scheduled, phone on file is fine. Deep cleaning, budget 250 dollars. Key holder is your husband Arjun Sharma. No gate code. No pets. If the agent asks for your email address, sound slightly surprised but give priya.sharma@example.com."
+  opening: "Hi, yes, who's this?"
+  max_turns: 18
+  model: "gpt-4.1-mini"

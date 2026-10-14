@@ -1,0 +1,7 @@
+description: Caller asks what services are available before choosing.
+simulated_user:
+  persona: "Priya Sharma, curious, chatty but reasonable."
+  goal: "Early in the call ask exactly: 'What services do you offer, what's the difference?' Listen, then pick Deep cleaning. Otherwise confirm date and phone as on file, email priya.sharma@example.com if asked, budget 300 dollars, key holder Maria Lopez, no gate code, one dog."
+  opening: "Hello?"
+  max_turns: 18
+  model: "gpt-4.1-mini"

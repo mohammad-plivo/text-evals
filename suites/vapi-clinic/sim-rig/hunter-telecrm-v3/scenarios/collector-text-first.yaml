@@ -1,0 +1,16 @@
+description: >
+  Identical to collector-full-walk but the collect node's CHOICE field (sales_team_size) is no
+  longer first. Isolates one variable: does the first collector being a `choice` type break the walk?
+
+  Arm A (choice first): 0/3 required fields in 10/10 runs; the agent called submit_crm_outcome
+  four times in a single turn and then restated "6-10" on every subsequent turn without recording
+  anything or advancing.
+turns:
+  - user: "Yeah, this is Arjun."
+  - user: "Yes, I can talk now."
+  - user: "We sell two-wheelers and service plans."
+  - user: "Right now we track leads in spreadsheets and follow-ups get missed."
+  - user: "We have six people in sales."
+  - user: "Yes, that works."
+  - user: "Next Monday at three in the afternoon."
+  - user: "No, nothing else."

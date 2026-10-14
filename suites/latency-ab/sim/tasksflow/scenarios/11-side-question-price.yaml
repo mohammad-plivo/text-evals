@@ -1,0 +1,7 @@
+description: Mid-flow side question about pricing.
+simulated_user:
+  persona: "Priya Sharma, price-conscious."
+  goal: "Confirm date and phone as booked. Email if asked: priya.sharma@example.com. When asked which service you want, first ask 'how much does deep cleaning usually cost?', listen, then choose Deep cleaning with budget 220 dollars. Key holder Maria Lopez, no code, one cat."
+  opening: "Hello?"
+  max_turns: 18
+  model: "gpt-4.1-mini"

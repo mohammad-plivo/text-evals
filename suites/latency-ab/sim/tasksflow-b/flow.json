@@ -1,0 +1,83 @@
+{
+  "instructions": "You are Jamie from SparkleClean. Confirm the details of the upcoming cleaning visit, collect anything missing, and answer basic questions about the service. Keep responses short and friendly.",
+  "agent_name": "Jamie",
+  "timezone": "America/Los_Angeles",
+  "intents": [
+    {
+      "intent_name": "Booking confirmed",
+      "intent_instructions": "The caller confirmed the cleaning visit booking details."
+    },
+    {
+      "intent_name": "Reschedule requested",
+      "intent_instructions": "The caller wants to move the visit to a different date or time entirely."
+    }
+  ],
+  "agent_tasks": {
+    "variables": [
+      {
+        "name": "service_date",
+        "type": "date",
+        "instructions": "The final agreed date and time of the cleaning visit.",
+        "params": {"accept_past": false, "accept_today": true, "require_time": true},
+        "confirm_if_known": true,
+        "known_value": "Friday, August 7 at 10:00 AM"
+      },
+      {
+        "name": "callback_number",
+        "type": "phone",
+        "instructions": "The best number to reach the customer on the day of the visit.",
+        "confirm_if_known": true,
+        "known_value": "+1 415 555 0134"
+      },
+      {
+        "name": "email",
+        "type": "email",
+        "instructions": "Email address for the booking confirmation."
+      },
+      {
+        "name": "service_type",
+        "type": "choice",
+        "instructions": "Which cleaning service the customer wants.",
+        "params": {"choices": ["Standard cleaning", "Deep cleaning", "Move out cleaning"], "present_options": true}
+      },
+      {
+        "name": "budget",
+        "type": "currency",
+        "instructions": "The customer's approximate budget for the visit."
+      },
+      {
+        "name": "key_holder_name",
+        "type": "name",
+        "instructions": "The name of the person who will let the crew in if the customer is away. This is a different person from the customer.",
+        "params": {"verify_spelling": true}
+      },
+      {
+        "name": "access_code",
+        "type": "text",
+        "instructions": "Building or gate code the crew should use, if any.",
+        "optional": true
+      },
+      {
+        "name": "has_pets",
+        "type": "boolean",
+        "instructions": "Whether there are pets at home the crew should know about."
+      }
+    ],
+    "extract_only": [
+      {
+        "name": "special_requests",
+        "instructions": "Focus areas, allergies, or anything else the crew should know, if the caller mentions it. Never ask for this."
+      }
+    ]
+  },
+  "output_state_config": {
+    "Booking confirmed": {
+      "type": "end_conversation",
+      "end_message": "Wonderful, you're all set for your cleaning visit. Thanks, and have a great day!"
+    },
+    "Reschedule requested": {
+      "type": "end_conversation",
+      "end_message": "No problem, our scheduling team will call you back to find a new time. Have a great day!"
+    }
+  }
+}

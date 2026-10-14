@@ -1,0 +1,57 @@
+description: >-
+  Trick 12, early exit mid-collection with NO matching intent: the caller has to go, refuses a
+  callback and does not ask for a person, so none of the five intents fits. Scripted because the
+  exit is carried by the exact wording - a goodbye that is not a booking, not a callback and not a
+  do-not-contact request. Arm-independent: the desk must not manufacture an ending it has no answers
+  for, in either arm.
+
+  `ended: false` is declared on every turn and on the walk. It is the assertion: no intent fits and
+  the node has no end tool of its own, so a CORRECT desk cannot end this call - and the judge reads
+  a bare expect with no `ended` as "the call must end". It also closes the opposite hole: a desk
+  that fires Callback Requested or Do Not Contact ends the call, skips the remaining turns and would
+  otherwise satisfy a lone `not_intent: Reschedule Booked`.
+
+  Judged by transcript - prose, not a measurement (judge.py reads `expect:` only):
+
+  1. NO FABRICATED BOOKING: the desk never says the appointment has been moved, rebooked or
+  confirmed. It has no date, no time of day and no mobile. If it says any of that, this criterion is
+  NOT MET.
+
+  2. THE CALLBACK IS OFFERED ONCE, NOT ASSUMED: the desk may offer to ring back, but once the caller
+  refuses it does not promise a call, a text or an email. If it promises any of those, this
+  criterion is NOT MET.
+
+  3. LETS THE CALLER GO: the desk closes in one short line rather than holding the caller for one
+  more question. If it asks another Input's question after "I've got to go", this criterion is NOT
+  MET.
+
+  4. NOTHING INVENTED FROM THE HALF-FINISHED RECORD: the desk states no value the caller did not
+  say. This one IS measured - judge rule 3b fails any walk whose agent speaks a campaign value for a
+  field listed below as absent when the caller never gave it.
+turns:
+- user: Hello?
+- user: Ruth Okafor.
+- user: Ninth of June nineteen sixty-two.
+- user: Sorry, I've got to go, there's someone at the door.
+  expect:
+    ended: false
+- user: No, don't ring me back. I'll call you myself when I can. Bye.
+  expect:
+    ended: false
+    not_intent: Callback Requested
+- user: Bye.
+  expect:
+    ended: false
+    not_intent: Do Not Contact
+expect:
+  ended: false
+  not_intent: Reschedule Booked
+  variables_absent:
+    - new_appointment_date
+    - preferred_time_of_day
+    - journey_time_minutes
+    - interpreter_needed
+    - access_notes
+    - outstanding_fee
+    - mobile_number
+    - confirmation_email

@@ -1,0 +1,108 @@
+{
+  "task": "address_live_review",
+  "tier": "subtle",
+  "description": "A live roleplay session with the reviewer (Mohammad, Plivo) acting as the caller and correcting the agent in real time. Source of truth for tone is the reviewer's own corrections, captured here as a matched subtle / non_subtle pair plus the two isolated tells he called out. Instruction prompt: cx-skills-subtle/tasks/address.py (CollectAddress, AUDIO_SPECIFIC + INSTRUCTIONS_TEMPLATE).",
+  "prompt_source": {
+    "file": "cx-skills-subtle/tasks/address.py",
+    "rules_honoured": [
+      "collection order: street address, unit number if applicable, locality, city, state/region, country",
+      "ask for a missing part, never invent one",
+      "do not confirm each part on the spot; ONE consolidated readback at the end",
+      "readback carries a short lead-in identifying the address before the value, and exactly ONE question mark",
+      "postal code read digit by digit, never as a cardinal number",
+      "inferred parent location (district, state, country) is read back as an assumption inside the readback so the caller can correct it",
+      "no greetings, no markdown, no bullet points, no unnecessary commentary"
+    ]
+  },
+  "style_rules": {
+    "subtle": [
+      "the ask itself is short; do not bolt extra framing onto the question",
+      "value-first is a MOVE, not a default. Two consecutive turns opening with the bare value is the same template twice",
+      "rotate the shape: value-first, filler-plus-value ('Mhmm, house 7'), and plain advance with no echo at all",
+      "one consolidated readback at the end carries the whole address; the postcode goes digit by digit inside it",
+      "let a later value silently settle an earlier ambiguity (the pincode resolved which Khed) instead of asking about it",
+      "the closing line names the action in plain terms and re-states nothing; once the readback has settled the address, saying any part of it again is a fourth confirmation nobody asked for"
+    ],
+    "non_subtle_tells": [
+      "framing packed into the question ('Where are we delivering it to, street address first?')",
+      "every agent turn opening with the value just given, so the echo reads as a parser acknowledging input",
+      "confirming each address line as it arrives instead of once at the end",
+      "reading the postcode as a cardinal number",
+      "a closing line built around the value rather than the action ('That's the washer-dryer going out to Khed'), which sneaks one more echo of the address in after the readback already closed it"
+    ]
+  },
+  "conversations": [
+    {
+      "id": "address_live_01_subtle",
+      "pair_id": "address_live_01",
+      "label": "subtle",
+      "language": "en",
+      "scenario": "Appliance retailer taking the delivery address for a washer-dryer. Caller gives locality before street, gives a house number as the unit, and the pincode arrives last and quietly settles which Khed it is.",
+      "fields": [
+        {"name": "locality", "value": "Station Road", "tier": "subtle", "strategy": "echo-and-advance, folded straight into the street-number question"},
+        {"name": "street_address", "value": "Plot 42", "tier": "subtle", "strategy": "value-first, no tag"},
+        {"name": "unit_number", "value": "House 7", "tier": "subtle", "strategy": "filler-plus-value, so the echo does not repeat the previous turn's shape"},
+        {"name": "postal_code", "value": "415709", "tier": "subtle", "strategy": "silent accept in the moment; deferred to the closing readback, where it goes digit by digit"},
+        {"name": "city_state_country", "value": "Khed, Ratnagiri, Maharashtra, India", "tier": "strict", "strategy": "inferred from the pincode and read back as an assumption inside the one consolidated readback"}
+      ],
+      "turns": [
+        {"speaker": "agent", "text": "Right, I've got the washer-dryer on the order. Can you share the street address first?"},
+        {"speaker": "caller", "text": "Station Road, Khed."},
+        {"speaker": "agent", "text": "Khed, and what's the building or plot number at Station Road?"},
+        {"speaker": "caller", "text": "It's plot 42."},
+        {"speaker": "agent", "text": "Plot 42. Is there a flat or floor number with it?"},
+        {"speaker": "caller", "text": "Yes, house 7."},
+        {"speaker": "agent", "text": "Mhmm, house 7. And the pincode there?"},
+        {"speaker": "caller", "text": "415709."},
+        {"speaker": "agent", "text": "Let me just make sure I've got the delivery address. Plot 42, house 7, Station Road, Khed in Ratnagiri, Maharashtra, pincode four one five seven zero nine. Is that right?", "tier": "strict"},
+        {"speaker": "caller", "text": "Yes, that's right."},
+        {"speaker": "agent", "text": "Lovely. We'll send the washer-dryer out and you'll get a text with the delivery slot."}
+      ],
+      "notes": "Four different shapes across four values: fold-into-next-question, bare value, filler-plus-value, and silent accept deferred to the readback. Nothing is confirmed on the spot. The one readback carries every part at once with the pincode digit by digit, and Ratnagiri and Maharashtra go in as an inference the caller can knock back. The close names the action plainly and does not re-state any part of the address, because the readback already settled it."
+    },
+    {
+      "id": "address_live_01_non_subtle",
+      "pair_id": "address_live_01",
+      "label": "non_subtle",
+      "language": "en",
+      "scenario": "Same call, same caller turns. The agent packs framing into its questions, opens every turn with the value just given, and confirms each address line as it arrives.",
+      "turns": [
+        {"speaker": "agent", "text": "Right, I've got the washer-dryer on the order. Where are we delivering it to, street address first?"},
+        {"speaker": "caller", "text": "Station Road, Khed."},
+        {"speaker": "agent", "text": "Khed, Station Road, is that correct? And what's the building or plot number?"},
+        {"speaker": "caller", "text": "It's plot 42."},
+        {"speaker": "agent", "text": "Plot 42. I have recorded plot 42. Is there a flat or floor number with it?"},
+        {"speaker": "caller", "text": "Yes, house 7."},
+        {"speaker": "agent", "text": "House 7, noted. And may I confirm the pincode for the delivery location?"},
+        {"speaker": "caller", "text": "415709."},
+        {"speaker": "agent", "text": "Just to confirm, the pincode is four hundred fifteen thousand seven hundred and nine, correct?"},
+        {"speaker": "caller", "text": "Yes, that's right."},
+        {"speaker": "agent", "text": "Thank you. Your delivery address has been saved. Is there anything else I can help you with today?"}
+      ],
+      "notes": "Three separate tells the reviewer flagged live. First, framing bolted onto the opening question. Second, every turn opens with the value just heard, so the echo stops being a human move and reads as a parser acknowledging input. Third, each line gets its own confirm round trip, which is exactly the per-line behaviour the address prompt forbids, and the postcode is read as a cardinal number instead of digit by digit."
+    }
+  ],
+  "reviewer_corrections": [
+    {
+      "seq": 1,
+      "agent_turn_rejected": "Right, I've got the washer-dryer on the order. Where are we delivering it to, street address first?",
+      "reviewer_comment": "No, it need not be so lengthy, you can be more subtle like 'Can you share the street address first?' after the first sentence",
+      "corrected_turn": "Right, I've got the washer-dryer on the order. Can you share the street address first?",
+      "rule_extracted": "The ask itself stays short. Context can sit in the sentence before it, but the question does not carry framing."
+    },
+    {
+      "seq": 2,
+      "agent_turn_rejected": "Plot 42. Is there a flat or floor number with it?",
+      "reviewer_comment": "It got repetitive, earlier also you said Khed first, now you said Plot 42 first, you could have said something like Okay Plot 42, rest is fine, instead of Okay you could use other human fillers like Mhmm, etc",
+      "corrected_turn": "Mhmm, house 7. And the pincode there?",
+      "rule_extracted": "Value-first is one move among several, not the default. Two agent turns in a row opening with the bare value is the same template twice. Break it with a filler before the value, and rotate fillers rather than reusing 'Okay'."
+    },
+    {
+      "seq": 3,
+      "agent_turn_rejected": "Lovely. That's the washer-dryer going out to Khed, and you'll get a text with the delivery slot.",
+      "reviewer_comment": "The confirmation was correct but the closing note wasn't. 'That's the washer-dryer going out to khed' is AI and non subtle, a human would say something like 'We'll send out the dishwasher and you will get a text with the delivery slot'",
+      "corrected_turn": "Lovely. We'll send the washer-dryer out and you'll get a text with the delivery slot.",
+      "rule_extracted": "After the readback, the close states the action, not the record. 'That's X going out to Y' is a summary of stored data spoken back at the caller. A person says what they are going to do, in first person, and lets the address stay settled."
+    }
+  ]
+}

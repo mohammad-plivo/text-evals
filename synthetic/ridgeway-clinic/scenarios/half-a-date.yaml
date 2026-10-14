@@ -1,0 +1,53 @@
+description: >-
+  Trick: a partial value. The caller half-says the new appointment date and her line drops out, then
+  completes it a turn later. Arm-independent expectation: nothing is spoken or stored for a month or
+  a year the caller never said, only the missing part is asked for, and the completed date lands
+  once as 2028-03-12.
+
+  Scripted, and the scenario is now SHORT on purpose. Its whole trick is criterion 1, and as a
+  simulated walk that criterion was prose: a collector that resolves "the twelfth of" to the next
+  twelfth, states it, is corrected by the persona and ends on 2028-03-12 satisfied the value pin
+  while having invented a month. The half-date turn now carries the assertion itself, as
+  `message_excludes` + `variables_absent`, which the engine and the judge both evaluate.
+
+  March and 2028 are deliberately NOT in the excludes list: they are what the caller is about to
+  say, so they cannot distinguish a guess from a correct wait. June is left out too - it is the
+  month of the date of birth already on record, so naming it is not proof of a guess, and "may"
+  is an ordinary English word. Those gaps are accepted; everything else a plausible guess would
+  reach for is banned.
+
+  Judged by transcript - prose, not a measurement, except criterion 1 which IS encoded below:
+
+  1. no agent turn names a month or a year before the caller has said it;
+  2. the question after the half-date asks for the missing part alone, not the whole date again;
+  3. the completed date is spoken back exactly once, in the arm's own shape - the prepared state
+     line, or the collector's own read-back question;
+  4. no earlier field is re-asked because of it.
+turns:
+- user: Hello?
+- user: Ruth Okafor.
+- user: Yes, that's right.
+- user: Ninth of June nineteen sixty-two.
+- user: The twelfth of
+  expect:
+    message_excludes:
+      - january
+      - february
+      - april
+      - july
+      - august
+      - september
+      - october
+      - november
+      - december
+      - "2026"
+      - "2027"
+      - "2029"
+    variables_absent:
+      - new_appointment_date
+- user: March, twenty twenty-eight.
+expect:
+  ended: false
+  variables:
+    date_of_birth: "1962-06-09"
+    new_appointment_date: "2028-03-12"

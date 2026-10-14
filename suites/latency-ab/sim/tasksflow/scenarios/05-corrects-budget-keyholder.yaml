@@ -1,0 +1,7 @@
+description: Caller corrects budget and key holder mid-call.
+simulated_user:
+  persona: "Priya Sharma, decisive but changes her mind twice."
+  goal: "Confirm date and phone as booked. Email if asked: priya.sharma@example.com. Move out cleaning. First say budget is 200 dollars; two or three turns later say 'actually, let's make the budget 250, not 200'. First say the key holder is Rob; when the agent moves on, interrupt with 'sorry, put down Robert Okafor as the key holder, not just Rob' and spell Okafor if asked: O-K-A-F-O-R. No gate code, no pets."
+  opening: "Hello?"
+  max_turns: 20
+  model: "gpt-4.1-mini"

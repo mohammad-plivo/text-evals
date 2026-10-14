@@ -1,0 +1,25 @@
+description: '[pattern C] A COMPLETE callback must be captured and routed through Callback Time Provided.
+
+  Replay of Hunter ''TeleCRM P0 - Never Filled Form Useful Proceeds'' (run a2e04e7d): caller lines verbatim
+  from the handoff on.'
+turns:
+- user: Yes, speaking.
+- user: Yes, go ahead.
+- user: No, I never filled any form on any TeleCRM website. First I'm hearing of it.
+- user: Actually, that does sound useful. We keep losing track of follow-ups all the time.
+- user: Six people handle sales.
+- user: Hmm, okay.
+- user: We run a travel agency, tour packages mostly.
+- user: Mainly keeping every enquiry and follow-up in one place. Right now it's all on WhatsApp and one
+    messy sheet. [neutral] Also, could you call me back tomorrow at four in the afternoon to go over this
+    properly?
+- user: Hmm, okay.
+- user: Tomorrow at four in the afternoon.
+- user: Tomorrow at four in the afternoon.
+- user: Tomorrow at four in the afternoon.
+- user: That's all from me. Thanks, bye.
+- user: I don't have that information.
+- user: I don't have that information.
+- user: No, nothing else.
+expect:
+  intent: Callback Time Provided

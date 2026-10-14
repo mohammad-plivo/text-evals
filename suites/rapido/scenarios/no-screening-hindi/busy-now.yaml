@@ -1,0 +1,7 @@
+description: 'no-screening opening: busy-now'
+turns:
+- user: Hello?
+- user: Yes, speaking.
+- user: No, I am busy right now, I am driving.
+- user: Call me tomorrow at 6 in the evening.
+- user: Okay, bye.

@@ -1,0 +1,2209 @@
+{
+  "task": "datetime",
+  "tier": "subtle",
+  "description": "CollectDateTime over short phone calls: appointment slots, delivery windows, callback times, travel dates, deadlines and availability windows. Dates and times are recoverable values, so the confirmation is usually the resolution itself, saying the relative date out loud as a real date, rather than a read-back gate. A date and the time it lands at count as one value and are collected in one beat.",
+  "style_rules": {
+    "subtle": [
+      "Resolve a relative date aloud to the actual date, and let that resolution be the confirmation. No right? after it.",
+      "Settle an AM or PM ambiguity in one beat: Eight, morning or evening?",
+      "One value, one beat: never confirm the date and then separately confirm the time.",
+      "Name a time zone once, at the moment it matters, then use your end or your time.",
+      "Narrow a window by offering, not interrogating: Five thirty, or we keep it overnight.",
+      "Rotate strategies field to field: echo-and-advance, bare value-as-question, silent accept, closing summary, one-beat correction.",
+      "An agent turn's first word repeats at most twice in a call, never in consecutive agent turns.",
+      "Each check tag appears at most twice, and at least two fields carry no tag at all.",
+      "Contractions throughout, short clauses, no em dashes, no praise, no status phrases, no I heard, no chatbot closer."
+    ],
+    "non_subtle_tells": [
+      "One template on every field: Just to confirm X, is that correct?",
+      "Double gating: is that right? followed by and shall I book that?",
+      "The date confirmed, then the time confirmed separately, as two round trips.",
+      "Restating the full time zone name on every turn, ante meridiem and post meridiem for ordinary clock times.",
+      "The same canned ack every turn: Got it, Got it, Got it.",
+      "Praise on trivial answers, status phrases like has been recorded, kindly and I will now proceed, and a chatbot closer."
+    ]
+  },
+  "conversations": [
+    {
+      "id": "datetime_01_subtle",
+      "pair_id": "datetime_01",
+      "label": "subtle",
+      "language": "en",
+      "scenario": "Dental practice books a hygienist slot; the caller gives a relative date then reschedules the day mid-call, and a reminder-call time is agreed.",
+      "fields": [
+        {
+          "name": "appointment_slot",
+          "value": "Wednesday 19 August, 10:30",
+          "tier": "subtle",
+          "strategy": "relative date resolved aloud to the 18th, then a one-beat correction that carries the time with it"
+        },
+        {
+          "name": "hygienist",
+          "value": "Nadia",
+          "tier": "subtle",
+          "strategy": "bare value-as-question with the only yeah tag"
+        },
+        {
+          "name": "date_of_birth",
+          "value": "14 March 1988",
+          "tier": "strict",
+          "strategy": "full readback, month as a word"
+        },
+        {
+          "name": "reminder_call_time",
+          "value": "18:00",
+          "tier": "subtle",
+          "strategy": "loose after six narrowed by offering two times, no confirm round trip"
+        }
+      ],
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Northgate Dental, this is Ravi. What can I get sorted for you?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Hi, I need to book a hygienist appointment. Ideally the Tuesday after next."
+        },
+        {
+          "speaker": "agent",
+          "text": "Tuesday after next, so the 18th of August. Morning or afternoon suits you better?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Morning. Half ten if you've got it."
+        },
+        {
+          "speaker": "agent",
+          "text": "Ten thirty's free with Nadia. You've been to Nadia before, yeah?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Yeah, Nadia's fine. Actually, hold on, Tuesday's no good, I've got a thing at work. Can we do the Wednesday?"
+        },
+        {
+          "speaker": "agent",
+          "text": "Wednesday the 19th, same ten thirty?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Ten thirty Wednesday, yeah, that's better."
+        },
+        {
+          "speaker": "agent",
+          "text": "Right. Date of birth, so I'm in the correct file?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Fourteenth of March, eighty-eight."
+        },
+        {
+          "speaker": "agent",
+          "text": "The fourteenth of March, nineteen eighty-eight.",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "That's it."
+        },
+        {
+          "speaker": "agent",
+          "text": "We ring a reminder the day before. What time's good?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Evening, after six."
+        },
+        {
+          "speaker": "agent",
+          "text": "Six or seven, take your pick, we don't ring past eight."
+        },
+        {
+          "speaker": "caller",
+          "text": "Six."
+        },
+        {
+          "speaker": "agent",
+          "text": "So that's Wednesday the 19th at ten thirty with Nadia, and a ring on the Tuesday at six."
+        },
+        {
+          "speaker": "caller",
+          "text": "Lovely, thanks."
+        },
+        {
+          "speaker": "agent",
+          "text": "See you on the 19th."
+        }
+      ],
+      "notes": "Four values, four different moves. The relative date is resolved aloud to the 18th and that resolution is the confirmation. The reschedule is one beat and carries the time with it, so date and time are never gated separately. Nadia takes the single yeah tag, the reminder time is settled by offering six or seven rather than asking, and the DOB stays strict."
+    },
+    {
+      "id": "datetime_01_non_subtle",
+      "pair_id": "datetime_01",
+      "label": "non_subtle",
+      "language": "en",
+      "scenario": "Same dental booking with the same reschedule, but one confirmation template runs over every field and each value is gated twice.",
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Thank you for calling Northgate Dental. My name is Ravi. How may I assist you today?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Hi, I need to book a hygienist appointment. Ideally the Tuesday after next."
+        },
+        {
+          "speaker": "agent",
+          "text": "Just to confirm, you have requested Tuesday the 18th of August. Is that correct?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Morning. Half ten if you've got it."
+        },
+        {
+          "speaker": "agent",
+          "text": "I heard ten thirty in the morning. Is that correct? And shall I hold that slot for you?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Yeah, Nadia's fine. Actually, hold on, Tuesday's no good, I've got a thing at work. Can we do the Wednesday?"
+        },
+        {
+          "speaker": "agent",
+          "text": "Got it. Just to confirm, you have selected Wednesday the 19th of August. Is that correct?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Ten thirty Wednesday, yeah, that's better."
+        },
+        {
+          "speaker": "agent",
+          "text": "Got it. Just to confirm, the time you have requested is ten thirty. Is that correct? Kindly provide your date of birth."
+        },
+        {
+          "speaker": "caller",
+          "text": "Fourteenth of March, eighty-eight."
+        },
+        {
+          "speaker": "agent",
+          "text": "The fourteenth of March, nineteen eighty-eight.",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "That's it."
+        },
+        {
+          "speaker": "agent",
+          "text": "Excellent. We provide a reminder call on the preceding day. Kindly indicate your preferred time."
+        },
+        {
+          "speaker": "caller",
+          "text": "Evening, after six."
+        },
+        {
+          "speaker": "agent",
+          "text": "I heard after six. Is that correct? And shall I set the reminder call for six o'clock?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Six."
+        },
+        {
+          "speaker": "agent",
+          "text": "Your appointment has been recorded for Wednesday the 19th of August at ten thirty."
+        },
+        {
+          "speaker": "caller",
+          "text": "Lovely, thanks."
+        },
+        {
+          "speaker": "agent",
+          "text": "Is there anything else I can help you with today?"
+        }
+      ],
+      "notes": "Four fields, one template: Just to confirm plus Is that correct on every one, two of them double gated with shall I. Two Got it acks, two I heard, kindly twice, praise on a trivial answer, has been recorded, and the closer. The date and the time are two separate round trips where the good twin does both in one beat."
+    },
+    {
+      "id": "datetime_02_subtle",
+      "pair_id": "datetime_02",
+      "label": "subtle",
+      "language": "en",
+      "scenario": "Airline change desk; the caller names a departure date that has already gone by, and an evening callback time is agreed.",
+      "fields": [
+        {
+          "name": "booking_reference",
+          "value": "KR92LM",
+          "tier": "strict",
+          "strategy": "value once then character by character with phonetics"
+        },
+        {
+          "name": "outbound_slot",
+          "value": "Friday 12 September, 09:50",
+          "tier": "subtle",
+          "strategy": "past date caught in one beat, month settled, then date and time land together"
+        },
+        {
+          "name": "return_date",
+          "value": "26 September",
+          "tier": "subtle",
+          "strategy": "bare value-as-question carrying the flight with it"
+        },
+        {
+          "name": "callback_time",
+          "value": "19:30 tonight",
+          "tier": "subtle",
+          "strategy": "open window narrowed by a two word question, then folded into the closing summary"
+        }
+      ],
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Cheshire Air changes, Danny speaking. What's the booking?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Hiya. I need to move a flight, the reference is K R nine two L M."
+        },
+        {
+          "speaker": "agent",
+          "text": "K R nine two L M. K for kilo, R for romeo, nine, two, L for lima, M for mike.",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "That's right. Manchester to Dublin, the fifth of September."
+        },
+        {
+          "speaker": "agent",
+          "text": "That's the seven forty out. Where do you want it?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Can we push it to the fifth of August?"
+        },
+        {
+          "speaker": "agent",
+          "text": "The fifth of August is behind us, we're on the twenty-ninth today. August or September you're after?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Sorry, yeah, September. I meant the twelfth."
+        },
+        {
+          "speaker": "agent",
+          "text": "Friday the twelfth. Morning flights or later on?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Morning, before noon if there's anything."
+        },
+        {
+          "speaker": "agent",
+          "text": "There's nine fifty and there's eleven twenty five."
+        },
+        {
+          "speaker": "caller",
+          "text": "Nine fifty."
+        },
+        {
+          "speaker": "agent",
+          "text": "Nine fifty out of Manchester. Your return's sitting on the nineteenth."
+        },
+        {
+          "speaker": "caller",
+          "text": "Move that too. The twenty-sixth."
+        },
+        {
+          "speaker": "agent",
+          "text": "Twenty-sixth, same evening flight back?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Same one, yeah. Can someone ring me to take payment?"
+        },
+        {
+          "speaker": "agent",
+          "text": "What time suits?"
+        },
+        {
+          "speaker": "caller",
+          "text": "After seven, I'm driving till then. Half seven's fine."
+        },
+        {
+          "speaker": "agent",
+          "text": "Half seven tonight, then. Twelfth out at nine fifty, twenty-sixth back."
+        },
+        {
+          "speaker": "caller",
+          "text": "Lovely, thanks Danny."
+        },
+        {
+          "speaker": "agent",
+          "text": "Talk to you tonight."
+        }
+      ],
+      "notes": "The dead date is caught with a two option question instead of a lecture, and the month is settled in the same breath. Rotation across four values: strict phonetic reference, offer then silent accept on the departure time so the date and time never split, bare value-as-question on the return, and the callback deferred into the closing summary. No check tags at all."
+    },
+    {
+      "id": "datetime_02_non_subtle",
+      "pair_id": "datetime_02",
+      "label": "non_subtle",
+      "language": "en",
+      "scenario": "Same flight change with the same past-date slip, but every value is read back with one template and gated twice.",
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Thank you for calling Cheshire Air. My name is Danny. May I have your booking reference?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Hiya. I need to move a flight, the reference is K R nine two L M."
+        },
+        {
+          "speaker": "agent",
+          "text": "K R nine two L M. K for kilo, R for romeo, nine, two, L for lima, M for mike.",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "That's right. Manchester to Dublin, the fifth of September."
+        },
+        {
+          "speaker": "agent",
+          "text": "Just to confirm, you have indicated Manchester to Dublin on the fifth of September. Is that correct?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Can we push it to the fifth of August?"
+        },
+        {
+          "speaker": "agent",
+          "text": "I heard the fifth of August. Is that correct? I must inform you that this date has already passed."
+        },
+        {
+          "speaker": "caller",
+          "text": "Sorry, yeah, September. I meant the twelfth."
+        },
+        {
+          "speaker": "agent",
+          "text": "Got it. Just to confirm, you have requested the twelfth of September. Is that correct? And shall I proceed to the time?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Morning, before noon if there's anything."
+        },
+        {
+          "speaker": "agent",
+          "text": "Certainly. I am able to offer nine fifty or eleven twenty five. Kindly confirm your preference."
+        },
+        {
+          "speaker": "caller",
+          "text": "Nine fifty."
+        },
+        {
+          "speaker": "agent",
+          "text": "Just to confirm, you have selected nine fifty. Is that correct? And shall I apply that to your booking?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Move that too. The twenty-sixth."
+        },
+        {
+          "speaker": "agent",
+          "text": "Got it. Just to confirm, the return date you have provided is the twenty-sixth of September. Is that correct?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Same one, yeah. Can someone ring me to take payment?"
+        },
+        {
+          "speaker": "agent",
+          "text": "Your return has been recorded. Kindly indicate your preferred callback time."
+        },
+        {
+          "speaker": "caller",
+          "text": "After seven, I'm driving till then. Half seven's fine."
+        },
+        {
+          "speaker": "agent",
+          "text": "I heard after seven. Just to confirm, seven thirty this evening. Is that correct? And shall I schedule the callback?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Lovely, thanks Danny."
+        },
+        {
+          "speaker": "agent",
+          "text": "Your changes have been recorded. Is there anything else I can help you with today?"
+        }
+      ],
+      "notes": "Five Just to confirm plus Is that correct across four values, three of them double gated with shall I. Two Got it acks, two I heard, has been recorded twice, kindly twice, and the closer. The past-date catch arrives as a formal notification instead of a one-beat question."
+    },
+    {
+      "id": "datetime_03_subtle",
+      "pair_id": "datetime_03",
+      "label": "subtle",
+      "language": "en",
+      "scenario": "Broadband provider moves an engineer visit; the caller says only eight, so the morning ambiguity is settled in one beat, and a backup day is added.",
+      "fields": [
+        {
+          "name": "job_reference",
+          "value": "J489T",
+          "tier": "strict",
+          "strategy": "value once then character by character"
+        },
+        {
+          "name": "visit_slot",
+          "value": "Monday 7 September, 08:00 to 13:00",
+          "tier": "subtle",
+          "strategy": "bare day resolved aloud to a dated Monday, then a one-beat morning or evening question"
+        },
+        {
+          "name": "backup_date",
+          "value": "Thursday 10 September",
+          "tier": "subtle",
+          "strategy": "value first with the only yeah tag, window inherited rather than re-asked"
+        },
+        {
+          "name": "mobile_number",
+          "value": "07700 900653",
+          "tier": "strict",
+          "strategy": "digit by digit in groups"
+        }
+      ],
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Riverline broadband, Sam here. What's up?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Hiya. I've got an engineer coming and I need to shift it."
+        },
+        {
+          "speaker": "agent",
+          "text": "Have you got the job reference?"
+        },
+        {
+          "speaker": "caller",
+          "text": "It's J four eight nine T. I think."
+        },
+        {
+          "speaker": "agent",
+          "text": "J four eight nine T. J for juliet, four, eight, nine, T for tango.",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "That's the one."
+        },
+        {
+          "speaker": "agent",
+          "text": "That's the visit on Wednesday the 2nd. What day works instead?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Monday if you can do it."
+        },
+        {
+          "speaker": "agent",
+          "text": "Monday the 7th of September. We run two windows, eight till one, or one till six."
+        },
+        {
+          "speaker": "caller",
+          "text": "Eight."
+        },
+        {
+          "speaker": "agent",
+          "text": "Eight, morning or evening?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Morning, sorry."
+        },
+        {
+          "speaker": "agent",
+          "text": "Morning window then, eight till one, and he can land any point inside it."
+        },
+        {
+          "speaker": "caller",
+          "text": "Right. And if Monday goes wrong?"
+        },
+        {
+          "speaker": "agent",
+          "text": "Thursday the 10th as a spare, same window, yeah?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Yeah, same. Do you need my number?"
+        },
+        {
+          "speaker": "agent",
+          "text": "Best one for him to ring on the day."
+        },
+        {
+          "speaker": "caller",
+          "text": "Oh seven nine four one, double two, oh six five three."
+        },
+        {
+          "speaker": "agent",
+          "text": "Zero seven seven zero zero, nine zero, zero six five three.",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "That's it. Cheers Sam."
+        },
+        {
+          "speaker": "agent",
+          "text": "Monday the 7th, eight till one. Take care."
+        }
+      ],
+      "notes": "The ambiguity costs three words, not a gate, and the resolved window is echoed once then never revisited. Monday and Thursday both get their dates the first time the agent says them, so no relative day floats. Four values, four moves: strict reference, dated echo plus one-beat disambiguation, a yeah tag on the backup that inherits the window, strict digits on the mobile."
+    },
+    {
+      "id": "datetime_03_non_subtle",
+      "pair_id": "datetime_03",
+      "label": "non_subtle",
+      "language": "en",
+      "scenario": "Same engineer visit change, but the agent is so casual it leaves eight ambiguous, never names the actual dates, and skips both character readbacks.",
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Riverline, Sam. Go ahead."
+        },
+        {
+          "speaker": "caller",
+          "text": "Hiya. I've got an engineer coming and I need to shift it."
+        },
+        {
+          "speaker": "agent",
+          "text": "No worries. Reference?"
+        },
+        {
+          "speaker": "caller",
+          "text": "It's J four eight nine T. I think."
+        },
+        {
+          "speaker": "agent",
+          "text": "J four eight nine T, cool, found you."
+        },
+        {
+          "speaker": "caller",
+          "text": "That's the one."
+        },
+        {
+          "speaker": "agent",
+          "text": "Yeah so you're down for Wednesday. What day do you fancy instead?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Monday if you can do it."
+        },
+        {
+          "speaker": "agent",
+          "text": "Monday's fine, loads of space. What time?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Eight."
+        },
+        {
+          "speaker": "agent",
+          "text": "Eight it is. Done."
+        },
+        {
+          "speaker": "caller",
+          "text": "Morning, sorry."
+        },
+        {
+          "speaker": "agent",
+          "text": "All good, it's in."
+        },
+        {
+          "speaker": "caller",
+          "text": "Right. And if Monday goes wrong?"
+        },
+        {
+          "speaker": "agent",
+          "text": "I'll stick Thursday down as a spare, easy."
+        },
+        {
+          "speaker": "caller",
+          "text": "Yeah, same. Do you need my number?"
+        },
+        {
+          "speaker": "agent",
+          "text": "Go on then."
+        },
+        {
+          "speaker": "caller",
+          "text": "Oh seven nine four one, double two, oh six five three."
+        },
+        {
+          "speaker": "agent",
+          "text": "Yep, got that."
+        },
+        {
+          "speaker": "caller",
+          "text": "That's it. Cheers Sam."
+        },
+        {
+          "speaker": "agent",
+          "text": "Laters."
+        }
+      ],
+      "notes": "wrong-direction: over-casual, dropped a fidelity floor. Nothing here sounds robotic, and that is the trap. Eight is never disambiguated even after the caller says morning, Monday and Thursday are never resolved to real dates, the job reference is not spelled character by character, and the mobile number is not read back at all. Subtle is not the same as sloppy."
+    },
+    {
+      "id": "datetime_04_subtle",
+      "pair_id": "datetime_04",
+      "label": "subtle",
+      "language": "en",
+      "scenario": "Recruiter books a second-stage interview with a candidate in Bengaluru while the panel sits in London; the time zone is named once and both clocks go on the invite.",
+      "fields": [
+        {
+          "name": "recording_consent",
+          "value": "yes",
+          "tier": "strict",
+          "strategy": "explicit ask and explicit answer"
+        },
+        {
+          "name": "interview_slot",
+          "value": "Thursday 13 August, 14:00 UK and 18:30 IST",
+          "tier": "subtle",
+          "strategy": "date and both clock readings held as one value, zone named once"
+        },
+        {
+          "name": "final_round_date",
+          "value": "Tuesday 25 August, 11:00 UK",
+          "tier": "subtle",
+          "strategy": "week narrowed to a day, morning sharpened to a time by offering"
+        },
+        {
+          "name": "earliest_start_date",
+          "value": "Thursday 1 October",
+          "tier": "subtle",
+          "strategy": "weekday added by the agent, and that addition is the confirmation"
+        },
+        {
+          "name": "email",
+          "value": "anjali.r@example.com",
+          "tier": "strict",
+          "strategy": "letter by letter, symbols named"
+        }
+      ],
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Hi, is that Anjali? It's Marcus from Halden Recruitment."
+        },
+        {
+          "speaker": "caller",
+          "text": "Yes, hi Marcus."
+        },
+        {
+          "speaker": "agent",
+          "text": "Quick one about the second stage. Before we get into it, we record these calls for our notes. Are you okay with that?",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "Yes, that's fine."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thanks. The panel's free Thursday the 13th at two in the afternoon, UK time."
+        },
+        {
+          "speaker": "caller",
+          "text": "Two your time. What's that for me? I'm in Bengaluru."
+        },
+        {
+          "speaker": "agent",
+          "text": "Six thirty in the evening your end. Does that sit alright?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Six thirty's alright, yeah. Bit tight after work but fine."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thursday the 13th then, six thirty your end, and both times go on the invite."
+        },
+        {
+          "speaker": "caller",
+          "text": "Please do, I always get that wrong. How many rounds after this?"
+        },
+        {
+          "speaker": "agent",
+          "text": "One more, with the director, week of the 24th. Tuesday the 25th is when he's around."
+        },
+        {
+          "speaker": "caller",
+          "text": "Tuesday morning if possible."
+        },
+        {
+          "speaker": "agent",
+          "text": "Morning for the director, I'll ask for eleven, half three where you are."
+        },
+        {
+          "speaker": "caller",
+          "text": "That works."
+        },
+        {
+          "speaker": "agent",
+          "text": "If they moved fast, when could you start?"
+        },
+        {
+          "speaker": "caller",
+          "text": "First of October, realistically."
+        },
+        {
+          "speaker": "agent",
+          "text": "The first of October, which is a Thursday. I'll put that in front of them."
+        },
+        {
+          "speaker": "caller",
+          "text": "Fine. It's anjali dot r at fastmail dot com for the invite."
+        },
+        {
+          "speaker": "agent",
+          "text": "A N J A L I dot R at fastmail dot com, all lowercase.",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "That's right."
+        },
+        {
+          "speaker": "agent",
+          "text": "Invite goes out today with both clocks on it. Speak on the 13th."
+        }
+      ],
+      "notes": "UK time is said once, at the moment it matters, and after that the call runs on your end and where you are. The date and the two clock readings are one value in one beat, never a date confirm followed by a time confirm. The start date is confirmed by the agent adding the weekday to it. Consent and the email stay strict inside an otherwise subtle call, and no check tag appears at all."
+    },
+    {
+      "id": "datetime_04_non_subtle",
+      "pair_id": "datetime_04",
+      "label": "non_subtle",
+      "language": "en",
+      "scenario": "Same cross-zone interview booking, but the agent restates both time zones in full on every turn and gates each value twice.",
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Good afternoon. Am I speaking with Anjali? This is Marcus calling from Halden Recruitment."
+        },
+        {
+          "speaker": "caller",
+          "text": "Yes, hi Marcus."
+        },
+        {
+          "speaker": "agent",
+          "text": "Before I proceed, kindly confirm that you consent to this call being recorded.",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "Yes, that's fine."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you. Your consent has been recorded. The panel is available on Thursday the 13th of August at two o'clock post meridiem British Summer Time."
+        },
+        {
+          "speaker": "caller",
+          "text": "Two your time. What's that for me? I'm in Bengaluru."
+        },
+        {
+          "speaker": "agent",
+          "text": "Just to confirm, two o'clock post meridiem British Summer Time is six thirty post meridiem India Standard Time. Is that correct?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Six thirty's alright, yeah. Bit tight after work but fine."
+        },
+        {
+          "speaker": "agent",
+          "text": "Got it. Just to confirm, you have selected Thursday the 13th of August. Is that correct? And shall I confirm six thirty post meridiem India Standard Time?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Please do, I always get that wrong. How many rounds after this?"
+        },
+        {
+          "speaker": "agent",
+          "text": "There is one further round with the director in the week commencing the 24th of August."
+        },
+        {
+          "speaker": "caller",
+          "text": "Tuesday morning if possible."
+        },
+        {
+          "speaker": "agent",
+          "text": "Just to confirm, you have requested Tuesday the 25th of August in the morning. Is that correct? And shall I request eleven o'clock ante meridiem British Summer Time?"
+        },
+        {
+          "speaker": "caller",
+          "text": "That works."
+        },
+        {
+          "speaker": "agent",
+          "text": "Excellent. Kindly provide your earliest available start date."
+        },
+        {
+          "speaker": "caller",
+          "text": "First of October, realistically."
+        },
+        {
+          "speaker": "agent",
+          "text": "Got it. Just to confirm, the start date you have provided is the first of October. Is that correct? And shall I communicate this to the client?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Fine. It's anjali dot r at fastmail dot com for the invite."
+        },
+        {
+          "speaker": "agent",
+          "text": "A N J A L I dot R at fastmail dot com, all lowercase.",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "That's right."
+        },
+        {
+          "speaker": "agent",
+          "text": "Your interview has been recorded for Thursday the 13th of August at six thirty post meridiem India Standard Time. Is there anything else I can help you with today?"
+        }
+      ],
+      "notes": "The zone is chanted in full on five separate turns, with post meridiem and ante meridiem instead of afternoon and morning. Four Just to confirm plus Is that correct, three second gates, two Got it acks, has been recorded twice, kindly twice, praise on a scheduling answer, and the closer."
+    },
+    {
+      "id": "datetime_05_subtle",
+      "pair_id": "datetime_05",
+      "label": "subtle",
+      "language": "en",
+      "scenario": "Garage books a service; the day the caller wants is a bank holiday, so the agent moves it in one line and offers alternatives.",
+      "fields": [
+        {
+          "name": "registration",
+          "value": "LV19 KXR",
+          "tier": "strict",
+          "strategy": "value once then character by character with phonetics"
+        },
+        {
+          "name": "service_date",
+          "value": "Tuesday 1 September",
+          "tier": "subtle",
+          "strategy": "holiday clash stated once with two alternatives, caller chooses, no apology loop"
+        },
+        {
+          "name": "drop_off_time",
+          "value": "07:30",
+          "tier": "subtle",
+          "strategy": "silent accept, answered with the key safe detail instead of a readback"
+        },
+        {
+          "name": "collection_time",
+          "value": "17:30",
+          "tier": "subtle",
+          "strategy": "loose after five narrowed by offering a time or overnight"
+        },
+        {
+          "name": "authorisation_call_time",
+          "value": "before 15:00",
+          "tier": "subtle",
+          "strategy": "bare echo plus a commitment, then folded into the closing line"
+        }
+      ],
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Bramley Motors service desk, this is Kat."
+        },
+        {
+          "speaker": "caller",
+          "text": "Morning. I need a full service, and it's due an MOT as well."
+        },
+        {
+          "speaker": "agent",
+          "text": "Both together's easiest. Registration?"
+        },
+        {
+          "speaker": "caller",
+          "text": "It's L V one nine, K X R."
+        },
+        {
+          "speaker": "agent",
+          "text": "L V one nine, K X R. L for lima, V for victor, one, nine, K for kilo, X for x-ray, R for romeo.",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "That's the one. Bank holiday Monday, the thirty-first, if you're open. I'm off that day."
+        },
+        {
+          "speaker": "agent",
+          "text": "We're shut the thirty-first for the bank holiday. Tuesday the 1st of September we're back, or the Saturday before."
+        },
+        {
+          "speaker": "caller",
+          "text": "Tuesday then. I'll get a lift in."
+        },
+        {
+          "speaker": "agent",
+          "text": "Tuesday the 1st. How early can you drop it?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Half seven if you're open."
+        },
+        {
+          "speaker": "agent",
+          "text": "Half seven's fine, key safe's by the door if nobody's on the desk yet."
+        },
+        {
+          "speaker": "caller",
+          "text": "And when's it ready?"
+        },
+        {
+          "speaker": "agent",
+          "text": "End of the day for a full one. What time can you collect?"
+        },
+        {
+          "speaker": "caller",
+          "text": "After five, but not too late."
+        },
+        {
+          "speaker": "agent",
+          "text": "Five thirty, or we keep it overnight, whichever."
+        },
+        {
+          "speaker": "caller",
+          "text": "Five thirty."
+        },
+        {
+          "speaker": "agent",
+          "text": "If we turn up anything extra we ring before we touch it. When's good for that?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Before three, I'm in meetings after."
+        },
+        {
+          "speaker": "agent",
+          "text": "Before three, we'll work to that. Keys in at half seven on the 1st, back to you at five thirty."
+        },
+        {
+          "speaker": "caller",
+          "text": "Cheers Kat."
+        },
+        {
+          "speaker": "agent",
+          "text": "See you Tuesday."
+        }
+      ],
+      "notes": "The bank holiday clash costs one sentence and arrives with two alternatives, so the caller picks instead of being blocked. After five becomes five thirty by offer, not interrogation. Five values, no check tags anywhere: the confirmations are carried by echo-and-advance, a silent accept answered with the key safe, a bare commitment on the authorisation time, and a closing line that folds the date and both times together."
+    },
+    {
+      "id": "datetime_05_non_subtle",
+      "pair_id": "datetime_05",
+      "label": "non_subtle",
+      "language": "en",
+      "scenario": "Same service booking with the same bank holiday clash, but every value gets the same template and a second gate.",
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Thank you for calling Bramley Motors. My name is Kat. How may I assist you today?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Morning. I need a full service, and it's due an MOT as well."
+        },
+        {
+          "speaker": "agent",
+          "text": "Certainly. I will now proceed to take your registration number."
+        },
+        {
+          "speaker": "caller",
+          "text": "It's L V one nine, K X R."
+        },
+        {
+          "speaker": "agent",
+          "text": "L V one nine, K X R. L for lima, V for victor, one, nine, K for kilo, X for x-ray, R for romeo.",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "That's the one. Bank holiday Monday, the thirty-first, if you're open. I'm off that day."
+        },
+        {
+          "speaker": "agent",
+          "text": "I heard the thirty-first of August. Is that correct? Unfortunately I must inform you that this date is a public holiday and the premises are closed."
+        },
+        {
+          "speaker": "caller",
+          "text": "Tuesday then. I'll get a lift in."
+        },
+        {
+          "speaker": "agent",
+          "text": "Got it. Just to confirm, you have selected Tuesday the 1st of September. Is that correct? And shall I proceed to book that date?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Half seven if you're open."
+        },
+        {
+          "speaker": "agent",
+          "text": "Just to confirm, the drop off time you have requested is seven thirty. Is that correct? And shall I record that time?"
+        },
+        {
+          "speaker": "caller",
+          "text": "And when's it ready?"
+        },
+        {
+          "speaker": "agent",
+          "text": "The vehicle will be available at the end of the working day. Kindly provide your preferred collection time."
+        },
+        {
+          "speaker": "caller",
+          "text": "After five, but not too late."
+        },
+        {
+          "speaker": "agent",
+          "text": "I heard after five. Is that correct? And shall I set the collection time as five thirty?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Five thirty."
+        },
+        {
+          "speaker": "agent",
+          "text": "Got it. Your collection time has been recorded as five thirty. Kindly provide a time at which we may telephone you regarding additional work."
+        },
+        {
+          "speaker": "caller",
+          "text": "Before three, I'm in meetings after."
+        },
+        {
+          "speaker": "agent",
+          "text": "Excellent. Just to confirm, you have requested before three o'clock. Is that correct?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Cheers Kat."
+        },
+        {
+          "speaker": "agent",
+          "text": "Your booking has been recorded for Tuesday the 1st of September. Is there anything else I can help you with today?"
+        }
+      ],
+      "notes": "Just to confirm plus Is that correct on four consecutive fields, three of them double gated with shall I. Two Got it acks, two I heard, has been recorded three times, kindly twice, I will now proceed, praise on a callback time, and the closer. The holiday clash is delivered as a formal notification with an apology instead of one line and two alternatives."
+    },
+    {
+      "id": "datetime_06_subtle",
+      "pair_id": "datetime_06",
+      "label": "subtle",
+      "language": "en",
+      "scenario": "Conference RSVP line; the delegate says her arrival date as two, one, and the agent settles the day-month ambiguity in one beat before building the rest of the itinerary.",
+      "fields": [
+        {
+          "name": "arrival_date",
+          "value": "Friday 2 January",
+          "tier": "subtle",
+          "strategy": "numeric ambiguity settled with a bare value-as-question"
+        },
+        {
+          "name": "drinks_slot",
+          "value": "Thursday 1 January, 19:30",
+          "tier": "subtle",
+          "strategy": "the night before resolved to a dated Thursday with its time in one line"
+        },
+        {
+          "name": "departure_date",
+          "value": "Sunday 4 January, after lunch",
+          "tier": "subtle",
+          "strategy": "two-way offer, then answered with train times rather than a readback"
+        },
+        {
+          "name": "workshop_slot",
+          "value": "Saturday 3 January, 10:00",
+          "tier": "subtle",
+          "strategy": "two options given, the choice echoed with its weekday"
+        },
+        {
+          "name": "name_on_list_consent",
+          "value": "yes",
+          "tier": "strict",
+          "strategy": "explicit ask and explicit answer"
+        }
+      ],
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Larkfield Events, Tom speaking. What can I do?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Hi, it's about the RSVP for the winter conference. Priya Mehta, ticket's already paid."
+        },
+        {
+          "speaker": "agent",
+          "text": "Found you, Priya. When are you getting in?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Two, one."
+        },
+        {
+          "speaker": "agent",
+          "text": "Two, one, that's the second of January?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Yeah, second of Jan, sorry. The Friday."
+        },
+        {
+          "speaker": "agent",
+          "text": "Second's the Friday, day one. There's drinks the night before if you fancy them, half seven on the Thursday, the 1st."
+        },
+        {
+          "speaker": "caller",
+          "text": "I'd have to come up a day early. Go on then, put me down."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thursday the 1st for drinks. When are you heading back?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Sunday. The fourth."
+        },
+        {
+          "speaker": "agent",
+          "text": "Fourth, after lunch or before?"
+        },
+        {
+          "speaker": "caller",
+          "text": "After. There's a session in the morning I want."
+        },
+        {
+          "speaker": "agent",
+          "text": "Closing session wraps at one, trains go half past every hour."
+        },
+        {
+          "speaker": "caller",
+          "text": "That's fine. And there's a workshop on the Saturday?"
+        },
+        {
+          "speaker": "agent",
+          "text": "There's a ten in the morning and a two in the afternoon, Saturday the 3rd."
+        },
+        {
+          "speaker": "caller",
+          "text": "The ten o'clock one."
+        },
+        {
+          "speaker": "agent",
+          "text": "Ten o'clock Saturday. We print delegate names on the attendee list, are you happy for yours to go on it?",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "Yes, that's fine."
+        },
+        {
+          "speaker": "agent",
+          "text": "So that's the 1st for drinks, ten o'clock workshop on the Saturday, out on the 4th after lunch."
+        },
+        {
+          "speaker": "caller",
+          "text": "That's the lot. Thanks Tom."
+        },
+        {
+          "speaker": "agent",
+          "text": "See you in January."
+        }
+      ],
+      "notes": "Two, one is settled with six words and never raised again. Every relative reference the caller uses, the night before, the Saturday, gets a real date the first time the agent repeats it, and the drinks date and time land together. Rotation: bare value-as-question on arrival, two-way offer on departure answered with train times, options then echo on the workshop, and an explicit consent ask for the printed list."
+    },
+    {
+      "id": "datetime_06_non_subtle",
+      "pair_id": "datetime_06",
+      "label": "non_subtle",
+      "language": "en",
+      "scenario": "Same conference RSVP, but the agent is breezy to the point of never resolving two, one, never naming an actual date, and never asking about printing her name.",
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Larkfield Events, Tom. Go on."
+        },
+        {
+          "speaker": "caller",
+          "text": "Hi, it's about the RSVP for the winter conference. Priya Mehta, ticket's already paid."
+        },
+        {
+          "speaker": "agent",
+          "text": "Yep, got you here. When are you in?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Two, one."
+        },
+        {
+          "speaker": "agent",
+          "text": "Sweet, I'll pop that in."
+        },
+        {
+          "speaker": "caller",
+          "text": "Yeah. The Friday."
+        },
+        {
+          "speaker": "agent",
+          "text": "Friday, nice. There's drinks the night before if you fancy it, half seven ish."
+        },
+        {
+          "speaker": "caller",
+          "text": "I'd have to come up a day early. Go on then, put me down."
+        },
+        {
+          "speaker": "agent",
+          "text": "Done, you're on the drinks list. Heading back when?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Sunday. The fourth."
+        },
+        {
+          "speaker": "agent",
+          "text": "Sunday, cool."
+        },
+        {
+          "speaker": "caller",
+          "text": "After. There's a session in the morning I want."
+        },
+        {
+          "speaker": "agent",
+          "text": "Yeah the closing one's good, finishes around lunch."
+        },
+        {
+          "speaker": "caller",
+          "text": "That's fine. And there's a workshop on the Saturday?"
+        },
+        {
+          "speaker": "agent",
+          "text": "Two of them, morning or afternoon."
+        },
+        {
+          "speaker": "caller",
+          "text": "The ten o'clock one."
+        },
+        {
+          "speaker": "agent",
+          "text": "Morning one, sorted. You'll be on the delegate list with everyone else."
+        },
+        {
+          "speaker": "caller",
+          "text": "Fine."
+        },
+        {
+          "speaker": "agent",
+          "text": "So you're in the day before, drinks that night, workshop in the morning, out on the Sunday."
+        },
+        {
+          "speaker": "caller",
+          "text": "That's the lot. Thanks Tom."
+        },
+        {
+          "speaker": "agent",
+          "text": "Laters."
+        }
+      ],
+      "notes": "wrong-direction: over-casual, dropped a fidelity floor. The tone is loose and unrobotic, and that is the trap. Two, one is never disambiguated, so the booking could sit on the first of February. The night before, the Saturday and the Sunday are never resolved to dates, the workshop time is downgraded to morning, and the printed-name consent is asserted rather than asked. Two caller lines differ from the good twin because with no disambiguation question there is nothing for her to correct."
+    },
+    {
+      "id": "datetime_07_subtle",
+      "pair_id": "datetime_07",
+      "label": "subtle",
+      "language": "en",
+      "scenario": "Clinic books a glucose tolerance test; the caller offers a week rather than a day, and the fasting window has to be pinned to real clock times.",
+      "fields": [
+        {
+          "name": "patient_number",
+          "value": "P914-6K",
+          "tier": "strict",
+          "strategy": "value once then character by character"
+        },
+        {
+          "name": "test_slot",
+          "value": "Wednesday 26 August, 08:15",
+          "tier": "subtle",
+          "strategy": "loose week narrowed to two dated options, then the time offered in the same breath"
+        },
+        {
+          "name": "fasting_start_time",
+          "value": "22:00 on Tuesday 25 August",
+          "tier": "subtle",
+          "strategy": "caller works the date out, agent confirms by carrying on with the instruction"
+        },
+        {
+          "name": "water_cutoff_time",
+          "value": "07:15",
+          "tier": "subtle",
+          "strategy": "derived aloud from the appointment time rather than asked for"
+        },
+        {
+          "name": "results_call_slot",
+          "value": "Monday 31 August, after 11:00",
+          "tier": "subtle",
+          "strategy": "date given with its reason, window taken silently and echoed once"
+        }
+      ],
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Hello, Marchbank Clinic, Dawn on the phones."
+        },
+        {
+          "speaker": "caller",
+          "text": "Hi, I've had a letter about a glucose test. I need to pick a slot."
+        },
+        {
+          "speaker": "agent",
+          "text": "Have you got the patient number off the letter?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Yeah, it's P nine one four dash six K."
+        },
+        {
+          "speaker": "agent",
+          "text": "P nine one four, dash, six K. P for papa, nine, one, four, dash, six, K for kilo.",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "That's it. Mornings only, sometime next week. I can't do afternoons."
+        },
+        {
+          "speaker": "agent",
+          "text": "Mornings next week. Tuesday the 25th and Wednesday the 26th both have room."
+        },
+        {
+          "speaker": "caller",
+          "text": "Wednesday."
+        },
+        {
+          "speaker": "agent",
+          "text": "Wednesday the 26th. Quarter past eight or quarter to nine?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Quarter past eight."
+        },
+        {
+          "speaker": "agent",
+          "text": "Quarter past eight then. Now the fasting, it's ten hours, so nothing after ten the night before."
+        },
+        {
+          "speaker": "caller",
+          "text": "Ten o'clock Tuesday night, so that's the twenty-fifth?"
+        },
+        {
+          "speaker": "agent",
+          "text": "Twenty-fifth, ten at night, and after that it's water only."
+        },
+        {
+          "speaker": "caller",
+          "text": "Can I drink water in the morning?"
+        },
+        {
+          "speaker": "agent",
+          "text": "Water up to an hour before, so seven fifteen, then stop."
+        },
+        {
+          "speaker": "caller",
+          "text": "Seven fifteen. How long for results?"
+        },
+        {
+          "speaker": "agent",
+          "text": "Doctor rings inside five working days, so the Monday, the 31st."
+        },
+        {
+          "speaker": "caller",
+          "text": "Monday's good, I'm at home. After eleven though, school run before that."
+        },
+        {
+          "speaker": "agent",
+          "text": "After eleven on the 31st. Anything you want me to go over?"
+        },
+        {
+          "speaker": "caller",
+          "text": "No, I've written it down."
+        },
+        {
+          "speaker": "agent",
+          "text": "See you on the 26th."
+        }
+      ],
+      "notes": "Sometime next week becomes a dated Wednesday in two moves, and the date and the time arrive in the same breath rather than as two round trips. The fasting cut-off is confirmed by carrying on with the instruction when the caller works the date out herself, and the water time is derived aloud from the appointment instead of being asked for. Five values, no check tags, every opener distinct."
+    },
+    {
+      "id": "datetime_07_non_subtle",
+      "pair_id": "datetime_07",
+      "label": "non_subtle",
+      "language": "en",
+      "scenario": "Same glucose test booking, but each date, time and instruction is read back with the same template and gated twice.",
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Thank you for contacting Marchbank Clinic. My name is Dawn. How may I assist you?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Hi, I've had a letter about a glucose test. I need to pick a slot."
+        },
+        {
+          "speaker": "agent",
+          "text": "Certainly. Kindly provide the patient number printed on your letter."
+        },
+        {
+          "speaker": "caller",
+          "text": "Yeah, it's P nine one four dash six K."
+        },
+        {
+          "speaker": "agent",
+          "text": "P nine one four, dash, six K. P for papa, nine, one, four, dash, six, K for kilo.",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "That's it. Mornings only, sometime next week. I can't do afternoons."
+        },
+        {
+          "speaker": "agent",
+          "text": "Just to confirm, you have indicated mornings only. Is that correct? I am able to offer Tuesday the 25th or Wednesday the 26th."
+        },
+        {
+          "speaker": "caller",
+          "text": "Wednesday."
+        },
+        {
+          "speaker": "agent",
+          "text": "Got it. Just to confirm, you have selected Wednesday the 26th of August. Is that correct? And shall I proceed to the time?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Quarter past eight."
+        },
+        {
+          "speaker": "agent",
+          "text": "I heard eight fifteen. Is that correct? And shall I reserve that time for you?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Ten o'clock Tuesday night, so that's the twenty-fifth?"
+        },
+        {
+          "speaker": "agent",
+          "text": "Got it. Just to confirm, the fasting commencement time is ten o'clock post meridiem on the twenty-fifth. Is that correct?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Can I drink water in the morning?"
+        },
+        {
+          "speaker": "agent",
+          "text": "Water is permitted until one hour prior, which is seven fifteen ante meridiem. Just to confirm, is that acceptable to you?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Seven fifteen. How long for results?"
+        },
+        {
+          "speaker": "agent",
+          "text": "The doctor will telephone within five working days, which is Monday the 31st of August."
+        },
+        {
+          "speaker": "caller",
+          "text": "Monday's good, I'm at home. After eleven though, school run before that."
+        },
+        {
+          "speaker": "agent",
+          "text": "I heard after eleven. Is that correct? And shall I record that preference?"
+        },
+        {
+          "speaker": "caller",
+          "text": "No, I've written it down."
+        },
+        {
+          "speaker": "agent",
+          "text": "Your appointment has been recorded for Wednesday the 26th of August at eight fifteen. Is there anything else I can help you with today?"
+        }
+      ],
+      "notes": "The same template lands on five fields including a water cut-off nobody would stop for. Five Just to confirm plus Is that correct, three second gates, two I heard, two Got it acks, has been recorded, kindly, ante and post meridiem for ordinary clock times, and the closer."
+    },
+    {
+      "id": "datetime_08_subtle",
+      "pair_id": "datetime_08",
+      "label": "subtle",
+      "language": "en",
+      "scenario": "Courier redelivery line; the caller books tomorrow then remembers a dentist appointment and moves the whole thing to Saturday with a different window.",
+      "fields": [
+        {
+          "name": "tracking_number",
+          "value": "PG22 741 903",
+          "tier": "strict",
+          "strategy": "value once then digit by digit with phonetics"
+        },
+        {
+          "name": "redelivery_slot",
+          "value": "Saturday 14th, 12:00 to 16:00",
+          "tier": "subtle",
+          "strategy": "one-beat correction offering the new date with the old window, then both folded into one echo"
+        },
+        {
+          "name": "neighbour",
+          "value": "number 41, right hand side",
+          "tier": "subtle",
+          "strategy": "value first, then the missing half asked as a two-way"
+        },
+        {
+          "name": "text_alert_time",
+          "value": "after 18:00",
+          "tier": "subtle",
+          "strategy": "echo-and-advance, a commitment instead of a tag"
+        }
+      ],
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Parcelgate delivery line, Ade speaking."
+        },
+        {
+          "speaker": "caller",
+          "text": "Hi, I missed a parcel yesterday. There's a card through the door."
+        },
+        {
+          "speaker": "agent",
+          "text": "Is the tracking number on the card?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Yeah. P G two two, seven four one, nine oh three."
+        },
+        {
+          "speaker": "agent",
+          "text": "P G two two, seven four one, nine oh three. P for papa, G for golf, two, two, seven, four, one, nine, zero, three.",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "That's right."
+        },
+        {
+          "speaker": "agent",
+          "text": "One box from Ashcroft Supplies. Want it tomorrow?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Tomorrow's the twelfth, isn't it? Yeah, tomorrow."
+        },
+        {
+          "speaker": "agent",
+          "text": "Tomorrow the 12th. Windows are eight till ten, or twelve till four."
+        },
+        {
+          "speaker": "caller",
+          "text": "Eight till ten."
+        },
+        {
+          "speaker": "agent",
+          "text": "Eight till ten. Someone in?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Actually, hang on. I've got the dentist at nine. Can we say Saturday instead?"
+        },
+        {
+          "speaker": "agent",
+          "text": "Saturday the 14th, same eight till ten?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Saturday, but make it the later one. Twelve till four."
+        },
+        {
+          "speaker": "agent",
+          "text": "Twelve till four on the 14th. Sorted."
+        },
+        {
+          "speaker": "caller",
+          "text": "And if I'm out? Next door, forty-one, they're always in."
+        },
+        {
+          "speaker": "agent",
+          "text": "Forty-one. Which side, left or right as you look at the house?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Right hand side."
+        },
+        {
+          "speaker": "agent",
+          "text": "Right as you face it, then. We text the night before, what time's good for that?"
+        },
+        {
+          "speaker": "caller",
+          "text": "After six. I'm driving before that."
+        },
+        {
+          "speaker": "agent",
+          "text": "After six it lands. Saturday the 14th, twelve till four, number forty-one if you're out."
+        }
+      ],
+      "notes": "The mid-call reschedule costs two lines: the new date is offered with the old window attached, and when she changes the window too both go into one echo. The neighbour is half a value, so the agent takes the number and asks only for the side. Four values, four moves, no check tags, and only the tracking number is strict."
+    },
+    {
+      "id": "datetime_08_non_subtle",
+      "pair_id": "datetime_08",
+      "label": "non_subtle",
+      "language": "en",
+      "scenario": "Same redelivery with the same mid-call reschedule, but the agent turns the cancellation, the new date and the new window into three gated round trips.",
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Thank you for calling Parcelgate. My name is Ade. How may I assist you today?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Hi, I missed a parcel yesterday. There's a card through the door."
+        },
+        {
+          "speaker": "agent",
+          "text": "Certainly. Kindly provide the tracking number shown on your card."
+        },
+        {
+          "speaker": "caller",
+          "text": "Yeah. P G two two, seven four one, nine oh three."
+        },
+        {
+          "speaker": "agent",
+          "text": "P G two two, seven four one, nine oh three. P for papa, G for golf, two, two, seven, four, one, nine, zero, three.",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "That's right."
+        },
+        {
+          "speaker": "agent",
+          "text": "Got it. Your parcel is one box from Ashcroft Supplies."
+        },
+        {
+          "speaker": "caller",
+          "text": "Tomorrow's the twelfth, isn't it? Yeah, tomorrow."
+        },
+        {
+          "speaker": "agent",
+          "text": "Just to confirm, you have requested delivery tomorrow, the twelfth. Is that correct? And shall I proceed to the delivery window?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Eight till ten."
+        },
+        {
+          "speaker": "agent",
+          "text": "I heard eight until ten. Is that correct? And shall I apply that window?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Actually, hang on. I've got the dentist at nine. Can we say Saturday instead?"
+        },
+        {
+          "speaker": "agent",
+          "text": "Got it. Just to confirm, you wish to cancel the twelfth. Is that correct?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Saturday, but make it the later one. Twelve till four."
+        },
+        {
+          "speaker": "agent",
+          "text": "Just to confirm, you have selected Saturday the fourteenth. Is that correct? And shall I now confirm the window?"
+        },
+        {
+          "speaker": "caller",
+          "text": "And if I'm out? Next door, forty-one, they're always in."
+        },
+        {
+          "speaker": "agent",
+          "text": "I heard twelve until four. Is that correct? Your window has been recorded. Kindly confirm the neighbour's house number."
+        },
+        {
+          "speaker": "caller",
+          "text": "Right hand side."
+        },
+        {
+          "speaker": "agent",
+          "text": "Got it. Just to confirm, the right hand side, number forty-one. Is that correct? And shall I add that instruction?"
+        },
+        {
+          "speaker": "caller",
+          "text": "After six. I'm driving before that."
+        },
+        {
+          "speaker": "agent",
+          "text": "Your redelivery has been recorded for Saturday the fourteenth, twelve until four. Is there anything else I can help you with today?"
+        }
+      ],
+      "notes": "The reschedule triggers three gated round trips where the good twin uses two lines: a confirm on the cancellation, a confirm on the new date, a confirm on the new window. Six Just to confirm plus Is that correct, three Got it acks, two I heard, has been recorded twice, kindly twice, and the closer."
+    },
+    {
+      "id": "datetime_09_subtle",
+      "pair_id": "datetime_09",
+      "label": "subtle",
+      "language": "en",
+      "scenario": "Salon books a colour and cut; the finish time clashes with something at three, and a patch test has to land at least forty eight hours before.",
+      "fields": [
+        {
+          "name": "appointment_slot",
+          "value": "Saturday 5 September, 10:30 to 13:45",
+          "tier": "subtle",
+          "strategy": "finish time derived aloud, and when it clashes the start moves and the finish is re-derived in the same line"
+        },
+        {
+          "name": "stylist",
+          "value": "Jo",
+          "tier": "subtle",
+          "strategy": "silent accept, value reused as the opener of the next question"
+        },
+        {
+          "name": "patch_test_slot",
+          "value": "Thursday 3 September, 18:15",
+          "tier": "subtle",
+          "strategy": "constraint stated once, pushback answered in one line, six-ish sharpened by offering the desk cut-off"
+        },
+        {
+          "name": "return_visit_date",
+          "value": "Saturday 17 October",
+          "tier": "subtle",
+          "strategy": "six weeks resolved to a date, time and stylist inherited rather than re-asked"
+        },
+        {
+          "name": "mobile_number",
+          "value": "07700 900 22",
+          "tier": "strict",
+          "strategy": "digit by digit in groups"
+        }
+      ],
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Ivy Lane, this is Rosa."
+        },
+        {
+          "speaker": "caller",
+          "text": "Hi, I want to book a colour and a cut, Saturday if you've got it."
+        },
+        {
+          "speaker": "agent",
+          "text": "Colour and cut, Saturday the 5th of September is the next one with space. What time were you after?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Late morning. Eleven?"
+        },
+        {
+          "speaker": "agent",
+          "text": "Eleven works with Jo. Have you been to Jo before?"
+        },
+        {
+          "speaker": "caller",
+          "text": "No, never. Jo's fine though."
+        },
+        {
+          "speaker": "agent",
+          "text": "Jo it is. Colour and a cut runs three and a bit hours, so you'd be out about quarter past two."
+        },
+        {
+          "speaker": "caller",
+          "text": "That long? I've got something at three."
+        },
+        {
+          "speaker": "agent",
+          "text": "We can start at half ten instead, out by quarter to two."
+        },
+        {
+          "speaker": "caller",
+          "text": "Half ten's better actually."
+        },
+        {
+          "speaker": "agent",
+          "text": "One thing, colour needs a patch test at least forty eight hours before. That's Thursday the 3rd at the latest."
+        },
+        {
+          "speaker": "caller",
+          "text": "Can I do it Friday?"
+        },
+        {
+          "speaker": "agent",
+          "text": "Friday's inside the forty eight, so it has to be Thursday. Takes two minutes."
+        },
+        {
+          "speaker": "caller",
+          "text": "Thursday after work then. Six-ish?"
+        },
+        {
+          "speaker": "agent",
+          "text": "Six fifteen, someone's on the desk till seven."
+        },
+        {
+          "speaker": "caller",
+          "text": "Six fifteen Thursday. And put me down for the top up too, I always forget."
+        },
+        {
+          "speaker": "agent",
+          "text": "Top up's six weeks on, so the 17th of October, same half ten with Jo. Number for the reminders?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Oh seven eight three three, four one five, double two."
+        },
+        {
+          "speaker": "agent",
+          "text": "Zero seven seven zero zero, nine zero zero, two two.",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "That's it. Thanks Rosa."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thursday the 3rd at quarter past six, then half ten on the Saturday. See you Thursday."
+        }
+      ],
+      "notes": "The finish time is worked out aloud, and when it clashes the start moves and the finish is re-derived inside the same sentence rather than confirmed as a second value. Six-ish becomes six fifteen by offering the desk cut-off. Six weeks is resolved to the 17th of October and the return visit inherits the time and the stylist. Five values, no check tags, and the mobile stays strict."
+    },
+    {
+      "id": "datetime_09_non_subtle",
+      "pair_id": "datetime_09",
+      "label": "non_subtle",
+      "language": "en",
+      "scenario": "Same salon booking with the same clash and patch test rule, but every value gets the same read-back template and a second gate.",
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Thank you for calling Ivy Lane. My name is Rosa. How may I assist you today?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Hi, I want to book a colour and a cut, Saturday if you've got it."
+        },
+        {
+          "speaker": "agent",
+          "text": "Just to confirm, you have requested a colour and a cut on Saturday. Is that correct?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Late morning. Eleven?"
+        },
+        {
+          "speaker": "agent",
+          "text": "I heard eleven o'clock. Is that correct? And shall I reserve that time?"
+        },
+        {
+          "speaker": "caller",
+          "text": "No, never. Jo's fine though."
+        },
+        {
+          "speaker": "agent",
+          "text": "Got it. Just to confirm, you have selected Jo as your stylist. Is that correct? The service duration is three hours and fifteen minutes."
+        },
+        {
+          "speaker": "caller",
+          "text": "That long? I've got something at three."
+        },
+        {
+          "speaker": "agent",
+          "text": "I am able to offer an earlier start of ten thirty. Just to confirm, is that acceptable to you?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Half ten's better actually."
+        },
+        {
+          "speaker": "agent",
+          "text": "Got it. Just to confirm, you have selected ten thirty. Is that correct? And shall I confirm your completion time of one forty five?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Can I do it Friday?"
+        },
+        {
+          "speaker": "agent",
+          "text": "Unfortunately Friday falls within the forty eight hour period. Kindly confirm Thursday the 3rd."
+        },
+        {
+          "speaker": "caller",
+          "text": "Thursday after work then. Six-ish?"
+        },
+        {
+          "speaker": "agent",
+          "text": "I heard approximately six o'clock. Is that correct? I am able to offer six fifteen."
+        },
+        {
+          "speaker": "caller",
+          "text": "Six fifteen Thursday. And put me down for the top up too, I always forget."
+        },
+        {
+          "speaker": "agent",
+          "text": "Just to confirm, you have requested six fifteen on Thursday the 3rd. Is that correct? And shall I also book the follow up on the 17th of October?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Oh seven eight three three, four one five, double two."
+        },
+        {
+          "speaker": "agent",
+          "text": "Zero seven seven zero zero, nine zero zero, two two.",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "That's it. Thanks Rosa."
+        },
+        {
+          "speaker": "agent",
+          "text": "All of your appointments have been recorded. Is there anything else I can help you with today?"
+        }
+      ],
+      "notes": "Six Just to confirm plus Is that correct across five values, three of them double gated with shall I. Two Got it acks, three I heard, has been recorded, kindly, and the closer. The start time and the finish time are confirmed as two separate values where the good twin re-derives the finish inside the same sentence."
+    },
+    {
+      "id": "datetime_10_subtle",
+      "pair_id": "datetime_10",
+      "label": "subtle",
+      "language": "en",
+      "scenario": "Recruiter and contractor settle a start date around a notice period, a booked holiday the contractor will not move, and a signature deadline.",
+      "fields": [
+        {
+          "name": "notice_end_date",
+          "value": "30 September",
+          "tier": "subtle",
+          "strategy": "asked for, then used as the basis for the start date in the same breath"
+        },
+        {
+          "name": "start_date",
+          "value": "Monday 5 October",
+          "tier": "subtle",
+          "strategy": "derived aloud from the notice end, so the arithmetic is the confirmation"
+        },
+        {
+          "name": "booked_holiday",
+          "value": "12 to 19 October",
+          "tier": "subtle",
+          "strategy": "range echoed and located in week two, refusal to move taken in one line"
+        },
+        {
+          "name": "signature_deadline",
+          "value": "Friday 11th, 17:00",
+          "tier": "subtle",
+          "strategy": "stated once with the consequence, restated only to answer a worry"
+        },
+        {
+          "name": "email",
+          "value": "d.okonkwo@example.co.uk",
+          "tier": "strict",
+          "strategy": "letter by letter, symbols named"
+        }
+      ],
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Afternoon, it's Neve from Halden, about the Tavistock contract."
+        },
+        {
+          "speaker": "caller",
+          "text": "Hi Neve. I've read it through. The start date's the problem, they've put the twenty-eighth of September and I can't do that."
+        },
+        {
+          "speaker": "agent",
+          "text": "When does your notice run out?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Thirtieth of September. Four weeks from Tuesday."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thirtieth's your last day, so the earliest clean start is the Monday, the 5th of October."
+        },
+        {
+          "speaker": "caller",
+          "text": "The fifth works. Will they wear it?"
+        },
+        {
+          "speaker": "agent",
+          "text": "A week's nothing to them. I'll put the 5th forward today."
+        },
+        {
+          "speaker": "caller",
+          "text": "There's one other thing. I've got a holiday booked, twelfth to the nineteenth of October."
+        },
+        {
+          "speaker": "agent",
+          "text": "Twelfth to the nineteenth, so that's week two. Is it moveable?"
+        },
+        {
+          "speaker": "caller",
+          "text": "No. It's paid for, and my wife's already booked the time off."
+        },
+        {
+          "speaker": "agent",
+          "text": "Fair enough, it goes in the same email so it isn't a surprise."
+        },
+        {
+          "speaker": "caller",
+          "text": "Thanks. Anything I need to send back?"
+        },
+        {
+          "speaker": "agent",
+          "text": "Signed copy by Friday the 11th, five o'clock, or the requisition lapses."
+        },
+        {
+          "speaker": "caller",
+          "text": "Friday's tight, I'm away Thursday."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thursday's no problem as long as it's in before five on the Friday."
+        },
+        {
+          "speaker": "caller",
+          "text": "I'll do it Wednesday. Send it to d dot okonkwo at brightmoor dot co dot uk."
+        },
+        {
+          "speaker": "agent",
+          "text": "D dot O K O N K W O at brightmoor dot co dot uk.",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "That's right."
+        },
+        {
+          "speaker": "agent",
+          "text": "So, the 5th of October, holiday flagged for the twelfth to the nineteenth, signed copy by Friday."
+        },
+        {
+          "speaker": "caller",
+          "text": "Lovely, thanks Neve."
+        },
+        {
+          "speaker": "agent",
+          "text": "I'll come back once they've agreed the 5th."
+        }
+      ],
+      "notes": "Four dates and a deadline move through this call and not one gets a confirm round trip. The start date is derived aloud from the notice end, so the arithmetic is the confirmation. The holiday range is echoed and located in week two, and the refusal to move it is taken in one line with no persuasion. The closing summary carries three values at once instead of three separate gates."
+    },
+    {
+      "id": "datetime_10_non_subtle",
+      "pair_id": "datetime_10",
+      "label": "non_subtle",
+      "language": "en",
+      "scenario": "Same contract negotiation with the same holiday refusal, but every date is read back with one template and gated twice.",
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Good afternoon. This is Neve calling from Halden regarding the Tavistock contract."
+        },
+        {
+          "speaker": "caller",
+          "text": "Hi Neve. I've read it through. The start date's the problem, they've put the twenty-eighth of September and I can't do that."
+        },
+        {
+          "speaker": "agent",
+          "text": "Just to confirm, you are unable to commence on the twenty-eighth of September. Is that correct?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Thirtieth of September. Four weeks from Tuesday."
+        },
+        {
+          "speaker": "agent",
+          "text": "Got it. Just to confirm, the notice end date you have provided is the thirtieth of September. Is that correct?"
+        },
+        {
+          "speaker": "caller",
+          "text": "The fifth works. Will they wear it?"
+        },
+        {
+          "speaker": "agent",
+          "text": "I heard the fifth of October. Is that correct? And shall I submit that start date to the client?"
+        },
+        {
+          "speaker": "caller",
+          "text": "There's one other thing. I've got a holiday booked, twelfth to the nineteenth of October."
+        },
+        {
+          "speaker": "agent",
+          "text": "Just to confirm, you have provided a holiday from the twelfth of October to the nineteenth of October. Is that correct?"
+        },
+        {
+          "speaker": "caller",
+          "text": "No. It's paid for, and my wife's already booked the time off."
+        },
+        {
+          "speaker": "agent",
+          "text": "Got it. Your absence has been recorded. I will now proceed to notify the client."
+        },
+        {
+          "speaker": "caller",
+          "text": "Thanks. Anything I need to send back?"
+        },
+        {
+          "speaker": "agent",
+          "text": "The signed copy must be returned by Friday the eleventh at five o'clock post meridiem. Just to confirm, is that acceptable to you?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Friday's tight, I'm away Thursday."
+        },
+        {
+          "speaker": "agent",
+          "text": "Excellent. Kindly confirm that you will return the document prior to that deadline."
+        },
+        {
+          "speaker": "caller",
+          "text": "I'll do it Wednesday. Send it to d dot okonkwo at brightmoor dot co dot uk."
+        },
+        {
+          "speaker": "agent",
+          "text": "D dot O K O N K W O at brightmoor dot co dot uk.",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "That's right."
+        },
+        {
+          "speaker": "agent",
+          "text": "Just to confirm, you have selected the fifth of October as your commencement date. Is that correct? And shall I finalise the paperwork?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Lovely, thanks Neve."
+        },
+        {
+          "speaker": "agent",
+          "text": "All of your details have been recorded. Is there anything else I can help you with today?"
+        }
+      ],
+      "notes": "Six Just to confirm plus Is that correct across four dates and a deadline, two of them double gated with shall I. Two Got it acks, an I heard, has been recorded twice, kindly, I will now proceed, post meridiem for an ordinary time, praise on a scheduling answer, and the closer. The start date is gated rather than derived, so the caller is asked to confirm a number the agent has just worked out for him."
+    }
+  ]
+}

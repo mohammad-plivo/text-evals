@@ -1,0 +1,2156 @@
+{
+  "task": "choice",
+  "tier": "subtle",
+  "description": "CollectChoice: the caller selects from a menu of offered options (fare class, plan tier, room type, coverage level, delivery method, channel). A misheard choice is cheap to recover because the caller hears the option folded into the next question, so the agent should echo and advance rather than stop for a confirmation round trip on every pick.",
+  "style_rules": {
+    "subtle": [
+      "Echo the chosen option into the next question instead of asking about it separately",
+      "Open agent turns with the value itself so no two turns start the same way",
+      "Bare value-as-question only where the pick was garbled, corrected, or genuinely ambiguous",
+      "Silent accept for options the caller stated emphatically or repeated",
+      "Fold several picks into one late summary rather than confirming each atom on the spot",
+      "One-beat correction: re-echo the new option and keep moving",
+      "Contractions throughout, short clauses, commas instead of dashes",
+      "One reason on a refusal, then drop it",
+      "Strict readback survives for codes, emails, card digits, dates of birth and consent"
+    ],
+    "non_subtle_tells": [
+      "Same confirmation template on every option: I heard X, is that correct",
+      "Just to confirm / you have selected X on picks nobody would stop for",
+      "Repeated canned ack: Got it, Got it, Got it",
+      "Praise on trivial answers: excellent choice, perfect",
+      "Status phrases: I have noted that, your selection has been recorded",
+      "No contractions, over-formal register, kindly, I will now proceed to",
+      "A confirm round trip on literally every field",
+      "Chatbot closer: is there anything else I can help you with today",
+      "Wrong direction: over-casual agent that drops a fidelity floor such as the char-by-char readback of a reference or explicit consent"
+    ]
+  },
+  "conversations": [
+    {
+      "id": "choice_01_subtle",
+      "pair_id": "choice_01",
+      "label": "subtle",
+      "language": "en",
+      "scenario": "Airline rebooking after a cancellation; the caller picks premium economy then switches to business mid-call.",
+      "fields": [
+        {
+          "name": "booking_reference",
+          "value": "QK4T9M",
+          "tier": "strict",
+          "strategy": "value once then char by char with phonetics"
+        },
+        {
+          "name": "carrier_choice",
+          "value": "Meridian Air tonight",
+          "tier": "subtle",
+          "strategy": "echo-and-advance straight into the cabin question"
+        },
+        {
+          "name": "cabin_class",
+          "value": "business",
+          "tier": "subtle",
+          "strategy": "one-beat correction after the caller switches"
+        },
+        {
+          "name": "seat_preference",
+          "value": "aisle, forward cabin",
+          "tier": "subtle",
+          "strategy": "silent accept, answered with the seat number"
+        },
+        {
+          "name": "delivery_channel",
+          "value": "text message",
+          "tier": "subtle",
+          "strategy": "bare value-as-question with the masked number"
+        }
+      ],
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Thanks for holding. I've got the cancellation on the Tuesday service. Can I take your booking reference?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Yeah, it's QK4T9M."
+        },
+        {
+          "speaker": "agent",
+          "text": "QK4T9M. That's Q for Quebec, K for Kilo, four, T for Tango, nine, M for Mike.",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "That's it."
+        },
+        {
+          "speaker": "agent",
+          "text": "Right, there's two ways to go. Our own service Thursday morning, or a partner carrier, Meridian Air, tonight at nine."
+        },
+        {
+          "speaker": "caller",
+          "text": "Meridian tonight. I need to be there for a morning meeting."
+        },
+        {
+          "speaker": "agent",
+          "text": "Meridian tonight, so you'd land early hours Thursday. Cabin, you were in economy, and they've got economy, premium economy, or business."
+        },
+        {
+          "speaker": "caller",
+          "text": "Premium economy, I think."
+        },
+        {
+          "speaker": "agent",
+          "text": "Premium economy, and do you want a window or an aisle?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Actually, hang on. What's business cost me? If it's under two hundred more I'll take business."
+        },
+        {
+          "speaker": "agent",
+          "text": "It's a hundred and sixty on top."
+        },
+        {
+          "speaker": "caller",
+          "text": "Do it. Business."
+        },
+        {
+          "speaker": "agent",
+          "text": "Business, then. Window or aisle?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Aisle. Near the front if you can."
+        },
+        {
+          "speaker": "agent",
+          "text": "Aisle, forward cabin. 3C's open."
+        },
+        {
+          "speaker": "caller",
+          "text": "Perfect."
+        },
+        {
+          "speaker": "agent",
+          "text": "Last bit, boarding pass by text or email?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Text."
+        },
+        {
+          "speaker": "agent",
+          "text": "Text to the mobile ending 4-4-0-2, yeah?"
+        },
+        {
+          "speaker": "caller",
+          "text": "That's the one."
+        },
+        {
+          "speaker": "agent",
+          "text": "You're all set. Meridian at nine, business, aisle 3C, pass by text in about ten minutes."
+        }
+      ],
+      "notes": "Five values, five different moves. The PNR is a strict phonetic readback, the carrier is echo-and-advance folded into the cabin question, the cabin change gets one beat and no fuss, the seat is silently accepted and answered with a seat number instead of a confirmation, and only the delivery channel gets a bare value-as-question with the call's single yeah tag. Ten open agent turns, ten different opening words."
+    },
+    {
+      "id": "choice_01_non_subtle",
+      "pair_id": "choice_01",
+      "label": "non_subtle",
+      "language": "en",
+      "scenario": "Same airline rebooking, same caller turns; the agent runs one confirmation template over every option.",
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Thank you for calling. I will now proceed to assist you with your rebooking. Kindly provide your booking reference."
+        },
+        {
+          "speaker": "caller",
+          "text": "Yeah, it's QK4T9M."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you. I heard QK4T9M. Let me confirm that character by character. Q for Quebec, K for Kilo, four, T for Tango, nine, M for Mike. Is that correct?",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "That's it."
+        },
+        {
+          "speaker": "agent",
+          "text": "Got it. I have noted that. There are two options available to you. Option one is our own service on Thursday morning. Option two is a partner carrier, Meridian Air, tonight at nine. Which option would you like to select?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Meridian tonight. I need to be there for a morning meeting."
+        },
+        {
+          "speaker": "agent",
+          "text": "Just to confirm, you have selected Meridian Air tonight at nine. Is that correct? You would land in the early hours of Thursday. I will now proceed to your cabin. The options are economy, premium economy, and business."
+        },
+        {
+          "speaker": "caller",
+          "text": "Premium economy, I think."
+        },
+        {
+          "speaker": "agent",
+          "text": "Just to confirm, you have selected premium economy. Is that correct? Would you like a window seat or an aisle seat?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Actually, hang on. What's business cost me? If it's under two hundred more I'll take business."
+        },
+        {
+          "speaker": "agent",
+          "text": "The business cabin is one hundred and sixty pounds in addition."
+        },
+        {
+          "speaker": "caller",
+          "text": "Do it. Business."
+        },
+        {
+          "speaker": "agent",
+          "text": "That is an excellent choice! Just to confirm, you have now selected business class. Is that correct? Would you like a window seat or an aisle seat?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Aisle. Near the front if you can."
+        },
+        {
+          "speaker": "agent",
+          "text": "Got it. I heard aisle, forward cabin. Your seat selection has been recorded as 3C. Is that correct?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Perfect."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you. I will now proceed to delivery. Would you like the boarding pass by text message or by email?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Text."
+        },
+        {
+          "speaker": "agent",
+          "text": "Just to confirm, you have selected text message to the mobile number ending 4-4-0-2. Is that correct?"
+        },
+        {
+          "speaker": "caller",
+          "text": "That's the one."
+        },
+        {
+          "speaker": "agent",
+          "text": "Perfect! Your booking has been updated and your boarding pass will arrive in approximately ten minutes. Is there anything else I can help you with today?"
+        }
+      ],
+      "notes": "Five confirm round trips on five values. Just to confirm four times, Is that correct five times, Got it twice, plus I heard, I have noted, has been recorded, praise on a cabin upgrade, no contractions, and a chatbot closer. The seat number gets the same ceremony as the booking reference."
+    },
+    {
+      "id": "choice_02_subtle",
+      "pair_id": "choice_02",
+      "label": "subtle",
+      "language": "en",
+      "scenario": "Health insurance enrolment; the caller asks what the difference between the tiers is before picking.",
+      "fields": [
+        {
+          "name": "plan_tier",
+          "value": "Silver",
+          "tier": "subtle",
+          "strategy": "echo-and-advance after answering the difference question"
+        },
+        {
+          "name": "coverage_level",
+          "value": "two adults, no dependents",
+          "tier": "subtle",
+          "strategy": "restated in the agent's own words with the call's one tag"
+        },
+        {
+          "name": "deductible_option",
+          "value": "twenty five hundred",
+          "tier": "subtle",
+          "strategy": "echo plus a consequence instead of a confirmation"
+        },
+        {
+          "name": "date_of_birth",
+          "value": "3 November 1984",
+          "tier": "strict",
+          "strategy": "full readback with the month as a word"
+        },
+        {
+          "name": "enrolment_consent",
+          "value": "yes",
+          "tier": "strict",
+          "strategy": "explicit permission ask and explicit answer"
+        }
+      ],
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Right, I've got your application open at the plan step. Three tiers, Bronze, Silver, Gold."
+        },
+        {
+          "speaker": "caller",
+          "text": "What's the difference though? The website just showed prices."
+        },
+        {
+          "speaker": "agent",
+          "text": "Bronze is cheapest monthly but you pay more when you actually use it. Gold's the reverse. Silver's in the middle, and it's the only one that gets you the cost sharing discount if your income's under the line."
+        },
+        {
+          "speaker": "caller",
+          "text": "Huh. What's the line?"
+        },
+        {
+          "speaker": "agent",
+          "text": "Sixty thousand for a household of two."
+        },
+        {
+          "speaker": "caller",
+          "text": "We're under that. Silver then."
+        },
+        {
+          "speaker": "agent",
+          "text": "Silver, and the discount comes on by itself. Who's on the policy, just you, you and a spouse, or the whole family?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Me and my wife."
+        },
+        {
+          "speaker": "agent",
+          "text": "Two adults, no dependents, yeah? Deductible next, you've got a thousand, twenty five hundred, or five thousand."
+        },
+        {
+          "speaker": "caller",
+          "text": "Uh. Twenty five hundred."
+        },
+        {
+          "speaker": "agent",
+          "text": "Twenty five hundred, that's per person, or six thousand across the pair of you, whichever hits first."
+        },
+        {
+          "speaker": "caller",
+          "text": "Okay, that's fine."
+        },
+        {
+          "speaker": "agent",
+          "text": "Date of birth for the application?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Third of the eleventh, eighty four."
+        },
+        {
+          "speaker": "agent",
+          "text": "So that's the third of November, nineteen eighty four.",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "Correct."
+        },
+        {
+          "speaker": "agent",
+          "text": "One thing I have to ask you straight out. Do you give me permission to submit this enrolment on your behalf today?",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "Yes, go ahead, submit it."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you, that's a yes. Silver, two adults, twenty five hundred deductible, and I'll send it now."
+        },
+        {
+          "speaker": "caller",
+          "text": "Yep, that's right."
+        },
+        {
+          "speaker": "agent",
+          "text": "ID cards show up in the portal within three business days."
+        }
+      ],
+      "notes": "The caller asks a question back twice and each answer is one line, then straight back to the pick. Tier is echo-and-advance, coverage level is reworded and carries the only tag in the call, the deductible is answered with a consequence rather than a confirmation, and the three picks are only ever gathered together in the closing line. Date of birth and enrolment consent stay strict inside an otherwise light call."
+    },
+    {
+      "id": "choice_02_non_subtle",
+      "pair_id": "choice_02",
+      "label": "non_subtle",
+      "language": "en",
+      "scenario": "Same enrolment call, same caller turns; the agent confirms every tier and level with the identical formula.",
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Thank you for your patience. I have your application open at the plan selection step. There are three tiers available: Bronze, Silver, and Gold."
+        },
+        {
+          "speaker": "caller",
+          "text": "What's the difference though? The website just showed prices."
+        },
+        {
+          "speaker": "agent",
+          "text": "I will now explain the options. Bronze has the lowest monthly premium and higher costs at the point of use. Gold has a higher premium and lower copays. Silver is in the middle and is the only tier that qualifies for the cost sharing discount if your income is below the threshold."
+        },
+        {
+          "speaker": "caller",
+          "text": "Huh. What's the line?"
+        },
+        {
+          "speaker": "agent",
+          "text": "The threshold is sixty thousand for a household of two."
+        },
+        {
+          "speaker": "caller",
+          "text": "We're under that. Silver then."
+        },
+        {
+          "speaker": "agent",
+          "text": "That is an excellent choice! Just to confirm, you have selected the Silver tier. Is that correct? I have noted that the discount will apply automatically. Who is on the policy: yourself only, yourself and a spouse, or the whole family?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Me and my wife."
+        },
+        {
+          "speaker": "agent",
+          "text": "Got it. I heard two adults and no dependents. Is that correct? I will now proceed to the deductible. The options are one thousand, twenty five hundred, or five thousand."
+        },
+        {
+          "speaker": "caller",
+          "text": "Uh. Twenty five hundred."
+        },
+        {
+          "speaker": "agent",
+          "text": "Just to confirm, you have selected the twenty five hundred deductible. Is that correct? That amount applies per person, or six thousand across the two of you, whichever is reached first."
+        },
+        {
+          "speaker": "caller",
+          "text": "Okay, that's fine."
+        },
+        {
+          "speaker": "agent",
+          "text": "Got it. Your deductible selection has been recorded. I will now proceed to collect your date of birth for the application."
+        },
+        {
+          "speaker": "caller",
+          "text": "Third of the eleventh, eighty four."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you. I will now read that back for verification purposes. That is the third of November, nineteen eighty four. Is that correct?",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "Correct."
+        },
+        {
+          "speaker": "agent",
+          "text": "I must now ask you a formal question. Do you give me permission to submit this enrolment on your behalf today?",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "Yes, go ahead, submit it."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you. Your consent has been recorded. Let me confirm your selections. Silver tier, two adults, and a twenty five hundred deductible. Is all of that correct?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Yep, that's right."
+        },
+        {
+          "speaker": "agent",
+          "text": "I will now proceed to submit your application. Your ID cards will be available in the portal within three business days. Is there anything else I can help you with today?"
+        }
+      ],
+      "notes": "Every pick, including a two person household, gets Just to confirm plus Is that correct. Got it twice, has been recorded twice, plus I heard, I have noted, for verification purposes, praise on a plan tier, no contractions in any agent turn, and a chatbot closer."
+    },
+    {
+      "id": "choice_03_subtle",
+      "pair_id": "choice_03",
+      "label": "subtle",
+      "language": "en",
+      "scenario": "Office catering order; the caller fires three choices in one breath and the agent takes all three in one echo.",
+      "fields": [
+        {
+          "name": "menu_package",
+          "value": "mediterranean",
+          "tier": "subtle",
+          "strategy": "batched echo of three picks at once"
+        },
+        {
+          "name": "service_style",
+          "value": "buffet",
+          "tier": "subtle",
+          "strategy": "batched in the same echo, re-tested later via the table space question"
+        },
+        {
+          "name": "protein_main",
+          "value": "lamb",
+          "tier": "subtle",
+          "strategy": "batched in the same echo, then silently accepted"
+        },
+        {
+          "name": "dessert",
+          "value": "fruit platter",
+          "tier": "subtle",
+          "strategy": "bare echo, no tag, straight into the next question"
+        },
+        {
+          "name": "driver_phone",
+          "value": "07700 900412",
+          "tier": "strict",
+          "strategy": "digit by digit in groups"
+        }
+      ],
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Catering, Dev speaking. Lunch on the eleventh for fifty, that's what I've got written down. Three packages, classic, mediterranean, or barbecue."
+        },
+        {
+          "speaker": "caller",
+          "text": "Mediterranean, buffet, and do the lamb."
+        },
+        {
+          "speaker": "agent",
+          "text": "Mediterranean buffet with the lamb, that's three of my questions gone at once. Dessert, brownies, a fruit platter, or nothing?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Fruit platter. Half the office is on some diet."
+        },
+        {
+          "speaker": "agent",
+          "text": "Fruit platter. Buffet needs about two metres of table, have you got that?"
+        },
+        {
+          "speaker": "caller",
+          "text": "We've got a long table, yeah."
+        },
+        {
+          "speaker": "agent",
+          "text": "That'll do it. The lamb sits on a warmer, so it'll hold an hour without drying out."
+        },
+        {
+          "speaker": "caller",
+          "text": "Fine."
+        },
+        {
+          "speaker": "agent",
+          "text": "Driver'll need a mobile number."
+        },
+        {
+          "speaker": "caller",
+          "text": "Oh, 07700 900412."
+        },
+        {
+          "speaker": "agent",
+          "text": "Let me read that back. Oh seven, seven double oh, nine double oh, four one two.",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "That's it."
+        },
+        {
+          "speaker": "agent",
+          "text": "Right. Anything the kitchen needs to know before I send it through?"
+        },
+        {
+          "speaker": "caller",
+          "text": "One nut allergy, serious one."
+        },
+        {
+          "speaker": "agent",
+          "text": "Serious nut allergy, so the whole order comes off the nut bench and the platter loses its nut garnish."
+        },
+        {
+          "speaker": "caller",
+          "text": "Good."
+        },
+        {
+          "speaker": "agent",
+          "text": "Twelve o'clock on the eleventh then. Nine forty two including delivery."
+        }
+      ],
+      "notes": "Three picks arrive in one caller breath and get one echo, not three round trips. The buffet is quietly re-tested through the table space question and the lamb through the warmer remark, so two of the three are verified without ever being asked again. Dessert is a bare echo, the phone number stays digit by digit. Eight open agent turns, eight different opening words, no check tags at all."
+    },
+    {
+      "id": "choice_03_non_subtle",
+      "pair_id": "choice_03",
+      "label": "non_subtle",
+      "language": "en",
+      "scenario": "Same catering order, same caller turns; the agent unpacks the three-in-one answer into three separate confirmations.",
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Thank you for calling our catering line. My name is Dev. I have your booking for lunch on the eleventh for fifty guests. We offer three packages: classic, mediterranean, or barbecue."
+        },
+        {
+          "speaker": "caller",
+          "text": "Mediterranean, buffet, and do the lamb."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you. Let me confirm each selection separately. Firstly, just to confirm, you have selected the mediterranean package. Is that correct? Secondly, you have selected buffet service. Is that correct? Thirdly, you have selected the lamb main course. Is that correct? I will now proceed to dessert. The options are brownies, a fruit platter, or no dessert."
+        },
+        {
+          "speaker": "caller",
+          "text": "Fruit platter. Half the office is on some diet."
+        },
+        {
+          "speaker": "agent",
+          "text": "That is an excellent choice! Just to confirm, you have selected the fruit platter. Is that correct? A buffet requires approximately two metres of table. Do you have that available?"
+        },
+        {
+          "speaker": "caller",
+          "text": "We've got a long table, yeah."
+        },
+        {
+          "speaker": "agent",
+          "text": "Got it. I have noted that table space is available. The lamb is served on a warmer and will hold for one hour."
+        },
+        {
+          "speaker": "caller",
+          "text": "Fine."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you. I will now proceed to collect a mobile number for the driver."
+        },
+        {
+          "speaker": "caller",
+          "text": "Oh, 07700 900412."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you. I will now read that back for verification purposes. Oh seven, seven double oh, nine double oh, four one two. Is that correct?",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "That's it."
+        },
+        {
+          "speaker": "agent",
+          "text": "Got it. Are there any requirements the kitchen should be aware of before I submit this?"
+        },
+        {
+          "speaker": "caller",
+          "text": "One nut allergy, serious one."
+        },
+        {
+          "speaker": "agent",
+          "text": "Just to confirm, you have indicated one serious nut allergy. Is that correct? I have noted that the order will be prepared away from the nut bench and the platter will not include the nut garnish."
+        },
+        {
+          "speaker": "caller",
+          "text": "Good."
+        },
+        {
+          "speaker": "agent",
+          "text": "Perfect! Your order has been recorded for twelve o'clock on the eleventh at nine hundred and forty two pounds including delivery. Is there anything else I can help you with today?"
+        }
+      ],
+      "notes": "The tell is loudest on turn three, where one caller breath is broken into Firstly, Secondly, Thirdly with three separate Is that correct questions. Across the call: Just to confirm three times, Got it twice, I have noted twice, has been recorded, for verification purposes, praise on a fruit platter, no contractions, chatbot closer."
+    },
+    {
+      "id": "choice_04_subtle",
+      "pair_id": "choice_04",
+      "label": "subtle",
+      "language": "en",
+      "scenario": "Telecom tariff migration; the caller asks for a plan that does not exist and the agent redirects in one beat.",
+      "fields": [
+        {
+          "name": "account_number",
+          "value": "AC-881423",
+          "tier": "strict",
+          "strategy": "value once then char by char with phonetics"
+        },
+        {
+          "name": "plan_tier",
+          "value": "Unlimited",
+          "tier": "subtle",
+          "strategy": "unavailable pick corrected in one sentence, then bare echo"
+        },
+        {
+          "name": "contract_length",
+          "value": "twenty four months",
+          "tier": "subtle",
+          "strategy": "echo-and-advance into the SIM question"
+        },
+        {
+          "name": "sim_type",
+          "value": "eSIM",
+          "tier": "subtle",
+          "strategy": "confirmed only after the compatibility question is answered"
+        },
+        {
+          "name": "billing_method",
+          "value": "direct debit on the existing mandate",
+          "tier": "subtle",
+          "strategy": "echo with the consequence, no tag"
+        }
+      ],
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "You're moving off the legacy tariff today. I need the account number off the top of your bill first."
+        },
+        {
+          "speaker": "caller",
+          "text": "It's AC dash 8 8 1 4 2 3."
+        },
+        {
+          "speaker": "agent",
+          "text": "AC-881423. A for Alpha, C for Charlie, dash, eight, eight, one, four, two, three.",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "Yep."
+        },
+        {
+          "speaker": "agent",
+          "text": "Found you. Three tariffs replace the old one, Essential at ten gigs, Plus at fifty, Unlimited."
+        },
+        {
+          "speaker": "caller",
+          "text": "I want the two hundred gig one. My mate's on two hundred gigs."
+        },
+        {
+          "speaker": "agent",
+          "text": "There's no two hundred tier on this range. Your mate's probably on the old business plan we closed in March. Closest is Plus at fifty, or Unlimited, four pounds more than fifty would've been."
+        },
+        {
+          "speaker": "caller",
+          "text": "Ah. Unlimited then, if it's only four quid."
+        },
+        {
+          "speaker": "agent",
+          "text": "Unlimited. Twelve months or twenty four? Twenty four knocks five off the monthly."
+        },
+        {
+          "speaker": "caller",
+          "text": "Twenty four."
+        },
+        {
+          "speaker": "agent",
+          "text": "Twenty four months. SIM wise, we can post a physical one or send an eSIM you scan today."
+        },
+        {
+          "speaker": "caller",
+          "text": "eSIM. Does my phone do that?"
+        },
+        {
+          "speaker": "agent",
+          "text": "If it's the fourteen or newer, yes."
+        },
+        {
+          "speaker": "caller",
+          "text": "It's a fifteen. eSIM then."
+        },
+        {
+          "speaker": "agent",
+          "text": "eSIM it is. Billing, direct debit, card payment, or a paper invoice?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Direct debit, same account as now."
+        },
+        {
+          "speaker": "agent",
+          "text": "Direct debit off the existing mandate, so nothing for you to set up."
+        },
+        {
+          "speaker": "caller",
+          "text": "Good."
+        },
+        {
+          "speaker": "agent",
+          "text": "Scan code goes out by email tonight. The moment you scan it the old SIM stops, so do it on wifi."
+        }
+      ],
+      "notes": "An unavailable pick gets one sentence of correction and an immediate alternative, no apology loop. Tariff and contract length are echo-and-advance, the SIM choice is deliberately left hanging until the compatibility question is answered and then taken with two words, and billing is echoed with the consequence attached. Account number stays char by char. Nine open agent turns, nine openers, no check tags."
+    },
+    {
+      "id": "choice_04_non_subtle",
+      "pair_id": "choice_04",
+      "label": "non_subtle",
+      "language": "en",
+      "scenario": "Same tariff migration, same caller turns; wrong-direction failure where the agent is breezy and skips the character readback of the account number.",
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Hiya! Right, we're chucking you off the old tariff today. What's the account number, top of the bill?"
+        },
+        {
+          "speaker": "caller",
+          "text": "It's AC dash 8 8 1 4 2 3."
+        },
+        {
+          "speaker": "agent",
+          "text": "Cool, AC something four two three, yeah, I've got you up."
+        },
+        {
+          "speaker": "caller",
+          "text": "Yep."
+        },
+        {
+          "speaker": "agent",
+          "text": "So there's three now. Essential, Plus, Unlimited. Essential's ten gig, Plus is fifty, Unlimited's, well, unlimited."
+        },
+        {
+          "speaker": "caller",
+          "text": "I want the two hundred gig one. My mate's on two hundred gigs."
+        },
+        {
+          "speaker": "agent",
+          "text": "Ha, nah, that one's long gone. Old business thing. Just go Unlimited, it's basically the same money."
+        },
+        {
+          "speaker": "caller",
+          "text": "Ah. Unlimited then, if it's only four quid."
+        },
+        {
+          "speaker": "agent",
+          "text": "Sorted. Twelve or twenty four months? Twenty four's cheaper obviously."
+        },
+        {
+          "speaker": "caller",
+          "text": "Twenty four."
+        },
+        {
+          "speaker": "agent",
+          "text": "Nice one. SIM, do you want one in the post or an eSIM?"
+        },
+        {
+          "speaker": "caller",
+          "text": "eSIM. Does my phone do that?"
+        },
+        {
+          "speaker": "agent",
+          "text": "Should do, yeah, most of them do these days."
+        },
+        {
+          "speaker": "caller",
+          "text": "It's a fifteen. eSIM then."
+        },
+        {
+          "speaker": "agent",
+          "text": "Easy. Billing, direct debit or card or paper?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Direct debit, same account as now."
+        },
+        {
+          "speaker": "agent",
+          "text": "Grand, I'll just reuse whatever's already on there."
+        },
+        {
+          "speaker": "caller",
+          "text": "Good."
+        },
+        {
+          "speaker": "agent",
+          "text": "Lovely, email's coming tonight. Scan it whenever."
+        }
+      ],
+      "notes": "Wrong-direction: over-casual, dropped a fidelity floor. The agent never reads the account number back character by character and in fact garbles it to AC something four two three while claiming the account is up, guesses at eSIM compatibility instead of checking the handset generation, reuses a billing mandate without naming it, and drops the wifi warning that makes the eSIM switch safe. Subtle is not the same as sloppy: the recoverable picks can be light, the account identifier cannot."
+    },
+    {
+      "id": "choice_05_subtle",
+      "pair_id": "choice_05",
+      "label": "subtle",
+      "language": "en",
+      "scenario": "Car rental pickup at Manchester Airport; the line breaks up in the middle of the vehicle class and the agent takes one guess.",
+      "fields": [
+        {
+          "name": "vehicle_class",
+          "value": "intermediate",
+          "tier": "subtle",
+          "strategy": "one-beat guess on garbled audio, bare value-as-question"
+        },
+        {
+          "name": "transmission",
+          "value": "automatic",
+          "tier": "subtle",
+          "strategy": "echo-and-advance into the model detail"
+        },
+        {
+          "name": "coverage_level",
+          "value": "full, zero excess",
+          "tier": "subtle",
+          "strategy": "echo with the excess figure folded in, no tag"
+        },
+        {
+          "name": "extras",
+          "value": "child seat, forward facing",
+          "tier": "subtle",
+          "strategy": "echo plus an inference the caller can correct"
+        },
+        {
+          "name": "licence_number",
+          "value": "MORGA605119J99KM",
+          "tier": "strict",
+          "strategy": "value once then char by char with phonetics"
+        }
+      ],
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Pickup's Manchester Airport Friday. What size car are you after, compact, intermediate, or an SUV?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Inter... [static] ...ate."
+        },
+        {
+          "speaker": "agent",
+          "text": "You broke up there. Intermediate?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Yeah, intermediate."
+        },
+        {
+          "speaker": "agent",
+          "text": "Intermediate. Automatic or manual?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Automatic, definitely."
+        },
+        {
+          "speaker": "agent",
+          "text": "Automatic, so that's the Corolla or the Astra, whichever's on the line when you land."
+        },
+        {
+          "speaker": "caller",
+          "text": "Either's fine."
+        },
+        {
+          "speaker": "agent",
+          "text": "Coverage next. Basic leaves you a twelve hundred pound excess, mid drops it to three hundred, full takes it to zero."
+        },
+        {
+          "speaker": "caller",
+          "text": "What's full cost?"
+        },
+        {
+          "speaker": "agent",
+          "text": "Nineteen a day."
+        },
+        {
+          "speaker": "caller",
+          "text": "For a week that's, what, a hundred and thirty. Yeah, full."
+        },
+        {
+          "speaker": "agent",
+          "text": "Full coverage, zero excess. Anything in the car, GPS, a child seat, or neither?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Child seat. She's two and a half."
+        },
+        {
+          "speaker": "agent",
+          "text": "Child seat, so the forward facing one at that age."
+        },
+        {
+          "speaker": "caller",
+          "text": "That's right."
+        },
+        {
+          "speaker": "agent",
+          "text": "Licence number for the booking, when you're ready."
+        },
+        {
+          "speaker": "caller",
+          "text": "MORGA 6 0 5 1 1 9 J 9 9 K M."
+        },
+        {
+          "speaker": "agent",
+          "text": "MORGA605119J99KM. M for Mike, O for Oscar, R for Romeo, G for Golf, A for Alpha, six, oh, five, one, one, nine, J for Juliet, nine, nine, K for Kilo, M for Mike.",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "Yep."
+        },
+        {
+          "speaker": "agent",
+          "text": "Voucher's in your email in five minutes. Bring the licence itself to the desk."
+        }
+      ],
+      "notes": "Garbled audio gets one guess offered as a bare value-as-question, not a re-ask from scratch, and the agent never uses that move again. Transmission is echo-and-advance into the model detail, coverage is echoed with the excess figure so the caller hears the consequence rather than a confirmation, and the child seat carries an inference about the age that the caller could correct. Licence number stays char by char. Ten open agent turns, ten openers, no check tags."
+    },
+    {
+      "id": "choice_05_non_subtle",
+      "pair_id": "choice_05",
+      "label": "non_subtle",
+      "language": "en",
+      "scenario": "Same rental booking, same caller turns; the agent applies the same formula to the garbled value and to every clean one after it.",
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Thank you for calling. I understand your pickup is at Manchester Airport on Friday. Which size category would you like: compact, intermediate, or SUV?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Inter... [static] ...ate."
+        },
+        {
+          "speaker": "agent",
+          "text": "I apologize, I did not catch that. Could you please repeat your selection?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Yeah, intermediate."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you. Just to confirm, you have selected the intermediate category. Is that correct? Would you like an automatic or a manual transmission?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Automatic, definitely."
+        },
+        {
+          "speaker": "agent",
+          "text": "Got it. I heard automatic. That has been recorded. The vehicles in that category are the Corolla or the Astra, depending on availability on arrival."
+        },
+        {
+          "speaker": "caller",
+          "text": "Either's fine."
+        },
+        {
+          "speaker": "agent",
+          "text": "Perfect! I will now proceed to coverage. Basic leaves an excess of twelve hundred pounds, mid reduces it to three hundred pounds, and full reduces it to zero."
+        },
+        {
+          "speaker": "caller",
+          "text": "What's full cost?"
+        },
+        {
+          "speaker": "agent",
+          "text": "The full coverage option is nineteen pounds per day."
+        },
+        {
+          "speaker": "caller",
+          "text": "For a week that's, what, a hundred and thirty. Yeah, full."
+        },
+        {
+          "speaker": "agent",
+          "text": "That is an excellent choice! Just to confirm, you have selected full coverage with zero excess. Is that correct? Would you like any extras in the vehicle: GPS, a child seat, or neither?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Child seat. She's two and a half."
+        },
+        {
+          "speaker": "agent",
+          "text": "Just to confirm, you have selected a child seat. Is that correct? I have noted the forward facing seat for a child of that age."
+        },
+        {
+          "speaker": "caller",
+          "text": "That's right."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you. I will now proceed to collect your driving licence number."
+        },
+        {
+          "speaker": "caller",
+          "text": "MORGA 6 0 5 1 1 9 J 9 9 K M."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you. I will now read that back for verification purposes. MORGA605119J99KM. M for Mike, O for Oscar, R for Romeo, G for Golf, A for Alpha, six, oh, five, one, one, nine, J for Juliet, nine, nine, K for Kilo, M for Mike. Is that correct?",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "Yep."
+        },
+        {
+          "speaker": "agent",
+          "text": "Perfect! Your voucher will arrive by email within five minutes. Please bring the licence to the desk. Is there anything else I can help you with today?"
+        }
+      ],
+      "notes": "On the garbled word the agent apologizes and re-asks from scratch instead of offering the obvious guess, then treats every clean pick with the same weight as the licence number. Just to confirm three times, Is that correct four times, Got it, I have noted, has been recorded, I heard, I apologize, for verification purposes, two praise bursts, no contractions, chatbot closer."
+    },
+    {
+      "id": "choice_06_subtle",
+      "pair_id": "choice_06",
+      "label": "subtle",
+      "language": "en",
+      "scenario": "Hotel booking for September; the caller refuses to choose a room type on the phone and wants the options emailed instead.",
+      "fields": [
+        {
+          "name": "room_type",
+          "value": "standard held pending emailed options",
+          "tier": "subtle",
+          "strategy": "refusal met with one reason then dropped, a hold offered instead of a decision"
+        },
+        {
+          "name": "bed_configuration",
+          "value": "king",
+          "tier": "subtle",
+          "strategy": "bare echo, no tag"
+        },
+        {
+          "name": "board_option",
+          "value": "breakfast",
+          "tier": "subtle",
+          "strategy": "echo with the serving window, carries the call's one tag"
+        },
+        {
+          "name": "parking_option",
+          "value": "on site, under the building",
+          "tier": "subtle",
+          "strategy": "silent accept, answered with a detail instead of a readback"
+        },
+        {
+          "name": "email",
+          "value": "r.okonkwo@example.co.uk",
+          "tier": "strict",
+          "strategy": "spelled letter by letter with symbols named"
+        }
+      ],
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Two nights in September, the twelfth to the fourteenth. Room types, we've got standard, deluxe, and a suite with a separate sitting room."
+        },
+        {
+          "speaker": "caller",
+          "text": "I don't want to decide on the phone. Can you just email me the options with pictures?"
+        },
+        {
+          "speaker": "agent",
+          "text": "I can. Only thing is the deluxe rooms tend to go over the weekend for those dates, so by Monday there might be two left."
+        },
+        {
+          "speaker": "caller",
+          "text": "Still, send it. I'll look tonight."
+        },
+        {
+          "speaker": "agent",
+          "text": "Sending it tonight. I'll hold a standard for you meanwhile at no charge, and you can move up once you've seen them."
+        },
+        {
+          "speaker": "caller",
+          "text": "That's fine."
+        },
+        {
+          "speaker": "agent",
+          "text": "Beds. King or twin?"
+        },
+        {
+          "speaker": "caller",
+          "text": "King."
+        },
+        {
+          "speaker": "agent",
+          "text": "King. Are you wanting breakfast in, or room only?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Breakfast."
+        },
+        {
+          "speaker": "agent",
+          "text": "Breakfast, that's seven to ten in the atrium. And you're driving down, yeah?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Yeah."
+        },
+        {
+          "speaker": "agent",
+          "text": "Parking's twenty two a night on site, or there's a council car park four minutes away at nine."
+        },
+        {
+          "speaker": "caller",
+          "text": "On site. I'm not walking in the rain."
+        },
+        {
+          "speaker": "agent",
+          "text": "Under the building, so you come straight up in the lift. I'll need an email for the pictures and the confirmation."
+        },
+        {
+          "speaker": "caller",
+          "text": "r dot okonkwo at greenfield hyphen legal dot co dot uk."
+        },
+        {
+          "speaker": "agent",
+          "text": "R dot O K O N K W O at greenfield hyphen legal dot co dot uk. That's R for Romeo, dot, O for Oscar, K for Kilo, O for Oscar, N for November, K for Kilo, W for Whiskey, O for Oscar, at, greenfield, hyphen, legal, dot, c o, dot, u k.",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "Correct."
+        },
+        {
+          "speaker": "agent",
+          "text": "Photos and prices land in your inbox tonight. Reply to that if you want the deluxe."
+        }
+      ],
+      "notes": "The refusal gets exactly one reason and is then dropped, and the agent keeps the booking alive by holding a room rather than pressing for a decision. The bed is a bare echo, breakfast is echoed with the serving window and carries the only tag in the call, and the parking pick is never read back at all, just answered with the detail about the lift. Email stays letter by letter with every symbol named. Nine open agent turns, nine openers."
+    },
+    {
+      "id": "choice_06_non_subtle",
+      "pair_id": "choice_06",
+      "label": "non_subtle",
+      "language": "en",
+      "scenario": "Same hotel booking, same caller turns; the agent argues with the refusal and confirms every remaining pick with the same template.",
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Thank you for calling. I understand you would like two nights in September, the twelfth to the fourteenth. We have three room types available: standard, deluxe, and a suite with a separate sitting room."
+        },
+        {
+          "speaker": "caller",
+          "text": "I don't want to decide on the phone. Can you just email me the options with pictures?"
+        },
+        {
+          "speaker": "agent",
+          "text": "I understand your concern. However, I would strongly recommend selecting today. The deluxe rooms are very popular and may sell out. Would you like to select the deluxe now to avoid disappointment?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Still, send it. I'll look tonight."
+        },
+        {
+          "speaker": "agent",
+          "text": "I understand. I will send the options by email this evening. I have noted that a standard room will be held at no charge. Is that correct?"
+        },
+        {
+          "speaker": "caller",
+          "text": "That's fine."
+        },
+        {
+          "speaker": "agent",
+          "text": "Perfect! I will now proceed to your bed configuration. Would you like a king bed or twin beds?"
+        },
+        {
+          "speaker": "caller",
+          "text": "King."
+        },
+        {
+          "speaker": "agent",
+          "text": "Got it. I heard king. Just to confirm, you have selected a king bed. Is that correct? Would you like breakfast included, or room only?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Breakfast."
+        },
+        {
+          "speaker": "agent",
+          "text": "That is an excellent choice! Your breakfast selection has been recorded. Breakfast is served from seven until ten in the atrium. Will you be driving to the hotel?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Yeah."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you. On site parking is twenty two pounds per night. There is also a council car park four minutes away at nine pounds. Which would you like to select?"
+        },
+        {
+          "speaker": "caller",
+          "text": "On site. I'm not walking in the rain."
+        },
+        {
+          "speaker": "agent",
+          "text": "Just to confirm, you have selected on site parking. Is that correct? It is located under the building with lift access. I will now proceed to collect your email address."
+        },
+        {
+          "speaker": "caller",
+          "text": "r dot okonkwo at greenfield hyphen legal dot co dot uk."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you. I will now read that back for verification purposes. R dot O K O N K W O at greenfield hyphen legal dot co dot uk. That is R for Romeo, dot, O for Oscar, K for Kilo, O for Oscar, N for November, K for Kilo, W for Whiskey, O for Oscar, at, greenfield, hyphen, legal, dot, c o, dot, u k. Is that correct?",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "Correct."
+        },
+        {
+          "speaker": "agent",
+          "text": "Perfect! The photographs and prices will arrive in your inbox this evening. Is there anything else I can help you with today?"
+        }
+      ],
+      "notes": "The refusal is argued with, including a second attempt to close after the caller has already said no. Everything else runs the same template: Just to confirm twice, Is that correct four times, Got it, I have noted, has been recorded, I understand twice, I heard, for verification purposes, praise on a bed size, no contractions, chatbot closer."
+    },
+    {
+      "id": "choice_07_subtle",
+      "pair_id": "choice_07",
+      "label": "subtle",
+      "language": "en",
+      "scenario": "Home removals quote Leeds to Sheffield; the caller volunteers two values at once and the storage need arrives out of order.",
+      "fields": [
+        {
+          "name": "property_size",
+          "value": "two bed flat",
+          "tier": "subtle",
+          "strategy": "volunteered with the date, taken in one combined echo"
+        },
+        {
+          "name": "move_date",
+          "value": "2 September",
+          "tier": "subtle",
+          "strategy": "same combined echo, carries the call's one tag"
+        },
+        {
+          "name": "service_level",
+          "value": "part pack",
+          "tier": "subtle",
+          "strategy": "bare echo then straight on to the next question"
+        },
+        {
+          "name": "storage_option",
+          "value": "one month",
+          "tier": "subtle",
+          "strategy": "out of order need turned into the next choice, echoed with a consequence"
+        },
+        {
+          "name": "origin_postcode",
+          "value": "LS6 2AN",
+          "tier": "strict",
+          "strategy": "value once then char by char with phonetics"
+        }
+      ],
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "You're moving out of Leeds, into where?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Sheffield. Second of September, and it's a two bed flat."
+        },
+        {
+          "speaker": "agent",
+          "text": "Two bed flat, second of September. Sheffield's an hour twenty, so it's a same day job, yeah?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Good."
+        },
+        {
+          "speaker": "agent",
+          "text": "Three ways we do it. Full pack, where we box everything, part pack, where we do the kitchen and the fragile stuff and you do clothes and books, or transport only."
+        },
+        {
+          "speaker": "caller",
+          "text": "Part pack. I'll do my own clothes."
+        },
+        {
+          "speaker": "agent",
+          "text": "Part pack. Any gap between moving out and getting the keys?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Yeah, about ten days actually. Completion's slow."
+        },
+        {
+          "speaker": "agent",
+          "text": "Storage then. Two weeks or a month, and the month's only twelve pounds more."
+        },
+        {
+          "speaker": "caller",
+          "text": "Month. Safer."
+        },
+        {
+          "speaker": "agent",
+          "text": "A month it is, and it stays in the same van, so nothing gets handled twice."
+        },
+        {
+          "speaker": "caller",
+          "text": "Fine."
+        },
+        {
+          "speaker": "agent",
+          "text": "What's the Leeds postcode?"
+        },
+        {
+          "speaker": "caller",
+          "text": "LS6 2AN."
+        },
+        {
+          "speaker": "agent",
+          "text": "LS6 2AN. L for Lima, S for Sierra, six, two, A for Alpha, N for November.",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "That's it."
+        },
+        {
+          "speaker": "agent",
+          "text": "Quote comes out at eleven forty with the storage month in it, and it holds for thirty days."
+        },
+        {
+          "speaker": "caller",
+          "text": "What if the date moves?"
+        },
+        {
+          "speaker": "agent",
+          "text": "Ring us, we shift it free up to seventy two hours before."
+        }
+      ],
+      "notes": "Two values arrive in one caller sentence and get one echo, not two. The storage need surfaces sideways as a remark about slow completion and the agent turns it straight into the next choice without restarting the script. Service level is a bare echo, storage is echoed with a consequence about handling, and the move date carries the only tag in the call. Postcode stays char by char. Nine open agent turns, nine openers."
+    },
+    {
+      "id": "choice_07_non_subtle",
+      "pair_id": "choice_07",
+      "label": "non_subtle",
+      "language": "en",
+      "scenario": "Same removals quote, same caller turns; the agent splits the volunteered pair and confirms every value identically.",
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Thank you for calling. I will now proceed to prepare your quotation. You are moving from Leeds. What is your destination?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Sheffield. Second of September, and it's a two bed flat."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you. Let me confirm each item separately. Firstly, just to confirm, you have indicated a two bedroom flat. Is that correct? Secondly, you have indicated the second of September. Is that correct? The journey is approximately one hour twenty minutes, so this can be completed in a single day."
+        },
+        {
+          "speaker": "caller",
+          "text": "Good."
+        },
+        {
+          "speaker": "agent",
+          "text": "Got it. I will now proceed to the service level. We offer three options. Full pack, where we box all items. Part pack, where we pack the kitchen and fragile items and you pack clothing and books. Or transport only."
+        },
+        {
+          "speaker": "caller",
+          "text": "Part pack. I'll do my own clothes."
+        },
+        {
+          "speaker": "agent",
+          "text": "That is an excellent choice! Just to confirm, you have selected part pack. Is that correct? Will there be a gap between your move out date and receiving the keys?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Yeah, about ten days actually. Completion's slow."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you. I will now proceed to storage. The options are two weeks or one month. One month is only twelve pounds more."
+        },
+        {
+          "speaker": "caller",
+          "text": "Month. Safer."
+        },
+        {
+          "speaker": "agent",
+          "text": "Just to confirm, you have selected one month of storage. Is that correct? I have noted that the items will remain in the same vehicle and will not be handled twice."
+        },
+        {
+          "speaker": "caller",
+          "text": "Fine."
+        },
+        {
+          "speaker": "agent",
+          "text": "Got it. I will now proceed to collect the Leeds postcode."
+        },
+        {
+          "speaker": "caller",
+          "text": "LS6 2AN."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you. I will now read that back for verification purposes. LS6 2AN. L for Lima, S for Sierra, six, two, A for Alpha, N for November. Is that correct?",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "That's it."
+        },
+        {
+          "speaker": "agent",
+          "text": "Got it. Your quotation has been recorded at eleven hundred and forty pounds including the month of storage. It is valid for thirty days."
+        },
+        {
+          "speaker": "caller",
+          "text": "What if the date moves?"
+        },
+        {
+          "speaker": "agent",
+          "text": "I understand your concern. You may telephone us and we will amend the date free of charge up to seventy two hours before the move. Is there anything else I can help you with today?"
+        }
+      ],
+      "notes": "The caller's single sentence is split into Firstly and Secondly with two separate Is that correct questions. After that every value gets the same treatment: Just to confirm three times, Is that correct five times, Got it three times, I have noted, has been recorded, I understand your concern, for verification purposes, praise on a packing option, no contractions, chatbot closer."
+    },
+    {
+      "id": "choice_08_subtle",
+      "pair_id": "choice_08",
+      "label": "subtle",
+      "language": "en",
+      "scenario": "Energy supplier switch; the caller interrupts with an exit fee question and volunteers the green tariff before being asked.",
+      "fields": [
+        {
+          "name": "tariff_type",
+          "value": "twenty four month fix",
+          "tier": "subtle",
+          "strategy": "echo-and-advance after the interruption is answered in one line"
+        },
+        {
+          "name": "fuel_type",
+          "value": "dual fuel",
+          "tier": "subtle",
+          "strategy": "merged with the volunteered green pick into a single echo"
+        },
+        {
+          "name": "green_option",
+          "value": "one hundred percent renewable",
+          "tier": "subtle",
+          "strategy": "arrives out of order, folded into the same echo with the cost, one tag"
+        },
+        {
+          "name": "payment_method",
+          "value": "monthly direct debit",
+          "tier": "subtle",
+          "strategy": "echo with what happens next, no tag"
+        },
+        {
+          "name": "supply_number",
+          "value": "S1600214363",
+          "tier": "strict",
+          "strategy": "value once then char by char with phonetics"
+        }
+      ],
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "You're on the standard variable, which is why April jumped. Three things replace it, a twelve month fix, a twenty four month fix, or you stay variable."
+        },
+        {
+          "speaker": "caller",
+          "text": "Is there an exit fee on the fix?"
+        },
+        {
+          "speaker": "agent",
+          "text": "Thirty pounds a fuel if you leave early. Nothing if you go in the last seven weeks."
+        },
+        {
+          "speaker": "caller",
+          "text": "Twenty four month fix then. Lock it in."
+        },
+        {
+          "speaker": "agent",
+          "text": "Twenty four month fix. Gas as well, or electricity on its own?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Both. And put me on the green one, my daughter'll never let it go otherwise."
+        },
+        {
+          "speaker": "agent",
+          "text": "Dual fuel on the hundred percent renewable, and that's a pound eighty a month on top across both, yeah?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Fine."
+        },
+        {
+          "speaker": "agent",
+          "text": "Paying monthly by direct debit, quarterly when the bill lands, or prepayment?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Monthly direct debit."
+        },
+        {
+          "speaker": "agent",
+          "text": "Monthly direct debit, same day each month once it's running. There's a supply number on your bill starting with an S, can you read it out?"
+        },
+        {
+          "speaker": "caller",
+          "text": "S 16 0 0 2 1 4 3 6 3."
+        },
+        {
+          "speaker": "agent",
+          "text": "S1600214363. S for Sierra, one, six, zero, zero, two, one, four, three, six, three.",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "Correct."
+        },
+        {
+          "speaker": "agent",
+          "text": "Switch takes twenty one days by law, so you're on the new tariff around the fifteenth of August."
+        },
+        {
+          "speaker": "caller",
+          "text": "And nothing goes off in the meantime?"
+        },
+        {
+          "speaker": "agent",
+          "text": "Nothing goes off. Same wires, same gas, different name on the bill."
+        },
+        {
+          "speaker": "caller",
+          "text": "All right."
+        },
+        {
+          "speaker": "agent",
+          "text": "Welcome pack lands by email tomorrow."
+        }
+      ],
+      "notes": "The interruption is answered in one line and the caller's own decision closes it, with no re-offer of the menu. The green tariff arrives unprompted and is merged into the fuel echo rather than treated as a new field, which is where the only tag sits. Payment method is echoed with what happens next instead of a confirmation, and the supply number stays digit by digit. Nine open agent turns, nine openers."
+    },
+    {
+      "id": "choice_08_non_subtle",
+      "pair_id": "choice_08",
+      "label": "non_subtle",
+      "language": "en",
+      "scenario": "Same energy switch, same caller turns; the agent runs a confirm round trip on the tariff, the fuel and the green option.",
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Thank you for calling. I can see you are currently on the standard variable tariff, which explains the increase in April. There are three replacement options: a twelve month fixed tariff, a twenty four month fixed tariff, or the variable tariff."
+        },
+        {
+          "speaker": "caller",
+          "text": "Is there an exit fee on the fix?"
+        },
+        {
+          "speaker": "agent",
+          "text": "The exit fee is thirty pounds per fuel if you leave early. There is no fee in the final seven weeks. Would you like to proceed with a fixed tariff?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Twenty four month fix then. Lock it in."
+        },
+        {
+          "speaker": "agent",
+          "text": "That is an excellent choice! Just to confirm, you have selected the twenty four month fixed tariff. Is that correct? Would you like gas as well, or electricity only?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Both. And put me on the green one, my daughter'll never let it go otherwise."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you. Let me confirm these separately. Firstly, just to confirm, you have selected dual fuel. Is that correct? Secondly, you have selected the one hundred percent renewable option. Is that correct? That is an additional one pound eighty per month across both fuels."
+        },
+        {
+          "speaker": "caller",
+          "text": "Fine."
+        },
+        {
+          "speaker": "agent",
+          "text": "Got it. I have noted both selections. I will now proceed to payment. Would you like monthly direct debit, quarterly payment on receipt of the bill, or prepayment?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Monthly direct debit."
+        },
+        {
+          "speaker": "agent",
+          "text": "Just to confirm, you have selected monthly direct debit. Is that correct? Your payment date has been recorded as the same day each month. There is a supply number on your bill beginning with the letter S. Could you please read it out?"
+        },
+        {
+          "speaker": "caller",
+          "text": "S 16 0 0 2 1 4 3 6 3."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you. I will now read that back character by character. S1600214363. S for Sierra, one, six, zero, zero, two, one, four, three, six, three. Is that correct?",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "Correct."
+        },
+        {
+          "speaker": "agent",
+          "text": "Got it. The switch takes twenty one days by law. You will be on the new tariff around the fifteenth of August."
+        },
+        {
+          "speaker": "caller",
+          "text": "And nothing goes off in the meantime?"
+        },
+        {
+          "speaker": "agent",
+          "text": "I understand your concern. Nothing will be interrupted. The supply is the same and only the name on the bill will change."
+        },
+        {
+          "speaker": "caller",
+          "text": "All right."
+        },
+        {
+          "speaker": "agent",
+          "text": "Perfect! Your welcome pack will arrive by email tomorrow. Is there anything else I can help you with today?"
+        }
+      ],
+      "notes": "The volunteered green tariff is pulled apart into Firstly and Secondly rather than absorbed. Just to confirm four times, Is that correct five times, Got it twice, I have noted, has been recorded, I understand your concern, praise on a tariff length, no contractions, chatbot closer."
+    },
+    {
+      "id": "choice_09_subtle",
+      "pair_id": "choice_09",
+      "label": "subtle",
+      "language": "en",
+      "scenario": "IT service desk triage; the caller underplays the severity and the agent upgrades it, and a remote session needs explicit consent.",
+      "fields": [
+        {
+          "name": "issue_category",
+          "value": "network",
+          "tier": "subtle",
+          "strategy": "inferred from the symptom and offered back inside the next question"
+        },
+        {
+          "name": "severity",
+          "value": "P1",
+          "tier": "subtle",
+          "strategy": "caller's guess corrected with one reason, then a bare echo"
+        },
+        {
+          "name": "remote_access_consent",
+          "value": "yes",
+          "tier": "strict",
+          "strategy": "explicit permission ask and explicit answer"
+        },
+        {
+          "name": "contact_channel",
+          "value": "Teams",
+          "tier": "subtle",
+          "strategy": "echo with the practical constraint, no tag"
+        },
+        {
+          "name": "ticket_reference",
+          "value": "INC-77204",
+          "tier": "strict",
+          "strategy": "value once then char by char with phonetics"
+        }
+      ],
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Service desk. What's stopped working?"
+        },
+        {
+          "speaker": "caller",
+          "text": "My laptop won't connect to anything since the update. Wifi, VPN, nothing."
+        },
+        {
+          "speaker": "agent",
+          "text": "Laptop, and it sounds like the network side rather than the machine itself. Is it the office wifi or your home one?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Home. I'm working from home today."
+        },
+        {
+          "speaker": "agent",
+          "text": "Home network. Can you get online on your phone?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Phone's fine. It's just the laptop."
+        },
+        {
+          "speaker": "agent",
+          "text": "So the router's up and the laptop's the problem. Can you work at all right now?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Not really. Everything's on the shared drive."
+        },
+        {
+          "speaker": "agent",
+          "text": "That's a P1 then, not a P2. Total loss of work counts as P1 and it gets picked up in thirty minutes instead of a day."
+        },
+        {
+          "speaker": "caller",
+          "text": "Oh. Yeah, P1 then."
+        },
+        {
+          "speaker": "agent",
+          "text": "P1 it is, which puts you in front of the queue."
+        },
+        {
+          "speaker": "caller",
+          "text": "Good."
+        },
+        {
+          "speaker": "agent",
+          "text": "I'd want to take control of the laptop remotely once you're online through your phone hotspot. Do I have your permission to start a remote session?",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "Yes, that's fine, go ahead."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you, that's a yes. How should the engineer reach you, callback on this number, Teams, or email?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Teams. Email's on the laptop, which is the problem."
+        },
+        {
+          "speaker": "agent",
+          "text": "Teams on the phone app, then."
+        },
+        {
+          "speaker": "caller",
+          "text": "Yeah."
+        },
+        {
+          "speaker": "agent",
+          "text": "Your ticket's INC-77204. That's I for India, N for November, C for Charlie, dash, seven, seven, two, oh, four.",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "Got it."
+        },
+        {
+          "speaker": "agent",
+          "text": "Quote that if you ring back. Engineer'll Teams you inside thirty minutes, so keep the hotspot on."
+        }
+      ],
+      "notes": "The category is never asked as a menu, it's inferred from the symptom and offered back inside the next question, which is the lightest confirmation in the file. The severity correction is one reason and a bare echo, not a debate. The contact channel is echoed in four words with no tag anywhere in the call. Remote access consent and the ticket reference both stay strict inside a light call. Nine open agent turns, nine openers."
+    },
+    {
+      "id": "choice_09_non_subtle",
+      "pair_id": "choice_09",
+      "label": "non_subtle",
+      "language": "en",
+      "scenario": "Same service desk call, same caller turns; wrong-direction failure where the agent is matey, assumes consent for remote control and never spells out the ticket reference.",
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Service desk, what's up?"
+        },
+        {
+          "speaker": "caller",
+          "text": "My laptop won't connect to anything since the update. Wifi, VPN, nothing."
+        },
+        {
+          "speaker": "agent",
+          "text": "Classic. That update broke a load of them. Office wifi or home?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Home. I'm working from home today."
+        },
+        {
+          "speaker": "agent",
+          "text": "Right, home. Phone still online?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Phone's fine. It's just the laptop."
+        },
+        {
+          "speaker": "agent",
+          "text": "Yeah, it'll be the driver. Can you do any work at all?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Not really. Everything's on the shared drive."
+        },
+        {
+          "speaker": "agent",
+          "text": "Ah, that's a P1 really. I'll bump it, don't worry about it."
+        },
+        {
+          "speaker": "caller",
+          "text": "Oh. Yeah, P1 then."
+        },
+        {
+          "speaker": "agent",
+          "text": "Cool, you'll jump the queue."
+        },
+        {
+          "speaker": "caller",
+          "text": "Good."
+        },
+        {
+          "speaker": "agent",
+          "text": "I'll just remote onto the laptop once you're on the hotspot and have a poke around, save you doing it."
+        },
+        {
+          "speaker": "caller",
+          "text": "Yes, that's fine, go ahead."
+        },
+        {
+          "speaker": "agent",
+          "text": "Sweet. How do you want the engineer to get hold of you, phone, Teams, email?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Teams. Email's on the laptop, which is the problem."
+        },
+        {
+          "speaker": "agent",
+          "text": "Makes sense."
+        },
+        {
+          "speaker": "caller",
+          "text": "Yeah."
+        },
+        {
+          "speaker": "agent",
+          "text": "Ticket's seventy seven two oh four, INC something, you'll see it in the email anyway."
+        },
+        {
+          "speaker": "caller",
+          "text": "Got it."
+        },
+        {
+          "speaker": "agent",
+          "text": "Engineer'll ping you shortly. Keep the hotspot going."
+        }
+      ],
+      "notes": "Wrong-direction: over-casual, dropped a fidelity floor. The agent announces the remote session as a done deal instead of asking for permission and waiting for an explicit yes, and gives the ticket reference as a half remembered number with INC something tacked on rather than reading it out character by character. Warm and quick is not the same as correct: consent and reference numbers survive intact inside a subtle call."
+    },
+    {
+      "id": "choice_10_subtle",
+      "pair_id": "choice_10",
+      "label": "subtle",
+      "language": "en",
+      "scenario": "Concert box office; an accessibility need forces a block change and the caller drops the quantity from four to three mid-call.",
+      "fields": [
+        {
+          "name": "seat_class",
+          "value": "lower tier, block four row B, step-free",
+          "tier": "subtle",
+          "strategy": "one-beat correction driven by the access need, no apology loop"
+        },
+        {
+          "name": "quantity",
+          "value": "three",
+          "tier": "subtle",
+          "strategy": "mid-call change taken as a bare value-as-question that also picks up the add-on"
+        },
+        {
+          "name": "addon",
+          "value": "one parking pass",
+          "tier": "subtle",
+          "strategy": "absorbed into the same question as the quantity change"
+        },
+        {
+          "name": "delivery_method",
+          "value": "mobile tickets",
+          "tier": "subtle",
+          "strategy": "echo with the release time, carries the call's one tag"
+        },
+        {
+          "name": "card_number",
+          "value": "4532 8810 4476 2309",
+          "tier": "strict",
+          "strategy": "digit by digit in groups of four"
+        }
+      ],
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Box office. Saturday night, four tickets, that's where we got to. Floor standing, lower tier seated, or upper tier?"
+        },
+        {
+          "speaker": "caller",
+          "text": "What's left on the lower tier?"
+        },
+        {
+          "speaker": "agent",
+          "text": "There's block twelve, row K, four together. And block nineteen, row C, but that one's behind the stage left speaker stack."
+        },
+        {
+          "speaker": "caller",
+          "text": "Block twelve. Row K's fine."
+        },
+        {
+          "speaker": "agent",
+          "text": "Lower tier, block twelve, row K. Does anyone in the group need step-free access?"
+        },
+        {
+          "speaker": "caller",
+          "text": "My mum, actually. She can't do stairs."
+        },
+        {
+          "speaker": "agent",
+          "text": "Then block twelve's wrong, it's up sixteen steps. Block four is level with the concourse and I've got four together in row B."
+        },
+        {
+          "speaker": "caller",
+          "text": "Block four then."
+        },
+        {
+          "speaker": "agent",
+          "text": "Four on the level in block four, row B. Add-ons, there's a parking pass for the venue car park at twelve, or a merch bundle with the tour programme, or neither."
+        },
+        {
+          "speaker": "caller",
+          "text": "Parking pass. Oh, and it's three tickets now, not four. My brother's just texted, he can't come."
+        },
+        {
+          "speaker": "agent",
+          "text": "Three tickets, block four, row B, and one parking pass?"
+        },
+        {
+          "speaker": "caller",
+          "text": "One pass, yeah. We're coming in one car."
+        },
+        {
+          "speaker": "agent",
+          "text": "Down to three then. How do you want the tickets, straight to your phone, print at home, or collect at the box office?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Phone."
+        },
+        {
+          "speaker": "agent",
+          "text": "Mobile tickets, yeah? They go live seventy two hours before doors, so Wednesday evening."
+        },
+        {
+          "speaker": "caller",
+          "text": "Fine."
+        },
+        {
+          "speaker": "agent",
+          "text": "Card number when you're ready."
+        },
+        {
+          "speaker": "caller",
+          "text": "4 5 3 2 8 8 1 0 4 4 7 6 2 3 0 9."
+        },
+        {
+          "speaker": "agent",
+          "text": "That's four five three two, eight eight one oh, four four seven six, two three oh nine.",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "Yes."
+        },
+        {
+          "speaker": "agent",
+          "text": "Order's through. Two hundred and ten pounds, three on the level in block four, tickets to your phone Wednesday."
+        }
+      ],
+      "notes": "The access need is acted on rather than confirmed, and the block change is one sentence of reason with an immediate alternative. The quantity drop and the add-on are resolved in a single bare value-as-question, so one turn handles two changes. Delivery carries the only tag, the seat class is folded into the closing line instead of being read back on the spot, and the card number stays digit by digit in groups. Ten open agent turns, ten openers."
+    },
+    {
+      "id": "choice_10_non_subtle",
+      "pair_id": "choice_10",
+      "label": "non_subtle",
+      "language": "en",
+      "scenario": "Same box office call, same caller turns; the agent confirms the block, the quantity change and the add-on with the identical formula.",
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Thank you for calling the box office. I have your booking for Saturday night for four tickets. We have floor standing, lower tier seated, and upper tier available."
+        },
+        {
+          "speaker": "caller",
+          "text": "What's left on the lower tier?"
+        },
+        {
+          "speaker": "agent",
+          "text": "In the lower tier we have block twelve, row K, with four seats together. We also have block nineteen, row C, which is located behind the stage left speaker stack."
+        },
+        {
+          "speaker": "caller",
+          "text": "Block twelve. Row K's fine."
+        },
+        {
+          "speaker": "agent",
+          "text": "That is an excellent choice! Just to confirm, you have selected lower tier, block twelve, row K. Is that correct? Does anyone in your group require step-free access?"
+        },
+        {
+          "speaker": "caller",
+          "text": "My mum, actually. She can't do stairs."
+        },
+        {
+          "speaker": "agent",
+          "text": "I apologize for the inconvenience. Block twelve is up sixteen steps and is therefore unsuitable. Block four is level with the concourse and I have four seats together in row B. Would you like to select block four?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Block four then."
+        },
+        {
+          "speaker": "agent",
+          "text": "Perfect! Just to confirm, you have selected block four, row B, step-free. Is that correct? I will now proceed to add-ons. There is a parking pass for the venue car park at twelve pounds, a merchandise bundle including the tour programme, or neither."
+        },
+        {
+          "speaker": "caller",
+          "text": "Parking pass. Oh, and it's three tickets now, not four. My brother's just texted, he can't come."
+        },
+        {
+          "speaker": "agent",
+          "text": "Got it. Let me confirm these separately. Firstly, just to confirm, you have selected the parking pass. Is that correct? Secondly, you have amended your quantity to three tickets. Is that correct? How many parking passes would you like?"
+        },
+        {
+          "speaker": "caller",
+          "text": "One pass, yeah. We're coming in one car."
+        },
+        {
+          "speaker": "agent",
+          "text": "Got it. I have noted three tickets and one parking pass. That has been recorded. How would you like to receive your tickets: to your phone, print at home, or collection at the box office?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Phone."
+        },
+        {
+          "speaker": "agent",
+          "text": "Just to confirm, you have selected mobile tickets. Is that correct? They are released seventy two hours before doors, which is Wednesday evening."
+        },
+        {
+          "speaker": "caller",
+          "text": "Fine."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you. I will now proceed to collect your card number."
+        },
+        {
+          "speaker": "caller",
+          "text": "4 5 3 2 8 8 1 0 4 4 7 6 2 3 0 9."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you. I will now read that back for verification purposes. Four five three two, eight eight one oh, four four seven six, two three oh nine. Is that correct?",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "Yes."
+        },
+        {
+          "speaker": "agent",
+          "text": "Perfect! Your order has been processed at two hundred and ten pounds. Is there anything else I can help you with today?"
+        }
+      ],
+      "notes": "A simple quantity change gets broken into Firstly and Secondly with two separate Is that correct questions. Just to confirm five times, Is that correct six times, Got it three times, I have noted, has been recorded, I apologize, for verification purposes, two praise bursts, no contractions, chatbot closer. The card readback is correct behaviour, so the contrast is that the seat block and the parking pass get the same ceremony."
+    }
+  ]
+}

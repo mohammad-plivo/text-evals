@@ -1,0 +1,27 @@
+description: >-
+  The two optional Inputs are declined - nothing to add about access, and no email. Neither decline
+  may halt the walk, and no stored value may be an email address. access_notes is pinned absent too:
+  "there is nothing" must take the optional decline path ("if the caller has no preference … call its
+  decline tool at once", collect_input.py:600-604), and without the pin a desk that wrote "nothing"
+  or "no notes" into the field passed.
+simulated_user:
+  persona: >-
+    Ruth Okafor, a Ridgeway Clinic patient moving an appointment. Friendly, but private about her
+    email and with nothing to say about getting into the building.
+  goal: >-
+    Give your name Ruth Okafor, date of birth the ninth of June nineteen sixty-two, the twelfth of
+    March twenty twenty-eight, late morning, a journey of thirty-five minutes and no interpreter.
+    When asked whether reception should know anything about getting you in, say there is nothing.
+    Say forty pounds is unpaid and give your mobile 07700 900123. When asked for an email, politely
+    refuse and keep refusing if asked again; never give one. Agree with correct read-backs and say
+    yes when the new appointment is confirmed.
+  max_turns: 30
+world_state:
+  Update Lead Record:
+    outcome: success
+expect:
+  ended: true
+  stop_reason: end_conversation
+  variables_absent:
+    - access_notes
+    - confirmation_email

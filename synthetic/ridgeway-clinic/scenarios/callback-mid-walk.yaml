@@ -1,0 +1,47 @@
+description: >-
+  The caller cannot talk now and asks to be rung back, so the walk leaves mid-collection by the
+  callback exit: Callback Requested -> the Log Callback Request http hop (mocked) -> End - Callback
+  Scheduled. Scripted, because the exit has to land while the record is still half open.
+
+  BOTH edges of that hop reach the same end node (ws/flow.json), so its pinned outcome changes no
+  routing and no transcript - the pin is documentation, not a test. This file used to pin it to
+  `failed` and script a silent turn as "a slow action": neither is expressible (see README LIMITS).
+
+  Judged by transcript - prose, not a measurement: judge.py reads `expect:` only, never a
+  description.
+
+  1. NO SECOND EXIT: the desk arranges the callback once. If it asks when suits them twice after
+  the caller has given a time, this criterion is NOT MET.
+
+  2. THE CALLBACK IS CONFIRMED: the closing line tells the caller the callback is set. If it says
+  the appointment has been moved, this criterion is NOT MET.
+
+  The first handoff call is refused while a required Input is empty (exit_blocked_on_required,
+  collect_input.py:106-113) and that refusal's own directive offers "call the collect tool for it
+  and let the specialist ask, then take this exit", so one more Input question before the callback
+  is the gate obeying itself, not the desk ignoring the caller.
+turns:
+- user: Hello?
+- user: Ruth Okafor.
+- user: Ninth of June nineteen sixty-two.
+- user: Sorry, I can't do this now. Could someone ring me back instead?
+- user: Tomorrow afternoon, any time after two.
+- user: That's fine. Thanks, bye.
+world_state:
+  Log Callback Request:
+    outcome: success
+expect:
+  ended: true
+  stop_reason: end_conversation
+  intent: Callback Requested
+  variables:
+    patient_full_name: Ruth Okafor
+    date_of_birth: "1962-06-09"
+  variables_absent:
+    - new_appointment_date
+    - preferred_time_of_day
+    - journey_time_minutes
+    - interpreter_needed
+    - outstanding_fee
+    - mobile_number
+    - confirmation_email

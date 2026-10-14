@@ -1,0 +1,7 @@
+description: 'no-screening opening: busy-then-no-callback'
+turns:
+- user: Hello?
+- user: Yes, speaking.
+- user: I am busy right now.
+- user: No, do not call me again.
+- user: Bye.

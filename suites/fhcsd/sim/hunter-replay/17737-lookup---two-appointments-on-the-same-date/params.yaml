@@ -1,0 +1,11 @@
+params:
+  from_number: '+12813056522'
+  phone_number: '+13473345222'
+  patient_first_name: Gordon
+  patient_last_name: Whitfield
+  missed_appointment_date: 08/29/2026
+substitutions:
+  '{{cdcb0c46-bf35-4bcf-809b-fc2f987b950f.http.params.from_number}}': '+12813056522'
+  '{{cdcb0c46-bf35-4bcf-809b-fc2f987b950f.http.params.patient_first_name}}': Gordon
+  '{{cdcb0c46-bf35-4bcf-809b-fc2f987b950f.http.params.patient_last_name}}': Whitfield
+  '{{cdcb0c46-bf35-4bcf-809b-fc2f987b950f.http.params.phone_number}}': '+13473345222'

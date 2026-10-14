@@ -1,0 +1,4 @@
+description: "a screening step told to stay silent"
+turns:
+- user: "Hello?"
+- user: "Hello?"

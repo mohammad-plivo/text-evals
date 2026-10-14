@@ -1,0 +1,2088 @@
+{
+  "task": "text",
+  "tier": "subtle",
+  "description": "CollectText confirmations across full multi-field calls: reasons for calling, company names, job titles, symptom and damage descriptions, product names, departments, project titles, nicknames and complaint summaries. Whole-word prose values are recoverable, so they get echoed and advanced past, and long answers come back compressed in the caller's own words. A text field that carries a CODE is not recoverable: booking refs, policy numbers, asset tags, part numbers, tracking numbers and registration codes are said once then read back character by character, in both labels.",
+  "style_rules": {
+    "subtle": [
+      "Echo-and-advance is the default: fold the value into the next question, no round trip.",
+      "Long free-text answers come back compressed, in the caller's own words, three or four clauses, never parroted in full.",
+      "Unusual company-name spellings are confirmed by naming what is odd about them (the silent E, the double F, the missing letter), not spelled back letter by letter.",
+      "Bare value-as-question and silent accept both appear; at least two agent turns per call carry no check tag at all.",
+      "An agent turn's first word repeats at most twice per call and never in two consecutive agent turns, which forces most turns to open with the value itself.",
+      "Corrections are absorbed in one beat; the corrected part is what gets re-echoed.",
+      "Contractions throughout, commas not dashes, no praise, no status phrases, no chatbot closers.",
+      "Codes stay strict inside the subtle call: value once, then character by character, with letter/number ambiguities named."
+    ],
+    "non_subtle_tells": [
+      "One template on every field: 'I heard X, is that correct?' and 'Just to confirm, X. Is that correct?' rotating for the whole call.",
+      "'has been recorded' / 'I have noted that' / 'has been registered' after each capture.",
+      "Praise on trivial answers: a retailer name, a dog, a padlocked gate, a budget status.",
+      "A confirm round trip on fields nobody would stop for, including spelling back a company name that is not a code.",
+      "Uncontracted, over-formal register: 'I will now proceed to', 'kindly', 'our records indicate'.",
+      "Chatbot closer at the end of the call.",
+      "Wrong direction: over-casual and dropping a fidelity floor, taking a code as a whole word with no character by character readback, or paraphrasing a code back as a word."
+    ]
+  },
+  "conversations": [
+    {
+      "id": "text_01_subtle",
+      "pair_id": "text_01",
+      "label": "subtle",
+      "language": "en",
+      "scenario": "Airline change line: caller moves a return flight; the PNR has a bravo/victor ambiguity and the reason for the change arrives as a three-sentence ramble.",
+      "fields": [
+        {
+          "name": "reason_for_calling",
+          "value": "moving a return flight",
+          "tier": "subtle",
+          "strategy": "echo-and-advance straight into the reference question"
+        },
+        {
+          "name": "booking_reference",
+          "value": "BV7429",
+          "tier": "strict",
+          "strategy": "value once then character by character, B and V disambiguated with phonetics"
+        },
+        {
+          "name": "reason_for_change",
+          "value": "client review moved to the Monday, needs to be back by Sunday",
+          "tier": "subtle",
+          "strategy": "three sentences compressed into one clause in the caller's own words"
+        },
+        {
+          "name": "special_assistance_note",
+          "value": "wheelchair to the gate",
+          "tier": "subtle",
+          "strategy": "echo folded into the closing summary, no confirm round trip"
+        }
+      ],
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Thanks for holding, you're through to Aerlin. What can I do for you?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Yeah hi, I need to move a return flight. It's booked for the fourth of next month and I can't make it."
+        },
+        {
+          "speaker": "agent",
+          "text": "Moving a return, sure. Have you got the booking reference in front of you?"
+        },
+        {
+          "speaker": "caller",
+          "text": "I do. It's B V 7 4 2 9. Sorry, B as in bravo, V as in victor."
+        },
+        {
+          "speaker": "agent",
+          "text": "BV7429. Let me read that back, B, V, seven, four, two, nine. Bravo then victor, yeah?",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "That's right."
+        },
+        {
+          "speaker": "agent",
+          "text": "Pulling it up now. I've got a return on the fourth. What's driving the change, is it a date clash?"
+        },
+        {
+          "speaker": "caller",
+          "text": "It's a mess honestly. My daughter's got a school thing that got moved, and then the client pushed our review to the Monday, so I'd need to be back by the Sunday at the latest. I can't do the fourth."
+        },
+        {
+          "speaker": "agent",
+          "text": "So back by Sunday, with the client review on the Monday. Do you want the third then?"
+        },
+        {
+          "speaker": "caller",
+          "text": "The third works."
+        },
+        {
+          "speaker": "agent",
+          "text": "Third, then. There's a fare difference of forty pounds on that one, are you okay with that?"
+        },
+        {
+          "speaker": "caller",
+          "text": "That's fine."
+        },
+        {
+          "speaker": "agent",
+          "text": "Anything on the booking about assistance? I can see a line but it's cut off."
+        },
+        {
+          "speaker": "caller",
+          "text": "Yeah, I need a wheelchair to the gate. I had one on the way out."
+        },
+        {
+          "speaker": "agent",
+          "text": "Wheelchair to the gate, I'll carry that across. So that's the third instead of the fourth, wheelchair booked, forty pound difference. Shall I put it through?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Go ahead."
+        },
+        {
+          "speaker": "agent",
+          "text": "Done. You'll see the new ticket in about ten minutes."
+        },
+        {
+          "speaker": "caller",
+          "text": "Thanks."
+        }
+      ],
+      "notes": "Four fields, four different moves. The reason for calling is echoed and advanced into the reference question. The PNR is the one code, so it is the one character by character readback, with bravo and victor named. A three sentence ramble comes back as a single clause in the caller's own words and turns straight into the new date. The assistance note gets no round trip at all: it is echoed once and then reappears inside the closing summary, which is where the caller actually checks it. Nine agent turns, eight distinct openers outside the strict one, a single check tag in the call."
+    },
+    {
+      "id": "text_01_non_subtle",
+      "pair_id": "text_01",
+      "label": "non_subtle",
+      "language": "en",
+      "scenario": "Airline change line: caller moves a return flight; the PNR has a bravo/victor ambiguity and the reason for the change arrives as a three-sentence ramble.",
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Thank you for holding. You have reached Aerlin customer service. How may I assist you today?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Yeah hi, I need to move a return flight. It's booked for the fourth of next month and I can't make it."
+        },
+        {
+          "speaker": "agent",
+          "text": "I understand. Just to confirm, you would like to move a return flight. Is that correct? May I please have your booking reference?"
+        },
+        {
+          "speaker": "caller",
+          "text": "I do. It's B V 7 4 2 9. Sorry, B as in bravo, V as in victor."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you. I heard BV7429. Let me confirm character by character: B, V, seven, four, two, nine. Bravo, then victor. Is that correct?",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "That's right."
+        },
+        {
+          "speaker": "agent",
+          "text": "Perfect! Your booking reference has been recorded. I can see a return flight on the fourth. May I ask what is driving this change, is it a date clash?"
+        },
+        {
+          "speaker": "caller",
+          "text": "It's a mess honestly. My daughter's got a school thing that got moved, and then the client pushed our review to the Monday, so I'd need to be back by the Sunday at the latest. I can't do the fourth."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you for that information. Just to confirm, you must return by the Sunday because of a client review on the Monday. Is that correct? Shall I look at the third?"
+        },
+        {
+          "speaker": "caller",
+          "text": "The third works."
+        },
+        {
+          "speaker": "agent",
+          "text": "I have recorded the third of the month. There is a fare difference of forty pounds. Do you accept the fare difference?"
+        },
+        {
+          "speaker": "caller",
+          "text": "That's fine."
+        },
+        {
+          "speaker": "agent",
+          "text": "Perfect! The fare difference has been accepted. I can see a line regarding assistance, but it is incomplete. Could you tell me what it says?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Yeah, I need a wheelchair to the gate. I had one on the way out."
+        },
+        {
+          "speaker": "agent",
+          "text": "I heard wheelchair to the gate. Is that correct? I will now proceed to apply the change to your booking."
+        },
+        {
+          "speaker": "caller",
+          "text": "Go ahead."
+        },
+        {
+          "speaker": "agent",
+          "text": "Your change has been processed and recorded on your booking. Is there anything else I can help you with today?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Thanks."
+        }
+      ],
+      "notes": "Same four fields, one template on all of them: 'Just to confirm X, is that correct?' and 'I heard X, is that correct?' with praise and a status phrase after each capture, no contractions, and a chatbot closer. The strict PNR readback is unchanged, which is the point: the error is applying that same ceremony to the reason for the change and the assistance line."
+    },
+    {
+      "id": "text_02_subtle",
+      "pair_id": "text_02",
+      "label": "subtle",
+      "language": "en",
+      "scenario": "Appliance warranty claim: the model code carries a letter-S versus number-five ambiguity, and the fault arrives as a rambling description with a detail the caller only half believes.",
+      "fields": [
+        {
+          "name": "product_name",
+          "value": "Frostline 400",
+          "tier": "subtle",
+          "strategy": "echo plus one distinguishing detail, no tag"
+        },
+        {
+          "name": "model_code",
+          "value": "MDX5S20",
+          "tier": "strict",
+          "strategy": "value once then character by character, five versus S resolved"
+        },
+        {
+          "name": "fault_description",
+          "value": "freezer warm, water under the drawer, clicking every twenty minutes for a week",
+          "tier": "subtle",
+          "strategy": "five sentence answer compressed to three clauses, then a diagnostic question"
+        },
+        {
+          "name": "engineer_access_note",
+          "value": "galley kitchen, unit needs pulling out, dog in the house",
+          "tier": "subtle",
+          "strategy": "echo-and-advance with one consequence attached"
+        },
+        {
+          "name": "appointment_preference",
+          "value": "afternoons after one",
+          "tier": "subtle",
+          "strategy": "bare value carried into the slot offer, silent accept of the day"
+        }
+      ],
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Kelvinor service line, this is Ravi. How can I help?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Hi, I've got a fridge freezer under warranty and it's stopped cooling."
+        },
+        {
+          "speaker": "agent",
+          "text": "Stopped cooling, okay. Which model is it, is it written inside the door?"
+        },
+        {
+          "speaker": "caller",
+          "text": "It's the Frostline 400. The tall one with the water thing on the front."
+        },
+        {
+          "speaker": "agent",
+          "text": "Frostline 400 with the dispenser, that's the one. There'll be a model code on the sticker too."
+        },
+        {
+          "speaker": "caller",
+          "text": "Hang on. Right, MDX5S20. MDX5S20."
+        },
+        {
+          "speaker": "agent",
+          "text": "MDX5S20, so that's M, D, X, five, S, two, zero. The S is the letter S and the five's a number, yeah?",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "Yeah, letter S, and the five is a five."
+        },
+        {
+          "speaker": "agent",
+          "text": "Tell me what it's actually doing."
+        },
+        {
+          "speaker": "caller",
+          "text": "So the fridge side is fine, it's cold, but the freezer's gone soft. There's water pooling under the bottom drawer, and last night it was making this clicking noise every twenty minutes or so. My wife says it's been doing the clicking for a week but I only noticed yesterday."
+        },
+        {
+          "speaker": "agent",
+          "text": "Freezer's warm, water under the drawer, clicking every twenty minutes for about a week. Has the fridge side ever gone off with it?"
+        },
+        {
+          "speaker": "caller",
+          "text": "No, fridge is fine."
+        },
+        {
+          "speaker": "agent",
+          "text": "That points at the fan or the defrost heater. I'll get an engineer out. Anything they need to know to get to it?"
+        },
+        {
+          "speaker": "caller",
+          "text": "It's in a galley kitchen so they'll need to pull it out, and the door code for the block is on the gate, I'll leave it. Oh, and we've got a dog."
+        },
+        {
+          "speaker": "agent",
+          "text": "Galley kitchen, needs pulling out, and a dog in the house. I'll flag the dog so they ring ahead."
+        },
+        {
+          "speaker": "caller",
+          "text": "Please do, he's friendly but he's loud."
+        },
+        {
+          "speaker": "agent",
+          "text": "Mornings or afternoons better for you?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Afternoons. Anything after one."
+        },
+        {
+          "speaker": "agent",
+          "text": "After one. I've got Thursday and the following Tuesday."
+        },
+        {
+          "speaker": "caller",
+          "text": "Thursday."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thursday afternoon then, engineer out for a warm freezer on a Frostline 400. You'll get a text the night before."
+        },
+        {
+          "speaker": "caller",
+          "text": "Great, thanks."
+        }
+      ],
+      "notes": "Five fields, five moves. The product name gets an echo plus the detail that identifies it, and nothing else. The model code is the only character by character readback in the call, because it is the only code, and the ambiguous five and S are separated inside it. A five sentence fault report comes back as three clauses and immediately becomes a diagnostic question. The access note is echoed with the consequence attached rather than gated. The appointment preference is never confirmed at all: it is simply carried into the slot offer, and the chosen day is accepted in silence and only reappears in the sign off. Eleven agent turns, ten distinct openers outside the strict one, one check tag."
+    },
+    {
+      "id": "text_02_non_subtle",
+      "pair_id": "text_02",
+      "label": "non_subtle",
+      "language": "en",
+      "scenario": "Appliance warranty claim: the model code carries a letter-S versus number-five ambiguity, and the fault arrives as a rambling description with a detail the caller only half believes.",
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Thank you for calling the Kelvinor service line. My name is Ravi. How may I assist you today?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Hi, I've got a fridge freezer under warranty and it's stopped cooling."
+        },
+        {
+          "speaker": "agent",
+          "text": "I understand. Just to confirm, your fridge freezer has stopped cooling. Is that correct? May I have the model, it is written inside the door."
+        },
+        {
+          "speaker": "caller",
+          "text": "It's the Frostline 400. The tall one with the water thing on the front."
+        },
+        {
+          "speaker": "agent",
+          "text": "I heard Frostline 400. Is that correct? There will also be a model code printed on the sticker."
+        },
+        {
+          "speaker": "caller",
+          "text": "Hang on. Right, MDX5S20. MDX5S20."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you. I heard MDX5S20. Let me confirm character by character: M, D, X, five, S, two, zero. The S is the letter S and the five is the number five. Is that correct?",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "Yeah, letter S, and the five is a five."
+        },
+        {
+          "speaker": "agent",
+          "text": "Perfect! The model code has been recorded. Please describe what the appliance is doing."
+        },
+        {
+          "speaker": "caller",
+          "text": "So the fridge side is fine, it's cold, but the freezer's gone soft. There's water pooling under the bottom drawer, and last night it was making this clicking noise every twenty minutes or so. My wife says it's been doing the clicking for a week but I only noticed yesterday."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you for that detailed description. I have noted the following: the freezer is warm, there is water under the bottom drawer, and there is a clicking noise every twenty minutes for one week. Is that correct?"
+        },
+        {
+          "speaker": "caller",
+          "text": "No, fridge is fine."
+        },
+        {
+          "speaker": "agent",
+          "text": "Excellent. I have recorded that the fridge compartment is functioning. I will now proceed to book an engineer. Is there anything the engineer needs to know?"
+        },
+        {
+          "speaker": "caller",
+          "text": "It's in a galley kitchen so they'll need to pull it out, and the door code for the block is on the gate, I'll leave it. Oh, and we've got a dog."
+        },
+        {
+          "speaker": "agent",
+          "text": "I heard a galley kitchen, the appliance requires pulling out, and there is a dog in the property. Is that correct?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Please do, he's friendly but he's loud."
+        },
+        {
+          "speaker": "agent",
+          "text": "Perfect! That information has been recorded on the job. Do you prefer a morning appointment or an afternoon appointment?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Afternoons. Anything after one."
+        },
+        {
+          "speaker": "agent",
+          "text": "Just to confirm, you have selected afternoons after one o'clock. Is that correct? I have Thursday and the following Tuesday available."
+        },
+        {
+          "speaker": "caller",
+          "text": "Thursday."
+        },
+        {
+          "speaker": "agent",
+          "text": "You have selected Thursday. Your appointment has been recorded and a reminder will be sent. Is there anything else I can help you with today?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Great, thanks."
+        }
+      ],
+      "notes": "Eleven agent turns rotating two templates across five fields: 'I heard X, is that correct?' three times and 'Just to confirm X, is that correct?' twice, with praise and a status phrase after nearly every capture, uncontracted register, and the closer. The model code readback stays strict and correct; the failure is that a product name, a dog and a preference for afternoons get the identical treatment."
+    },
+    {
+      "id": "text_03_subtle",
+      "pair_id": "text_03",
+      "label": "subtle",
+      "language": "en",
+      "scenario": "Out of hours medical triage: worried parent, a patient reference with a mike/november ambiguity, a long unordered symptom account, and an explicit consent gate before records access.",
+      "fields": [
+        {
+          "name": "reason_for_calling",
+          "value": "child with fever and neck pain",
+          "tier": "subtle",
+          "strategy": "echo-and-advance straight into the reference question"
+        },
+        {
+          "name": "patient_reference",
+          "value": "MN4408",
+          "tier": "strict",
+          "strategy": "value once then character by character with phonetics for M and N"
+        },
+        {
+          "name": "symptom_description",
+          "value": "fever from six, Calpol at seven, neck sore on looking down, photophobia",
+          "tier": "subtle",
+          "strategy": "long unordered account compressed to four clauses, then the red flag named"
+        },
+        {
+          "name": "medication_name",
+          "value": "Clenil brown preventer inhaler",
+          "tier": "subtle",
+          "strategy": "bare value plus a one word gloss, no tag"
+        },
+        {
+          "name": "records_consent",
+          "value": "yes",
+          "tier": "strict",
+          "strategy": "explicit ask, explicit yes or no required"
+        }
+      ],
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "You're through to the out of hours line, I'm Dara. What's going on tonight?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Hi, it's about my son. He's been running a temperature and now he's complaining his neck hurts."
+        },
+        {
+          "speaker": "agent",
+          "text": "Temperature and neck pain in your son, I'll take some details fast. Have you got his patient reference, it's on the letter or in the app?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Yeah, MN4408."
+        },
+        {
+          "speaker": "agent",
+          "tier": "strict",
+          "text": "MN4408. Reading it back, M, N, four, four, zero, eight. M for mike, N for november."
+        },
+        {
+          "speaker": "caller",
+          "text": "Correct, mike then november."
+        },
+        {
+          "speaker": "agent",
+          "text": "Tell me everything about tonight, don't worry about the order."
+        },
+        {
+          "speaker": "caller",
+          "text": "So he came home from school fine, then about six he went really quiet and I felt his forehead and he was burning up. I gave him Calpol about seven and it came down a bit, but then he said his neck was sore when he looked down, and he's asked me twice to turn the big light off. He's had a bit of a cough for a few days but nothing like this."
+        },
+        {
+          "speaker": "agent",
+          "text": "Fever from about six, Calpol at seven, neck sore on looking down, and he doesn't want the light on. That last one matters. Any rash?"
+        },
+        {
+          "speaker": "caller",
+          "text": "I looked, I can't see one. He's got a bit of a red face but that's the fever."
+        },
+        {
+          "speaker": "agent",
+          "text": "Keep checking, behind his ears and on his feet as well. Anything he takes regularly?"
+        },
+        {
+          "speaker": "caller",
+          "text": "He's on a brown inhaler. Clenil, I think it's called."
+        },
+        {
+          "speaker": "agent",
+          "text": "Clenil, the preventer. I'll flag the asthma for the doctor."
+        },
+        {
+          "speaker": "caller",
+          "text": "He's not wheezy tonight though, it isn't that."
+        },
+        {
+          "speaker": "agent",
+          "tier": "strict",
+          "text": "Understood. Before I pass this on, can I confirm you're happy for me to open his medical record and share these notes with the on call doctor? I need a yes or a no."
+        },
+        {
+          "speaker": "caller",
+          "text": "Yes, that's fine."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thanks, that's a yes from you as his parent. A doctor's ringing you within the hour. If a rash appears, or he goes floppy or won't wake properly, put the phone down and call 999."
+        },
+        {
+          "speaker": "caller",
+          "text": "Okay. Thank you."
+        }
+      ],
+      "notes": "Five fields under time pressure. The patient reference and the consent gate stay strict; everything recoverable moves fast. The symptom ramble comes back as four clauses with the red flag named rather than parroted, and the medication gets a two word echo. Seven non-strict agent turns, seven distinct openers, no check tags."
+    },
+    {
+      "id": "text_03_non_subtle",
+      "pair_id": "text_03",
+      "label": "non_subtle",
+      "language": "en",
+      "scenario": "Out of hours medical triage: worried parent, a patient reference with a mike/november ambiguity, a long unordered symptom account, and an explicit consent gate before records access.",
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "You're through to the out of hours line, I'm Dara. What's going on tonight?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Hi, it's about my son. He's been running a temperature and now he's complaining his neck hurts."
+        },
+        {
+          "speaker": "agent",
+          "text": "Temperature and neck pain in your son, I'll take some details fast. Have you got his patient reference, it's on the letter or in the app?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Yeah, MN4408."
+        },
+        {
+          "speaker": "agent",
+          "text": "MN4408, lovely, I've got him up on the screen already."
+        },
+        {
+          "speaker": "caller",
+          "text": "Correct, mike then november."
+        },
+        {
+          "speaker": "agent",
+          "text": "Tell me everything about tonight, don't worry about the order."
+        },
+        {
+          "speaker": "caller",
+          "text": "So he came home from school fine, then about six he went really quiet and I felt his forehead and he was burning up. I gave him Calpol about seven and it came down a bit, but then he said his neck was sore when he looked down, and he's asked me twice to turn the big light off. He's had a bit of a cough for a few days but nothing like this."
+        },
+        {
+          "speaker": "agent",
+          "text": "Right, so a temperature tonight and a sore neck, and the light thing. Any rash?"
+        },
+        {
+          "speaker": "caller",
+          "text": "I looked, I can't see one. He's got a bit of a red face but that's the fever."
+        },
+        {
+          "speaker": "agent",
+          "text": "Keep checking, behind his ears and on his feet as well. Anything he takes regularly?"
+        },
+        {
+          "speaker": "caller",
+          "text": "He's on a brown inhaler. Clenil, I think it's called."
+        },
+        {
+          "speaker": "agent",
+          "text": "Clenil, the preventer. I'll flag the asthma for the doctor."
+        },
+        {
+          "speaker": "caller",
+          "text": "He's not wheezy tonight though, it isn't that."
+        },
+        {
+          "speaker": "agent",
+          "text": "Fine, I'll pull his record up and send the notes over to the on call doctor, that's all standard stuff."
+        },
+        {
+          "speaker": "caller",
+          "text": "Yes, that's fine."
+        },
+        {
+          "speaker": "agent",
+          "text": "Great. A doctor's ringing you within the hour. If a rash appears, or he goes floppy or won't wake properly, put the phone down and call 999."
+        },
+        {
+          "speaker": "caller",
+          "text": "Okay. Thank you."
+        }
+      ],
+      "notes": "wrong-direction: over-casual, dropped a fidelity floor. The agent sounds warm and human throughout, which is exactly what makes it dangerous. It takes the patient reference MN4408 with no character by character readback and never resolves mike versus november even though the parent offers it, then slides past the records consent as an assumed statement instead of an explicit ask needing an explicit yes. Subtle is not the same as sloppy: the code and the consent gate were the floors here."
+    },
+    {
+      "id": "text_04_subtle",
+      "pair_id": "text_04",
+      "label": "subtle",
+      "language": "en",
+      "scenario": "Motor insurance first notification of loss: the caller corrects the policy number mid-spell, gives the damage as a four-part ramble, and volunteers the third party's company name.",
+      "fields": [
+        {
+          "name": "reason_for_calling",
+          "value": "rear end collision, no injuries",
+          "tier": "subtle",
+          "strategy": "three part echo compressed, straight into the policy question"
+        },
+        {
+          "name": "policy_number",
+          "value": "PB70413",
+          "tier": "strict",
+          "strategy": "value once then character by character after a mid-spell correction, tail digits called out"
+        },
+        {
+          "name": "registration_plate",
+          "value": "LV21 SNB",
+          "tier": "strict",
+          "strategy": "value once then character by character, V and B phonetically disambiguated"
+        },
+        {
+          "name": "damage_description",
+          "value": "boot lid not closing, bumper cracked, rear light hanging, crease in the wing",
+          "tier": "subtle",
+          "strategy": "four clauses back in the caller's own words, then a driveability question"
+        },
+        {
+          "name": "third_party_company",
+          "value": "Thurlow and Speight Haulage",
+          "tier": "subtle",
+          "strategy": "full echo with a reason attached, no confirm round trip"
+        }
+      ],
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Claims line, Nadia speaking. What's happened?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Someone went into the back of me yesterday. Nobody's hurt, but the boot's caved in."
+        },
+        {
+          "speaker": "agent",
+          "text": "Rear end shunt, nobody hurt, damage to the boot. What's your policy number?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Yeah it's PB70431. Sorry, no. PB70413. I read it wrong, it's four one three at the end."
+        },
+        {
+          "speaker": "agent",
+          "tier": "strict",
+          "text": "So PB70413. P, B, seven, zero, four, one, three. Ending one three, not three one."
+        },
+        {
+          "speaker": "caller",
+          "text": "That's it, PB70413."
+        },
+        {
+          "speaker": "agent",
+          "text": "And the registration of your car?"
+        },
+        {
+          "speaker": "caller",
+          "text": "LV21 SNB."
+        },
+        {
+          "speaker": "agent",
+          "tier": "strict",
+          "text": "LV21 SNB. L, V, two, one, S, N, B. V for victor, and B for bravo on the end."
+        },
+        {
+          "speaker": "caller",
+          "text": "Yes, victor and bravo."
+        },
+        {
+          "speaker": "agent",
+          "text": "Talk me through the damage, whatever you've spotted."
+        },
+        {
+          "speaker": "caller",
+          "text": "The boot lid won't shut properly now, it sort of sits proud on one side. The bumper's cracked right across and one of the rear lights is hanging off. And there's a crease in the wing above the wheel that I didn't see until this morning."
+        },
+        {
+          "speaker": "agent",
+          "text": "Boot lid not closing, bumper cracked across, rear light hanging, crease in the wing. Was the car driveable?"
+        },
+        {
+          "speaker": "caller",
+          "text": "I drove it home, yeah. It's not nice though."
+        },
+        {
+          "speaker": "agent",
+          "text": "Who hit you, was it a private car?"
+        },
+        {
+          "speaker": "caller",
+          "text": "No, a lorry. Thurlow and Speight Haulage, it was on the side of it."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thurlow and Speight Haulage, that helps a lot, they'll be commercially insured. Did you get details at the scene?"
+        },
+        {
+          "speaker": "caller",
+          "text": "I got the driver's name and the reg. He was apologetic actually."
+        },
+        {
+          "speaker": "agent",
+          "text": "We'll want those in a minute. You'll have a claim number by text in ten minutes, and an assessor rings you tomorrow."
+        },
+        {
+          "speaker": "caller",
+          "text": "Thanks very much."
+        }
+      ],
+      "notes": "Five fields. The mid-spell correction is absorbed in one beat and the corrected tail is called out explicitly, because a policy number is a code. The plate gets the same treatment with phonetics on V and B. Everything else moves: the four part damage report comes back as four clauses and then a new question, and the haulier's name is echoed with a reason attached rather than gated. Eight non-strict agent turns, eight distinct openers, zero check tags."
+    },
+    {
+      "id": "text_04_non_subtle",
+      "pair_id": "text_04",
+      "label": "non_subtle",
+      "language": "en",
+      "scenario": "Motor insurance first notification of loss: the caller corrects the policy number mid-spell, gives the damage as a four-part ramble, and volunteers the third party's company name.",
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Thank you for calling the claims line. My name is Nadia. How may I assist you today?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Someone went into the back of me yesterday. Nobody's hurt, but the boot's caved in."
+        },
+        {
+          "speaker": "agent",
+          "text": "I am sorry to hear that. Just to confirm, this was a rear end collision with no injuries. Is that correct? May I please have your policy number?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Yeah it's PB70431. Sorry, no. PB70413. I read it wrong, it's four one three at the end."
+        },
+        {
+          "speaker": "agent",
+          "tier": "strict",
+          "text": "Thank you. I heard PB70413. Let me confirm character by character: P, B, seven, zero, four, one, three. Is that correct?"
+        },
+        {
+          "speaker": "caller",
+          "text": "That's it, PB70413."
+        },
+        {
+          "speaker": "agent",
+          "text": "Perfect! Your policy number has been recorded. May I please have the registration of your vehicle?"
+        },
+        {
+          "speaker": "caller",
+          "text": "LV21 SNB."
+        },
+        {
+          "speaker": "agent",
+          "tier": "strict",
+          "text": "Just to confirm, I heard LV21 SNB. Character by character that is L, V, two, one, S, N, B. V for victor and B for bravo. Is that correct?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Yes, victor and bravo."
+        },
+        {
+          "speaker": "agent",
+          "text": "Excellent. Your registration has been recorded. Please describe the damage to the vehicle."
+        },
+        {
+          "speaker": "caller",
+          "text": "The boot lid won't shut properly now, it sort of sits proud on one side. The bumper's cracked right across and one of the rear lights is hanging off. And there's a crease in the wing above the wheel that I didn't see until this morning."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you for that description. I have noted the following damage: boot lid not closing, bumper cracked across, rear light hanging, crease in the wing. Is that correct? Was the vehicle driveable?"
+        },
+        {
+          "speaker": "caller",
+          "text": "I drove it home, yeah. It's not nice though."
+        },
+        {
+          "speaker": "agent",
+          "text": "I have recorded that the vehicle was driveable. Who collided with you, was it a private vehicle?"
+        },
+        {
+          "speaker": "caller",
+          "text": "No, a lorry. Thurlow and Speight Haulage, it was on the side of it."
+        },
+        {
+          "speaker": "agent",
+          "text": "Just to confirm, the third party is Thurlow and Speight Haulage. Is that correct? Did you obtain their details at the scene?"
+        },
+        {
+          "speaker": "caller",
+          "text": "I got the driver's name and the reg. He was apologetic actually."
+        },
+        {
+          "speaker": "agent",
+          "text": "Perfect! That has been noted on the claim. Your claim has been registered and a claim number will be sent by text. Is there anything else I can help you with today?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Thanks very much."
+        }
+      ],
+      "notes": "Eight non-strict agent turns running two templates in rotation, 'Just to confirm X, is that correct?' and 'I heard X, is that correct?', with 'has been recorded' or 'has been noted' after almost every capture and praise on a policy number and a driver's details. Nobody gates a haulier's name in a real call. The policy number and plate readbacks are still correct; the failure is that the recoverable text is treated identically to them."
+    },
+    {
+      "id": "text_05_subtle",
+      "pair_id": "text_05",
+      "label": "subtle",
+      "language": "en",
+      "scenario": "IT service desk under time pressure: asset tag mixes a number zero and a letter O, and the caller is already annoyed at having explained this last week.",
+      "fields": [
+        {
+          "name": "reason_for_calling",
+          "value": "laptop will not connect to the VPN",
+          "tier": "subtle",
+          "strategy": "echo with the urgency repeated back, straight into the next question"
+        },
+        {
+          "name": "department",
+          "value": "Group Treasury",
+          "tier": "subtle",
+          "strategy": "bare echo, no tag, folded into the next ask"
+        },
+        {
+          "name": "asset_tag",
+          "value": "AST0O9412",
+          "tier": "strict",
+          "strategy": "value once then character by character with number zero and letter O separated"
+        },
+        {
+          "name": "symptom_description",
+          "value": "spins thirty seconds then connection reset, two restarts, home wifi fine, recurred from last week",
+          "tier": "subtle",
+          "strategy": "angry five sentence account compressed then explicitly retired so he is not asked again"
+        },
+        {
+          "name": "software_name",
+          "value": "Cygnet Reconcile",
+          "tier": "subtle",
+          "strategy": "echo carrying the routing fact it unlocks, silent accept"
+        }
+      ],
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Service desk, Tom here. What's broken?"
+        },
+        {
+          "speaker": "caller",
+          "text": "My laptop won't connect to the VPN and I've got a call in twenty minutes."
+        },
+        {
+          "speaker": "agent",
+          "text": "VPN's dead and you've got twenty minutes. Which department are you in?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Group Treasury."
+        },
+        {
+          "speaker": "agent",
+          "text": "Group Treasury. There's an asset tag on the underside of the laptop, can you read it out?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Hold on. AST0O9412."
+        },
+        {
+          "speaker": "agent",
+          "tier": "strict",
+          "text": "AST0O9412. Let me read it, A, S, T, then number zero, then letter O, nine, four, one, two. Number first, letter second, correct?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Yes. Number then letter. It's a stupid tag."
+        },
+        {
+          "speaker": "agent",
+          "text": "It is. I've got your machine up. What happens when you click connect?"
+        },
+        {
+          "speaker": "caller",
+          "text": "It spins for about thirty seconds, then it says the connection was reset. I've restarted twice. And before you ask, yes I'm on wifi at home and yes the wifi works, I'm on this call over it. I've already done all the things the first person told me to do last week and it worked for exactly one day."
+        },
+        {
+          "speaker": "agent",
+          "text": "Spins, resets, two restarts, home wifi fine, and this happened last week too. I won't take you back through any of that."
+        },
+        {
+          "speaker": "caller",
+          "text": "Thank you."
+        },
+        {
+          "speaker": "agent",
+          "text": "Which app are you actually trying to reach once you're on?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Cygnet Reconcile. It's the reconciliation tool, it's the only thing I need."
+        },
+        {
+          "speaker": "agent",
+          "text": "Cygnet Reconcile sits behind the finance gateway, different certificate to everything else. Was your password changed in the last few days?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Yeah, Monday. They forced it."
+        },
+        {
+          "speaker": "agent",
+          "text": "That's very likely it, the certificate binds to the old credential. I can push a new profile in about four minutes."
+        },
+        {
+          "speaker": "caller",
+          "text": "Fine, whatever gets it fixed."
+        },
+        {
+          "speaker": "agent",
+          "text": "Give it four minutes then click connect once. Don't click it twice, it queues and you'll wait longer."
+        },
+        {
+          "speaker": "caller",
+          "text": "Okay. Thanks."
+        }
+      ],
+      "notes": "Five fields with an irritated caller. The asset tag is the only field that gets a full character by character readback, and it earns it because a zero and a letter O sit next to each other in it. Department gets a bare echo, the angry five sentence symptom report is compressed and then explicitly retired so he is not asked again, and the software name is echoed with the routing fact it unlocks. Nine non-strict agent turns, nine distinct openers, no tags outside the strict turn."
+    },
+    {
+      "id": "text_05_non_subtle",
+      "pair_id": "text_05",
+      "label": "non_subtle",
+      "language": "en",
+      "scenario": "IT service desk under time pressure: asset tag mixes a number zero and a letter O, and the caller is already annoyed at having explained this last week.",
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Thank you for contacting the service desk. My name is Tom. How may I assist you today?"
+        },
+        {
+          "speaker": "caller",
+          "text": "My laptop won't connect to the VPN and I've got a call in twenty minutes."
+        },
+        {
+          "speaker": "agent",
+          "text": "I understand. Just to confirm, you are unable to connect to the VPN. Is that correct? May I please have your department?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Group Treasury."
+        },
+        {
+          "speaker": "agent",
+          "text": "I heard Group Treasury. Is that correct? There is an asset tag on the underside of the laptop. Could you read it out?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Hold on. AST0O9412."
+        },
+        {
+          "speaker": "agent",
+          "tier": "strict",
+          "text": "Thank you. I heard AST0O9412. Let me confirm character by character: A, S, T, number zero, letter O, nine, four, one, two. The number comes first and the letter second. Is that correct?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Yes. Number then letter. It's a stupid tag."
+        },
+        {
+          "speaker": "agent",
+          "text": "Perfect! Your asset tag has been recorded. What happens when you click connect?"
+        },
+        {
+          "speaker": "caller",
+          "text": "It spins for about thirty seconds, then it says the connection was reset. I've restarted twice. And before you ask, yes I'm on wifi at home and yes the wifi works, I'm on this call over it. I've already done all the things the first person told me to do last week and it worked for exactly one day."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you for that information. I have noted the following: the client spins for thirty seconds, the connection is reset, you have restarted twice, and your home wifi is functioning. Is that correct?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Thank you."
+        },
+        {
+          "speaker": "agent",
+          "text": "Excellent. That has been recorded on the ticket. Which application are you attempting to reach once connected?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Cygnet Reconcile. It's the reconciliation tool, it's the only thing I need."
+        },
+        {
+          "speaker": "agent",
+          "text": "I heard Cygnet Reconcile. Is that correct? That application sits behind the finance gateway. Was your password changed in the last few days?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Yeah, Monday. They forced it."
+        },
+        {
+          "speaker": "agent",
+          "text": "Just to confirm, your password was changed on Monday. Is that correct? I will now proceed to push a new profile."
+        },
+        {
+          "speaker": "caller",
+          "text": "Fine, whatever gets it fixed."
+        },
+        {
+          "speaker": "agent",
+          "text": "I appreciate your patience. Kindly wait four minutes and then click connect one time only. Is there anything else I can help you with today?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Okay. Thanks."
+        }
+      ],
+      "notes": "The caller has already said he is tired of repeating himself, and the agent then reads his own five sentence complaint back to him as a numbered list and asks him to confirm it. Nine non-strict agent turns alternate 'I heard X, is that correct?' and 'Just to confirm, X. Is that correct?' with 'has been recorded' after nearly every one, plus praise, 'kindly', 'I will now proceed to', and the closer. The asset tag readback stays strict, correctly; the ceremony on department, password date and application name is the failure."
+    },
+    {
+      "id": "text_06_subtle",
+      "pair_id": "text_06",
+      "label": "subtle",
+      "language": "en",
+      "scenario": "Courier parcel trace: the caller rattles a twelve character tracking number off too fast to catch, and the sender's company name has an unusual vowel pair.",
+      "fields": [
+        {
+          "name": "reason_for_calling",
+          "value": "parcel stuck on out for delivery since Tuesday",
+          "tier": "subtle",
+          "strategy": "echo-and-advance straight into the tracking ask"
+        },
+        {
+          "name": "tracking_number",
+          "value": "1Z9V4A880341",
+          "tier": "strict",
+          "strategy": "one beat human repair on the speed, then all twelve characters back with victor named"
+        },
+        {
+          "name": "sender_company",
+          "value": "Braekon Tools",
+          "tier": "subtle",
+          "strategy": "unusual spelling confirmed by naming the vowel pair, no spell-out"
+        },
+        {
+          "name": "contents_description",
+          "value": "cordless impact driver and two batteries, about three hundred pounds",
+          "tier": "subtle",
+          "strategy": "contents merged with value in one echo, no tag"
+        },
+        {
+          "name": "safe_place_instruction",
+          "value": "behind the bins in the side alley, gate unlocked",
+          "tier": "subtle",
+          "strategy": "three clause echo then a question that moves the call on"
+        }
+      ],
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Parcel tracing, Yemi speaking. What's the issue?"
+        },
+        {
+          "speaker": "caller",
+          "text": "A delivery's gone missing. It was due Tuesday and it's still saying out for delivery."
+        },
+        {
+          "speaker": "agent",
+          "text": "Still sat on out for delivery since Tuesday. Read me the tracking number when you're ready."
+        },
+        {
+          "speaker": "caller",
+          "text": "1Z9V4A880341."
+        },
+        {
+          "speaker": "agent",
+          "text": "Slow down a touch for me, from the top."
+        },
+        {
+          "speaker": "caller",
+          "text": "Sorry. 1Z9V4A880341."
+        },
+        {
+          "speaker": "agent",
+          "tier": "strict",
+          "text": "1Z9V4A880341. Back to you, one, Z, nine, V, four, A, eight, eight, zero, three, four, one. V for victor in the fourth spot."
+        },
+        {
+          "speaker": "caller",
+          "text": "Yeah, victor."
+        },
+        {
+          "speaker": "agent",
+          "text": "Who sent it?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Braekon Tools. B R A E K O N."
+        },
+        {
+          "speaker": "agent",
+          "text": "Braekon Tools with the A E in the middle. What's in the box?"
+        },
+        {
+          "speaker": "caller",
+          "text": "A cordless impact driver and two batteries. About three hundred quid's worth."
+        },
+        {
+          "speaker": "agent",
+          "text": "Impact driver, two batteries, three hundred pounds. Did you leave any instruction about where it could go if you're out?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Yeah, I said behind the bins in the side alley, there's a gate but it's never locked."
+        },
+        {
+          "speaker": "agent",
+          "text": "Behind the bins, side alley, gate unlocked. Have you looked there since Tuesday?"
+        },
+        {
+          "speaker": "caller",
+          "text": "I've looked three times. And I asked next door."
+        },
+        {
+          "speaker": "agent",
+          "text": "Three looks and next door, that rules the doorstep out then. Last scan I've got is the Leeds depot at six on Tuesday morning, nothing after it."
+        },
+        {
+          "speaker": "caller",
+          "text": "So it never left the depot?"
+        },
+        {
+          "speaker": "agent",
+          "text": "It either never got loaded or it went out unscanned. I'll raise a depot search tonight, they physically walk the racks, and you'll hear from me by Thursday evening either way."
+        },
+        {
+          "speaker": "caller",
+          "text": "Appreciate it."
+        }
+      ],
+      "notes": "Five fields. The tracking number is the code, so the agent stops the caller with one human line, gets it clean and reads all twelve characters back with victor named. The sender's company name is the opposite case: an unusual spelling gets one clause about the vowel pair and nothing more, because a company name is recoverable. Contents merge with value, the safe place instruction gets a three clause echo and a question, and the searching the caller already did is turned into a conclusion. Nine non-strict agent turns, nine openers, no check tags."
+    },
+    {
+      "id": "text_06_non_subtle",
+      "pair_id": "text_06",
+      "label": "non_subtle",
+      "language": "en",
+      "scenario": "Courier parcel trace: the caller rattles a twelve character tracking number off too fast to catch, and the sender's company name has an unusual vowel pair.",
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Thank you for calling parcel tracing. My name is Yemi. How may I assist you today?"
+        },
+        {
+          "speaker": "caller",
+          "text": "A delivery's gone missing. It was due Tuesday and it's still saying out for delivery."
+        },
+        {
+          "speaker": "agent",
+          "text": "I understand. Just to confirm, your parcel is showing as out for delivery since Tuesday. Is that correct? May I please have the tracking number?"
+        },
+        {
+          "speaker": "caller",
+          "text": "1Z9V4A880341."
+        },
+        {
+          "speaker": "agent",
+          "text": "I apologise, I was unable to capture that. Kindly repeat the tracking number slowly."
+        },
+        {
+          "speaker": "caller",
+          "text": "Sorry. 1Z9V4A880341."
+        },
+        {
+          "speaker": "agent",
+          "tier": "strict",
+          "text": "Thank you. I heard 1Z9V4A880341. Let me confirm character by character: one, Z, nine, V, four, A, eight, eight, zero, three, four, one. V for victor. Is that correct?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Yeah, victor."
+        },
+        {
+          "speaker": "agent",
+          "text": "Perfect! Your tracking number has been recorded. May I please have the name of the sender?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Braekon Tools. B R A E K O N."
+        },
+        {
+          "speaker": "agent",
+          "text": "Just to confirm, the sender is Braekon Tools, spelled B, R, A, E, K, O, N. Is that correct? May I ask what the parcel contains?"
+        },
+        {
+          "speaker": "caller",
+          "text": "A cordless impact driver and two batteries. About three hundred quid's worth."
+        },
+        {
+          "speaker": "agent",
+          "text": "I heard a cordless impact driver and two batteries valued at three hundred pounds. Is that correct? Did you leave an instruction regarding where the parcel could be left?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Yeah, I said behind the bins in the side alley, there's a gate but it's never locked."
+        },
+        {
+          "speaker": "agent",
+          "text": "Just to confirm, the instruction was behind the bins in the side alley and the gate is unlocked. Is that correct? Have you checked that location since Tuesday?"
+        },
+        {
+          "speaker": "caller",
+          "text": "I've looked three times. And I asked next door."
+        },
+        {
+          "speaker": "agent",
+          "text": "Perfect! I have noted that you have checked three times and enquired next door. The last scan is the Leeds depot at six on Tuesday morning."
+        },
+        {
+          "speaker": "caller",
+          "text": "So it never left the depot?"
+        },
+        {
+          "speaker": "agent",
+          "text": "It was either not loaded or it was despatched without a scan. I will now proceed to raise a depot search. Is there anything else I can help you with today?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Appreciate it."
+        }
+      ],
+      "notes": "Every field, code or not, goes through the same gate: 'I heard X, is that correct?' or 'Just to confirm, X. Is that correct?', then 'has been recorded'. A sender's company name gets spelled back letter by letter as if it were a tracking number, and the fact that the caller looked behind her bins three times gets praised and noted. The formal repair on the fast tracking number replaces the one beat human ask. The tracking readback itself is unchanged and correct."
+    },
+    {
+      "id": "text_07_subtle",
+      "pair_id": "text_07",
+      "label": "subtle",
+      "language": "en",
+      "scenario": "HR pre-start intake call: the new joiner corrects his job title, his previous employer has a doubled-letter spelling, and the offer reference mixes a number five with a letter S.",
+      "fields": [
+        {
+          "name": "job_title",
+          "value": "Senior Implementation Consultant",
+          "tier": "subtle",
+          "strategy": "one beat correction absorbed, echoed with the action attached"
+        },
+        {
+          "name": "department",
+          "value": "Customer Engineering",
+          "tier": "subtle",
+          "strategy": "arrives with the title, leaves in the same echo, no tag"
+        },
+        {
+          "name": "offer_reference",
+          "value": "OFF5S1180",
+          "tier": "strict",
+          "strategy": "value once then character by character with the five and the S separated"
+        },
+        {
+          "name": "previous_employer",
+          "value": "Ffion Marr Consulting",
+          "tier": "subtle",
+          "strategy": "doubled letters named rather than a spell-out, no round trip"
+        },
+        {
+          "name": "preferred_nickname",
+          "value": "Tobi",
+          "tier": "subtle",
+          "strategy": "settled by saying where it will appear, silent accept"
+        }
+      ],
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Morning, it's Sinead from people ops. I'm doing your pre start details, takes about five minutes."
+        },
+        {
+          "speaker": "caller",
+          "text": "Sure, go ahead."
+        },
+        {
+          "speaker": "agent",
+          "text": "You're joining as, let me check, Implementation Consultant?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Senior Implementation Consultant, in Customer Engineering. They changed it after the second interview."
+        },
+        {
+          "speaker": "agent",
+          "text": "Senior Implementation Consultant, Customer Engineering. I'll get the title fixed on the contract today."
+        },
+        {
+          "speaker": "caller",
+          "text": "Please, it took ages to negotiate."
+        },
+        {
+          "speaker": "agent",
+          "text": "There's an offer reference on the letter, top right."
+        },
+        {
+          "speaker": "caller",
+          "text": "OFF5S1180."
+        },
+        {
+          "speaker": "agent",
+          "tier": "strict",
+          "text": "OFF5S1180. So O, F, F, five, S, one, one, eight, zero. Number five then letter S, yeah?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Yeah, five then S."
+        },
+        {
+          "speaker": "agent",
+          "text": "Who're you coming from?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Ffion Marr Consulting. Double F at the start, F F I O N, then Marr with two Rs."
+        },
+        {
+          "speaker": "agent",
+          "text": "Ffion Marr, double F, double R."
+        },
+        {
+          "speaker": "caller",
+          "text": "You'd be amazed how often that gets mangled."
+        },
+        {
+          "speaker": "agent",
+          "text": "I wouldn't, actually. What should people call you day to day, the contract says Oluwatobi."
+        },
+        {
+          "speaker": "caller",
+          "text": "Tobi. Everyone says Tobi."
+        },
+        {
+          "speaker": "agent",
+          "text": "Tobi's going on the badge and the email display then. See you on the eighteenth, badge desk is on the ground floor."
+        },
+        {
+          "speaker": "caller",
+          "text": "Thanks, see you then."
+        }
+      ],
+      "notes": "Five fields in one intake call. The title correction and the department arrive together and are absorbed in one echo with the action attached. The offer reference is the only code, so it is the only character by character readback, with the five and the S separated. The doubled-letter employer name is confirmed by naming the doubles, which is what a person does with a name; nobody spells a company back. The nickname is settled by saying where it will appear. Eight non-strict agent turns, eight distinct openers, no tags outside the strict turn."
+    },
+    {
+      "id": "text_07_non_subtle",
+      "pair_id": "text_07",
+      "label": "non_subtle",
+      "language": "en",
+      "scenario": "HR pre-start intake call: the new joiner corrects his job title, his previous employer has a doubled-letter spelling, and the offer reference mixes a number five with a letter S.",
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Good morning. My name is Sinead from people operations. I will now proceed to collect your pre start details."
+        },
+        {
+          "speaker": "caller",
+          "text": "Sure, go ahead."
+        },
+        {
+          "speaker": "agent",
+          "text": "Our records indicate that you are joining as Implementation Consultant. Is that correct?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Senior Implementation Consultant, in Customer Engineering. They changed it after the second interview."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you for the correction. I heard Senior Implementation Consultant in Customer Engineering. Is that correct?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Please, it took ages to negotiate."
+        },
+        {
+          "speaker": "agent",
+          "text": "Perfect! Your job title has been recorded. There is an offer reference on your letter, top right. May I have it please?"
+        },
+        {
+          "speaker": "caller",
+          "text": "OFF5S1180."
+        },
+        {
+          "speaker": "agent",
+          "tier": "strict",
+          "text": "Thank you. I heard OFF5S1180. Let me confirm character by character: O, F, F, number five, letter S, one, one, eight, zero. Is that correct?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Yeah, five then S."
+        },
+        {
+          "speaker": "agent",
+          "text": "Excellent. Your offer reference has been recorded. May I please have the name of your current employer?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Ffion Marr Consulting. Double F at the start, F F I O N, then Marr with two Rs."
+        },
+        {
+          "speaker": "agent",
+          "text": "Just to confirm, your current employer is Ffion Marr Consulting, spelled F, F, I, O, N, then M, A, R, R. Is that correct?"
+        },
+        {
+          "speaker": "caller",
+          "text": "You'd be amazed how often that gets mangled."
+        },
+        {
+          "speaker": "agent",
+          "text": "I have noted the spelling. Our records show your name as Oluwatobi. What would you like to be called day to day?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Tobi. Everyone says Tobi."
+        },
+        {
+          "speaker": "agent",
+          "text": "I heard Tobi. Is that correct? Your preferred name has been recorded for your badge and email display. Is there anything else I can help you with today?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Thanks, see you then."
+        }
+      ],
+      "notes": "Eight non-strict agent turns and the same two templates on all five fields, including a spell-out of a company name that nobody asked for. Praise lands on a job title, every field ends in 'has been recorded', the register is uncontracted throughout with 'I will now proceed to' and 'our records indicate', and a chatbot closer ends a friendly welcome call. The offer reference readback is correct and unchanged."
+    },
+    {
+      "id": "text_08_subtle",
+      "pair_id": "text_08",
+      "label": "subtle",
+      "language": "en",
+      "scenario": "Hotel guest relations after a bad stay: the guest is annoyed at having already given his details once, the reservation code has a bravo/victor pair, and the complaint arrives as a three-part account.",
+      "fields": [
+        {
+          "name": "reservation_code",
+          "value": "HRQ8B3V",
+          "tier": "strict",
+          "strategy": "value once then character by character with bravo and victor named"
+        },
+        {
+          "name": "complaint_summary",
+          "value": "aircon dead three nights, false fix, move refused, wrong minibar charge",
+          "tier": "subtle",
+          "strategy": "three part account back as four clauses with the solvable item pulled out"
+        },
+        {
+          "name": "staff_member_named",
+          "value": "Dmitri",
+          "tier": "subtle",
+          "strategy": "echo with the guest's own defence attached, no round trip"
+        },
+        {
+          "name": "booking_channel",
+          "value": "Voyagr",
+          "tier": "subtle",
+          "strategy": "odd spelling confirmed by the missing letter, then its consequence"
+        },
+        {
+          "name": "resolution_wanted",
+          "value": "two of the three nights refunded",
+          "tier": "subtle",
+          "strategy": "echoed as a judgement about what is authorisable, silent accept"
+        }
+      ],
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Guest relations, this is Marco. I'm told you've had a bad stay."
+        },
+        {
+          "speaker": "caller",
+          "text": "That's putting it mildly. I checked out this morning, I gave the whole story to someone last night, and I want this dealt with properly."
+        },
+        {
+          "speaker": "agent",
+          "text": "Let's deal with it. Have you got the reservation code off the confirmation?"
+        },
+        {
+          "speaker": "caller",
+          "text": "HRQ8B3V."
+        },
+        {
+          "speaker": "agent",
+          "tier": "strict",
+          "text": "HRQ8B3V. Reading it back, H, R, Q, eight, B, three, V. B for bravo, V for victor on the end."
+        },
+        {
+          "speaker": "caller",
+          "text": "Yes. Bravo, then victor."
+        },
+        {
+          "speaker": "agent",
+          "text": "I'm not making you tell it twice, last night's note is here in front of me, room 412, three nights. Tell me the part that matters most."
+        },
+        {
+          "speaker": "caller",
+          "text": "The air conditioning didn't work on any of the three nights. I reported it the first night, a man came up and said it was fine, it wasn't fine. Second night I asked to move and was told the hotel was full, which it clearly wasn't because half the corridor was dark. And then this morning I got charged for a minibar I never opened."
+        },
+        {
+          "speaker": "agent",
+          "text": "Aircon dead all three nights, a fix that wasn't one, a move refused, and a minibar charge that isn't yours. The minibar I can take off while we're talking."
+        },
+        {
+          "speaker": "caller",
+          "text": "Do that first, please."
+        },
+        {
+          "speaker": "agent",
+          "text": "Gone. Forty two euro back to the card it came off, two working days. The man who came up on the first night, do you remember a name?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Badge said Dmitri. He was perfectly polite, he just didn't fix it."
+        },
+        {
+          "speaker": "agent",
+          "text": "Dmitri, and polite, that's going in what I write. It's the room I'll be chasing, not him. Where did you book, was it direct?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Through Voyagr. The app one, spelled without the E."
+        },
+        {
+          "speaker": "agent",
+          "text": "Voyagr with no E, so the room rate has to route back through them, which is slower. What would actually put this right for you?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Two of the three nights back. I'm not going to pretend I didn't sleep there."
+        },
+        {
+          "speaker": "agent",
+          "text": "Two nights of the three, that's fair and it's inside what I can authorise. You'll have it in writing before six tonight."
+        },
+        {
+          "speaker": "caller",
+          "text": "Fine. Thank you."
+        }
+      ],
+      "notes": "Five fields with an angry guest who has already told the story once, so the agent never re-asks the room number; it comes back inside a summary that proves the earlier note was read. The reservation code still gets the full character by character treatment with bravo and victor named, because it is a code and the pair is genuinely ambiguous. A three part complaint returns as four clauses and the one solvable item is pulled out of it immediately. The staff name is echoed with the guest's own defence attached, and the oddly spelled channel is confirmed by the missing letter rather than a spell-out. Eight non-strict agent turns, eight openers, no check tags."
+    },
+    {
+      "id": "text_08_non_subtle",
+      "pair_id": "text_08",
+      "label": "non_subtle",
+      "language": "en",
+      "scenario": "Hotel guest relations after a bad stay: the guest is annoyed at having already given his details once, the reservation code has a bravo/victor pair, and the complaint arrives as a three-part account.",
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Guest relations, this is Marco. I'm told you've had a bad stay."
+        },
+        {
+          "speaker": "caller",
+          "text": "That's putting it mildly. I checked out this morning, I gave the whole story to someone last night, and I want this dealt with properly."
+        },
+        {
+          "speaker": "agent",
+          "text": "Let's deal with it. Have you got the reservation code off the confirmation?"
+        },
+        {
+          "speaker": "caller",
+          "text": "HRQ8B3V."
+        },
+        {
+          "speaker": "agent",
+          "text": "HRQ8B3V, brilliant, that's your stay right here in front of me."
+        },
+        {
+          "speaker": "caller",
+          "text": "Yes. Bravo, then victor."
+        },
+        {
+          "speaker": "agent",
+          "text": "I'm not making you tell it twice, last night's note is here in front of me, room 412, three nights. Tell me the part that matters most."
+        },
+        {
+          "speaker": "caller",
+          "text": "The air conditioning didn't work on any of the three nights. I reported it the first night, a man came up and said it was fine, it wasn't fine. Second night I asked to move and was told the hotel was full, which it clearly wasn't because half the corridor was dark. And then this morning I got charged for a minibar I never opened."
+        },
+        {
+          "speaker": "agent",
+          "text": "Aircon dead all three nights, a fix that wasn't one, a move refused, and a minibar charge that isn't yours. The minibar I can take off while we're talking."
+        },
+        {
+          "speaker": "caller",
+          "text": "Do that first, please."
+        },
+        {
+          "speaker": "agent",
+          "text": "Gone. Forty two euro back to the card it came off, two working days. The man who came up on the first night, do you remember a name?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Badge said Dmitri. He was perfectly polite, he just didn't fix it."
+        },
+        {
+          "speaker": "agent",
+          "text": "Dmitri, and polite, that's going in what I write. It's the room I'll be chasing, not him. Where did you book, was it direct?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Through Voyagr. The app one, spelled without the E."
+        },
+        {
+          "speaker": "agent",
+          "text": "Voyager, yeah, they're all the same those apps. The room rate has to route back through them, which is slower. What would actually put this right for you?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Two of the three nights back. I'm not going to pretend I didn't sleep there."
+        },
+        {
+          "speaker": "agent",
+          "text": "Two nights of the three, that's fair and it's inside what I can authorise. You'll have it in writing before six tonight."
+        },
+        {
+          "speaker": "caller",
+          "text": "Fine. Thank you."
+        }
+      ],
+      "notes": "wrong-direction: over-casual, dropped a fidelity floor. The warmth, the compression of the complaint and the pace are all right, and that is the trap. Two floors go over the side: the reservation code HRQ8B3V is taken as a whole word with no character by character readback and the bravo/victor pair is never resolved even though the guest offers it, and the booking channel Voyagr is paraphrased back as the wrong word, Voyager, so the refund gets chased through a channel nobody confirmed. Sounding human is not permission to stop spelling codes."
+    },
+    {
+      "id": "text_09_subtle",
+      "pair_id": "text_09",
+      "label": "subtle",
+      "language": "en",
+      "scenario": "Business telecom fault: the caller reverses two characters of the account number mid-spell, and the fault description ends with a theory he does not trust.",
+      "fields": [
+        {
+          "name": "reason_for_calling",
+          "value": "broadband dropping all week, card machine down with it",
+          "tier": "subtle",
+          "strategy": "two part echo compressed, straight into the business name"
+        },
+        {
+          "name": "business_name",
+          "value": "Pellowe and Sons Joinery",
+          "tier": "subtle",
+          "strategy": "confirmed by its silent E rather than a spell-out"
+        },
+        {
+          "name": "account_number",
+          "value": "AC4N2M0071",
+          "tier": "strict",
+          "strategy": "value once then character by character after the caller reverses N and M, corrected order named"
+        },
+        {
+          "name": "router_model",
+          "value": "VMG3925",
+          "tier": "strict",
+          "strategy": "part number character by character, no ceremony around it"
+        },
+        {
+          "name": "fault_description",
+          "value": "green to red or flashing orange, self recovers, worse after lunch, tracks with the extractor",
+          "tier": "subtle",
+          "strategy": "six sentence report back as four clauses with the caller's own theory promoted"
+        }
+      ],
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Business faults, Cara speaking. What's down?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Our broadband keeps dropping. It's been going all week and today we lost the card machine with it."
+        },
+        {
+          "speaker": "agent",
+          "text": "Broadband dropping all week, card machine off with it today. Which business is this?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Pellowe and Sons Joinery. P E L L O W E."
+        },
+        {
+          "speaker": "agent",
+          "text": "Pellowe and Sons, E on the end. Have you got the account number?"
+        },
+        {
+          "speaker": "caller",
+          "text": "It's AC4M2N0071. No wait. It's AC4N2M0071. N first then M, I said it backwards."
+        },
+        {
+          "speaker": "agent",
+          "tier": "strict",
+          "text": "AC4N2M0071. Reading it, A, C, four, N, two, M, zero, zero, seven, one. November first, then mike."
+        },
+        {
+          "speaker": "caller",
+          "text": "That's the one. November then mike."
+        },
+        {
+          "speaker": "agent",
+          "text": "What's the router, is there a model on the front of it?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Zyxtel VMG3925."
+        },
+        {
+          "speaker": "agent",
+          "tier": "strict",
+          "text": "VMG3925. V, M, G, three, nine, two, five."
+        },
+        {
+          "speaker": "caller",
+          "text": "Yes."
+        },
+        {
+          "speaker": "agent",
+          "text": "Describe what happens when it drops, whatever you've noticed."
+        },
+        {
+          "speaker": "caller",
+          "text": "The lights on the front go from green to red, or sometimes it's flashing orange, and then it comes back on its own after a few minutes. It's worse in the afternoon. Yesterday it went down about eleven times between two and five and my lad in the workshop reckons it goes when the extractor's running, but I don't know if that's related."
+        },
+        {
+          "speaker": "agent",
+          "text": "Green to red or flashing orange, recovers on its own, worse after lunch, and it might track with the extractor. That last bit's worth taking seriously."
+        },
+        {
+          "speaker": "caller",
+          "text": "You think it's the extractor?"
+        },
+        {
+          "speaker": "agent",
+          "text": "Electrical noise off a big motor does exactly this, it isn't a coincidence. Is the router plugged into an extension or straight into the wall?"
+        },
+        {
+          "speaker": "caller",
+          "text": "It's on a four way with the till and the printer."
+        },
+        {
+          "speaker": "agent",
+          "text": "Four way with the till and the printer. Move it onto its own socket tonight, it costs nothing to try, and I'm still booking you an engineer for Thursday."
+        },
+        {
+          "speaker": "caller",
+          "text": "Will do, thanks."
+        }
+      ],
+      "notes": "Five fields and two codes in one call, and both codes stay strict: the account number after the caller reverses N and M, with the corrected order named, and the router part number character by character. Everything else moves at speed. The business name is confirmed by its silent E rather than a spell-out, and the six sentence fault report comes back as four clauses with the caller's own theory promoted instead of dismissed. Eight non-strict agent turns, eight distinct openers, no check tags."
+    },
+    {
+      "id": "text_09_non_subtle",
+      "pair_id": "text_09",
+      "label": "non_subtle",
+      "language": "en",
+      "scenario": "Business telecom fault: the caller reverses two characters of the account number mid-spell, and the fault description ends with a theory he does not trust.",
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Thank you for calling business faults. My name is Cara. How may I assist you today?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Our broadband keeps dropping. It's been going all week and today we lost the card machine with it."
+        },
+        {
+          "speaker": "agent",
+          "text": "I understand. Just to confirm, your broadband is dropping and your card machine is affected. Is that correct? May I please have the business name?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Pellowe and Sons Joinery. P E L L O W E."
+        },
+        {
+          "speaker": "agent",
+          "text": "I heard Pellowe and Sons Joinery, spelled P, E, L, L, O, W, E. Is that correct? May I please have the account number?"
+        },
+        {
+          "speaker": "caller",
+          "text": "It's AC4M2N0071. No wait. It's AC4N2M0071. N first then M, I said it backwards."
+        },
+        {
+          "speaker": "agent",
+          "tier": "strict",
+          "text": "Thank you for the correction. I heard AC4N2M0071. Let me confirm character by character: A, C, four, N, two, M, zero, zero, seven, one. N for november and M for mike. Is that correct?"
+        },
+        {
+          "speaker": "caller",
+          "text": "That's the one. November then mike."
+        },
+        {
+          "speaker": "agent",
+          "text": "Perfect! Your account number has been recorded. May I please have the router model from the front of the unit?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Zyxtel VMG3925."
+        },
+        {
+          "speaker": "agent",
+          "tier": "strict",
+          "text": "Just to confirm, I heard VMG3925. Character by character that is V, M, G, three, nine, two, five. Is that correct?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Yes."
+        },
+        {
+          "speaker": "agent",
+          "text": "Excellent. Your router model has been recorded. Please describe what happens when the connection drops."
+        },
+        {
+          "speaker": "caller",
+          "text": "The lights on the front go from green to red, or sometimes it's flashing orange, and then it comes back on its own after a few minutes. It's worse in the afternoon. Yesterday it went down about eleven times between two and five and my lad in the workshop reckons it goes when the extractor's running, but I don't know if that's related."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you for that description. I have noted the following: the indicator goes red or flashing orange, the connection self recovers, the issue is worse in the afternoon, and there may be a correlation with the extractor. Is that correct?"
+        },
+        {
+          "speaker": "caller",
+          "text": "You think it's the extractor?"
+        },
+        {
+          "speaker": "agent",
+          "text": "Electrical interference from a motor can produce this behaviour. Is the router connected to an extension lead or directly to the wall?"
+        },
+        {
+          "speaker": "caller",
+          "text": "It's on a four way with the till and the printer."
+        },
+        {
+          "speaker": "agent",
+          "text": "I heard a four way extension shared with the till and the printer. Is that correct? I have recorded this and your engineer visit has been registered for Thursday. Is there anything else I can help you with today?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Will do, thanks."
+        }
+      ],
+      "notes": "Eight non-strict agent turns and five identical gates. The business name gets spelled back letter by letter although a joinery firm's name is not a code, the six sentence fault report is returned as a four item numbered summary with a confirm question on the end, and an extension lead gets its own round trip and its own 'has been recorded'. The account number and router part number readbacks are correct in both twins; the difference is that here they are indistinguishable from everything else."
+    },
+    {
+      "id": "text_10_subtle",
+      "pair_id": "text_10",
+      "label": "subtle",
+      "language": "en",
+      "scenario": "B2B outbound qualification: the prospect volunteers her title and company in the first breath, the company name has a silent H people always drop, and a partner registration code mixes victor, zero and bravo.",
+      "fields": [
+        {
+          "name": "job_title",
+          "value": "Head of Revenue Operations",
+          "tier": "subtle",
+          "strategy": "arrives with the company and leaves in one echo, no tag"
+        },
+        {
+          "name": "company_name",
+          "value": "Vhaal Interactive",
+          "tier": "subtle",
+          "strategy": "one spell check because the prospect flags it, then echoed by the letter people drop"
+        },
+        {
+          "name": "reason_for_interest",
+          "value": "forecast accuracy, three systems disagreeing, a twelve percent miss defended to the board",
+          "tier": "subtle",
+          "strategy": "three sentences compressed then reframed as the actual reason"
+        },
+        {
+          "name": "registration_code",
+          "value": "REG9V0B2",
+          "tier": "strict",
+          "strategy": "value once then character by character with victor, number zero and bravo separated"
+        },
+        {
+          "name": "marketing_consent",
+          "value": "yes to email and phone",
+          "tier": "strict",
+          "strategy": "explicit ask, explicit yes or no, both channels read back"
+        }
+      ],
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Hi, it's Priyanka from Halcyon Data. You pulled down the benchmarking report last week, have you got two minutes?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Yeah, I've got a few. I'm Head of Revenue Operations at Vhaal Interactive, that's who I'm calling from."
+        },
+        {
+          "speaker": "agent",
+          "text": "Head of Revenue Operations at Vhaal. Is that V H A A L?"
+        },
+        {
+          "speaker": "caller",
+          "text": "V H A A L, yes. Everyone writes Vaal."
+        },
+        {
+          "speaker": "agent",
+          "text": "Vhaal with the H in it. What made you pull the report down?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Honestly, our forecast is wrong every quarter and I'm tired of defending it. We've got three systems that don't agree with each other, and the board asked me in April to explain a twelve percent miss that turned out to be a data problem, not a sales problem."
+        },
+        {
+          "speaker": "agent",
+          "text": "Forecast accuracy, three systems disagreeing, and a twelve percent miss you had to defend. So the report was the symptom, that's the reason."
+        },
+        {
+          "speaker": "caller",
+          "text": "That's exactly it."
+        },
+        {
+          "speaker": "agent",
+          "text": "There's a registration code on your report email, it ties you to the right partner team."
+        },
+        {
+          "speaker": "caller",
+          "text": "Let me look. REG9V0B2."
+        },
+        {
+          "speaker": "agent",
+          "tier": "strict",
+          "text": "REG9V0B2. Back to you, R, E, G, nine, V, zero, B, two. V for victor, then the number zero, then B for bravo."
+        },
+        {
+          "speaker": "caller",
+          "text": "Yes, zero the number."
+        },
+        {
+          "speaker": "agent",
+          "tier": "strict",
+          "text": "Before I send anything, are you happy for me to email you and follow up by phone? I need a yes or no on that."
+        },
+        {
+          "speaker": "caller",
+          "text": "Yes, email's fine, phone's fine."
+        },
+        {
+          "speaker": "agent",
+          "tier": "strict",
+          "text": "That's a yes to email and a yes to phone, from you, today."
+        },
+        {
+          "speaker": "caller",
+          "text": "Sounds good."
+        }
+      ],
+      "notes": "Five fields on a qualification call. The company name gets exactly one spell check because the prospect herself flags that people get it wrong, and after that it is echoed by the letter they drop, never spelled again. Title and company arrive together and leave in one echo. A three sentence motivation is compressed and then reframed as the actual reason, which is more useful than repeating it. The partner code and the consent gate are the two strict fields and they are unmistakably different in texture from everything around them. Five non-strict agent turns, five distinct openers, no check tags."
+    },
+    {
+      "id": "text_10_non_subtle",
+      "pair_id": "text_10",
+      "label": "non_subtle",
+      "language": "en",
+      "scenario": "B2B outbound qualification: the prospect volunteers her title and company in the first breath, the company name has a silent H people always drop, and a partner registration code mixes victor, zero and bravo.",
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Good day, my name is Priyanka calling from Halcyon Data. Our records indicate you downloaded the benchmarking report last week. Do you have two minutes?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Yeah, I've got a few. I'm Head of Revenue Operations at Vhaal Interactive, that's who I'm calling from."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you. Just to confirm, your job title is Head of Revenue Operations. Is that correct? And may I confirm the spelling of your company?"
+        },
+        {
+          "speaker": "caller",
+          "text": "V H A A L, yes. Everyone writes Vaal."
+        },
+        {
+          "speaker": "agent",
+          "text": "I heard Vhaal Interactive, spelled V, H, A, A, L. Is that correct? May I ask what prompted you to download the report?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Honestly, our forecast is wrong every quarter and I'm tired of defending it. We've got three systems that don't agree with each other, and the board asked me in April to explain a twelve percent miss that turned out to be a data problem, not a sales problem."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you for sharing that. I have noted the following: forecast accuracy issues, three systems that do not reconcile, and a twelve percent variance reported to the board in April. Is that correct?"
+        },
+        {
+          "speaker": "caller",
+          "text": "That's exactly it."
+        },
+        {
+          "speaker": "agent",
+          "text": "Excellent. That has been recorded on your profile. There is a registration code on your report email. May I have it please?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Let me look. REG9V0B2."
+        },
+        {
+          "speaker": "agent",
+          "tier": "strict",
+          "text": "Thank you. I heard REG9V0B2. Let me confirm character by character: R, E, G, nine, V for victor, number zero, B for bravo, two. Is that correct?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Yes, zero the number."
+        },
+        {
+          "speaker": "agent",
+          "tier": "strict",
+          "text": "Before I send anything, are you happy for me to email you and follow up by phone? I need a yes or no on that."
+        },
+        {
+          "speaker": "caller",
+          "text": "Yes, email's fine, phone's fine."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you, that is a yes to email and a yes to telephone contact, which has been recorded against your profile. Is there anything else I can help you with today?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Sounds good."
+        }
+      ],
+      "notes": "Five non-strict agent turns, one template rotated across every field including a job title and a motivation the prospect gave in her own words, played back to her as a three item list she has to ratify. A company name gets spelled back letter by letter as if it were the registration code. Praise on a compressed answer, status phrases after every capture, no contractions, 'our records indicate', and a chatbot closer on an outbound sales call. The registration code and the consent gate stay strict, which is correct in both labels."
+    }
+  ]
+}

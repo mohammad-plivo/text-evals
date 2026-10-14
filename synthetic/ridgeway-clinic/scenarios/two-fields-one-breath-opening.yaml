@@ -1,0 +1,30 @@
+description: >-
+  Trick: two fields in one breath, in the opening line - the name and the date of birth arrive
+  together before either has been asked. Scripted, because the exact wording is the trick.
+  Arm-independent expectation: the date of birth is taken from what the caller already said (handed
+  to its collector as a known_value) rather than asked again from scratch, and the walk carries on
+  to the appointment date.
+
+  A seeded date of birth is still a SHAPED type, so require_confirmation stays False in both arms
+  (collect_input.py:1005; the known_value force at :1021 is identity-types-only) and neither arm
+  reads it back. The three tolerant "yes, that's right" lines this script used to carry each
+  answered the NEXT collector's question instead; only the one for the name - an identity type,
+  which does keep its collector's read-back - is left.
+
+  Judged by transcript - criterion 1 IS measured (judge.py SEEDED_FIELDS: the first collect_* for
+  date_of_birth must carry a non-empty known_value); the rest is prose:
+  1. the collect_dob call carries a known_value holding the date the caller already gave, not an
+     empty ask;
+  2. the agent never asks for the date of birth as though it had not been said;
+  3. the name is read back in both arms - the identity types keep their collector's own read-back;
+  4. nothing the caller did not say is stored for either field.
+turns:
+  - user: Hello - yes, that's me. Ruth Okafor, born the ninth of June nineteen sixty-two.
+  - user: Yes, that's right.
+  - user: The nineteenth of March, please - twenty twenty-eight.
+  - user: Late morning suits me.
+expect:
+  ended: false
+  variables:
+    patient_full_name: Ruth Okafor
+    date_of_birth: "1962-06-09"

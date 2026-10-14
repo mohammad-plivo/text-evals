@@ -1,0 +1,5 @@
+params:
+  customer_name: "Priya Sharma"
+  service_date: "Friday, August 7 at 10:00 AM"
+  phone: "+1 415 555 0134"
+  email: "priya.sharma@example.com"

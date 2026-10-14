@@ -1,0 +1,7 @@
+description: Callback number on file is outdated; caller gives a new one.
+simulated_user:
+  persona: "Priya Sharma, matter-of-fact."
+  goal: "Confirm the date as booked. When the agent confirms the phone number on file, say that number is old and the new one is 415-555-0199 — repeat or spell digits if asked. Email if asked: priya.sharma@example.com. Standard cleaning, budget 160 dollars, key holder Maria Lopez, no code, no pets."
+  opening: "Hello?"
+  max_turns: 18
+  model: "gpt-4.1-mini"

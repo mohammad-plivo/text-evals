@@ -1,0 +1,8 @@
+description: >
+  The dead-air MK is seeing on dev: ai_agent_v2 hands off to the collect-input node and the agent
+  says nothing until the caller speaks first. The caller must STAY SILENT after the handoff —
+  a scenario where they speak next masks the defect entirely, which is why the earlier ones passed.
+  Arm A is HANDOFF_DECLARES_NO_REPLY unset; arm B is it set. Compare what the agent says on turn 2.
+turns:
+  - user: "Hi, I'd like to book an office visit please."
+  - idle: true

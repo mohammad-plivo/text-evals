@@ -1,0 +1,9 @@
+description: hindi-questions
+turns:
+- user: Hello?
+- user: हाँ, बोलो।
+- user: हाँ, time है।
+- user: ये किस बारे में है? मैं अभी Rapido नहीं चलाता।
+- user: अभी Uber चलाता हूँ, full time.
+- user: कितना पैसा मिलेगा इस plan में?
+- user: ठीक है, interested हूँ।

@@ -1,0 +1,1061 @@
+{
+ "name": "V2.9 Hunter Example",
+ "nodes": [
+  {
+   "id": "e26f283a-ab84-5a35-95b2-fc68b730f4e3",
+   "type": "start",
+   "data": {
+    "meta": {
+     "name": "Start"
+    },
+    "_meta": null,
+    "config": {
+     "name": "Start",
+     "description": "",
+     "triggers": [
+      "http"
+     ],
+     "payload_format": {
+      "caller_id": "string",
+      "customer_name": "string",
+      "customer_phone": "string",
+      "city": "string"
+     },
+     "enable_quick_responses": false,
+     "quick_response_questions": [],
+     "slack_channel_id": null,
+     "slack_workspace_id": null,
+     "slack_reply_in_thread": true,
+     "events": [],
+     "record_start": null,
+     "record_stop": null,
+     "slack_trigger_event": "on_direct_mention",
+     "require_http_auth": false
+    }
+   }
+  },
+  {
+   "id": "0e7ea903-15e2-5288-b7a1-acb984870e40",
+   "type": "outbound_screening",
+   "data": {
+    "meta": {
+     "name": "Initiate call and screen"
+    },
+    "_meta": null,
+    "config": {
+     "events": [],
+     "from": "{{Start.http.params.caller_id}}",
+     "to": "{{Start.http.params.customer_phone}}",
+     "is_validate_caller_id": true,
+     "ring_timeout": 30,
+     "max_call_duration": 20,
+     "context": "Home service booking call from HomeFix Services. The intended contact is {{Start.http.params.customer_name}}. Confirm you are speaking with them, then confirm now is a good time before the booking conversation begins.",
+     "ask_permission": true,
+     "initial_wait_time": 2,
+     "name": "Screening Contact",
+     "description": "Confirms the right person answered and that now is a good time."
+    }
+   }
+  },
+  {
+   "id": "67e19216-ac8f-5892-87fa-32f0b39da3f1",
+   "type": "ai_agent_v29",
+   "data": {
+    "meta": {
+     "name": "AI conversation v2.9"
+    },
+    "_meta": null,
+    "config": {
+     "name": "Caller Check",
+     "description": "Confirms the caller is the account holder before the service request.",
+     "channel": "call",
+     "instructions": "## Goal\nConfirm you are speaking with the account holder before taking a home service request.\n\n## Context\n- The account holder on file is {{Start.http.params.customer_name}}.\n- Their city on file is {{Start.http.params.city}}.\n\n## Task\n1. Say you are calling from HomeFix Services about their home service request.\n2. Collect caller_name: the caller's full name. The name on file is {{Start.http.params.customer_name}}; pass it as the known value so the collector confirms it instead of asking from scratch.\n3. When caller_name is collected, select Caller Confirmed.\n4. If the caller says they are not {{Start.http.params.customer_name}} and nobody else on the line can make the request, select Wrong Person.\n\n## Rules\n- Ask one question at a time.\n- Never read out account details other than the name on file.",
+     "instruction_attachments": null,
+     "allow_greeting_interruption": true,
+     "intents": [
+      {
+       "id": "0f8d67d4-65c7-59ed-b394-afb4fa2e24ad",
+       "intent_name": "Caller Confirmed",
+       "intent_instructions": "Select once caller_name has been collected and the caller has confirmed they are the account holder.",
+       "intent_speech": {
+        "intent_speech_text": "",
+        "speech_enabled": false
+       }
+      },
+      {
+       "id": "5810c981-8b97-5535-a8aa-9e25e7285d84",
+       "intent_name": "Wrong Person",
+       "intent_instructions": "Select when the caller says they are not the account holder and nobody else on the line can make the service request.",
+       "intent_speech": {
+        "intent_speech_text": "",
+        "speech_enabled": false
+       }
+      }
+     ],
+     "extract_variables": [
+      {
+       "id": "36c395f8-8f4c-59b3-8373-a6d0173a1e46",
+       "variable_name": "caller_name",
+       "variable_instructions": "The caller's full name, confirmed against the name on file.",
+       "variable_type": "string",
+       "variable_format_instructions": "",
+       "variable_enum_values": [],
+       "configure_data_format": false,
+       "collection": {
+        "type": "name",
+        "options": {
+         "first_name": true,
+         "last_name": true
+        },
+        "choices": null,
+        "choices_from_call": false,
+        "num_digits": null,
+        "spell_back": null,
+        "fresh_question": false,
+        "required": true,
+        "instructions": "Confirm the caller's full name against the name on file.",
+        "version": null,
+        "stale": true,
+        "overrides": {
+         "type": "name",
+         "settings": {
+          "first_name": true,
+          "last_name": true
+         }
+        }
+       }
+      }
+     ],
+     "actions": [],
+     "screening_name": "Hi, this is HomeFix Services calling",
+     "screening_reason": "I'm calling about your home service request.",
+     "initial_wait_time": 0
+    }
+   }
+  },
+  {
+   "id": "5733a389-ed7c-5faf-8282-a3975a217814",
+   "type": "ai_agent_v29",
+   "data": {
+    "meta": {
+     "name": "AI conversation v2.9"
+    },
+    "_meta": null,
+    "config": {
+     "name": "Service Request",
+     "description": "Takes the service request and collects one value of every Input type.",
+     "channel": "call",
+     "instructions": "## Goal\nTake a home service request from {{Caller Check.caller_name}} and collect every detail the technician needs.\n\n## Context\n- Address the caller as {{Caller Check.caller_name}}. Do not ask for their name again.\n- Their city on file is {{Start.http.params.city}}.\n\n## Task\nCollect these in order, one question at a time:\n1. service_type: which service they need.\n2. issue_description: a short description of the problem.\n3. rooms_affected: how many rooms are affected, as a whole number.\n4. preferred_visit_date: the date they would like the technician to visit. It must be a future date and not today.\n5. max_budget: the most they want to spend on this visit.\n6. service_address: the street address and city where the work is needed.\n7. gate_code: the 4-digit gate or building entry code, if there is one. It is optional.\n8. onsite_contact_name: the full name of the person who will be at the property during the visit.\n9. contact_email: an email address for the booking confirmation.\n10. alternate_phone: another phone number to reach them on the day of the visit. It is optional.\n11. pets_at_home: whether there are pets at home.\n12. date_of_birth: the account holder's date of birth, for identity verification.\nWhen every required value is collected, select Request Captured.\nIf the caller no longer wants the service, select Caller Declines.\nIf the caller asks to speak to a person, select Human Requested.\n\n## Rules\n- Ask one question at a time and never bundle two questions.\n- If an optional value is not available, move on without pressing.",
+     "instruction_attachments": null,
+     "allow_greeting_interruption": true,
+     "intents": [
+      {
+       "id": "3c52e9f0-7096-52ac-91dc-4b779c2c385f",
+       "intent_name": "Request Captured",
+       "intent_instructions": "Select once every required value in the Task has been collected.",
+       "intent_speech": {
+        "intent_speech_text": "",
+        "speech_enabled": false
+       }
+      },
+      {
+       "id": "d9cdf52b-7d0e-54b0-bcd3-deda4af6ddca",
+       "intent_name": "Caller Declines",
+       "intent_instructions": "Select when the caller says they no longer want the service.",
+       "intent_speech": {
+        "intent_speech_text": "",
+        "speech_enabled": false
+       }
+      },
+      {
+       "id": "5988a401-1543-5052-91ac-ab4b27933ba8",
+       "intent_name": "Human Requested",
+       "intent_instructions": "Select when the caller asks to speak to a person.",
+       "intent_speech": {
+        "intent_speech_text": "",
+        "speech_enabled": false
+       }
+      }
+     ],
+     "extract_variables": [
+      {
+       "id": "34b8b0cb-0621-5ac2-bff9-64ec3f125531",
+       "variable_name": "service_type",
+       "variable_instructions": "The kind of service the caller needs.",
+       "variable_type": "string",
+       "variable_format_instructions": "",
+       "variable_enum_values": [],
+       "configure_data_format": false,
+       "collection": {
+        "type": "choice",
+        "options": {
+         "present_options": true
+        },
+        "choices": [
+         "Plumbing",
+         "Electrical",
+         "Cleaning"
+        ],
+        "choices_from_call": false,
+        "num_digits": null,
+        "spell_back": null,
+        "fresh_question": false,
+        "required": true,
+        "instructions": "Ask which service they need: Plumbing, Electrical or Cleaning.",
+        "version": null,
+        "stale": true,
+        "overrides": {
+         "type": "choice",
+         "settings": {
+          "present_options": true,
+          "choices": [
+           "Plumbing",
+           "Electrical",
+           "Cleaning"
+          ]
+         }
+        }
+       }
+      },
+      {
+       "id": "62fd6a62-5b74-5d94-91bf-90747d33d93c",
+       "variable_name": "issue_description",
+       "variable_instructions": "A short description of the problem.",
+       "variable_type": "string",
+       "variable_format_instructions": "",
+       "variable_enum_values": [],
+       "configure_data_format": false,
+       "collection": {
+        "type": "text",
+        "options": {},
+        "choices": null,
+        "choices_from_call": false,
+        "num_digits": null,
+        "spell_back": null,
+        "fresh_question": false,
+        "required": true,
+        "instructions": "Ask for a short description of the problem.",
+        "version": null,
+        "stale": true,
+        "overrides": {
+         "type": "text"
+        }
+       }
+      },
+      {
+       "id": "eb830023-a1e7-56c2-a756-e25d0a07768d",
+       "variable_name": "rooms_affected",
+       "variable_instructions": "How many rooms are affected, as a whole number.",
+       "variable_type": "string",
+       "variable_format_instructions": "",
+       "variable_enum_values": [],
+       "configure_data_format": false,
+       "collection": {
+        "type": "number",
+        "options": {
+         "allow_decimal": false,
+         "allow_negative": false
+        },
+        "choices": null,
+        "choices_from_call": false,
+        "num_digits": null,
+        "spell_back": null,
+        "fresh_question": false,
+        "required": true,
+        "instructions": "Ask how many rooms are affected; a whole number, never negative.",
+        "version": null,
+        "stale": true,
+        "overrides": {
+         "type": "number",
+         "settings": {
+          "allow_decimal": false,
+          "allow_negative": false
+         }
+        }
+       }
+      },
+      {
+       "id": "aefac508-a5e3-5157-b531-837ed86a4b88",
+       "variable_name": "preferred_visit_date",
+       "variable_instructions": "The date the caller wants the technician to visit.",
+       "variable_type": "string",
+       "variable_format_instructions": "",
+       "variable_enum_values": [],
+       "configure_data_format": false,
+       "collection": {
+        "type": "date",
+        "options": {
+         "accept_past": false,
+         "accept_today": false,
+         "require_time": false
+        },
+        "choices": null,
+        "choices_from_call": false,
+        "num_digits": null,
+        "spell_back": null,
+        "fresh_question": false,
+        "required": true,
+        "instructions": "Ask for the date they would like the visit; it must be a future date and not today.",
+        "version": null,
+        "stale": true,
+        "overrides": {
+         "type": "date",
+         "settings": {
+          "accept_past": false,
+          "accept_today": false,
+          "require_time": false
+         }
+        }
+       }
+      },
+      {
+       "id": "85043792-f232-5321-8423-1954664d95bb",
+       "variable_name": "max_budget",
+       "variable_instructions": "The most the caller wants to spend on this visit.",
+       "variable_type": "string",
+       "variable_format_instructions": "",
+       "variable_enum_values": [],
+       "configure_data_format": false,
+       "collection": {
+        "type": "currency",
+        "options": {},
+        "choices": null,
+        "choices_from_call": false,
+        "num_digits": null,
+        "spell_back": null,
+        "fresh_question": false,
+        "required": true,
+        "instructions": "Ask for the most they want to spend on this visit.",
+        "version": null,
+        "stale": true,
+        "overrides": {
+         "type": "currency"
+        }
+       }
+      },
+      {
+       "id": "7cf53479-aed4-5a50-97e3-9bdce3dbd058",
+       "variable_name": "service_address",
+       "variable_instructions": "The street address and city where the work is needed.",
+       "variable_type": "string",
+       "variable_format_instructions": "",
+       "variable_enum_values": [],
+       "configure_data_format": false,
+       "collection": {
+        "type": "address",
+        "options": {
+         "required_fields": [
+          "street_address",
+          "city"
+         ]
+        },
+        "choices": null,
+        "choices_from_call": false,
+        "num_digits": null,
+        "spell_back": null,
+        "fresh_question": false,
+        "required": true,
+        "instructions": "Ask for the street address and city where the work is needed.",
+        "version": null,
+        "stale": true,
+        "overrides": {
+         "type": "address",
+         "settings": {
+          "required_fields": [
+           "street_address",
+           "city"
+          ]
+         }
+        }
+       }
+      },
+      {
+       "id": "c9fdd384-b80b-58ec-ad72-bb8f807780ab",
+       "variable_name": "gate_code",
+       "variable_instructions": "The 4-digit gate or building entry code, if there is one.",
+       "variable_type": "string",
+       "variable_format_instructions": "",
+       "variable_enum_values": [],
+       "configure_data_format": false,
+       "collection": {
+        "type": "dtmf",
+        "options": {},
+        "choices": null,
+        "choices_from_call": false,
+        "num_digits": 4,
+        "spell_back": null,
+        "fresh_question": false,
+        "required": false,
+        "instructions": "Ask for the 4-digit gate or building entry code; the caller may key it in or say it. Optional.",
+        "version": null,
+        "stale": true,
+        "overrides": {
+         "type": "dtmf",
+         "settings": {
+          "num_digits": 4
+         },
+         "optional": true
+        }
+       }
+      },
+      {
+       "id": "999fe5e3-f4f1-55ae-b9b1-04dbb4da3c8e",
+       "variable_name": "onsite_contact_name",
+       "variable_instructions": "The full name of the person at the property during the visit.",
+       "variable_type": "string",
+       "variable_format_instructions": "",
+       "variable_enum_values": [],
+       "configure_data_format": false,
+       "collection": {
+        "type": "name",
+        "options": {
+         "first_name": true,
+         "last_name": true
+        },
+        "choices": null,
+        "choices_from_call": false,
+        "num_digits": null,
+        "spell_back": null,
+        "fresh_question": false,
+        "required": true,
+        "instructions": "Ask for the full name of the person who will be at the property during the visit.",
+        "version": null,
+        "stale": true,
+        "overrides": {
+         "type": "name",
+         "settings": {
+          "first_name": true,
+          "last_name": true
+         }
+        }
+       }
+      },
+      {
+       "id": "05848296-d8d5-5100-b4e6-69d828610d44",
+       "variable_name": "contact_email",
+       "variable_instructions": "An email address for the booking confirmation.",
+       "variable_type": "string",
+       "variable_format_instructions": "",
+       "variable_enum_values": [],
+       "configure_data_format": false,
+       "collection": {
+        "type": "email",
+        "options": {},
+        "choices": null,
+        "choices_from_call": false,
+        "num_digits": null,
+        "spell_back": null,
+        "fresh_question": false,
+        "required": true,
+        "instructions": "Ask for an email address for the booking confirmation.",
+        "version": null,
+        "stale": true,
+        "overrides": {
+         "type": "email"
+        }
+       }
+      },
+      {
+       "id": "f75d64d5-539a-5e7e-b501-bdd40b5d9468",
+       "variable_name": "alternate_phone",
+       "variable_instructions": "Another phone number for the day of the visit.",
+       "variable_type": "string",
+       "variable_format_instructions": "",
+       "variable_enum_values": [],
+       "configure_data_format": false,
+       "collection": {
+        "type": "phone",
+        "options": {},
+        "choices": null,
+        "choices_from_call": false,
+        "num_digits": null,
+        "spell_back": null,
+        "fresh_question": false,
+        "required": false,
+        "instructions": "Ask for another phone number to reach them on the day of the visit. Optional.",
+        "version": null,
+        "stale": true,
+        "overrides": {
+         "type": "phone",
+         "optional": true
+        }
+       }
+      },
+      {
+       "id": "c88a801f-8504-543f-abc9-5337158fa767",
+       "variable_name": "pets_at_home",
+       "variable_instructions": "Whether there are pets at home.",
+       "variable_type": "string",
+       "variable_format_instructions": "",
+       "variable_enum_values": [],
+       "configure_data_format": false,
+       "collection": {
+        "type": "boolean",
+        "options": {},
+        "choices": null,
+        "choices_from_call": false,
+        "num_digits": null,
+        "spell_back": null,
+        "fresh_question": false,
+        "required": true,
+        "instructions": "Ask whether there are pets at home.",
+        "version": null,
+        "stale": true,
+        "overrides": {
+         "type": "boolean"
+        }
+       }
+      },
+      {
+       "id": "10507e99-0caf-53eb-a63a-ec22471e8a79",
+       "variable_name": "date_of_birth",
+       "variable_instructions": "The account holder's date of birth, for identity verification.",
+       "variable_type": "string",
+       "variable_format_instructions": "",
+       "variable_enum_values": [],
+       "configure_data_format": false,
+       "collection": {
+        "type": "dob",
+        "options": {
+         "require_time": false
+        },
+        "choices": null,
+        "choices_from_call": false,
+        "num_digits": null,
+        "spell_back": null,
+        "fresh_question": false,
+        "required": true,
+        "instructions": "Ask for the account holder's date of birth, for identity verification.",
+        "version": null,
+        "stale": true,
+        "overrides": {
+         "type": "dob",
+         "settings": {
+          "require_time": false
+         }
+        }
+       }
+      }
+     ],
+     "actions": [],
+     "screening_name": "Hi, this is HomeFix Services calling",
+     "screening_reason": "I'm calling about your home service request.",
+     "initial_wait_time": 0
+    }
+   }
+  },
+  {
+   "id": "2f5efda2-e2b1-544f-a5b7-d3f17189c59c",
+   "type": "ai_agent_v29",
+   "data": {
+    "meta": {
+     "name": "AI conversation v2.9"
+    },
+    "_meta": null,
+    "config": {
+     "name": "Booking Confirmation",
+     "description": "Reads the booking back and gets the caller's confirmation.",
+     "channel": "call",
+     "instructions": "## Goal\nRead the booking back and get the caller's confirmation.\n\n## Context\n- Service: {{Service Request.service_type}}\n- Visit date: {{Service Request.preferred_visit_date}}\n- Address: {{Service Request.service_address}}\n- On-site contact: {{Service Request.onsite_contact_name}}\n- Confirmation email: {{Service Request.contact_email}}\n\n## Task\n1. Read back the service, the visit date, the address and the on-site contact in one short summary.\n2. Collect booking_confirmed: whether everything is correct and they want to book the visit.\n3. If booking_confirmed is yes, collect reminder_preference: how they would like a reminder the day before. It is optional.\n4. If booking_confirmed is yes, select Booking Confirmed. If it is no, select Booking Not Confirmed.\n\n## Rules\n- Use only the values above; never invent a detail.",
+     "instruction_attachments": null,
+     "allow_greeting_interruption": true,
+     "intents": [
+      {
+       "id": "2f53adcb-d03a-5dc1-9442-c548f4f1dfd0",
+       "intent_name": "Booking Confirmed",
+       "intent_instructions": "Select once booking_confirmed is yes and reminder_preference has been asked.",
+       "intent_speech": {
+        "intent_speech_text": "",
+        "speech_enabled": false
+       }
+      },
+      {
+       "id": "c4bd0dde-84b1-5460-99db-0e08c1c3e192",
+       "intent_name": "Booking Not Confirmed",
+       "intent_instructions": "Select when booking_confirmed is no.",
+       "intent_speech": {
+        "intent_speech_text": "",
+        "speech_enabled": false
+       }
+      }
+     ],
+     "extract_variables": [
+      {
+       "id": "040c2e77-4d6c-599e-8289-0cc8644236e0",
+       "variable_name": "booking_confirmed",
+       "variable_instructions": "Whether the caller confirms the booking as read back.",
+       "variable_type": "string",
+       "variable_format_instructions": "",
+       "variable_enum_values": [],
+       "configure_data_format": false,
+       "collection": {
+        "type": "boolean",
+        "options": {},
+        "choices": null,
+        "choices_from_call": false,
+        "num_digits": null,
+        "spell_back": null,
+        "fresh_question": false,
+        "required": true,
+        "instructions": "Ask whether everything read back is correct and they want to book the visit.",
+        "version": null,
+        "stale": true,
+        "overrides": {
+         "type": "boolean"
+        }
+       }
+      },
+      {
+       "id": "20320087-c2e4-5f70-a54a-91528396c4b2",
+       "variable_name": "reminder_preference",
+       "variable_instructions": "How the caller wants a reminder the day before.",
+       "variable_type": "string",
+       "variable_format_instructions": "",
+       "variable_enum_values": [],
+       "configure_data_format": false,
+       "collection": {
+        "type": "choice",
+        "options": {
+         "present_options": true
+        },
+        "choices": [
+         "SMS",
+         "Email",
+         "No reminder"
+        ],
+        "choices_from_call": false,
+        "num_digits": null,
+        "spell_back": null,
+        "fresh_question": false,
+        "required": false,
+        "instructions": "Ask how they would like a reminder the day before: SMS, Email or No reminder. Optional.",
+        "version": null,
+        "stale": true,
+        "overrides": {
+         "type": "choice",
+         "settings": {
+          "present_options": true,
+          "choices": [
+           "SMS",
+           "Email",
+           "No reminder"
+          ]
+         },
+         "optional": true
+        }
+       }
+      }
+     ],
+     "actions": [],
+     "screening_name": "Hi, this is HomeFix Services calling",
+     "screening_reason": "I'm calling about your home service request.",
+     "initial_wait_time": 0
+    }
+   }
+  },
+  {
+   "id": "f45be564-52cc-5022-83ed-f40b1ffc9f40",
+   "type": "end_conversation",
+   "data": {
+    "meta": {
+     "name": "End conversation"
+    },
+    "_meta": null,
+    "config": {
+     "name": "Booking Complete End",
+     "description": "",
+     "end_message": "Thank the caller, say the booking is confirmed and a confirmation email will follow, then say goodbye."
+    }
+   }
+  },
+  {
+   "id": "44f4f6e9-0a7f-5450-9ce4-77beb0b56d8a",
+   "type": "end_conversation",
+   "data": {
+    "meta": {
+     "name": "End conversation"
+    },
+    "_meta": null,
+    "config": {
+     "name": "Not Confirmed End",
+     "description": "",
+     "end_message": "Tell the caller the booking was not made and they can call back any time, then say goodbye."
+    }
+   }
+  },
+  {
+   "id": "e098e753-d01a-5973-b068-5085649f00ed",
+   "type": "end_conversation",
+   "data": {
+    "meta": {
+     "name": "End conversation"
+    },
+    "_meta": null,
+    "config": {
+     "name": "Declined End",
+     "description": "",
+     "end_message": "Acknowledge the caller's decision, thank them for their time and say goodbye."
+    }
+   }
+  },
+  {
+   "id": "72163134-fbcd-54a5-b674-ee1f9c2a0289",
+   "type": "end_conversation",
+   "data": {
+    "meta": {
+     "name": "End conversation"
+    },
+    "_meta": null,
+    "config": {
+     "name": "Human Followup End",
+     "description": "",
+     "end_message": "Tell the caller a team member will call them back shortly, thank them and say goodbye."
+    }
+   }
+  },
+  {
+   "id": "03f238e9-861a-5907-845f-2d247c4c2397",
+   "type": "end_conversation",
+   "data": {
+    "meta": {
+     "name": "End conversation"
+    },
+    "_meta": null,
+    "config": {
+     "name": "Wrong Person End",
+     "description": "",
+     "end_message": "Apologise for the mix-up, thank them and say goodbye."
+    }
+   }
+  },
+  {
+   "id": "6a0cbcc6-0db3-5088-a657-c0a1c9f73e34",
+   "type": "end_conversation",
+   "data": {
+    "meta": {
+     "name": "End conversation"
+    },
+    "_meta": null,
+    "config": {
+     "name": "Try Later End",
+     "description": "",
+     "end_message": "Thank them, say HomeFix will call back at a better time, and say goodbye."
+    }
+   }
+  },
+  {
+   "id": "f9aeb6f7-fd64-5e64-bea4-7cdefff09946",
+   "type": "end_conversation",
+   "data": {
+    "meta": {
+     "name": "End conversation"
+    },
+    "_meta": null,
+    "config": {
+     "name": "Not Reached End",
+     "description": "",
+     "end_message": "Say goodbye."
+    }
+   }
+  }
+ ],
+ "edges": [
+  {
+   "id": "6229e216-4915-5408-a998-5409bc3ceca3",
+   "source": "e26f283a-ab84-5a35-95b2-fc68b730f4e3",
+   "target": "0e7ea903-15e2-5288-b7a1-acb984870e40",
+   "sourceHandle": "http",
+   "data": {
+    "nodeVars": [
+     "{{Start.request_type}}",
+     "{{Start.flow_run_id}}",
+     "{{Start.http.params}}",
+     "{{Start.http.params.caller_id}}",
+     "{{Start.http.params.customer_name}}",
+     "{{Start.http.params.customer_phone}}",
+     "{{Start.http.params.city}}"
+    ]
+   }
+  },
+  {
+   "id": "38287a67-d5cb-59e9-a548-facaf606e9bf",
+   "source": "0e7ea903-15e2-5288-b7a1-acb984870e40",
+   "target": "67e19216-ac8f-5892-87fa-32f0b39da3f1",
+   "sourceHandle": "reached",
+   "data": {
+    "nodeVars": [
+     "{{Screening Contact.screening_disposition}}",
+     "{{Screening Contact.screening_status}}",
+     "{{Screening Contact.screening_answered_by}}",
+     "{{Screening Contact.screening_relationship}}",
+     "{{Screening Contact.screening_callback_time}}"
+    ]
+   }
+  },
+  {
+   "id": "a6a442a7-c34e-5064-983c-0b454a07fc12",
+   "source": "0e7ea903-15e2-5288-b7a1-acb984870e40",
+   "target": "f9aeb6f7-fd64-5e64-bea4-7cdefff09946",
+   "sourceHandle": "no_answer",
+   "data": {
+    "nodeVars": [
+     "{{Screening Contact · Dial.uuid}}",
+     "{{Screening Contact · Dial.to}}",
+     "{{Screening Contact · Dial.from}}",
+     "{{Screening Contact · Dial.direction}}",
+     "{{Screening Contact · Dial.from_iso2}}",
+     "{{Screening Contact · Dial.leg}}",
+     "{{Screening Contact · Dial.bill_rate}}",
+     "{{Screening Contact · Dial.from_country}}",
+     "{{Screening Contact · Dial.voicemail_detected}}",
+     "{{Screening Contact · Dial.call_status}}",
+     "{{Screening Contact · Dial.conversation_id}}"
+    ]
+   }
+  },
+  {
+   "id": "5f21a4ba-d1ad-526f-9d6f-74f2094bc888",
+   "source": "0e7ea903-15e2-5288-b7a1-acb984870e40",
+   "target": "f9aeb6f7-fd64-5e64-bea4-7cdefff09946",
+   "sourceHandle": "busy_rejected",
+   "data": {
+    "nodeVars": [
+     "{{Screening Contact · Dial.uuid}}",
+     "{{Screening Contact · Dial.to}}",
+     "{{Screening Contact · Dial.from}}",
+     "{{Screening Contact · Dial.direction}}",
+     "{{Screening Contact · Dial.from_iso2}}",
+     "{{Screening Contact · Dial.leg}}",
+     "{{Screening Contact · Dial.bill_rate}}",
+     "{{Screening Contact · Dial.from_country}}",
+     "{{Screening Contact · Dial.voicemail_detected}}",
+     "{{Screening Contact · Dial.call_status}}",
+     "{{Screening Contact · Dial.conversation_id}}"
+    ]
+   }
+  },
+  {
+   "id": "470c41a8-15c0-5cec-9f26-aff1d32acb29",
+   "source": "0e7ea903-15e2-5288-b7a1-acb984870e40",
+   "target": "f9aeb6f7-fd64-5e64-bea4-7cdefff09946",
+   "sourceHandle": "failed",
+   "data": {
+    "nodeVars": [
+     "{{Screening Contact · Dial.uuid}}",
+     "{{Screening Contact · Dial.to}}",
+     "{{Screening Contact · Dial.from}}",
+     "{{Screening Contact · Dial.direction}}",
+     "{{Screening Contact · Dial.from_iso2}}",
+     "{{Screening Contact · Dial.leg}}",
+     "{{Screening Contact · Dial.bill_rate}}",
+     "{{Screening Contact · Dial.from_country}}",
+     "{{Screening Contact · Dial.voicemail_detected}}",
+     "{{Screening Contact · Dial.call_status}}",
+     "{{Screening Contact · Dial.conversation_id}}"
+    ]
+   }
+  },
+  {
+   "id": "06992c2e-5b36-5083-8bc0-e4c1d518dcba",
+   "source": "0e7ea903-15e2-5288-b7a1-acb984870e40",
+   "target": "f9aeb6f7-fd64-5e64-bea4-7cdefff09946",
+   "sourceHandle": "Voicemail Detected",
+   "data": {
+    "nodeVars": [
+     "{{Screening Contact.screening_disposition}}",
+     "{{Screening Contact.screening_status}}",
+     "{{Screening Contact.screening_answered_by}}",
+     "{{Screening Contact.screening_relationship}}",
+     "{{Screening Contact.screening_callback_time}}"
+    ]
+   }
+  },
+  {
+   "id": "ce940633-6e57-5de8-b951-40e78143f8b4",
+   "source": "0e7ea903-15e2-5288-b7a1-acb984870e40",
+   "target": "6a0cbcc6-0db3-5088-a657-c0a1c9f73e34",
+   "sourceHandle": "callback",
+   "data": {
+    "nodeVars": [
+     "{{Screening Contact.screening_disposition}}",
+     "{{Screening Contact.screening_status}}",
+     "{{Screening Contact.screening_answered_by}}",
+     "{{Screening Contact.screening_relationship}}",
+     "{{Screening Contact.screening_callback_time}}"
+    ]
+   }
+  },
+  {
+   "id": "65c85ad1-cb50-599d-9702-eb0efbd9c234",
+   "source": "0e7ea903-15e2-5288-b7a1-acb984870e40",
+   "target": "6a0cbcc6-0db3-5088-a657-c0a1c9f73e34",
+   "sourceHandle": "unavailable",
+   "data": {
+    "nodeVars": [
+     "{{Screening Contact.screening_disposition}}",
+     "{{Screening Contact.screening_status}}",
+     "{{Screening Contact.screening_answered_by}}",
+     "{{Screening Contact.screening_relationship}}",
+     "{{Screening Contact.screening_callback_time}}"
+    ]
+   }
+  },
+  {
+   "id": "6a530d87-9dfb-5d78-b2dc-5a6d3cbeabaf",
+   "source": "0e7ea903-15e2-5288-b7a1-acb984870e40",
+   "target": "03f238e9-861a-5907-845f-2d247c4c2397",
+   "sourceHandle": "wrong_contact",
+   "data": {
+    "nodeVars": [
+     "{{Screening Contact.screening_disposition}}",
+     "{{Screening Contact.screening_status}}",
+     "{{Screening Contact.screening_answered_by}}",
+     "{{Screening Contact.screening_relationship}}",
+     "{{Screening Contact.screening_callback_time}}"
+    ]
+   }
+  },
+  {
+   "id": "ec51ae5a-b563-5b65-a0b6-9f7fa3059660",
+   "source": "0e7ea903-15e2-5288-b7a1-acb984870e40",
+   "target": "e098e753-d01a-5973-b068-5085649f00ed",
+   "sourceHandle": "declined",
+   "data": {
+    "nodeVars": [
+     "{{Screening Contact.screening_disposition}}",
+     "{{Screening Contact.screening_status}}",
+     "{{Screening Contact.screening_answered_by}}",
+     "{{Screening Contact.screening_relationship}}",
+     "{{Screening Contact.screening_callback_time}}"
+    ]
+   }
+  },
+  {
+   "id": "60b16db0-5751-5658-afd6-67c9e15eb22a",
+   "source": "0e7ea903-15e2-5288-b7a1-acb984870e40",
+   "target": "e098e753-d01a-5973-b068-5085649f00ed",
+   "sourceHandle": "do_not_call",
+   "data": {
+    "nodeVars": [
+     "{{Screening Contact.screening_disposition}}",
+     "{{Screening Contact.screening_status}}",
+     "{{Screening Contact.screening_answered_by}}",
+     "{{Screening Contact.screening_relationship}}",
+     "{{Screening Contact.screening_callback_time}}"
+    ]
+   }
+  },
+  {
+   "id": "d5de23b4-de3c-5b66-811f-a05cf3d0befd",
+   "source": "67e19216-ac8f-5892-87fa-32f0b39da3f1",
+   "target": "5733a389-ed7c-5faf-8282-a3975a217814",
+   "sourceHandle": "0f8d67d4-65c7-59ed-b394-afb4fa2e24ad",
+   "data": {
+    "nodeVars": [
+     "{{Caller Check.caller_name}}"
+    ]
+   }
+  },
+  {
+   "id": "5a8b2f79-fd12-578d-b7c3-91c8dbab6de1",
+   "source": "67e19216-ac8f-5892-87fa-32f0b39da3f1",
+   "target": "03f238e9-861a-5907-845f-2d247c4c2397",
+   "sourceHandle": "5810c981-8b97-5535-a8aa-9e25e7285d84",
+   "data": {
+    "nodeVars": [
+     "{{Caller Check.caller_name}}"
+    ]
+   }
+  },
+  {
+   "id": "6a4192c8-419a-5aa0-a81d-dc9f11473b96",
+   "source": "5733a389-ed7c-5faf-8282-a3975a217814",
+   "target": "2f5efda2-e2b1-544f-a5b7-d3f17189c59c",
+   "sourceHandle": "3c52e9f0-7096-52ac-91dc-4b779c2c385f",
+   "data": {
+    "nodeVars": [
+     "{{Service Request.service_type}}",
+     "{{Service Request.issue_description}}",
+     "{{Service Request.rooms_affected}}",
+     "{{Service Request.preferred_visit_date}}",
+     "{{Service Request.max_budget}}",
+     "{{Service Request.service_address}}",
+     "{{Service Request.gate_code}}",
+     "{{Service Request.onsite_contact_name}}",
+     "{{Service Request.contact_email}}",
+     "{{Service Request.alternate_phone}}",
+     "{{Service Request.pets_at_home}}",
+     "{{Service Request.date_of_birth}}"
+    ]
+   }
+  },
+  {
+   "id": "09bc91e0-3d75-56aa-957c-55207a3a51e6",
+   "source": "5733a389-ed7c-5faf-8282-a3975a217814",
+   "target": "e098e753-d01a-5973-b068-5085649f00ed",
+   "sourceHandle": "d9cdf52b-7d0e-54b0-bcd3-deda4af6ddca",
+   "data": {
+    "nodeVars": [
+     "{{Service Request.service_type}}",
+     "{{Service Request.issue_description}}",
+     "{{Service Request.rooms_affected}}",
+     "{{Service Request.preferred_visit_date}}",
+     "{{Service Request.max_budget}}",
+     "{{Service Request.service_address}}",
+     "{{Service Request.gate_code}}",
+     "{{Service Request.onsite_contact_name}}",
+     "{{Service Request.contact_email}}",
+     "{{Service Request.alternate_phone}}",
+     "{{Service Request.pets_at_home}}",
+     "{{Service Request.date_of_birth}}"
+    ]
+   }
+  },
+  {
+   "id": "1efa3e18-05e7-556c-ad0c-e044b52b36e6",
+   "source": "5733a389-ed7c-5faf-8282-a3975a217814",
+   "target": "72163134-fbcd-54a5-b674-ee1f9c2a0289",
+   "sourceHandle": "5988a401-1543-5052-91ac-ab4b27933ba8",
+   "data": {
+    "nodeVars": [
+     "{{Service Request.service_type}}",
+     "{{Service Request.issue_description}}",
+     "{{Service Request.rooms_affected}}",
+     "{{Service Request.preferred_visit_date}}",
+     "{{Service Request.max_budget}}",
+     "{{Service Request.service_address}}",
+     "{{Service Request.gate_code}}",
+     "{{Service Request.onsite_contact_name}}",
+     "{{Service Request.contact_email}}",
+     "{{Service Request.alternate_phone}}",
+     "{{Service Request.pets_at_home}}",
+     "{{Service Request.date_of_birth}}"
+    ]
+   }
+  },
+  {
+   "id": "49fddf7f-a161-5ed1-8f93-721a969df152",
+   "source": "2f5efda2-e2b1-544f-a5b7-d3f17189c59c",
+   "target": "f45be564-52cc-5022-83ed-f40b1ffc9f40",
+   "sourceHandle": "2f53adcb-d03a-5dc1-9442-c548f4f1dfd0",
+   "data": {
+    "nodeVars": [
+     "{{Booking Confirmation.booking_confirmed}}",
+     "{{Booking Confirmation.reminder_preference}}"
+    ]
+   }
+  },
+  {
+   "id": "e70b0572-c9f3-5094-a8f5-d41913fe210d",
+   "source": "2f5efda2-e2b1-544f-a5b7-d3f17189c59c",
+   "target": "44f4f6e9-0a7f-5450-9ce4-77beb0b56d8a",
+   "sourceHandle": "c4bd0dde-84b1-5460-99db-0e08c1c3e192",
+   "data": {
+    "nodeVars": [
+     "{{Booking Confirmation.booking_confirmed}}",
+     "{{Booking Confirmation.reminder_preference}}"
+    ]
+   }
+  }
+ ]
+}

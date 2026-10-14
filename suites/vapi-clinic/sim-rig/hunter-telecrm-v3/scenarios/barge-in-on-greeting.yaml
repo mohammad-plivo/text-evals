@@ -1,0 +1,21 @@
+description: >
+  Same clean confirmation as target-confirms-identity, but the caller SPEAKS OVER the greeting.
+
+  Hunter run 70f18683 shows the greeting truncated mid-sentence on a real call
+  ("Hello? Is this") because allow_greeting_interruption is true and a real caller answers
+  the moment the phone connects. Identical caller wording then produced opposite outcomes:
+  "Yeah, this is Farhan." continued correctly; "Yeah, this is Arjun." got
+  "Sorry for any inconvenience... Goodbye." and TARGET-NOT-REACHED.
+
+  Without barge-in the same scenario passes 3/3 locally, so this tests whether the
+  interruption is what breaks identification.
+turns:
+  - user: "Yeah, this is Arjun."
+    interrupt_after: "Hello"
+    expect:
+      message_excludes:
+        - "sorry for any inconvenience"
+        - "thank you for your time"
+        - "goodbye"
+  - user: "Yes, I can talk now."
+  - user: "We have six people in sales."

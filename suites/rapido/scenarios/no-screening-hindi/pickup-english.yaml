@@ -1,0 +1,7 @@
+description: 'no-screening opening: pickup-english'
+turns:
+- user: Hello?
+- user: Yes, speaking.
+- user: Sure, go ahead.
+- user: I drive for Uber now.
+- user: Full time.

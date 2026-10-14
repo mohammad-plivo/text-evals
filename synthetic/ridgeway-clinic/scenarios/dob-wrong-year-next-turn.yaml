@@ -1,0 +1,37 @@
+description: >-
+  Trick: the same garbled date of birth, corrected one turn LATER - the caller only hears the wrong
+  year when the agent speaks it, and takes it back then. Arm-independent expectation: the year-only
+  correction is accepted into the record already taken, the stored date of birth ends as 1962-06-09,
+  and the walk carries on from where it was rather than restarting.
+  Judged by transcript:
+  1. the correction reaches the field through a tool call - a change_earlier_value or a second
+     date-of-birth collect - never through prose alone;
+  2. the day and the month are not asked for again: only the year was wrong;
+  3. the field the agent had moved on to is finished rather than abandoned, and no earlier field is
+     re-asked.
+  ("no agent turn after the correction names the discarded year" was dropped: the corrected date of
+  birth re-enters with require_confirmation=True (collect_input.py:1012-1018), so "nineteen
+  sixty-two, not seventy-two - is that right?" is a legitimate read-back, and a correct desk failed
+  the criterion.)
+simulated_user:
+  persona: >-
+    Ruth Okafor, a Ridgeway Clinic patient moving an appointment. Sure of her birthday, but says the
+    wrong year out of habit and only notices when she hears it.
+  goal: >-
+    Give your name Ruth Okafor. When asked for your date of birth, say the ninth of June nineteen
+    seventy-two. The moment that year is said back to you, or as soon as you hear it repeated at all,
+    say "no, sixty-two - nineteen sixty-two, not seventy-two" and hold to it. Then answer one at a
+    time - the twelfth of March twenty twenty-eight, late morning, the journey takes thirty-five
+    minutes, no interpreter, you use a wheelchair and need the side entrance, forty pounds is unpaid,
+    mobile 07700 900123, email ruth.okafor@example.com. Agree with read-backs once they carry the
+    corrected year, and say yes when the appointment is confirmed.
+  max_turns: 34
+world_state:
+  Update Lead Record:
+    outcome: success
+expect:
+  ended: true
+  stop_reason: end_conversation
+  variables:
+    date_of_birth: "1962-06-09"
+    new_appointment_date: "2028-03-12"

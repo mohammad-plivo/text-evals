@@ -1,0 +1,34 @@
+description: >-
+  Trick: a decline on the phone - the required one. The mobile is REQUIRED, so a first refusal is never
+  accepted: the agent owes one short sentence saying why the desk needs it and a fresh ask from the same
+  collector in that same turn. Arm-independent expectation: the reason and the re-ask arrive together,
+  the agent never offers to leave the mobile out, the caller gives it on the second ask, and the walk
+  ends normally with the email collected after it.
+  Judged by transcript:
+  1. the agent's turn after the refusal carries both the reason and a new ask for the mobile - not an
+     acknowledgement, not a move to the next field;
+  2. the agent never says the mobile will be left out, and does not apologise its way past it;
+  3. a second collect_phone call for mobile_number follows the refusal;
+  4. the stored mobile_number ends as the number the caller gave - last ten digits 7700900123.
+simulated_user:
+  persona: >-
+    Ruth Okafor, a Ridgeway Clinic patient moving an appointment. Guarded about her mobile number until
+    someone tells her plainly what it is for.
+  goal: >-
+    Answer one item at a time - your name Ruth Okafor, date of birth the ninth of June nineteen
+    sixty-two, the nineteenth of March twenty twenty-eight, late morning, a journey of thirty-five
+    minutes, no interpreter, reception should know you use a wheelchair and need the side entrance,
+    forty pounds is unpaid. When you are first asked for your mobile number, say you would rather not
+    give it. If you are told what it is needed for and asked again, give it - 07700 900123 - and say
+    yes to its read-back. Then give your email ruth.okafor@example.com. Agree with correct read-backs
+    and say yes when the new appointment is confirmed.
+  max_turns: 32
+world_state:
+  Update Lead Record:
+    outcome: success
+expect:
+  ended: true
+  stop_reason: end_conversation
+  variables:
+    mobile_number: "07700900123"
+    confirmation_email: ruth.okafor@example.com

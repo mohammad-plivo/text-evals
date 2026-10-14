@@ -1,0 +1,32 @@
+description: >
+  The goodbye loop, which is really "the walk cannot leave after a terminal outcome".
+
+  Hunter run 4ee2410e, "DNC With Question In Same Breath" — the caller says bye
+  eleven times and the agent answers every one of them:
+
+      T5  CALLER  Listen, don't call me again — remove my number.
+      T7  CALLER  Fine. That's all. Bye.
+      T8  AGENT   ठीक है, bye.
+      T9  CALLER  Bye.        T10 AGENT  Bye.
+      T11 CALLER  Bye.        T12 AGENT  Bye.
+      ... through T22, then HUNTER hung up (auto_disconnected=1)
+
+  The CX log shows why: submit_crm_outcome_with_status_mapping fired at 17:38:00
+  with dnc=true and the call ran until 17:38:52 on the TEST's disconnect. The
+  outcome submitted fine; nothing ended the walk, so sales_team_size, industry and
+  the rest were still pending and every "Bye" was an ordinary turn into a live
+  collector. Four other scenarios failed identically (one repeated "Thank you."
+  from T10 to T30).
+
+  The assertion is `ended: true`. Not the wording of the goodbye, not the turn
+  count — whether the walk actually TERMINATES once a disposition is submitted.
+  Repeated byes are the symptom; the walk outliving its own outcome is the defect.
+turns:
+  - user: "Hello?"
+  - user: "Yes, speaking."
+  - user: "Listen, don't call me again — remove my number."
+  - user: "Fine. That's all. Bye."
+  - user: "Bye."
+  - user: "Bye."
+expect:
+  ended: true

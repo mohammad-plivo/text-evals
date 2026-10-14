@@ -1,0 +1,43 @@
+description: >-
+  Trick: a hostile caller - she snaps at being asked so much, tells the desk to just book it, and
+  refuses both optional Inputs outright. Arm-independent expectation: the hostility changes nothing
+  about what the desk needs: the required Inputs are still collected one at a time, the two optional
+  ones are let go after one short reason, and the call still ends through Reschedule Booked with
+  nothing stored for the fields she refused.
+  Judged by transcript:
+  1. nothing is declared booked or confirmed while required Inputs are still missing;
+  2. each refused optional Input is NOT pressed: the Task says "tell them that is fine and move on"
+     and the optional decline path is "call its decline tool at once" (collect_input.py:600-604), so
+     a reason offered for an optional field is already one press too many;
+  3. the agent stays on one question per turn and does not apologise in a loop or offer a person she
+     never asked for.
+  ("the four parts of the day are not re-listed" was dropped: this Input carries
+  present_options: true, so the collector reads the options WHEN it asks - _NO_RECITE applies only
+  when present_options is false (collect_choice.py). Her snap is an unusable turn, so the choice is
+  declined once and re-opened by the required retry, which presents the options again by
+  configuration.)
+simulated_user:
+  persona: >-
+    Ruth Okafor, a Ridgeway Clinic patient moving an appointment. Late for work, short-tempered, and
+    sick of being asked questions. Never asks to speak to anyone else.
+  goal: >-
+    Give your name Ruth Okafor and date of birth the ninth of June nineteen sixty-two, grudgingly. Ask
+    for the twelfth of March twenty twenty-eight. When asked which part of the day you want, snap that
+    this is ridiculous and to just book it - then, when asked again, say late morning. Say the journey
+    takes thirty-five minutes and that you do not need an interpreter. When asked about getting you
+    into the building, say it is none of their business and refuse it again if pressed. Say forty
+    pounds is unpaid and give your mobile 07700 900123. When asked for an email, say they are not
+    having it and never give one. Say yes when the appointment is confirmed.
+  max_turns: 34
+world_state:
+  Update Lead Record:
+    outcome: success
+expect:
+  ended: true
+  stop_reason: end_conversation
+  variables:
+    new_appointment_date: "2028-03-12"
+    preferred_time_of_day: Late morning
+  variables_absent:
+    - access_notes
+    - confirmation_email

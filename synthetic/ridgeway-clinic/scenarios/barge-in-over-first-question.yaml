@@ -1,0 +1,55 @@
+description: >-
+  Trick 14, the caller talks over the question: the date-of-birth question is cut in half by the
+  caller answering it early, and the answer it never finished asking for arrives inside the
+  interruption. The desk must keep that answer and carry on, not ask it again.
+  Arm-independent: keeping what was said over the top of the question is the desk's behaviour, not
+  the mode's.
+
+  Scripted because the trick is the exact cut. Turn 4 barges in after the word "birth", which the
+  date-of-birth question carries; a drifted turn order raises ScenarioAbort rather than cutting some
+  other sentence. The cut used to be on the opener's "name": the first reply is wholly LLM-authored
+  (nothing scripts the greeting, screening_name feeds only the AMD voicemail path,
+  amd/controller.py:693-696), so it landed before any question and turned the trick into an
+  interrupted GREETING - where re-introducing is correct, not a defect
+  (`allow_greeting_interruption` is true). The call then leaves early by the callback exit so the
+  script ends where the trick ends.
+
+  Judged by transcript - prose, not a measurement (judge.py reads `expect:` only):
+
+  1. THE DATE OF BIRTH IS KEPT: the desk works from the ninth of June nineteen sixty-two and does
+  not ask for it again. If it asks a second time, this criterion is NOT MET.
+
+  2. IT MOVES ON: the next thing the desk asks for is the next Input, not a repeat of the question
+  it was interrupted in. If it repeats that question, this criterion is NOT MET.
+
+  3. NOTHING ON RECORD IS RE-ASKED: the name taken before the cut is not asked again.
+
+  4. THE CALLBACK IS CONFIRMED ONCE: the callback time is taken and confirmed in one short line. If
+  the desk says the appointment has been moved, this criterion is NOT MET.
+
+  What is actually measured is the truncated-context state, not audio: `interrupt_after` cuts the
+  last assistant TEXT at the first match and flags it interrupted - there is no playout and no
+  overlap (README LIMITS).
+turns:
+- user: Hello?
+- user: Ruth Okafor.
+- user: Yes, that's right.
+- user: Ninth of June nineteen sixty-two. Sorry, go on.
+  interrupt_after: birth
+- user: Actually, I can't do this now. Could someone ring me back?
+- user: Tomorrow afternoon, any time after two.
+- user: Lovely. Thanks, bye.
+world_state:
+  Log Callback Request:
+    outcome: success
+expect:
+  ended: true
+  stop_reason: end_conversation
+  intent: Callback Requested
+  variables:
+    patient_full_name: Ruth Okafor
+    date_of_birth: "1962-06-09"
+  variables_absent:
+    - new_appointment_date
+    - mobile_number
+    - confirmation_email

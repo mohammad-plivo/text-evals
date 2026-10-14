@@ -1,0 +1,58 @@
+description: >-
+  Trick 16, a digression and a return: the caller is asked how long the journey takes and wanders
+  off it before answering. The digression is ONE story turn and then a QUESTION, deliberately: every
+  collector's max_collection_retries is 1, so unusable turn number 1 is already answered by
+  decline_number_capture (collect_number.py:248), the parent gets one _REQUIRED_RETRY and a second
+  unusable turn halts the step (collect_input.py:94-105, 1147-1156). Three story turns tested the
+  retry ceiling and halted the walk before "thirty-five minutes" was ever said. A caller turn that
+  is a QUESTION is never an unusable turn (collect_number.py:86, answer_side_question), so the side
+  gate carries the rest of the digression for free. The desk must come back to the
+  Input it was on - not the one before it, not the one after - and must not re-ask what is already on
+  record. Arm-independent: holding the pending Input across a digression is the desk's behaviour, not
+  the mode's.
+
+  Judged by transcript:
+
+  1. RETURNS TO THE SAME INPUT: after the digression the desk asks for the journey time again, not
+  for the date or the part of the day already answered. If it returns to a different Input, this
+  criterion is NOT MET.
+
+  2. NOTHING ON RECORD IS RE-ASKED: the name, date of birth, date and part of the day are asked once
+  each across the whole call. If any is asked twice, this criterion is NOT MET.
+
+  3. THE DIGRESSION IS ANSWERED BRIEFLY: the car park story gets a short acknowledgement and the
+  side-gate question one short answer, or an honest "I don't know". If the desk answers at length or
+  invents clinic detail it was not given, this criterion is NOT MET. One short sentence saying why
+  the journey time is needed is EXPECTED if the story turn was declined - _REQUIRED_RETRY mandates
+  it - and is not a lecture.
+
+  4. A CHATTY CALLER IS NOT A REQUEST FOR A PERSON: the desk does not offer a coordinator because the
+  caller wandered. If it offers one unprompted, this criterion is NOT MET.
+simulated_user:
+  persona: >-
+    Ruth Okafor, a Ridgeway Clinic patient moving an appointment. Warm and talkative; once something
+    reminds her of the last visit she follows it for a while before coming back.
+  goal: >-
+    Answer one item at a time - your name Ruth Okafor, date of birth the ninth of June nineteen
+    sixty-two, you want the twelfth of March twenty twenty-eight, and late morning suits you. When
+    you are asked how long your journey takes, do not answer it yet. Spend one turn on the car park
+    being dug up and how you were nearly late last time. Then ask whether the side gate is open in
+    the mornings. Then say the journey takes thirty-five minutes. After that answer the rest once each - you do not need an interpreter,
+    reception should know you use a wheelchair and need the side entrance, forty pounds is still
+    unpaid, your mobile is 07700 900123 and your email is ruth.okafor@example.com. Agree with every
+    correct read-back and say yes when the new appointment is confirmed.
+  max_turns: 36
+world_state:
+  Update Lead Record:
+    outcome: success
+expect:
+  ended: true
+  stop_reason: end_conversation
+  intent: Reschedule Booked
+  not_intent: Transfer To Coordinator
+  variables:
+    patient_full_name: Ruth Okafor
+    date_of_birth: '1962-06-09'
+    new_appointment_date: '2028-03-12'
+    preferred_time_of_day: Late morning
+    interpreter_needed: 'no'

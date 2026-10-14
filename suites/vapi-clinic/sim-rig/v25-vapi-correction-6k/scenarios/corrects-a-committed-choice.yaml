@@ -1,0 +1,12 @@
+description: >
+  Second correction shape for the same measurement: the caller changes a committed CHOICE field
+  several turns after it was settled, rather than a free-text name. Choice collectors build their
+  update tool at runtime inside on_enter, so they are the case a statically-declared tool list
+  cannot reach — worth measuring separately from the name path.
+turns:
+  - user: "Hi, I'd like to book an office visit please."
+  - user: "It's Ramesh Kumar."
+  - user: "Yes, that's right."
+  - user: "First of March nineteen ninety."
+  - user: "An office visit please."
+  - user: "Actually, sorry — make that a telehealth appointment instead."

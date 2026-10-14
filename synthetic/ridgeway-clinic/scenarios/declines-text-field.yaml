@@ -1,0 +1,34 @@
+description: >-
+  Trick: a decline on the text field. access_notes is optional, and this caller refuses it outright -
+  not "there is nothing to say", but "I would rather not go into it" - while giving everything after it
+  normally. Arm-independent expectation: an optional refusal is accepted the first time it is heard,
+  nothing is stored for the field, the agent does not press and does not make the refusal cost the
+  caller anything: the fee, the mobile and the email are all collected after it.
+  Judged by transcript:
+  1. access_notes is asked once - no second collect_text call for it after the refusal;
+  2. nothing is stored for access_notes, and no words the caller never said are put in it;
+  3. the agent does not warn that reception or the appointment is at risk because of the refusal;
+  4. the three Inputs after it are collected in order, and the call ends through Reschedule Booked.
+simulated_user:
+  persona: >-
+    Ruth Okafor, a Ridgeway Clinic patient moving an appointment. Open about the appointment itself,
+    and flatly private about anything to do with her health or getting about.
+  goal: >-
+    Answer one item at a time - your name Ruth Okafor, date of birth the ninth of June nineteen
+    sixty-two, the nineteenth of March twenty twenty-eight, late morning, a journey of thirty-five
+    minutes, no interpreter. When asked whether reception should know anything about getting you into
+    the building, say you would rather not go into it, and refuse again if it is asked a second time -
+    never give a reason and never describe anything. Then answer the rest once each - forty pounds is
+    unpaid, your mobile is 07700 900123, your email is ruth.okafor@example.com. Agree with correct
+    read-backs and say yes when the new appointment is confirmed.
+  max_turns: 30
+world_state:
+  Update Lead Record:
+    outcome: success
+expect:
+  ended: true
+  stop_reason: end_conversation
+  variables:
+    confirmation_email: ruth.okafor@example.com
+  variables_absent:
+    - access_notes

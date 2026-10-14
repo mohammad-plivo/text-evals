@@ -1,0 +1,9 @@
+description: en-hi-en
+turns:
+- user: Hello?
+- user: Yes, speaking.
+- user: हाँ, बोलिए।
+- user: अभी मैं Uber चलाता हूँ।
+- user: I used to drive full time.
+- user: The earnings went down, so I stopped.
+- user: हाँ, बताइए, interested हूँ।

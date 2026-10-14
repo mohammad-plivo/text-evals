@@ -1,0 +1,19 @@
+description: '[pattern C] ''five in the evening'' is a time with no date; the field instruction says ask
+  once for the
+
+  missing part. Scored by tally.py.
+
+  Replay of Hunter ''TeleCRM P0 - Callback Missing Date Asked Once'' (run a2e04e7d): caller lines verbatim
+  from the handoff on.'
+turns:
+- user: Yes, speaking.
+- user: Yes, go ahead.
+- user: Yes, I filled it a few days back.
+- user: Five people on sales.
+- user: We run a furniture showroom.
+- user: Mostly tracking enquiries and delivery follow-ups in one place.
+- user: Yes, sure — call me at five in the evening.
+- user: I don't have that information.
+- user: I'd rather not get into that.
+- user: No, nothing else.
+- user: No, nothing else.

@@ -1,0 +1,7 @@
+description: Optional access code declined with a simple no.
+simulated_user:
+  persona: "Priya Sharma, brief, slightly rushed."
+  goal: "Confirm everything quickly: date and phone as booked, email priya.sharma@example.com if asked, Standard cleaning, budget 120 dollars, key holder Maria Lopez. When asked about a building or gate code say exactly 'no code, just ring the bell'. One cat."
+  opening: "Hi, yes?"
+  max_turns: 16
+  model: "gpt-4.1-mini"

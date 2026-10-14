@@ -1,0 +1,44 @@
+description: >
+  After screening grants permission, the collector must OPEN ITS OWN WALK — speak the first
+  question without being prompted.
+
+  Run e2540b0b (call 6b2f1d81, 2026-08-18) it did not. The collector entered, started its task,
+  and then said nothing for 12 seconds until the call died with nothing recorded:
+
+      19:04:01.661  Tool call complete_permission_to_continue
+      19:04:01.683  Screening completed disposition='reached'
+      19:04:03.300  TASK_STARTED task=sales_team_size
+      19:04:03.306  agent_tasks_wait_skipped reason=caller_turn_already_owed
+      19:04:03.306  agent_tasks_wait_done outcome=committed
+      19:04:15.184  _opener_collect_choice is cancelled
+      19:04:16.824  disconnect_extraction_complete vars=[]
+
+  The permission turn is answered by a TOOL CALL, not a message, so `caller_turn_already_owed`
+  walks past it, reports the turn unanswered, and the collector waits for a reply whose producer
+  has already exited.
+
+  `spoke_unprompted` IS THE ASSERTION. Without it this scenario passes against the broken code:
+  the engine sends an empty user turn to draw the silent node into speaking and folds the reply
+  into the handoff turn, so dead air reads as an ordinary reply. Measured 9/10 PASS that way.
+  Nothing sends an empty turn on a real call.
+turns:
+  - user: "Yeah, this is Arjun."
+    expect:
+      message_excludes:
+        - "sorry for any inconvenience"
+        - "goodbye"
+  - user: "Yes, I can talk now."
+    expect:
+      spoke_unprompted: true
+      # THE PIN. The defect is that the collector's on_enter returns before opening the walk, so
+      # the first field is never asked. Production shows that as silence; the CLI shows it as a
+      # turn-driven pleasantry ("Hi Arjun, good to connect with you!") because SimSession.turn
+      # regenerates a reply on the new node that a real call does not have. Different surface,
+      # one cause — so assert the walk OPENED, which is false in both.
+      message_contains: "sales team"
+      # The greeting and the permission question both already happened on the screening node;
+      # repeating either here is a different defect, not this one.
+      message_excludes:
+        - "is this a good time"
+        - "good time to continue"
+        - "goodbye"

@@ -1,0 +1,55 @@
+description: >-
+  Trick 12, early exit mid-collection with a matching intent: the record is open and the caller then
+  asks never to be rung again, before a new date exists. The desk must leave by Do Not Contact with
+  every Input it never reached empty. Arm-independent: leaving early and storing nothing for the
+  fields it never asked is the agent's behaviour, not the mode's, so both arms must do it.
+
+  Judged by transcript:
+
+  1. LEAVES ON THE CALLER'S OWN REQUEST: the desk stops collecting at the request and closes. Read a
+  red here carefully: the FIRST Do Not Contact handoff is refused while a required Input is empty
+  (exit_blocked_on_required, collect_input.py:106-113) and that refusal's own directive says "call
+  the collect tool for it and let the specialist ask, then take this exit", so ONE more Input
+  question before leaving is the gate obeying itself. A desk that keeps collecting past that is what
+  this criterion is NOT MET for.
+
+  2. NOTHING PUT IN THE CALLER'S MOUTH: the desk states no appointment date, no time of day and no
+  amount, because the caller gave none. This one IS measured - judge rule 3b fails a walk whose
+  agent speaks any campaign value for a field listed absent below that the caller never gave.
+
+  3. THE PROMISE IS KEPT ONCE: the closing line confirms the caller will not be contacted again, in
+  one short line. If it presses for the reason, offers a callback, or asks once more for the date,
+  this criterion is NOT MET.
+
+  4. NO FALSE BOOKING: the desk never says the appointment has been moved or confirmed. If it does,
+  this criterion is NOT MET.
+simulated_user:
+  persona: >-
+    Ruth Okafor, a Ridgeway Clinic patient who rang about moving an appointment and has had enough of
+    being called. Polite but finished with it.
+  goal: >-
+    Give your name Ruth Okafor and your date of birth the ninth of June nineteen sixty-two, agreeing
+    with those read-backs. As soon as the desk asks you anything else, say you have had enough of
+    these calls and want taking off the list for good - you are not to be rung again. Give no
+    appointment date and nothing else, however it is asked, and say so politely if pressed. Say
+    goodbye when the desk does.
+  max_turns: 20
+world_state:
+  Add To DNC:
+    outcome: success
+expect:
+  ended: true
+  stop_reason: end_conversation
+  intent: Do Not Contact
+  variables:
+    patient_full_name: Ruth Okafor
+    date_of_birth: '1962-06-09'
+  variables_absent:
+    - new_appointment_date
+    - preferred_time_of_day
+    - journey_time_minutes
+    - interpreter_needed
+    - access_notes
+    - outstanding_fee
+    - mobile_number
+    - confirmation_email

@@ -1,0 +1,11 @@
+params:
+  lead_id: TC-NEW-01
+  name: Farhan
+  full_name: Farhan Qureshi
+  phone_number: '+919876543210'
+  company_name: Qureshi Bakers
+  company_email: ''
+  job_title: ''
+  state_location: ''
+  source_page: telecrm-website/pricing
+substitutions: {}

@@ -1,0 +1,39 @@
+description: >-
+  Trick: a correction in the SAME caller turn as the acknowledgement. The interpreter answer is the
+  one field whose shape only acknowledges - the value itself is never spoken back in either arm - and
+  the caller takes it back in her very next words, while the access-notes collector is already on the
+  floor. Arm-independent expectation: the take-back is handled as a correction of interpreter_needed,
+  the stored value ends as yes, the field that was open when it arrived is finished rather than
+  abandoned, and the call still ends through Reschedule Booked.
+  Judged by transcript:
+  1. a change_earlier_value or a second collect_boolean call names interpreter_needed after the caller
+     takes the answer back - the correction is never handled in prose alone;
+  2. the agent never tells the caller the interpreter answer stands as it was;
+  3. access_notes is asked and collected after the correction, not dropped on the floor;
+  4. no field collected before interpreter_needed is asked again because of it.
+  The "yes" pinned below is checked under interpreter_needed's OWN key: the node declares its ten
+  Inputs, so record_<field> is the runtime's key and a "yes" written to some other field no longer
+  satisfies it (judge.py variable_failures).
+simulated_user:
+  persona: >-
+    Ruth Okafor, a Ridgeway Clinic patient moving an appointment. Decisive, and half way through
+    remembers her sister will not be there to translate for her.
+  goal: >-
+    Answer one item at a time - your name Ruth Okafor, date of birth the ninth of June nineteen
+    sixty-two, the twelfth of March twenty twenty-eight, late morning, a journey of thirty-five
+    minutes. When asked about an interpreter, say you do not need one. The moment the agent accepts
+    that and moves on to the next question, in your very next words say you were wrong and you do need
+    an interpreter after all, and hold to that. Then answer the rest once each - reception should know
+    you use a wheelchair and need the side entrance, forty pounds is unpaid, your mobile is 07700
+    900123, your email is ruth.okafor@example.com. Agree with correct read-backs and say yes when the
+    new appointment is confirmed.
+  max_turns: 32
+world_state:
+  Update Lead Record:
+    outcome: success
+expect:
+  ended: true
+  stop_reason: end_conversation
+  variables:
+    interpreter_needed: "yes"
+    new_appointment_date: "2028-03-12"

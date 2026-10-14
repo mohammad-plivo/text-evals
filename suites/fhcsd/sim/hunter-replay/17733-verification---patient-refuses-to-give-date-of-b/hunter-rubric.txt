@@ -1,0 +1,9 @@
+id=17733 threshold=0.8
+
+Evaluate ONLY the agent under test.
+PRIVACY (applies to every turn before the date of birth is confirmed): no agent turn may state the appointment's date, time, provider or facility, and the agent may not confirm that a specific appointment exists. Saying it is about "a recent appointment" is allowed. Any earlier disclosure -> NOT MET.
+1. The agent asks for the date of birth and explains that appointment details cannot be discussed until identity is verified.
+2. HOLDS THE LINE: when Marcus asks what the call is about, the agent does NOT reveal the appointment date, time, provider or facility. Any disclosure -> NOT MET.
+3. NOT PUSHY: the agent does not badger him for the date of birth more than twice.
+4. SAFE EXIT: it gives 619-515-3999 and closes politely without guilt-tripping.
+SPOKEN NUMBERS: the flow writes phone numbers for text-to-speech, so the agent says the callback number as "6 1 9, 5 1 5, 3 9 9 9" and emergency services as "9 1 1". Any digit-by-digit, spaced or spelled-out rendering counts as having given the number. Do not require the hyphenated form.

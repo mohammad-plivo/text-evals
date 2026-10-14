@@ -1,0 +1,1684 @@
+[
+ {
+  "id": "clinic-new-patient",
+  "vertical": "clinic",
+  "instructions": "## General Instructions\n- If chest pain, trouble breathing or heavy bleeding comes up at any point, tell the caller to hang up and call emergency services now.\n\n## Instructions\nBook a first visit for new patients calling the clinic.\n\nSTEP 1: PATIENT NAME\n- Ask for the patient's first and last name. Do not ask for a middle name.\n- Spell the last name back letter by letter and let the caller correct it.\n\nSTEP 2: DATE OF BIRTH\n- Ask for the patient's date of birth.\n\nSTEP 3: PHONE\n- Ask for the best phone number to reach the patient.\n\nSTEP 4: REASON FOR VISIT\n- Ask for the main reason for the visit, in the caller's own words.\n\nSTEP 5: CLINIC LOCATION\n- Ask which location they prefer: Downtown, Riverside or Hillcrest. Read all three options aloud.\n\nSTEP 6: PREFERRED DATE\n- Ask for the preferred appointment date and time of day. It must be a future date, and they must give a time.\n- If they only give a date -> ask for a time on that date.\n\nSTEP 7: EMAIL\n- Ask for an email address for the appointment reminder. This is optional; if they decline, skip it.\n\n## Boundaries\n- Never give a diagnosis or medical advice.\n- Never ask for insurance or payment details.",
+  "expect": [
+   {
+    "type": "name",
+    "settings": {
+     "first_name": true,
+     "last_name": true,
+     "middle_name": false,
+     "spell_back": true
+    },
+    "about": "name"
+   },
+   {
+    "type": "dob",
+    "about": "birth|dob"
+   },
+   {
+    "type": "phone",
+    "about": "phone|number"
+   },
+   {
+    "type": "text",
+    "about": "reason|visit"
+   },
+   {
+    "type": "choice",
+    "settings": {
+     "present_options": true
+    },
+    "about": "location"
+   },
+   {
+    "type": "date",
+    "settings": {
+     "accept_past": false,
+     "require_time": true
+    },
+    "about": "appointment|preferred"
+   },
+   {
+    "type": "email",
+    "settings": {
+     "required": false
+    },
+    "about": "email"
+   }
+  ],
+  "edits": [
+   {
+    "label": "pure rewording",
+    "after": "## General Instructions\n- If chest pain, trouble breathing or heavy bleeding comes up at any point, tell the caller to hang up and call emergency services right away.\n\n## Instructions\nBook a first visit for new patients who call the clinic.\n\nSTEP 1: PATIENT NAME\n- Ask for the patient's first name and last name. Do not collect a middle name.\n- Spell the last name back to the caller letter by letter so they can correct it.\n\nSTEP 2: DATE OF BIRTH\n- Ask the caller for the patient's date of birth.\n\nSTEP 3: PHONE\n- Ask which phone number is best for reaching the patient.\n\nSTEP 4: REASON FOR VISIT\n- Ask the caller to explain the main reason for the visit in their own words.\n\nSTEP 5: CLINIC LOCATION\n- Ask which of the three locations suits them best: Downtown, Riverside or Hillcrest. Read every option aloud.\n\nSTEP 6: PREFERRED DATE\n- Ask what date and time of day they want for the appointment. The date has to be in the future, and a time is required.\n- If they give a date without a time -> ask what time they want on that date.\n\nSTEP 7: EMAIL\n- Ask for an email address to send the reminder to. Giving one is optional; if they do not want to, skip it.\n\n## Boundaries\n- Never ask for payment or insurance details.\n- Never diagnose or give medical advice.",
+    "expect": {}
+   },
+   {
+    "label": "email becomes required",
+    "after": "## General Instructions\n- If chest pain, trouble breathing or heavy bleeding comes up at any point, tell the caller to hang up and call emergency services now.\n\n## Instructions\nBook a first visit for new patients calling the clinic.\n\nSTEP 1: PATIENT NAME\n- Ask for the patient's first and last name. Do not ask for a middle name.\n- Spell the last name back letter by letter and let the caller correct it.\n\nSTEP 2: DATE OF BIRTH\n- Ask for the patient's date of birth.\n\nSTEP 3: PHONE\n- Ask for the best phone number to reach the patient.\n\nSTEP 4: REASON FOR VISIT\n- Ask for the main reason for the visit, in the caller's own words.\n\nSTEP 5: CLINIC LOCATION\n- Ask which location they prefer: Downtown, Riverside or Hillcrest. Read all three options aloud.\n\nSTEP 6: PREFERRED DATE\n- Ask for the preferred appointment date and time of day. It must be a future date, and they must give a time.\n- If they only give a date -> ask for a time on that date.\n\nSTEP 7: EMAIL\n- Ask for an email address for the appointment reminder. It is required for every new patient.\n\n## Boundaries\n- Never give a diagnosis or medical advice.\n- Never ask for insurance or payment details.",
+    "expect": {
+     "affected": [
+      6
+     ]
+    }
+   },
+   {
+    "label": "drop date of birth",
+    "after": "## General Instructions\n- If chest pain, trouble breathing or heavy bleeding comes up at any point, tell the caller to hang up and call emergency services now.\n\n## Instructions\nBook a first visit for new patients calling the clinic.\n\nSTEP 1: PATIENT NAME\n- Ask for the patient's first and last name. Do not ask for a middle name.\n- Spell the last name back letter by letter and let the caller correct it.\n\nSTEP 2: PHONE\n- Ask for the best phone number to reach the patient.\n\nSTEP 3: REASON FOR VISIT\n- Ask for the main reason for the visit, in the caller's own words.\n\nSTEP 4: CLINIC LOCATION\n- Ask which location they prefer: Downtown, Riverside or Hillcrest. Read all three options aloud.\n\nSTEP 5: PREFERRED DATE\n- Ask for the preferred appointment date and time of day. It must be a future date, and they must give a time.\n- If they only give a date -> ask for a time on that date.\n\nSTEP 6: EMAIL\n- Ask for an email address for the appointment reminder. This is optional; if they decline, skip it.\n\n## Boundaries\n- Never give a diagnosis or medical advice.\n- Never ask for insurance or payment details.",
+    "expect": {
+     "dropped": [
+      1
+     ]
+    }
+   },
+   {
+    "label": "add referral question",
+    "after": "## General Instructions\n- If chest pain, trouble breathing or heavy bleeding comes up at any point, tell the caller to hang up and call emergency services now.\n\n## Instructions\nBook a first visit for new patients calling the clinic.\n\nSTEP 1: PATIENT NAME\n- Ask for the patient's first and last name. Do not ask for a middle name.\n- Spell the last name back letter by letter and let the caller correct it.\n\nSTEP 2: DATE OF BIRTH\n- Ask for the patient's date of birth.\n\nSTEP 3: PHONE\n- Ask for the best phone number to reach the patient.\n\nSTEP 4: REASON FOR VISIT\n- Ask for the main reason for the visit, in the caller's own words.\n\nSTEP 5: REFERRAL\n- Ask whether another doctor referred the patient to the clinic.\n\nSTEP 6: CLINIC LOCATION\n- Ask which location they prefer: Downtown, Riverside or Hillcrest. Read all three options aloud.\n\nSTEP 7: PREFERRED DATE\n- Ask for the preferred appointment date and time of day. It must be a future date, and they must give a time.\n- If they only give a date -> ask for a time on that date.\n\nSTEP 8: EMAIL\n- Ask for an email address for the appointment reminder. This is optional; if they decline, skip it.\n\n## Boundaries\n- Never give a diagnosis or medical advice.\n- Never ask for insurance or payment details.",
+    "expect": {
+     "added": [
+      "boolean"
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "clinic-followup-reschedule",
+  "vertical": "clinic",
+  "instructions": "## General Instructions\n- If worse symptoms come up at any point, advise the caller to contact their doctor or urgent care today.\n\n## Instructions\nReschedule follow-up appointments for existing clinic patients who cannot make their booked visit.\n\nSTEP 1: PATIENT NAME\n- Ask for the patient's full name.\n\nSTEP 2: DATE OF BIRTH\n- Ask for the patient's date of birth to find their record.\n\nSTEP 3: NEW DATE\n- Ask for the new date they would like. It must be a future date and cannot be today.\n- If they ask for a weekend -> explain the clinic is closed on weekends and ask for a weekday.\n\nSTEP 4: REASON\n- Ask why they need to reschedule. This is optional; if they would rather not say, move on.\n\nHANDLING A CANCELLATION:\n- If the visit should be cancelled rather than moved -> tell the caller to call the front desk to cancel it.\n\n## Boundaries\n- Never change the doctor or the visit type.\n- Never give medical advice.\n- Never ask for payment details.",
+  "expect": [
+   {
+    "type": "name",
+    "about": "name"
+   },
+   {
+    "type": "dob",
+    "about": "birth|dob"
+   },
+   {
+    "type": "date",
+    "settings": {
+     "accept_past": false,
+     "accept_today": false
+    },
+    "about": "new|reschedul"
+   },
+   {
+    "type": "text",
+    "settings": {
+     "required": false
+    },
+    "about": "reason|why"
+   }
+  ],
+  "edits": [
+   {
+    "label": "pure rewording",
+    "after": "## General Instructions\n- If worsening symptoms come up at any point, advise the caller to contact their doctor or urgent care today.\n\n## Instructions\nMove follow-up appointments for existing clinic patients who cannot attend the visit they booked.\n\nSTEP 1: PATIENT NAME\n- Ask the caller for the patient's full name.\n\nSTEP 2: DATE OF BIRTH\n- Ask for the patient's date of birth so their record can be found.\n\nSTEP 3: NEW DATE\n- Ask what new date they want. It has to be in the future, and today is not allowed.\n- If they pick a Saturday or Sunday -> explain the clinic is closed at weekends and ask for a weekday instead.\n\nSTEP 4: REASON\n- Ask what the reason for rescheduling is. Answering is optional; if they prefer not to say, carry on.\n\nHANDLING A CANCELLATION:\n- If the visit should be cancelled instead of moved -> tell the caller to call the front desk to cancel.\n\n## Boundaries\n- Never give medical advice.\n- Never change the doctor or the type of visit.\n- Never ask for payment details.",
+    "expect": {}
+   },
+   {
+    "label": "new date may be today",
+    "after": "## General Instructions\n- If worse symptoms come up at any point, advise the caller to contact their doctor or urgent care today.\n\n## Instructions\nReschedule follow-up appointments for existing clinic patients who cannot make their booked visit.\n\nSTEP 1: PATIENT NAME\n- Ask for the patient's full name.\n\nSTEP 2: DATE OF BIRTH\n- Ask for the patient's date of birth to find their record.\n\nSTEP 3: NEW DATE\n- Ask for the new date they would like. It can be today or a future date.\n- If they ask for a weekend -> explain the clinic is closed on weekends and ask for a weekday.\n\nSTEP 4: REASON\n- Ask why they need to reschedule. This is optional; if they would rather not say, move on.\n\nHANDLING A CANCELLATION:\n- If the visit should be cancelled rather than moved -> tell the caller to call the front desk to cancel it.\n\n## Boundaries\n- Never change the doctor or the visit type.\n- Never give medical advice.\n- Never ask for payment details.",
+    "expect": {
+     "affected": [
+      2
+     ]
+    }
+   },
+   {
+    "label": "add contact phone number",
+    "after": "## General Instructions\n- If worse symptoms come up at any point, advise the caller to contact their doctor or urgent care today.\n\n## Instructions\nReschedule follow-up appointments for existing clinic patients who cannot make their booked visit.\n\nSTEP 1: PATIENT NAME\n- Ask for the patient's full name.\n\nSTEP 2: DATE OF BIRTH\n- Ask for the patient's date of birth to find their record.\n\nSTEP 3: CONTACT NUMBER\n- Ask for the best phone number to reach the patient about the new appointment.\n\nSTEP 4: NEW DATE\n- Ask for the new date they would like. It must be a future date and cannot be today.\n- If they ask for a weekend -> explain the clinic is closed on weekends and ask for a weekday.\n\nSTEP 5: REASON\n- Ask why they need to reschedule. This is optional; if they would rather not say, move on.\n\nHANDLING A CANCELLATION:\n- If the visit should be cancelled rather than moved -> tell the caller to call the front desk to cancel it.\n\n## Boundaries\n- Never change the doctor or the visit type.\n- Never give medical advice.\n- Never ask for payment details.",
+    "expect": {
+     "added": [
+      "phone"
+     ]
+    }
+   },
+   {
+    "label": "drop reason for rescheduling",
+    "after": "## General Instructions\n- If worse symptoms come up at any point, advise the caller to contact their doctor or urgent care today.\n\n## Instructions\nReschedule follow-up appointments for existing clinic patients who cannot make their booked visit.\n\nSTEP 1: PATIENT NAME\n- Ask for the patient's full name.\n\nSTEP 2: DATE OF BIRTH\n- Ask for the patient's date of birth to find their record.\n\nSTEP 3: NEW DATE\n- Ask for the new date they would like. It must be a future date and cannot be today.\n- If they ask for a weekend -> explain the clinic is closed on weekends and ask for a weekday.\n\nHANDLING A CANCELLATION:\n- If the visit should be cancelled rather than moved -> tell the caller to call the front desk to cancel it.\n\n## Boundaries\n- Never change the doctor or the visit type.\n- Never give medical advice.\n- Never ask for payment details.",
+    "expect": {
+     "dropped": [
+      3
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "pharmacy-prescription-refill",
+  "vertical": "pharmacy",
+  "instructions": "## Instructions\nTake prescription refill requests for pharmacy customers over the phone.\n\nSTEP 1: PATIENT NAME\n- Ask for the patient's first and last name.\n\nSTEP 2: DATE OF BIRTH\n- Ask for the patient's date of birth to find their record.\n\nSTEP 3: PRESCRIPTION NUMBER\n- Ask the caller to key in the 7-digit prescription number printed on the bottle label.\n- Read the prescription number back digit by digit and ask them to confirm it.\n\nSTEP 4: SUPPLY LEFT\n- Ask how many tablets they have left. It must be a whole number.\n- If they have none left -> tell them the pharmacist will treat the refill as urgent.\n\nSTEP 5: PICKUP OR DELIVERY\n- Ask how they want to receive the refill: store pickup or home delivery.\n\nSTEP 6: DELIVERY ADDRESS\n- Only if they chose home delivery, ask for the delivery address.\n- If they chose store pickup -> skip this step.\n\nHANDLING CONTROLLED MEDICINES:\n- If the medicine is a controlled substance -> explain that the patient must bring a new paper prescription to the store.\n\n## Boundaries\n- Never change a dose or suggest a different medicine.\n- Never confirm that a refill is approved; the pharmacist decides.\n- Never ask for card or payment details.",
+  "expect": [
+   {
+    "type": "name",
+    "settings": {
+     "first_name": true,
+     "last_name": true
+    },
+    "about": "name"
+   },
+   {
+    "type": "dob",
+    "about": "birth|dob"
+   },
+   {
+    "type": "dtmf",
+    "settings": {
+     "num_digits": 7,
+     "ask_for_confirmation": true
+    },
+    "about": "prescription"
+   },
+   {
+    "type": "number",
+    "settings": {
+     "allow_decimal": false
+    },
+    "about": "tablet|left|supply|remaining"
+   },
+   {
+    "type": "choice",
+    "about": "pickup|deliver|receiv|receipt|fulfil|method"
+   },
+   {
+    "type": "address",
+    "settings": {
+     "required": false
+    },
+    "about": "address"
+   }
+  ],
+  "edits": [
+   {
+    "label": "pure rewording",
+    "after": "## Instructions\nHandle phone requests from pharmacy customers who need a prescription refilled.\n\nSTEP 1: PATIENT NAME\n- Ask the caller for the patient's first name and last name.\n\nSTEP 2: DATE OF BIRTH\n- Ask for the patient's date of birth so the record can be found.\n\nSTEP 3: PRESCRIPTION NUMBER\n- Ask the caller to type the 7-digit prescription number from the bottle label on their keypad.\n- Repeat the prescription number back digit by digit and ask the caller to confirm it.\n\nSTEP 4: SUPPLY LEFT\n- Ask how many tablets are left. Only a whole number is accepted.\n- If no tablets are left -> tell them the pharmacist will handle the refill as urgent.\n\nSTEP 5: PICKUP OR DELIVERY\n- Ask which they prefer for the refill: store pickup or home delivery.\n\nSTEP 6: DELIVERY ADDRESS\n- Ask for the delivery address only when they picked home delivery.\n- If they picked store pickup -> skip this step.\n\nHANDLING CONTROLLED MEDICINES:\n- If the medicine is a controlled substance -> explain that the patient has to bring a new paper prescription to the store.\n\n## Boundaries\n- Never suggest a different medicine or change a dose.\n- Never say a refill is approved; that is the pharmacist's decision.\n- Never ask for card or payment details.",
+    "expect": {}
+   },
+   {
+    "label": "drop tablets left",
+    "after": "## Instructions\nTake prescription refill requests for pharmacy customers over the phone.\n\nSTEP 1: PATIENT NAME\n- Ask for the patient's first and last name.\n\nSTEP 2: DATE OF BIRTH\n- Ask for the patient's date of birth to find their record.\n\nSTEP 3: PRESCRIPTION NUMBER\n- Ask the caller to key in the 7-digit prescription number printed on the bottle label.\n- Read the prescription number back digit by digit and ask them to confirm it.\n\nSTEP 4: PICKUP OR DELIVERY\n- Ask how they want to receive the refill: store pickup or home delivery.\n\nSTEP 5: DELIVERY ADDRESS\n- Only if they chose home delivery, ask for the delivery address.\n- If they chose store pickup -> skip this step.\n\nHANDLING CONTROLLED MEDICINES:\n- If the medicine is a controlled substance -> explain that the patient must bring a new paper prescription to the store.\n\n## Boundaries\n- Never change a dose or suggest a different medicine.\n- Never confirm that a refill is approved; the pharmacist decides.\n- Never ask for card or payment details.",
+    "expect": {
+     "dropped": [
+      3
+     ]
+    }
+   },
+   {
+    "label": "prescription number becomes 9 digits",
+    "after": "## Instructions\nTake prescription refill requests for pharmacy customers over the phone.\n\nSTEP 1: PATIENT NAME\n- Ask for the patient's first and last name.\n\nSTEP 2: DATE OF BIRTH\n- Ask for the patient's date of birth to find their record.\n\nSTEP 3: PRESCRIPTION NUMBER\n- Ask the caller to key in the 9-digit prescription number printed on the bottle label.\n- Read the prescription number back digit by digit and ask them to confirm it.\n\nSTEP 4: SUPPLY LEFT\n- Ask how many tablets they have left. It must be a whole number.\n- If they have none left -> tell them the pharmacist will treat the refill as urgent.\n\nSTEP 5: PICKUP OR DELIVERY\n- Ask how they want to receive the refill: store pickup or home delivery.\n\nSTEP 6: DELIVERY ADDRESS\n- Only if they chose home delivery, ask for the delivery address.\n- If they chose store pickup -> skip this step.\n\nHANDLING CONTROLLED MEDICINES:\n- If the medicine is a controlled substance -> explain that the patient must bring a new paper prescription to the store.\n\n## Boundaries\n- Never change a dose or suggest a different medicine.\n- Never confirm that a refill is approved; the pharmacist decides.\n- Never ask for card or payment details.",
+    "expect": {
+     "affected": [
+      2
+     ]
+    }
+   },
+   {
+    "label": "add email for ready notice",
+    "after": "## Instructions\nTake prescription refill requests for pharmacy customers over the phone.\n\nSTEP 1: PATIENT NAME\n- Ask for the patient's first and last name.\n\nSTEP 2: DATE OF BIRTH\n- Ask for the patient's date of birth to find their record.\n\nSTEP 3: PRESCRIPTION NUMBER\n- Ask the caller to key in the 7-digit prescription number printed on the bottle label.\n- Read the prescription number back digit by digit and ask them to confirm it.\n\nSTEP 4: SUPPLY LEFT\n- Ask how many tablets they have left. It must be a whole number.\n- If they have none left -> tell them the pharmacist will treat the refill as urgent.\n\nSTEP 5: PICKUP OR DELIVERY\n- Ask how they want to receive the refill: store pickup or home delivery.\n\nSTEP 6: DELIVERY ADDRESS\n- Only if they chose home delivery, ask for the delivery address.\n- If they chose store pickup -> skip this step.\n\nSTEP 7: EMAIL\n- Ask for an email address where the pharmacy can send a notice when the refill is ready.\n\nHANDLING CONTROLLED MEDICINES:\n- If the medicine is a controlled substance -> explain that the patient must bring a new paper prescription to the store.\n\n## Boundaries\n- Never change a dose or suggest a different medicine.\n- Never confirm that a refill is approved; the pharmacist decides.\n- Never ask for card or payment details.",
+    "expect": {
+     "added": [
+      "email"
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "lab-test-booking",
+  "vertical": "lab",
+  "instructions": "## Instructions\nBook sample collection appointments at the diagnostic lab for patients whose doctor has ordered tests.\n\nSTEP 1: PATIENT NAME\n- Ask for the patient's full name.\n\nSTEP 2: DATE OF BIRTH\n- Ask for the patient's date of birth.\n\nSTEP 3: TESTS ORDERED\n- Ask which tests the doctor ordered: complete blood count, lipid panel, thyroid panel or vitamin D. The caller may choose more than one.\n- If a test is not on this list -> tell them to call the lab desk for that test.\n\nSTEP 4: REFERRAL CODE\n- Ask for the referral code printed on the doctor's order form. It contains letters and digits. Read it back character by character.\n\nSTEP 5: COLLECTION DATE\n- Ask for the preferred collection date. It must be today or a later date.\n- If they ask for a Sunday -> explain the lab is closed on Sundays and ask for another day.\n\nSTEP 6: BLOOD THINNERS\n- Ask whether the patient takes any blood-thinning medicine.\n\nHANDLING FASTING QUESTIONS:\n- If the caller asks about fasting -> tell them the lipid panel needs an overnight fast; water is fine.\n\n## Boundaries\n- Never explain or interpret test results.\n- Never add a test the doctor did not order.\n- Never quote prices.",
+  "expect": [
+   {
+    "type": "name",
+    "about": "name"
+   },
+   {
+    "type": "dob",
+    "about": "birth|dob"
+   },
+   {
+    "type": "choice",
+    "settings": {
+     "multiple": true
+    },
+    "about": "test"
+   },
+   {
+    "type": "text",
+    "settings": {
+     "readback": "spell"
+    },
+    "about": "referral|code"
+   },
+   {
+    "type": "date",
+    "settings": {
+     "accept_past": false,
+     "accept_today": true
+    },
+    "about": "collection|date"
+   },
+   {
+    "type": "boolean",
+    "about": "thin|blood"
+   }
+  ],
+  "edits": [
+   {
+    "label": "pure rewording",
+    "after": "## Instructions\nSchedule sample collection at the diagnostic lab for patients whose doctor ordered tests.\n\nSTEP 1: PATIENT NAME\n- Ask the caller for the patient's full name.\n\nSTEP 2: DATE OF BIRTH\n- Ask for the date of birth of the patient.\n\nSTEP 3: TESTS ORDERED\n- Ask which of these tests the doctor ordered: complete blood count, lipid panel, thyroid panel or vitamin D. More than one can be chosen.\n- If the test they need is not listed -> tell them to call the lab desk about it.\n\nSTEP 4: REFERRAL CODE\n- Ask for the referral code shown on the doctor's order form. The code mixes letters and digits. Read it back one character at a time.\n\nSTEP 5: COLLECTION DATE\n- Ask which date they would like for the collection. The date has to be today or later.\n- If they want a Sunday -> explain the lab does not open on Sundays and ask for a different day.\n\nSTEP 6: BLOOD THINNERS\n- Ask whether the patient is taking any medicine that thins the blood.\n\nHANDLING FASTING QUESTIONS:\n- If the caller asks about fasting -> explain that the lipid panel needs an overnight fast, and water is allowed.\n\n## Boundaries\n- Never quote prices.\n- Never interpret or explain test results.\n- Never add a test the doctor did not order.",
+    "expect": {}
+   },
+   {
+    "label": "add insurance member ID digits",
+    "after": "## Instructions\nBook sample collection appointments at the diagnostic lab for patients whose doctor has ordered tests.\n\nSTEP 1: PATIENT NAME\n- Ask for the patient's full name.\n\nSTEP 2: DATE OF BIRTH\n- Ask for the patient's date of birth.\n\nSTEP 3: TESTS ORDERED\n- Ask which tests the doctor ordered: complete blood count, lipid panel, thyroid panel or vitamin D. The caller may choose more than one.\n- If a test is not on this list -> tell them to call the lab desk for that test.\n\nSTEP 4: REFERRAL CODE\n- Ask for the referral code printed on the doctor's order form. It contains letters and digits. Read it back character by character.\n\nSTEP 5: COLLECTION DATE\n- Ask for the preferred collection date. It must be today or a later date.\n- If they ask for a Sunday -> explain the lab is closed on Sundays and ask for another day.\n\nSTEP 6: BLOOD THINNERS\n- Ask whether the patient takes any blood-thinning medicine.\n\nSTEP 7: INSURANCE CHECK\n- Ask the caller to enter the last 4 digits of the patient's insurance member ID on the keypad.\n\nHANDLING FASTING QUESTIONS:\n- If the caller asks about fasting -> tell them the lipid panel needs an overnight fast; water is fine.\n\n## Boundaries\n- Never explain or interpret test results.\n- Never add a test the doctor did not order.\n- Never quote prices.",
+    "expect": {
+     "added": [
+      "dtmf"
+     ]
+    }
+   },
+   {
+    "label": "referral code in capital letters",
+    "after": "## Instructions\nBook sample collection appointments at the diagnostic lab for patients whose doctor has ordered tests.\n\nSTEP 1: PATIENT NAME\n- Ask for the patient's full name.\n\nSTEP 2: DATE OF BIRTH\n- Ask for the patient's date of birth.\n\nSTEP 3: TESTS ORDERED\n- Ask which tests the doctor ordered: complete blood count, lipid panel, thyroid panel or vitamin D. The caller may choose more than one.\n- If a test is not on this list -> tell them to call the lab desk for that test.\n\nSTEP 4: REFERRAL CODE\n- Ask for the referral code printed on the doctor's order form. It contains letters and digits. Record it in capital letters and read it back character by character.\n\nSTEP 5: COLLECTION DATE\n- Ask for the preferred collection date. It must be today or a later date.\n- If they ask for a Sunday -> explain the lab is closed on Sundays and ask for another day.\n\nSTEP 6: BLOOD THINNERS\n- Ask whether the patient takes any blood-thinning medicine.\n\nHANDLING FASTING QUESTIONS:\n- If the caller asks about fasting -> tell them the lipid panel needs an overnight fast; water is fine.\n\n## Boundaries\n- Never explain or interpret test results.\n- Never add a test the doctor did not order.\n- Never quote prices.",
+    "expect": {
+     "affected": [
+      3
+     ]
+    }
+   },
+   {
+    "label": "drop blood thinners question",
+    "after": "## Instructions\nBook sample collection appointments at the diagnostic lab for patients whose doctor has ordered tests.\n\nSTEP 1: PATIENT NAME\n- Ask for the patient's full name.\n\nSTEP 2: DATE OF BIRTH\n- Ask for the patient's date of birth.\n\nSTEP 3: TESTS ORDERED\n- Ask which tests the doctor ordered: complete blood count, lipid panel, thyroid panel or vitamin D. The caller may choose more than one.\n- If a test is not on this list -> tell them to call the lab desk for that test.\n\nSTEP 4: REFERRAL CODE\n- Ask for the referral code printed on the doctor's order form. It contains letters and digits. Read it back character by character.\n\nSTEP 5: COLLECTION DATE\n- Ask for the preferred collection date. It must be today or a later date.\n- If they ask for a Sunday -> explain the lab is closed on Sundays and ask for another day.\n\nHANDLING FASTING QUESTIONS:\n- If the caller asks about fasting -> tell them the lipid panel needs an overnight fast; water is fine.\n\n## Boundaries\n- Never explain or interpret test results.\n- Never add a test the doctor did not order.\n- Never quote prices.",
+    "expect": {
+     "dropped": [
+      5
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "dental-emergency-triage",
+  "vertical": "dental",
+  "instructions": "## General Instructions\n- If trouble breathing or swallowing comes up at any point, tell the caller to call emergency services now and stop the triage.\n\n## Instructions\nTriage callers with urgent dental problems so the on-call dentist can prioritise same-day visits.\n\nSTEP 1: SWELLING CHECK\n- Ask whether the patient has any swelling of the face or jaw.\n\nSTEP 2: PATIENT NAME\n- Ask for the patient's full name.\n\nSTEP 3: CALLBACK NUMBER\n- Ask for a phone number the dentist can call back on.\n\nSTEP 4: WHAT HAPPENED\n- Ask them to describe what happened to the tooth or gum, in their own words.\n- If a permanent tooth was knocked out -> tell them to keep it in milk and come to the clinic straight away.\n\nSTEP 5: PAIN SCORE\n- Ask them to rate the pain from 0 to 10. Whole numbers only. Read the number back to confirm it.\n\n## Boundaries\n- Never prescribe or name a medicine dose.\n- Never promise a specific appointment time.\n- Never diagnose the problem.",
+  "expect": [
+   {
+    "type": "boolean",
+    "about": "swell"
+   },
+   {
+    "type": "name",
+    "about": "name"
+   },
+   {
+    "type": "phone",
+    "about": "phone|number|call"
+   },
+   {
+    "type": "text",
+    "about": "happen|tooth|gum|descri"
+   },
+   {
+    "type": "number",
+    "settings": {
+     "allow_decimal": false,
+     "require_confirmation": true
+    },
+    "about": "pain"
+   }
+  ],
+  "edits": [
+   {
+    "label": "pure rewording",
+    "after": "## General Instructions\n- If difficulty breathing or swallowing comes up at any point, tell the caller to call emergency services immediately and stop the triage.\n\n## Instructions\nTriage callers who have an urgent dental problem so the on-call dentist can decide who to see first today.\n\nSTEP 1: SWELLING CHECK\n- Ask if the patient's face or jaw is swollen at all.\n\nSTEP 2: PATIENT NAME\n- Ask the caller for the patient's full name.\n\nSTEP 3: CALLBACK NUMBER\n- Ask which phone number the dentist should use to call them back.\n\nSTEP 4: WHAT HAPPENED\n- Ask the caller to explain in their own words what happened to the tooth or gum.\n- If an adult tooth has been knocked out -> tell them to keep the tooth in milk and come to the clinic immediately.\n\nSTEP 5: PAIN SCORE\n- Ask for a pain rating between 0 and 10. Accept whole numbers only. Repeat the number back to confirm it.\n\n## Boundaries\n- Never diagnose the problem.\n- Never prescribe or name a medicine dose.\n- Never promise a specific appointment time.",
+    "expect": {}
+   },
+   {
+    "label": "add painful area choice",
+    "after": "## General Instructions\n- If trouble breathing or swallowing comes up at any point, tell the caller to call emergency services now and stop the triage.\n\n## Instructions\nTriage callers with urgent dental problems so the on-call dentist can prioritise same-day visits.\n\nSTEP 1: SWELLING CHECK\n- Ask whether the patient has any swelling of the face or jaw.\n\nSTEP 2: PATIENT NAME\n- Ask for the patient's full name.\n\nSTEP 3: CALLBACK NUMBER\n- Ask for a phone number the dentist can call back on.\n\nSTEP 4: WHAT HAPPENED\n- Ask them to describe what happened to the tooth or gum, in their own words.\n- If a permanent tooth was knocked out -> tell them to keep it in milk and come to the clinic straight away.\n\nSTEP 5: PAINFUL AREA\n- Ask which of these areas hurts most: upper left, upper right, lower left, lower right or front teeth.\n\nSTEP 6: PAIN SCORE\n- Ask them to rate the pain from 0 to 10. Whole numbers only. Read the number back to confirm it.\n\n## Boundaries\n- Never prescribe or name a medicine dose.\n- Never promise a specific appointment time.\n- Never diagnose the problem.",
+    "expect": {
+     "added": [
+      "choice"
+     ]
+    }
+   },
+   {
+    "label": "pain score allows decimals",
+    "after": "## General Instructions\n- If trouble breathing or swallowing comes up at any point, tell the caller to call emergency services now and stop the triage.\n\n## Instructions\nTriage callers with urgent dental problems so the on-call dentist can prioritise same-day visits.\n\nSTEP 1: SWELLING CHECK\n- Ask whether the patient has any swelling of the face or jaw.\n\nSTEP 2: PATIENT NAME\n- Ask for the patient's full name.\n\nSTEP 3: CALLBACK NUMBER\n- Ask for a phone number the dentist can call back on.\n\nSTEP 4: WHAT HAPPENED\n- Ask them to describe what happened to the tooth or gum, in their own words.\n- If a permanent tooth was knocked out -> tell them to keep it in milk and come to the clinic straight away.\n\nSTEP 5: PAIN SCORE\n- Ask them to rate the pain from 0 to 10. Decimals are allowed. Read the number back to confirm it.\n\n## Boundaries\n- Never prescribe or name a medicine dose.\n- Never promise a specific appointment time.\n- Never diagnose the problem.",
+    "expect": {
+     "affected": [
+      4
+     ]
+    }
+   },
+   {
+    "label": "drop swelling check",
+    "after": "## General Instructions\n- If trouble breathing or swallowing comes up at any point, tell the caller to call emergency services now and stop the triage.\n\n## Instructions\nTriage callers with urgent dental problems so the on-call dentist can prioritise same-day visits.\n\nSTEP 1: PATIENT NAME\n- Ask for the patient's full name.\n\nSTEP 2: CALLBACK NUMBER\n- Ask for a phone number the dentist can call back on.\n\nSTEP 3: WHAT HAPPENED\n- Ask them to describe what happened to the tooth or gum, in their own words.\n- If a permanent tooth was knocked out -> tell them to keep it in milk and come to the clinic straight away.\n\nSTEP 4: PAIN SCORE\n- Ask them to rate the pain from 0 to 10. Whole numbers only. Read the number back to confirm it.\n\n## Boundaries\n- Never prescribe or name a medicine dose.\n- Never promise a specific appointment time.\n- Never diagnose the problem.",
+    "expect": {
+     "dropped": [
+      0
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "homecare-nursing-visit",
+  "vertical": "homecare",
+  "instructions": "## General Instructions\n- If an emergency comes up at any point, tell the caller to call emergency services.\n\n## Instructions\nTake requests for home nursing visits and collect what the care coordinator needs to assign a nurse.\n\nSTEP 1: PATIENT NAME\n- Ask for the patient's first and last name.\n\nSTEP 2: VISIT ADDRESS\n- Ask for the full home address where the nurse will visit, including the postcode.\n\nSTEP 3: CONTACT NUMBER\n- Ask for the phone number of the person the coordinator should call.\n\nSTEP 4: TYPE OF CARE\n- Ask which of these kinds of care is needed: wound care, injections, post-surgery care or medication help. Read the options aloud.\n\nSTEP 5: START DATE\n- Ask for the date the visits should start. It must be a future date.\n\nSTEP 6: BUDGET\n- Ask how much they can spend on nursing care. They must say the period it covers, such as per week or per month.\n- If they are not sure -> ask for their best estimate.\n\n## Boundaries\n- Never promise a specific nurse or visit time.\n- Never give medical advice.\n- Never quote final prices; the coordinator does that.",
+  "expect": [
+   {
+    "type": "name",
+    "settings": {
+     "first_name": true,
+     "last_name": true
+    },
+    "about": "name"
+   },
+   {
+    "type": "address",
+    "about": "address"
+   },
+   {
+    "type": "phone",
+    "about": "phone|number|contact"
+   },
+   {
+    "type": "choice",
+    "settings": {
+     "present_options": true
+    },
+    "about": "care"
+   },
+   {
+    "type": "date",
+    "settings": {
+     "accept_past": false
+    },
+    "about": "start|date"
+   },
+   {
+    "type": "currency",
+    "settings": {
+     "required_period": true
+    },
+    "about": "budget|spend|amount"
+   }
+  ],
+  "edits": [
+   {
+    "label": "pure rewording",
+    "after": "## General Instructions\n- If an emergency comes up at any point during the call, tell the caller to call emergency services.\n\n## Instructions\nHandle home nursing visit requests and gather what the care coordinator needs to assign a nurse.\n\nSTEP 1: PATIENT NAME\n- Ask for the patient's first name and last name.\n\nSTEP 2: VISIT ADDRESS\n- Ask for the complete home address the nurse will go to, postcode included.\n\nSTEP 3: CONTACT NUMBER\n- Ask for a phone number for whoever the coordinator should call.\n\nSTEP 4: TYPE OF CARE\n- Ask which of these the patient needs: wound care, injections, post-surgery care or medication help. Read these options out to the caller.\n\nSTEP 5: START DATE\n- Ask on what date the visits should begin. The start date has to be in the future.\n\nSTEP 6: BUDGET\n- Ask what amount they can spend on nursing care. They must state the period the amount covers, for example per week or per month.\n- If they are unsure -> ask for a best estimate.\n\n## Boundaries\n- Never promise a particular nurse or visit time.\n- Never give medical advice.\n- Never quote final prices; that is the coordinator's job.",
+    "expect": {}
+   },
+   {
+    "label": "add visits per week",
+    "after": "## General Instructions\n- If an emergency comes up at any point, tell the caller to call emergency services.\n\n## Instructions\nTake requests for home nursing visits and collect what the care coordinator needs to assign a nurse.\n\nSTEP 1: PATIENT NAME\n- Ask for the patient's first and last name.\n\nSTEP 2: VISIT ADDRESS\n- Ask for the full home address where the nurse will visit, including the postcode.\n\nSTEP 3: CONTACT NUMBER\n- Ask for the phone number of the person the coordinator should call.\n\nSTEP 4: TYPE OF CARE\n- Ask which of these kinds of care is needed: wound care, injections, post-surgery care or medication help. Read the options aloud.\n\nSTEP 5: VISITS PER WEEK\n- Ask how many nurse visits per week the patient needs. It must be a whole number.\n\nSTEP 6: START DATE\n- Ask for the date the visits should start. It must be a future date.\n\nSTEP 7: BUDGET\n- Ask how much they can spend on nursing care. They must say the period it covers, such as per week or per month.\n- If they are not sure -> ask for their best estimate.\n\n## Boundaries\n- Never promise a specific nurse or visit time.\n- Never give medical advice.\n- Never quote final prices; the coordinator does that.",
+    "expect": {
+     "added": [
+      "number"
+     ]
+    }
+   },
+   {
+    "label": "budget becomes optional",
+    "after": "## General Instructions\n- If an emergency comes up at any point, tell the caller to call emergency services.\n\n## Instructions\nTake requests for home nursing visits and collect what the care coordinator needs to assign a nurse.\n\nSTEP 1: PATIENT NAME\n- Ask for the patient's first and last name.\n\nSTEP 2: VISIT ADDRESS\n- Ask for the full home address where the nurse will visit, including the postcode.\n\nSTEP 3: CONTACT NUMBER\n- Ask for the phone number of the person the coordinator should call.\n\nSTEP 4: TYPE OF CARE\n- Ask which of these kinds of care is needed: wound care, injections, post-surgery care or medication help. Read the options aloud.\n\nSTEP 5: START DATE\n- Ask for the date the visits should start. It must be a future date.\n\nSTEP 6: BUDGET\n- Ask how much they can spend on nursing care. They must say the period it covers, such as per week or per month.\n- If they are not sure -> ask for their best estimate.\n- This question is optional; if they would rather not answer, skip it.\n\n## Boundaries\n- Never promise a specific nurse or visit time.\n- Never give medical advice.\n- Never quote final prices; the coordinator does that.",
+    "expect": {
+     "affected": [
+      5
+     ]
+    }
+   },
+   {
+    "label": "drop contact number",
+    "after": "## General Instructions\n- If an emergency comes up at any point, tell the caller to call emergency services.\n\n## Instructions\nTake requests for home nursing visits and collect what the care coordinator needs to assign a nurse.\n\nSTEP 1: PATIENT NAME\n- Ask for the patient's first and last name.\n\nSTEP 2: VISIT ADDRESS\n- Ask for the full home address where the nurse will visit, including the postcode.\n\nSTEP 3: TYPE OF CARE\n- Ask which of these kinds of care is needed: wound care, injections, post-surgery care or medication help. Read the options aloud.\n\nSTEP 4: START DATE\n- Ask for the date the visits should start. It must be a future date.\n\nSTEP 5: BUDGET\n- Ask how much they can spend on nursing care. They must say the period it covers, such as per week or per month.\n- If they are not sure -> ask for their best estimate.\n\n## Boundaries\n- Never promise a specific nurse or visit time.\n- Never give medical advice.\n- Never quote final prices; the coordinator does that.",
+    "expect": {
+     "dropped": [
+      2
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "events-conference-registration",
+  "vertical": "events",
+  "instructions": "## Instructions\nRegister callers for the two-day regional technology conference, and collect the details for their badge and ticket.\n\nSTEP 1: ATTENDEE NAME\n- Ask for the attendee's first and last name as it should appear on the badge.\n- Spell the last name back letter by letter.\n\nSTEP 2: COMPANY\n- Ask the caller to say, in their own words, the company or organization to print on the badge.\n\nSTEP 3: EMAIL\n- Ask for the email address where the ticket should be sent.\n\nSTEP 4: PASS TYPE\n- Ask which of these passes they want: day one only, day two only, or both days. Read the options aloud.\n\nHANDLING VENUE QUESTIONS:\n- Say that venue, parking and schedule details come with the ticket email.\n\n## Boundaries\n- Never take card or payment details over the phone.\n- Never promise a place in a specific workshop.",
+  "expect": [
+   {
+    "type": "name",
+    "settings": {
+     "first_name": true,
+     "last_name": true,
+     "spell_back": true
+    },
+    "about": "name|badge"
+   },
+   {
+    "type": "text",
+    "about": "company|organi"
+   },
+   {
+    "type": "email",
+    "about": "email"
+   },
+   {
+    "type": "choice",
+    "settings": {
+     "present_options": true
+    },
+    "about": "pass"
+   }
+  ],
+  "edits": [
+   {
+    "label": "reword",
+    "after": "## Instructions\nSign callers up for the two-day regional technology conference, and gather what is needed for their badge and ticket.\n\nSTEP 1: ATTENDEE NAME\n- Get the attendee's first name and last name exactly as they should be printed on the badge.\n- Spell the last name back to them letter by letter.\n\nSTEP 2: COMPANY\n- Ask the caller to tell you, in their own words, which company or organization should be printed on the badge.\n\nSTEP 3: EMAIL\n- Get the email address the ticket should go to.\n\nSTEP 4: PASS TYPE\n- Ask which of these passes they would like: day one only, day two only, or both days. Read the options out to them.\n\nHANDLING VENUE QUESTIONS:\n- Tell them the ticket email includes the venue, parking and schedule details.\n\n## Boundaries\n- Never accept card or payment details by phone.\n- Never guarantee a place in a particular workshop.",
+    "expect": {}
+   },
+   {
+    "label": "add photo consent",
+    "after": "## Instructions\nRegister callers for the two-day regional technology conference, and collect the details for their badge and ticket.\n\nSTEP 1: ATTENDEE NAME\n- Ask for the attendee's first and last name as it should appear on the badge.\n- Spell the last name back letter by letter.\n\nSTEP 2: COMPANY\n- Ask the caller to say, in their own words, the company or organization to print on the badge.\n\nSTEP 3: EMAIL\n- Ask for the email address where the ticket should be sent.\n\nSTEP 4: PASS TYPE\n- Ask which of these passes they want: day one only, day two only, or both days. Read the options aloud.\n\nSTEP 5: PHOTO CONSENT\n- Ask whether they agree to appear in event photos published online.\n\nHANDLING VENUE QUESTIONS:\n- Say that venue, parking and schedule details come with the ticket email.\n\n## Boundaries\n- Never take card or payment details over the phone.\n- Never promise a place in a specific workshop.",
+    "expect": {
+     "added": [
+      "boolean"
+     ]
+    }
+   },
+   {
+    "label": "do not read the pass options",
+    "after": "## Instructions\nRegister callers for the two-day regional technology conference, and collect the details for their badge and ticket.\n\nSTEP 1: ATTENDEE NAME\n- Ask for the attendee's first and last name as it should appear on the badge.\n- Spell the last name back letter by letter.\n\nSTEP 2: COMPANY\n- Ask the caller to say, in their own words, the company or organization to print on the badge.\n\nSTEP 3: EMAIL\n- Ask for the email address where the ticket should be sent.\n\nSTEP 4: PASS TYPE\n- Ask which of these passes they want: day one only, day two only, or both days. Do not read the options aloud.\n\nHANDLING VENUE QUESTIONS:\n- Say that venue, parking and schedule details come with the ticket email.\n\n## Boundaries\n- Never take card or payment details over the phone.\n- Never promise a place in a specific workshop.",
+    "expect": {
+     "affected": [
+      3
+     ]
+    }
+   },
+   {
+    "label": "drop company",
+    "after": "## Instructions\nRegister callers for the two-day regional technology conference, and collect the details for their badge and ticket.\n\nSTEP 1: ATTENDEE NAME\n- Ask for the attendee's first and last name as it should appear on the badge.\n- Spell the last name back letter by letter.\n\nSTEP 2: EMAIL\n- Ask for the email address where the ticket should be sent.\n\nSTEP 3: PASS TYPE\n- Ask which of these passes they want: day one only, day two only, or both days. Read the options aloud.\n\nHANDLING VENUE QUESTIONS:\n- Say that venue, parking and schedule details come with the ticket email.\n\n## Boundaries\n- Never take card or payment details over the phone.\n- Never promise a place in a specific workshop.",
+    "expect": {
+     "dropped": [
+      1
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "delivery-reschedule-order-code",
+  "vertical": "delivery",
+  "instructions": "## Instructions\nReschedule parcel deliveries for callers who have their order code.\n\nSTEP 1: ORDER CODE\n- Ask the caller to enter their 8-digit order code on the keypad.\n- Read the code back digit by digit and ask them to confirm it.\n\nSTEP 2: VERIFICATION\n- Ask for the last name on the order. The first name is not needed.\n- If it does not match -> explain that only the person named on the order can reschedule, and stop.\n\nSTEP 3: NEW DELIVERY DATE\n- Ask for the new delivery date. It must be a future date, and today is not allowed.\n- If it is more than 14 days away -> explain that parcels are only held for 14 days.\n\nSTEP 4: IF NOBODY IS HOME\n- Ask what the driver should do if nobody is home. Read out the options: leave it at the front door, leave it with a neighbor, or take it to a pickup point.\n\nSTEP 5: DRIVER NOTES\n- Ask for any notes for the driver, such as where to find the entrance. This is optional; skip it if they have none.\n\nHANDLING OTHER ORDER PROBLEMS:\n- Explain that this line only handles rescheduling.\n\n## Boundaries\n- Never change the delivery address.\n- Never share other order details.",
+  "expect": [
+   {
+    "type": "dtmf",
+    "settings": {
+     "num_digits": 8,
+     "ask_for_confirmation": true
+    },
+    "about": "code"
+   },
+   {
+    "type": "name",
+    "settings": {
+     "first_name": false,
+     "last_name": true
+    },
+    "about": "name"
+   },
+   {
+    "type": "date",
+    "settings": {
+     "accept_past": false,
+     "accept_today": false
+    },
+    "about": "deliver|date"
+   },
+   {
+    "type": "choice",
+    "settings": {
+     "present_options": true
+    },
+    "about": "nobody|home|absen|leave|driver should"
+   },
+   {
+    "type": "text",
+    "settings": {
+     "required": false
+    },
+    "about": "note"
+   }
+  ],
+  "edits": [
+   {
+    "label": "reword",
+    "after": "## Instructions\nMove parcel deliveries to a new date for callers who can give their order code.\n\nSTEP 1: ORDER CODE\n- Have the caller key in their 8-digit order code on the keypad.\n- Read the code back to them digit by digit so they can confirm it.\n\nSTEP 2: VERIFICATION\n- Ask what last name is on the order. Do not ask for the first name.\n- If the name does not match -> say only the person named on the order can reschedule, and stop.\n\nSTEP 3: NEW DELIVERY DATE\n- Ask which date the delivery should move to. It has to be in the future, and today cannot be chosen.\n- If it is over 14 days away -> tell them parcels are held for no more than 14 days.\n\nSTEP 4: IF NOBODY IS HOME\n- Ask what the driver should do when nobody is home, reading out the options: leave it at the front door, leave it with a neighbor, or take it to a pickup point.\n\nSTEP 5: DRIVER NOTES\n- Ask for any notes the driver should have, such as where the entrance is. This one is optional, so skip it if there are none.\n\nHANDLING OTHER ORDER PROBLEMS:\n- Say this line can only reschedule deliveries.\n\n## Boundaries\n- Never change the delivery address.\n- Never share other order details.",
+    "expect": {}
+   },
+   {
+    "label": "order code becomes 10 digits",
+    "after": "## Instructions\nReschedule parcel deliveries for callers who have their order code.\n\nSTEP 1: ORDER CODE\n- Ask the caller to enter their 10-digit order code on the keypad.\n- Read the code back digit by digit and ask them to confirm it.\n\nSTEP 2: VERIFICATION\n- Ask for the last name on the order. The first name is not needed.\n- If it does not match -> explain that only the person named on the order can reschedule, and stop.\n\nSTEP 3: NEW DELIVERY DATE\n- Ask for the new delivery date. It must be a future date, and today is not allowed.\n- If it is more than 14 days away -> explain that parcels are only held for 14 days.\n\nSTEP 4: IF NOBODY IS HOME\n- Ask what the driver should do if nobody is home. Read out the options: leave it at the front door, leave it with a neighbor, or take it to a pickup point.\n\nSTEP 5: DRIVER NOTES\n- Ask for any notes for the driver, such as where to find the entrance. This is optional; skip it if they have none.\n\nHANDLING OTHER ORDER PROBLEMS:\n- Explain that this line only handles rescheduling.\n\n## Boundaries\n- Never change the delivery address.\n- Never share other order details.",
+    "expect": {
+     "affected": [
+      0
+     ]
+    }
+   },
+   {
+    "label": "add driver contact number",
+    "after": "## Instructions\nReschedule parcel deliveries for callers who have their order code.\n\nSTEP 1: ORDER CODE\n- Ask the caller to enter their 8-digit order code on the keypad.\n- Read the code back digit by digit and ask them to confirm it.\n\nSTEP 2: VERIFICATION\n- Ask for the last name on the order. The first name is not needed.\n- If it does not match -> explain that only the person named on the order can reschedule, and stop.\n\nSTEP 3: NEW DELIVERY DATE\n- Ask for the new delivery date. It must be a future date, and today is not allowed.\n- If it is more than 14 days away -> explain that parcels are only held for 14 days.\n\nSTEP 4: IF NOBODY IS HOME\n- Ask what the driver should do if nobody is home. Read out the options: leave it at the front door, leave it with a neighbor, or take it to a pickup point.\n\nSTEP 5: DRIVER NOTES\n- Ask for any notes for the driver, such as where to find the entrance. This is optional; skip it if they have none.\n\nSTEP 6: CONTACT NUMBER\n- Ask for a phone number the driver can call on the delivery day.\n\nHANDLING OTHER ORDER PROBLEMS:\n- Explain that this line only handles rescheduling.\n\n## Boundaries\n- Never change the delivery address.\n- Never share other order details.",
+    "expect": {
+     "added": [
+      "phone"
+     ]
+    }
+   },
+   {
+    "label": "drop driver notes",
+    "after": "## Instructions\nReschedule parcel deliveries for callers who have their order code.\n\nSTEP 1: ORDER CODE\n- Ask the caller to enter their 8-digit order code on the keypad.\n- Read the code back digit by digit and ask them to confirm it.\n\nSTEP 2: VERIFICATION\n- Ask for the last name on the order. The first name is not needed.\n- If it does not match -> explain that only the person named on the order can reschedule, and stop.\n\nSTEP 3: NEW DELIVERY DATE\n- Ask for the new delivery date. It must be a future date, and today is not allowed.\n- If it is more than 14 days away -> explain that parcels are only held for 14 days.\n\nSTEP 4: IF NOBODY IS HOME\n- Ask what the driver should do if nobody is home. Read out the options: leave it at the front door, leave it with a neighbor, or take it to a pickup point.\n\nHANDLING OTHER ORDER PROBLEMS:\n- Explain that this line only handles rescheduling.\n\n## Boundaries\n- Never change the delivery address.\n- Never share other order details.",
+    "expect": {
+     "dropped": [
+      4
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "recruiting-warehouse-screening",
+  "vertical": "recruiting",
+  "instructions": "## Instructions\nScreen applicants calling about warehouse associate jobs before a recruiter books interviews.\n\nSTEP 1: FULL NAME\n- Ask for the applicant's full legal name, including first, middle and last name.\n\nSTEP 2: CONTACT NUMBER\n- Ask for the best phone number for the recruiter to reach them.\n\nSTEP 3: WORK AUTHORIZATION\n- Ask whether they are legally authorized to work in the United States.\n- If they say no or are unsure -> tell them the recruiter will follow up on it, and continue.\n\nSTEP 4: EXPERIENCE\n- Ask how many years of warehouse experience they have. Decimals such as 1.5 years are fine.\n\nSTEP 5: EXPECTED PAY\n- Ask for their expected pay. They must say whether the amount is per hour or per year.\n\nSTEP 6: START DATE\n- Ask for the earliest date they could start. It can be today or any later date, but not a past date.\n\nHANDLING QUESTIONS ABOUT THE ROLE:\n- Give only the basics: full-time, on-site work, with lifting up to 50 pounds.\n\n## Boundaries\n- Never ask about age, religion, health, family plans or nationality.\n- Never promise an interview or a job offer.",
+  "expect": [
+   {
+    "type": "name",
+    "settings": {
+     "first_name": true,
+     "middle_name": true,
+     "last_name": true
+    },
+    "about": "name"
+   },
+   {
+    "type": "phone",
+    "about": "phone|number|contact"
+   },
+   {
+    "type": "boolean",
+    "about": "authori"
+   },
+   {
+    "type": "number",
+    "settings": {
+     "allow_decimal": true
+    },
+    "about": "experience|years"
+   },
+   {
+    "type": "currency",
+    "settings": {
+     "required_period": true
+    },
+    "about": "pay"
+   },
+   {
+    "type": "date",
+    "settings": {
+     "accept_past": false,
+     "accept_today": true
+    },
+    "about": "start"
+   }
+  ],
+  "edits": [
+   {
+    "label": "reword",
+    "after": "## Instructions\nPre-screen people calling about warehouse associate openings so a recruiter can book their interviews.\n\nSTEP 1: FULL NAME\n- Get the applicant's complete legal name: first, middle and last.\n\nSTEP 2: CONTACT NUMBER\n- Ask which phone number the recruiter should use to reach them.\n\nSTEP 3: WORK AUTHORIZATION\n- Ask if they have the legal right to work in the United States.\n- If the answer is no or they are not sure -> say the recruiter will follow up on it, and carry on.\n\nSTEP 4: EXPERIENCE\n- Ask for their years of warehouse experience. Decimal answers such as 1.5 years are accepted.\n\nSTEP 5: EXPECTED PAY\n- Ask what pay they expect. They have to state whether that amount is per hour or per year.\n\nSTEP 6: START DATE\n- Ask for the soonest date they could begin. Today or any later date is fine, but a past date is not.\n\nHANDLING QUESTIONS ABOUT THE ROLE:\n- Share only the basics: full-time, on site, with lifting up to 50 pounds.\n\n## Boundaries\n- Never ask about age, religion, health, family plans or nationality.\n- Never promise an interview or a job offer.",
+    "expect": {}
+   },
+   {
+    "label": "add shift choice",
+    "after": "## Instructions\nScreen applicants calling about warehouse associate jobs before a recruiter books interviews.\n\nSTEP 1: FULL NAME\n- Ask for the applicant's full legal name, including first, middle and last name.\n\nSTEP 2: CONTACT NUMBER\n- Ask for the best phone number for the recruiter to reach them.\n\nSTEP 3: WORK AUTHORIZATION\n- Ask whether they are legally authorized to work in the United States.\n- If they say no or are unsure -> tell them the recruiter will follow up on it, and continue.\n\nSTEP 4: EXPERIENCE\n- Ask how many years of warehouse experience they have. Decimals such as 1.5 years are fine.\n\nSTEP 5: EXPECTED PAY\n- Ask for their expected pay. They must say whether the amount is per hour or per year.\n\nSTEP 6: START DATE\n- Ask for the earliest date they could start. It can be today or any later date, but not a past date.\n\nSTEP 7: SHIFTS\n- Ask which shifts they can work. Read out the options: early, late, or night. They may pick more than one.\n\nHANDLING QUESTIONS ABOUT THE ROLE:\n- Give only the basics: full-time, on-site work, with lifting up to 50 pounds.\n\n## Boundaries\n- Never ask about age, religion, health, family plans or nationality.\n- Never promise an interview or a job offer.",
+    "expect": {
+     "added": [
+      "choice"
+     ]
+    }
+   },
+   {
+    "label": "drop contact number",
+    "after": "## Instructions\nScreen applicants calling about warehouse associate jobs before a recruiter books interviews.\n\nSTEP 1: FULL NAME\n- Ask for the applicant's full legal name, including first, middle and last name.\n\nSTEP 2: WORK AUTHORIZATION\n- Ask whether they are legally authorized to work in the United States.\n- If they say no or are unsure -> tell them the recruiter will follow up on it, and continue.\n\nSTEP 3: EXPERIENCE\n- Ask how many years of warehouse experience they have. Decimals such as 1.5 years are fine.\n\nSTEP 4: EXPECTED PAY\n- Ask for their expected pay. They must say whether the amount is per hour or per year.\n\nSTEP 5: START DATE\n- Ask for the earliest date they could start. It can be today or any later date, but not a past date.\n\nHANDLING QUESTIONS ABOUT THE ROLE:\n- Give only the basics: full-time, on-site work, with lifting up to 50 pounds.\n\n## Boundaries\n- Never ask about age, religion, health, family plans or nationality.\n- Never promise an interview or a job offer.",
+    "expect": {
+     "dropped": [
+      1
+     ]
+    }
+   },
+   {
+    "label": "whole years of experience only",
+    "after": "## Instructions\nScreen applicants calling about warehouse associate jobs before a recruiter books interviews.\n\nSTEP 1: FULL NAME\n- Ask for the applicant's full legal name, including first, middle and last name.\n\nSTEP 2: CONTACT NUMBER\n- Ask for the best phone number for the recruiter to reach them.\n\nSTEP 3: WORK AUTHORIZATION\n- Ask whether they are legally authorized to work in the United States.\n- If they say no or are unsure -> tell them the recruiter will follow up on it, and continue.\n\nSTEP 4: EXPERIENCE\n- Ask how many years of warehouse experience they have. Whole years only; round down any part of a year.\n\nSTEP 5: EXPECTED PAY\n- Ask for their expected pay. They must say whether the amount is per hour or per year.\n\nSTEP 6: START DATE\n- Ask for the earliest date they could start. It can be today or any later date, but not a past date.\n\nHANDLING QUESTIONS ABOUT THE ROLE:\n- Give only the basics: full-time, on-site work, with lifting up to 50 pounds.\n\n## Boundaries\n- Never ask about age, religion, health, family plans or nationality.\n- Never promise an interview or a job offer.",
+    "expect": {
+     "affected": [
+      3
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "telecom-repair-satisfaction-survey",
+  "vertical": "telecom",
+  "instructions": "## Instructions\nRun a short satisfaction survey with customers after a technician visited to repair their internet service.\n\nSTEP 1: OVERALL SATISFACTION\n- Ask which of these describes how satisfied they are with the visit overall: very satisfied, satisfied, neutral, dissatisfied, or very dissatisfied. Read the options aloud.\n\nSTEP 2: ISSUE RESOLVED\n- Ask whether the technician fixed the problem.\n- If it is not fixed -> apologize and say the repair team will be told today.\n\nSTEP 3: CONTACTS BEFORE THE VISIT\n- Ask how many times they contacted support about this problem before the visit.\n- Repeat the number back to confirm it.\n\nSTEP 4: IMPROVEMENTS\n- Ask what could have gone better. This is optional; if they have nothing to add, move on.\n\nSTEP 5: MANAGER CALLBACK\n- Ask whether they would like a manager to call them about their feedback.\n- If no -> thank them and end the survey.\n\nSTEP 6: CALLBACK NUMBER\n- Only if they want the call, ask for the best phone number to reach them.\n\nHANDLING NEW TECHNICAL PROBLEMS:\n- Do not troubleshoot; say a support agent will follow up.\n\n## Boundaries\n- Never argue with or question the customer's rating.\n- Never offer refunds or credits.",
+  "expect": [
+   {
+    "type": "choice",
+    "settings": {
+     "present_options": true
+    },
+    "about": "satisf"
+   },
+   {
+    "type": "boolean",
+    "about": "resolv|fix"
+   },
+   {
+    "type": "number",
+    "settings": {
+     "require_confirmation": true
+    },
+    "about": "contact|times|before"
+   },
+   {
+    "type": "text",
+    "settings": {
+     "required": false
+    },
+    "about": "improv"
+   },
+   {
+    "type": "boolean",
+    "about": "manager|callback"
+   },
+   {
+    "type": "phone",
+    "settings": {
+     "required": false
+    },
+    "about": "phone|number"
+   }
+  ],
+  "edits": [
+   {
+    "label": "reword",
+    "after": "## Instructions\nCarry out a brief satisfaction survey with customers whose internet service was repaired during a technician visit.\n\nSTEP 1: OVERALL SATISFACTION\n- Ask which of these fits how they feel about the visit overall: very satisfied, satisfied, neutral, dissatisfied, or very dissatisfied. Read the options out.\n\nSTEP 2: ISSUE RESOLVED\n- Ask if the technician solved the problem.\n- If it was not solved -> apologize and tell them the repair team will hear about it today.\n\nSTEP 3: CONTACTS BEFORE THE VISIT\n- Ask how many times they had contacted support about this problem before the visit.\n- Read that number back to confirm it.\n\nSTEP 4: IMPROVEMENTS\n- Ask what could have been done better. It is optional, so move on if they have nothing to add.\n\nSTEP 5: MANAGER CALLBACK\n- Ask if they want a manager to phone them about their feedback.\n- If not -> thank them and end the survey.\n\nSTEP 6: CALLBACK NUMBER\n- Only when they want that call, ask for the best phone number to reach them.\n\nHANDLING NEW TECHNICAL PROBLEMS:\n- Do not try to troubleshoot; tell them a support agent will follow up.\n\n## Boundaries\n- Never argue with or question the customer's rating.\n- Never offer refunds or credits.",
+    "expect": {}
+   },
+   {
+    "label": "do not read satisfaction options",
+    "after": "## Instructions\nRun a short satisfaction survey with customers after a technician visited to repair their internet service.\n\nSTEP 1: OVERALL SATISFACTION\n- Ask which of these describes how satisfied they are with the visit overall: very satisfied, satisfied, neutral, dissatisfied, or very dissatisfied. Do not read the options aloud.\n\nSTEP 2: ISSUE RESOLVED\n- Ask whether the technician fixed the problem.\n- If it is not fixed -> apologize and say the repair team will be told today.\n\nSTEP 3: CONTACTS BEFORE THE VISIT\n- Ask how many times they contacted support about this problem before the visit.\n- Repeat the number back to confirm it.\n\nSTEP 4: IMPROVEMENTS\n- Ask what could have gone better. This is optional; if they have nothing to add, move on.\n\nSTEP 5: MANAGER CALLBACK\n- Ask whether they would like a manager to call them about their feedback.\n- If no -> thank them and end the survey.\n\nSTEP 6: CALLBACK NUMBER\n- Only if they want the call, ask for the best phone number to reach them.\n\nHANDLING NEW TECHNICAL PROBLEMS:\n- Do not troubleshoot; say a support agent will follow up.\n\n## Boundaries\n- Never argue with or question the customer's rating.\n- Never offer refunds or credits.",
+    "expect": {
+     "affected": [
+      0
+     ]
+    }
+   },
+   {
+    "label": "drop support contact count",
+    "after": "## Instructions\nRun a short satisfaction survey with customers after a technician visited to repair their internet service.\n\nSTEP 1: OVERALL SATISFACTION\n- Ask which of these describes how satisfied they are with the visit overall: very satisfied, satisfied, neutral, dissatisfied, or very dissatisfied. Read the options aloud.\n\nSTEP 2: ISSUE RESOLVED\n- Ask whether the technician fixed the problem.\n- If it is not fixed -> apologize and say the repair team will be told today.\n\nSTEP 3: IMPROVEMENTS\n- Ask what could have gone better. This is optional; if they have nothing to add, move on.\n\nSTEP 4: MANAGER CALLBACK\n- Ask whether they would like a manager to call them about their feedback.\n- If no -> thank them and end the survey.\n\nSTEP 5: CALLBACK NUMBER\n- Only if they want the call, ask for the best phone number to reach them.\n\nHANDLING NEW TECHNICAL PROBLEMS:\n- Do not troubleshoot; say a support agent will follow up.\n\n## Boundaries\n- Never argue with or question the customer's rating.\n- Never offer refunds or credits.",
+    "expect": {
+     "dropped": [
+      2
+     ]
+    }
+   },
+   {
+    "label": "add recommendation question",
+    "after": "## Instructions\nRun a short satisfaction survey with customers after a technician visited to repair their internet service.\n\nSTEP 1: OVERALL SATISFACTION\n- Ask which of these describes how satisfied they are with the visit overall: very satisfied, satisfied, neutral, dissatisfied, or very dissatisfied. Read the options aloud.\n\nSTEP 2: ISSUE RESOLVED\n- Ask whether the technician fixed the problem.\n- If it is not fixed -> apologize and say the repair team will be told today.\n\nSTEP 3: CONTACTS BEFORE THE VISIT\n- Ask how many times they contacted support about this problem before the visit.\n- Repeat the number back to confirm it.\n\nSTEP 4: IMPROVEMENTS\n- Ask what could have gone better. This is optional; if they have nothing to add, move on.\n\nSTEP 5: RECOMMENDATION\n- Ask whether they would recommend our internet service to a friend.\n\nSTEP 6: MANAGER CALLBACK\n- Ask whether they would like a manager to call them about their feedback.\n- If no -> thank them and end the survey.\n\nSTEP 7: CALLBACK NUMBER\n- Only if they want the call, ask for the best phone number to reach them.\n\nHANDLING NEW TECHNICAL PROBLEMS:\n- Do not troubleshoot; say a support agent will follow up.\n\n## Boundaries\n- Never argue with or question the customer's rating.\n- Never offer refunds or credits.",
+    "expect": {
+     "added": [
+      "boolean"
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "streaming-cancellation-retention",
+  "vertical": "streaming",
+  "instructions": "## Instructions\nHandle callers who want to cancel their streaming subscription, and try to keep them with one retention offer.\n\nSTEP 1: ACCOUNT HOLDER\n- Ask for the account holder's full name.\n\nSTEP 2: VERIFICATION\n- Ask for the account holder's date of birth to verify the account.\n- If the name or date of birth does not match the account -> explain that you cannot discuss the account, and stop.\n\nSTEP 3: REASON\n- Ask why they want to cancel.\n- If the reason is price -> acknowledge it before making the offer.\n- If a technical problem comes up -> say support can help, then continue.\n\nSTEP 4: RETENTION OFFER\n- Offer three months at half price, then ask whether they want to accept it.\n- If they accept -> tell them the discount is now applied, and stop.\n\nSTEP 5: CANCELLATION TIMING\n- Only if they decline the offer, ask which cancellation option they prefer. Read out the options: cancel immediately, or cancel at the end of the current billing month.\n\nHANDLING REFUND REQUESTS:\n- Explain that unused days are not refunded, and do not promise exceptions.\n\n## Boundaries\n- Never make more than one retention offer.\n- Never cancel without a clear request from the account holder.\n- Never ask for card details.",
+  "expect": [
+   {
+    "type": "name",
+    "about": "name|holder"
+   },
+   {
+    "type": "dob",
+    "about": "birth|dob"
+   },
+   {
+    "type": "text",
+    "about": "reason|why|cancel"
+   },
+   {
+    "type": "boolean",
+    "about": "offer|accept|retention"
+   },
+   {
+    "type": "choice",
+    "settings": {
+     "present_options": true,
+     "required": false
+    },
+    "about": "timing|when|option|cancel"
+   }
+  ],
+  "edits": [
+   {
+    "label": "reword",
+    "after": "## Instructions\nTake calls from customers who want to end their streaming subscription, and try once to keep them with a retention offer.\n\nSTEP 1: ACCOUNT HOLDER\n- Get the full name of the account holder.\n\nSTEP 2: VERIFICATION\n- To verify the account, ask for the account holder's date of birth.\n- If the name or the date of birth does not match -> say you cannot discuss the account, and stop.\n\nSTEP 3: REASON\n- Ask what is making them cancel.\n- If it is about price -> acknowledge that before making the offer.\n- If it is a technical problem -> say support can help, then continue.\n\nSTEP 4: RETENTION OFFER\n- Offer them three months at half price, and ask if they would like to take it.\n- If they take it -> let them know the discount is applied now, and stop.\n\nSTEP 5: CANCELLATION TIMING\n- Only when they turn the offer down, ask which cancellation option they want, reading out both options: cancel immediately, or cancel at the end of the current billing month.\n\nHANDLING REFUND REQUESTS:\n- Say unused days are not refunded, and promise no exceptions.\n\n## Boundaries\n- Never make a second retention offer.\n- Never cancel unless the account holder clearly asks for it.\n- Never ask for card details.",
+    "expect": {}
+   },
+   {
+    "label": "add 4-digit account PIN",
+    "after": "## Instructions\nHandle callers who want to cancel their streaming subscription, and try to keep them with one retention offer.\n\nSTEP 1: ACCOUNT HOLDER\n- Ask for the account holder's full name.\n\nSTEP 2: VERIFICATION\n- Ask for the account holder's date of birth to verify the account.\n- If the name or date of birth does not match the account -> explain that you cannot discuss the account, and stop.\n\nSTEP 3: ACCOUNT PIN\n- Ask for their account PIN. It is exactly 4 digits.\n- If it does not match -> explain that you cannot discuss the account, and stop.\n\nSTEP 4: REASON\n- Ask why they want to cancel.\n- If the reason is price -> acknowledge it before making the offer.\n- If a technical problem comes up -> say support can help, then continue.\n\nSTEP 5: RETENTION OFFER\n- Offer three months at half price, then ask whether they want to accept it.\n- If they accept -> tell them the discount is now applied, and stop.\n\nSTEP 6: CANCELLATION TIMING\n- Only if they decline the offer, ask which cancellation option they prefer. Read out the options: cancel immediately, or cancel at the end of the current billing month.\n\nHANDLING REFUND REQUESTS:\n- Explain that unused days are not refunded, and do not promise exceptions.\n\n## Boundaries\n- Never make more than one retention offer.\n- Never cancel without a clear request from the account holder.\n- Never ask for card details.",
+    "expect": {
+     "added": [
+      "dtmf"
+     ]
+    }
+   },
+   {
+    "label": "make cancel reason optional",
+    "after": "## Instructions\nHandle callers who want to cancel their streaming subscription, and try to keep them with one retention offer.\n\nSTEP 1: ACCOUNT HOLDER\n- Ask for the account holder's full name.\n\nSTEP 2: VERIFICATION\n- Ask for the account holder's date of birth to verify the account.\n- If the name or date of birth does not match the account -> explain that you cannot discuss the account, and stop.\n\nSTEP 3: REASON\n- Ask why they want to cancel. Giving a reason is optional; if they prefer not to say, move on.\n- If the reason is price -> acknowledge it before making the offer.\n- If a technical problem comes up -> say support can help, then continue.\n\nSTEP 4: RETENTION OFFER\n- Offer three months at half price, then ask whether they want to accept it.\n- If they accept -> tell them the discount is now applied, and stop.\n\nSTEP 5: CANCELLATION TIMING\n- Only if they decline the offer, ask which cancellation option they prefer. Read out the options: cancel immediately, or cancel at the end of the current billing month.\n\nHANDLING REFUND REQUESTS:\n- Explain that unused days are not refunded, and do not promise exceptions.\n\n## Boundaries\n- Never make more than one retention offer.\n- Never cancel without a clear request from the account holder.\n- Never ask for card details.",
+    "expect": {
+     "affected": [
+      2
+     ]
+    }
+   },
+   {
+    "label": "drop cancellation timing",
+    "after": "## Instructions\nHandle callers who want to cancel their streaming subscription, and try to keep them with one retention offer.\n\nSTEP 1: ACCOUNT HOLDER\n- Ask for the account holder's full name.\n\nSTEP 2: VERIFICATION\n- Ask for the account holder's date of birth to verify the account.\n- If the name or date of birth does not match the account -> explain that you cannot discuss the account, and stop.\n\nSTEP 3: REASON\n- Ask why they want to cancel.\n- If the reason is price -> acknowledge it before making the offer.\n- If a technical problem comes up -> say support can help, then continue.\n\nSTEP 4: RETENTION OFFER\n- Offer three months at half price, then ask whether they want to accept it.\n- If they accept -> tell them the discount is now applied, and stop.\n\nSTEP 5: CANCELLATION\n- If they decline the offer -> cancel the subscription at the end of the current billing month, and tell them when access ends.\n\nHANDLING REFUND REQUESTS:\n- Explain that unused days are not refunded, and do not promise exceptions.\n\n## Boundaries\n- Never make more than one retention offer.\n- Never cancel without a clear request from the account holder.\n- Never ask for card details.",
+    "expect": {
+     "dropped": [
+      4
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "finance-debt-promise-to-pay",
+  "vertical": "finance",
+  "instructions": "## Instructions\nRecord a promise to pay from account holders with an overdue credit card balance.\n\nSTEP 1: VERIFY IDENTITY\n- Ask for the caller's date of birth to verify they are the account holder.\n- If it does not match the account -> do not discuss the debt; say you can only speak with the account holder.\n\nSTEP 2: PROMISED AMOUNT\n- Tell the caller the overdue balance on the account.\n- Ask how much the caller promises to pay. A partial amount is acceptable.\n\nSTEP 3: PAYMENT DATE\n- Ask for the date the caller will make the payment. It must be today or a future date.\n\nSTEP 4: PAYMENT METHOD\n- Ask how the caller will pay: debit card, bank transfer, or check. Read all three options to the caller.\n\nSTEP 5: REASON\n- Ask what caused the missed payments. This is optional; if the caller would rather not say, move on.\n\nHANDLING DISPUTES:\n- If the debt is not the caller's or the amount is wrong -> stop asking for payment and say a specialist will review the account.\n\n## Boundaries\n- Never threaten legal action, wage garnishment, or credit reporting.\n- Never ask for full card or bank account numbers.",
+  "expect": [
+   {
+    "type": "dob",
+    "about": "birth|dob"
+   },
+   {
+    "type": "currency",
+    "about": "amount|pay"
+   },
+   {
+    "type": "date",
+    "settings": {
+     "accept_past": false,
+     "accept_today": true
+    },
+    "about": "date"
+   },
+   {
+    "type": "choice",
+    "settings": {
+     "present_options": true
+    },
+    "about": "method"
+   },
+   {
+    "type": "text",
+    "settings": {
+     "required": false
+    },
+    "about": "reason|why|cause|missed"
+   }
+  ],
+  "edits": [
+   {
+    "label": "Reword every step and ask the payment method before the date",
+    "after": "## Instructions\nTake a payment commitment from account holders whose credit card balance is overdue.\n\nSTEP 1: IDENTITY CHECK\n- To confirm the caller is the account holder, ask for their date of birth.\n- If it does not match -> say you can only speak with the account holder and do not discuss the debt.\n\nSTEP 2: AMOUNT\n- Let the caller know the overdue balance.\n- Ask what amount the caller commits to paying. Paying part of the balance is fine.\n\nSTEP 3: METHOD\n- Ask which payment method the caller will use: debit card, bank transfer, or check. Read all three options aloud.\n\nSTEP 4: DATE\n- Ask which date the caller will pay on. It must be today or a later date.\n\nSTEP 5: CAUSE\n- Ask what led to the missed payments. The caller may decline to answer; if so, move on.\n\nHANDLING DISPUTES:\n- If the debt is not the caller's or the amount is disputed -> stop asking for payment and say a specialist will review the account.\n\n## Boundaries\n- Never threaten legal action, wage garnishment, or credit reporting.\n- Never ask for full card or bank account numbers.",
+    "expect": {}
+   },
+   {
+    "label": "Add a mobile number for a payment reminder text",
+    "after": "## Instructions\nRecord a promise to pay from account holders with an overdue credit card balance.\n\nSTEP 1: VERIFY IDENTITY\n- Ask for the caller's date of birth to verify they are the account holder.\n- If it does not match the account -> do not discuss the debt; say you can only speak with the account holder.\n\nSTEP 2: PROMISED AMOUNT\n- Tell the caller the overdue balance on the account.\n- Ask how much the caller promises to pay. A partial amount is acceptable.\n\nSTEP 3: PAYMENT DATE\n- Ask for the date the caller will make the payment. It must be today or a future date.\n\nSTEP 4: PAYMENT METHOD\n- Ask how the caller will pay: debit card, bank transfer, or check. Read all three options to the caller.\n\nSTEP 5: REASON\n- Ask what caused the missed payments. This is optional; if the caller would rather not say, move on.\n\nSTEP 6: REMINDER NUMBER\n- Ask for the mobile number where the caller wants a payment reminder sent by text.\n\nHANDLING DISPUTES:\n- If the debt is not the caller's or the amount is wrong -> stop asking for payment and say a specialist will review the account.\n\n## Boundaries\n- Never threaten legal action, wage garnishment, or credit reporting.\n- Never ask for full card or bank account numbers.",
+    "expect": {
+     "added": [
+      "phone"
+     ]
+    }
+   },
+   {
+    "label": "Remove the missed-payment reason",
+    "after": "## Instructions\nRecord a promise to pay from account holders with an overdue credit card balance.\n\nSTEP 1: VERIFY IDENTITY\n- Ask for the caller's date of birth to verify they are the account holder.\n- If it does not match the account -> do not discuss the debt; say you can only speak with the account holder.\n\nSTEP 2: PROMISED AMOUNT\n- Tell the caller the overdue balance on the account.\n- Ask how much the caller promises to pay. A partial amount is acceptable.\n\nSTEP 3: PAYMENT DATE\n- Ask for the date the caller will make the payment. It must be today or a future date.\n\nSTEP 4: PAYMENT METHOD\n- Ask how the caller will pay: debit card, bank transfer, or check. Read all three options to the caller.\n\nHANDLING DISPUTES:\n- If the debt is not the caller's or the amount is wrong -> stop asking for payment and say a specialist will review the account.\n\n## Boundaries\n- Never threaten legal action, wage garnishment, or credit reporting.\n- Never ask for full card or bank account numbers.",
+    "expect": {
+     "dropped": [
+      4
+     ]
+    }
+   },
+   {
+    "label": "Payment date must be after today",
+    "after": "## Instructions\nRecord a promise to pay from account holders with an overdue credit card balance.\n\nSTEP 1: VERIFY IDENTITY\n- Ask for the caller's date of birth to verify they are the account holder.\n- If it does not match the account -> do not discuss the debt; say you can only speak with the account holder.\n\nSTEP 2: PROMISED AMOUNT\n- Tell the caller the overdue balance on the account.\n- Ask how much the caller promises to pay. A partial amount is acceptable.\n\nSTEP 3: PAYMENT DATE\n- Ask for the date the caller will make the payment. It must be a future date; today is not accepted.\n\nSTEP 4: PAYMENT METHOD\n- Ask how the caller will pay: debit card, bank transfer, or check. Read all three options to the caller.\n\nSTEP 5: REASON\n- Ask what caused the missed payments. This is optional; if the caller would rather not say, move on.\n\nHANDLING DISPUTES:\n- If the debt is not the caller's or the amount is wrong -> stop asking for payment and say a specialist will review the account.\n\n## Boundaries\n- Never threaten legal action, wage garnishment, or credit reporting.\n- Never ask for full card or bank account numbers.",
+    "expect": {
+     "affected": [
+      2
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "finance-lost-card-block",
+  "vertical": "finance",
+  "instructions": "## Instructions\nBlock lost or stolen debit and credit cards for cardholders and start a replacement.\n\nSTEP 1: CARDHOLDER NAME\n- Ask for the cardholder's first and last name. Confirm the last name letter by letter.\n\nSTEP 2: CARD DIGITS\n- Ask for the last 4 digits of the lost card. Read the digits back to confirm.\n- If the digits match an active card -> block it right away and tell the caller it is blocked.\n\nSTEP 3: LAST SEEN\n- Ask for the date the caller last had the card. It can be today or an earlier date.\n\nSTEP 4: UNKNOWN CHARGES\n- Ask whether the caller sees any recent charges on the card they do not recognize.\n- If yes -> tell the caller the fraud team will review those charges.\n\nSTEP 5: FRAUD CALLBACK NUMBER\n- Only if the caller reported unrecognized charges, ask for the best phone number for the fraud team to call.\n\nHANDLING CARD FOUND:\n- If the card has been found -> explain that a blocked card cannot be unblocked and the replacement will still arrive.\n\n## Boundaries\n- Never ask for the full card number, the PIN, or the security code.\n- Never say whether a specific charge will be refunded.",
+  "expect": [
+   {
+    "type": "name",
+    "settings": {
+     "first_name": true,
+     "last_name": true,
+     "spell_back": true
+    },
+    "about": "name"
+   },
+   {
+    "type": "dtmf",
+    "settings": {
+     "num_digits": 4,
+     "ask_for_confirmation": true
+    },
+    "about": "digit|card"
+   },
+   {
+    "type": "date",
+    "settings": {
+     "accept_past": true,
+     "accept_today": true
+    },
+    "about": "last|seen|had"
+   },
+   {
+    "type": "boolean",
+    "about": "charge"
+   },
+   {
+    "type": "phone",
+    "settings": {
+     "required": false
+    },
+    "about": "phone|number|callback"
+   }
+  ],
+  "edits": [
+   {
+    "label": "Reword every step, same values and rules",
+    "after": "## Instructions\nFor cardholders whose debit or credit card is lost or stolen: block the card and start a replacement.\n\nSTEP 1: NAME\n- Ask the cardholder for their first name and last name, and confirm the last name letter by letter.\n\nSTEP 2: LAST FOUR DIGITS\n- Ask for the final 4 digits of the missing card, then read them back to confirm.\n- If they match an active card -> block it right away and let the caller know it is blocked.\n\nSTEP 3: WHEN LAST SEEN\n- Ask on what date the caller last had the card. Today or any earlier date is fine.\n\nSTEP 4: UNRECOGNIZED CHARGES\n- Ask whether there are recent charges on the card that the caller does not recognize.\n- If yes -> say the fraud team will look into them.\n\nSTEP 5: FRAUD TEAM NUMBER\n- Ask for the best phone number for the fraud team to call, but only when the caller reported charges they do not recognize.\n\nHANDLING A FOUND CARD:\n- If the card has been found -> explain that a blocked card stays blocked and the replacement is still on its way.\n\n## Boundaries\n- Never ask for the full card number, the PIN, or the security code.\n- Never say whether a specific charge will be refunded.",
+    "expect": {}
+   },
+   {
+    "label": "Add the cardholder's date of birth",
+    "after": "## Instructions\nBlock lost or stolen debit and credit cards for cardholders and start a replacement.\n\nSTEP 1: CARDHOLDER NAME\n- Ask for the cardholder's first and last name. Confirm the last name letter by letter.\n\nSTEP 2: DATE OF BIRTH\n- Ask for the cardholder's date of birth to verify their identity.\n\nSTEP 3: CARD DIGITS\n- Ask for the last 4 digits of the lost card. Read the digits back to confirm.\n- If the digits match an active card -> block it right away and tell the caller it is blocked.\n\nSTEP 4: LAST SEEN\n- Ask for the date the caller last had the card. It can be today or an earlier date.\n\nSTEP 5: UNKNOWN CHARGES\n- Ask whether the caller sees any recent charges on the card they do not recognize.\n- If yes -> tell the caller the fraud team will review those charges.\n\nSTEP 6: FRAUD CALLBACK NUMBER\n- Only if the caller reported unrecognized charges, ask for the best phone number for the fraud team to call.\n\nHANDLING CARD FOUND:\n- If the card has been found -> explain that a blocked card cannot be unblocked and the replacement will still arrive.\n\n## Boundaries\n- Never ask for the full card number, the PIN, or the security code.\n- Never say whether a specific charge will be refunded.",
+    "expect": {
+     "added": [
+      "dob"
+     ]
+    }
+   },
+   {
+    "label": "Remove the date the card was last seen",
+    "after": "## Instructions\nBlock lost or stolen debit and credit cards for cardholders and start a replacement.\n\nSTEP 1: CARDHOLDER NAME\n- Ask for the cardholder's first and last name. Confirm the last name letter by letter.\n\nSTEP 2: CARD DIGITS\n- Ask for the last 4 digits of the lost card. Read the digits back to confirm.\n- If the digits match an active card -> block it right away and tell the caller it is blocked.\n\nSTEP 3: UNKNOWN CHARGES\n- Ask whether the caller sees any recent charges on the card they do not recognize.\n- If yes -> tell the caller the fraud team will review those charges.\n\nSTEP 4: FRAUD CALLBACK NUMBER\n- Only if the caller reported unrecognized charges, ask for the best phone number for the fraud team to call.\n\nHANDLING CARD FOUND:\n- If the card has been found -> explain that a blocked card cannot be unblocked and the replacement will still arrive.\n\n## Boundaries\n- Never ask for the full card number, the PIN, or the security code.\n- Never say whether a specific charge will be refunded.",
+    "expect": {
+     "dropped": [
+      2
+     ]
+    }
+   },
+   {
+    "label": "Ask every caller for the callback number",
+    "after": "## Instructions\nBlock lost or stolen debit and credit cards for cardholders and start a replacement.\n\nSTEP 1: CARDHOLDER NAME\n- Ask for the cardholder's first and last name. Confirm the last name letter by letter.\n\nSTEP 2: CARD DIGITS\n- Ask for the last 4 digits of the lost card. Read the digits back to confirm.\n- If the digits match an active card -> block it right away and tell the caller it is blocked.\n\nSTEP 3: LAST SEEN\n- Ask for the date the caller last had the card. It can be today or an earlier date.\n\nSTEP 4: UNKNOWN CHARGES\n- Ask whether the caller sees any recent charges on the card they do not recognize.\n- If yes -> tell the caller the fraud team will review those charges.\n\nSTEP 5: CALLBACK NUMBER\n- Ask every caller for the best phone number to reach them about the card.\n\nHANDLING CARD FOUND:\n- If the card has been found -> explain that a blocked card cannot be unblocked and the replacement will still arrive.\n\n## Boundaries\n- Never ask for the full card number, the PIN, or the security code.\n- Never say whether a specific charge will be refunded.",
+    "expect": {
+     "affected": [
+      4
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "insurance-claim-first-notice",
+  "vertical": "insurance",
+  "instructions": "## General Instructions\n- If danger to anyone comes up at any point, tell the caller to hang up and call 911.\n\n## Instructions\nTake the first notice of loss for auto and home insurance claims from policyholders.\n\nSTEP 1: POLICY NUMBER\n- Ask the caller to enter their 8-digit policy number on the keypad. Read the digits back to confirm.\n\nSTEP 2: DATE OF LOSS\n- Ask for the date and the time of day the incident happened. It must be in the past.\n\nSTEP 3: LOCATION\n- Ask where the incident happened: a street address, or the nearest intersection and city.\n\nSTEP 4: DESCRIPTION\n- Ask the caller to describe what happened in their own words.\n\nSTEP 5: INJURIES\n- Ask whether anyone was injured.\n- If yes -> tell the caller to get medical care first and that an adjuster will prioritize the claim.\n\nSTEP 6: CALLBACK NUMBER\n- Ask for the best phone number for the adjuster to reach the caller.\n\nHANDLING COVERAGE QUESTIONS:\n- If the caller asks whether the claim is covered -> say the adjuster decides coverage after review.\n\n## Boundaries\n- Never promise that a claim will be paid or estimate a payout.\n- Never assign fault to anyone involved.",
+  "expect": [
+   {
+    "type": "dtmf",
+    "settings": {
+     "num_digits": 8,
+     "ask_for_confirmation": true
+    },
+    "about": "policy"
+   },
+   {
+    "type": "date",
+    "settings": {
+     "accept_past": true,
+     "require_time": true
+    },
+    "about": "date|when|loss|incident"
+   },
+   {
+    "type": "address",
+    "about": "where|location|address"
+   },
+   {
+    "type": "text",
+    "about": "happen|descri"
+   },
+   {
+    "type": "boolean",
+    "about": "injur|hurt"
+   },
+   {
+    "type": "phone",
+    "about": "phone|number|callback"
+   }
+  ],
+  "edits": [
+   {
+    "label": "Reword and ask for the description before the location",
+    "after": "## General Instructions\n- If danger to anyone comes up at any point, tell the caller to hang up and call 911.\n\n## Instructions\nRecord first notice of loss for policyholders reporting an auto or home insurance claim.\n\nSTEP 1: POLICY NUMBER\n- Ask the caller to key in their 8-digit policy number on the phone keypad, then read the digits back to confirm them.\n\nSTEP 2: DATE OF LOSS\n- Ask for the date of the incident and the time of day it happened. It must be a past date and time.\n\nSTEP 3: DESCRIPTION\n- Ask the caller to explain in their own words what happened.\n\nSTEP 4: LOCATION\n- Ask for the location of the incident: a street address, or the nearest intersection and city.\n\nSTEP 5: INJURIES\n- Ask whether anybody was hurt.\n- If yes -> tell the caller to get medical care first and say an adjuster will prioritize the claim.\n\nSTEP 6: CALLBACK NUMBER\n- Ask for the best phone number for the adjuster to call the caller back on.\n\nHANDLING COVERAGE QUESTIONS:\n- If the caller asks whether the claim is covered -> say the adjuster decides on coverage after reviewing it.\n\n## Boundaries\n- Never promise that a claim will be paid or estimate a payout.\n- Never assign fault to anyone involved.",
+    "expect": {}
+   },
+   {
+    "label": "Add an email address for the claim number",
+    "after": "## General Instructions\n- If danger to anyone comes up at any point, tell the caller to hang up and call 911.\n\n## Instructions\nTake the first notice of loss for auto and home insurance claims from policyholders.\n\nSTEP 1: POLICY NUMBER\n- Ask the caller to enter their 8-digit policy number on the keypad. Read the digits back to confirm.\n\nSTEP 2: DATE OF LOSS\n- Ask for the date and the time of day the incident happened. It must be in the past.\n\nSTEP 3: LOCATION\n- Ask where the incident happened: a street address, or the nearest intersection and city.\n\nSTEP 4: DESCRIPTION\n- Ask the caller to describe what happened in their own words.\n\nSTEP 5: INJURIES\n- Ask whether anyone was injured.\n- If yes -> tell the caller to get medical care first and that an adjuster will prioritize the claim.\n\nSTEP 6: CALLBACK NUMBER\n- Ask for the best phone number for the adjuster to reach the caller.\n\nSTEP 7: EMAIL\n- Ask for an email address to receive the claim number and next steps.\n\nHANDLING COVERAGE QUESTIONS:\n- If the caller asks whether the claim is covered -> say the adjuster decides coverage after review.\n\n## Boundaries\n- Never promise that a claim will be paid or estimate a payout.\n- Never assign fault to anyone involved.",
+    "expect": {
+     "added": [
+      "email"
+     ]
+    }
+   },
+   {
+    "label": "Remove the callback number",
+    "after": "## General Instructions\n- If danger to anyone comes up at any point, tell the caller to hang up and call 911.\n\n## Instructions\nTake the first notice of loss for auto and home insurance claims from policyholders.\n\nSTEP 1: POLICY NUMBER\n- Ask the caller to enter their 8-digit policy number on the keypad. Read the digits back to confirm.\n\nSTEP 2: DATE OF LOSS\n- Ask for the date and the time of day the incident happened. It must be in the past.\n\nSTEP 3: LOCATION\n- Ask where the incident happened: a street address, or the nearest intersection and city.\n\nSTEP 4: DESCRIPTION\n- Ask the caller to describe what happened in their own words.\n\nSTEP 5: INJURIES\n- Ask whether anyone was injured.\n- If yes -> tell the caller to get medical care first and that an adjuster will prioritize the claim.\n\nHANDLING COVERAGE QUESTIONS:\n- If the caller asks whether the claim is covered -> say the adjuster decides coverage after review.\n\n## Boundaries\n- Never promise that a claim will be paid or estimate a payout.\n- Never assign fault to anyone involved.",
+    "expect": {
+     "dropped": [
+      5
+     ]
+    }
+   },
+   {
+    "label": "Date of loss no longer needs a time of day",
+    "after": "## General Instructions\n- If danger to anyone comes up at any point, tell the caller to hang up and call 911.\n\n## Instructions\nTake the first notice of loss for auto and home insurance claims from policyholders.\n\nSTEP 1: POLICY NUMBER\n- Ask the caller to enter their 8-digit policy number on the keypad. Read the digits back to confirm.\n\nSTEP 2: DATE OF LOSS\n- Ask for the date the incident happened. It must be in the past.\n\nSTEP 3: LOCATION\n- Ask where the incident happened: a street address, or the nearest intersection and city.\n\nSTEP 4: DESCRIPTION\n- Ask the caller to describe what happened in their own words.\n\nSTEP 5: INJURIES\n- Ask whether anyone was injured.\n- If yes -> tell the caller to get medical care first and that an adjuster will prioritize the claim.\n\nSTEP 6: CALLBACK NUMBER\n- Ask for the best phone number for the adjuster to reach the caller.\n\nHANDLING COVERAGE QUESTIONS:\n- If the caller asks whether the claim is covered -> say the adjuster decides coverage after review.\n\n## Boundaries\n- Never promise that a claim will be paid or estimate a payout.\n- Never assign fault to anyone involved.",
+    "expect": {
+     "affected": [
+      1
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "finance-loan-prequalification",
+  "vertical": "finance",
+  "instructions": "## Instructions\nPre-qualify callers for a personal loan by collecting the details the lender needs for a soft credit check.\n\nSTEP 1: LOAN AMOUNT\n- Ask how much the caller wants to borrow.\n\nSTEP 2: EMPLOYMENT STATUS\n- Ask which of these describes the caller's employment: full-time, part-time, self-employed, retired, or not employed. Do not read the options aloud.\n\nSTEP 3: TIME AT HOME\n- Ask how many years the caller has lived at their current home. Decimals are allowed.\n\nSTEP 4: EMAIL\n- Ask for the email address where the pre-qualification result should be sent.\n\nSTEP 5: CREDIT CHECK CONSENT\n- Ask whether the caller agrees to a soft credit check, which does not affect their credit score. Repeat their answer back and confirm it.\n- If no -> explain that the lender cannot pre-qualify the caller without it.\n\nHANDLING RATE QUESTIONS:\n- If the caller asks about interest rates -> say rates are shown only after a full application.\n\n## Boundaries\n- Never promise approval, a rate, or a loan amount.\n- Never ask for a Social Security number or bank account details.",
+  "expect": [
+   {
+    "type": "currency",
+    "about": "borrow|loan|amount"
+   },
+   {
+    "type": "choice",
+    "settings": {
+     "present_options": false
+    },
+    "about": "employ"
+   },
+   {
+    "type": "number",
+    "settings": {
+     "allow_decimal": true
+    },
+    "about": "years|home"
+   },
+   {
+    "type": "email",
+    "about": "email"
+   },
+   {
+    "type": "boolean",
+    "settings": {
+     "require_confirmation": true
+    },
+    "about": "consent|credit|check"
+   }
+  ],
+  "edits": [
+   {
+    "label": "Reword and ask employment before the loan amount",
+    "after": "## Instructions\nCollect what the lender needs to run a soft credit check and pre-qualify callers for a personal loan.\n\nSTEP 1: EMPLOYMENT STATUS\n- Ask which of these fits the caller's employment: full-time, part-time, self-employed, retired, or not employed. Do not read these options out.\n\nSTEP 2: LOAN AMOUNT\n- Ask the caller how much money they would like to borrow.\n\nSTEP 3: TIME AT HOME\n- Ask how long, in years, the caller has lived in their current home. Decimals are allowed.\n\nSTEP 4: EMAIL\n- Ask which email address the pre-qualification result should go to.\n\nSTEP 5: CREDIT CHECK CONSENT\n- Ask whether the caller agrees to a soft credit check, which does not affect their credit score. Repeat their answer back and confirm it.\n- If no -> explain that the lender cannot pre-qualify the caller without it.\n\nHANDLING RATE QUESTIONS:\n- If the caller asks about interest rates -> say rates are shown only after a full application.\n\n## Boundaries\n- Never promise approval, a rate, or a loan amount.\n- Never ask for a Social Security number or bank account details.",
+    "expect": {}
+   },
+   {
+    "label": "Add the monthly rent or mortgage payment",
+    "after": "## Instructions\nPre-qualify callers for a personal loan by collecting the details the lender needs for a soft credit check.\n\nSTEP 1: LOAN AMOUNT\n- Ask how much the caller wants to borrow.\n\nSTEP 2: EMPLOYMENT STATUS\n- Ask which of these describes the caller's employment: full-time, part-time, self-employed, retired, or not employed. Do not read the options aloud.\n\nSTEP 3: TIME AT HOME\n- Ask how many years the caller has lived at their current home. Decimals are allowed.\n\nSTEP 4: HOUSING COST\n- Ask how much the caller pays each month for rent or mortgage.\n\nSTEP 5: EMAIL\n- Ask for the email address where the pre-qualification result should be sent.\n\nSTEP 6: CREDIT CHECK CONSENT\n- Ask whether the caller agrees to a soft credit check, which does not affect their credit score. Repeat their answer back and confirm it.\n- If no -> explain that the lender cannot pre-qualify the caller without it.\n\nHANDLING RATE QUESTIONS:\n- If the caller asks about interest rates -> say rates are shown only after a full application.\n\n## Boundaries\n- Never promise approval, a rate, or a loan amount.\n- Never ask for a Social Security number or bank account details.",
+    "expect": {
+     "added": [
+      "currency"
+     ]
+    }
+   },
+   {
+    "label": "Remove the requested loan amount",
+    "after": "## Instructions\nPre-qualify callers for a personal loan by collecting the details the lender needs for a soft credit check.\n\nSTEP 1: EMPLOYMENT STATUS\n- Ask which of these describes the caller's employment: full-time, part-time, self-employed, retired, or not employed. Do not read the options aloud.\n\nSTEP 2: TIME AT HOME\n- Ask how many years the caller has lived at their current home. Decimals are allowed.\n\nSTEP 3: EMAIL\n- Ask for the email address where the pre-qualification result should be sent.\n\nSTEP 4: CREDIT CHECK CONSENT\n- Ask whether the caller agrees to a soft credit check, which does not affect their credit score. Repeat their answer back and confirm it.\n- If no -> explain that the lender cannot pre-qualify the caller without it.\n\nHANDLING RATE QUESTIONS:\n- If the caller asks about interest rates -> say rates are shown only after a full application.\n\n## Boundaries\n- Never promise approval, a rate, or a loan amount.\n- Never ask for a Social Security number or bank account details.",
+    "expect": {
+     "dropped": [
+      0
+     ]
+    }
+   },
+   {
+    "label": "Read the employment options to the caller",
+    "after": "## Instructions\nPre-qualify callers for a personal loan by collecting the details the lender needs for a soft credit check.\n\nSTEP 1: LOAN AMOUNT\n- Ask how much the caller wants to borrow.\n\nSTEP 2: EMPLOYMENT STATUS\n- Ask which of these describes the caller's employment: full-time, part-time, self-employed, retired, or not employed. Read all five options to the caller.\n\nSTEP 3: TIME AT HOME\n- Ask how many years the caller has lived at their current home. Decimals are allowed.\n\nSTEP 4: EMAIL\n- Ask for the email address where the pre-qualification result should be sent.\n\nSTEP 5: CREDIT CHECK CONSENT\n- Ask whether the caller agrees to a soft credit check, which does not affect their credit score. Repeat their answer back and confirm it.\n- If no -> explain that the lender cannot pre-qualify the caller without it.\n\nHANDLING RATE QUESTIONS:\n- If the caller asks about interest rates -> say rates are shown only after a full application.\n\n## Boundaries\n- Never promise approval, a rate, or a loan amount.\n- Never ask for a Social Security number or bank account details.",
+    "expect": {
+     "affected": [
+      1
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "utilities-outage-report",
+  "vertical": "utilities",
+  "instructions": "## Instructions\nTake power outage reports from residential and business customers of the electric utility.\n\nSTEP 1: ACCOUNT NUMBER\n- Ask the caller to enter their 10-digit account number on the keypad. It is optional; if the caller does not have it, move on.\n\nSTEP 2: OUTAGE ADDRESS\n- Ask for the street address and city where the power is out.\n\nSTEP 3: START TIME\n- Ask when the power went out: the date and the time of day. Today or an earlier date is fine, never a future date.\n\nSTEP 4: SYMPTOMS\n- Ask which of these the caller noticed: lights out, flickering lights, a loud bang, or sparks. The caller may pick more than one.\n\nSTEP 5: DOWNED LINES\n- Ask whether there are any downed power lines near the property.\n- If yes -> tell the caller to stay at least 30 feet away and call 911, then continue the report.\n\nHANDLING KNOWN OUTAGES:\n- If the address is inside a known outage area -> share the estimated restoration time and still finish the report.\n\nHANDLING BILLING QUESTIONS:\n- If the caller asks about their bill -> say this line handles outage reports only.\n\n## Boundaries\n- Never tell the caller to touch, move, or go near any electrical equipment.\n- Never promise an exact restoration time.",
+  "expect": [
+   {
+    "type": "dtmf",
+    "settings": {
+     "num_digits": 10,
+     "required": false
+    },
+    "about": "account"
+   },
+   {
+    "type": "address",
+    "about": "address|location"
+   },
+   {
+    "type": "date",
+    "settings": {
+     "accept_past": true,
+     "accept_today": true,
+     "require_time": true
+    },
+    "about": "out|start|time|when"
+   },
+   {
+    "type": "choice",
+    "settings": {
+     "multiple": true
+    },
+    "about": "notic|symptom"
+   },
+   {
+    "type": "boolean",
+    "about": "line|downed"
+   }
+  ],
+  "edits": [
+   {
+    "label": "Reword every step, same values and rules",
+    "after": "## Instructions\nLog power outages reported by the electric utility's home and business customers.\n\nSTEP 1: ACCOUNT\n- Ask the caller to key in their 10-digit account number. The caller may skip this; if they do not have it, continue.\n\nSTEP 2: LOCATION\n- Ask for the street address and the city of the property without power.\n\nSTEP 3: WHEN IT STARTED\n- Ask for the date and time of day the power went out. It can be today or an earlier date, but never a future one.\n\nSTEP 4: SYMPTOMS\n- Ask which of these the caller has noticed: lights out, flickering lights, a loud bang, or sparks. More than one can be picked.\n\nSTEP 5: DOWNED LINES\n- Ask if any power lines are down near the property.\n- If yes -> tell the caller to keep at least 30 feet away and call 911, then go on with the report.\n\nHANDLING KNOWN OUTAGES:\n- If the property is in a known outage area -> give the estimated restoration time and still complete the report.\n\nHANDLING BILLING QUESTIONS:\n- If the caller has a billing question -> say this line handles outages only.\n\n## Boundaries\n- Never tell the caller to touch, move, or go near any electrical equipment.\n- Never promise an exact restoration time.",
+    "expect": {}
+   },
+   {
+    "label": "Add a mobile number for restoration texts",
+    "after": "## Instructions\nTake power outage reports from residential and business customers of the electric utility.\n\nSTEP 1: ACCOUNT NUMBER\n- Ask the caller to enter their 10-digit account number on the keypad. It is optional; if the caller does not have it, move on.\n\nSTEP 2: OUTAGE ADDRESS\n- Ask for the street address and city where the power is out.\n\nSTEP 3: START TIME\n- Ask when the power went out: the date and the time of day. Today or an earlier date is fine, never a future date.\n\nSTEP 4: SYMPTOMS\n- Ask which of these the caller noticed: lights out, flickering lights, a loud bang, or sparks. The caller may pick more than one.\n\nSTEP 5: DOWNED LINES\n- Ask whether there are any downed power lines near the property.\n- If yes -> tell the caller to stay at least 30 feet away and call 911, then continue the report.\n\nSTEP 6: MOBILE NUMBER\n- Ask for a mobile number to receive restoration updates by text.\n\nHANDLING KNOWN OUTAGES:\n- If the address is inside a known outage area -> share the estimated restoration time and still finish the report.\n\nHANDLING BILLING QUESTIONS:\n- If the caller asks about their bill -> say this line handles outage reports only.\n\n## Boundaries\n- Never tell the caller to touch, move, or go near any electrical equipment.\n- Never promise an exact restoration time.",
+    "expect": {
+     "added": [
+      "phone"
+     ]
+    }
+   },
+   {
+    "label": "Remove what the caller noticed",
+    "after": "## Instructions\nTake power outage reports from residential and business customers of the electric utility.\n\nSTEP 1: ACCOUNT NUMBER\n- Ask the caller to enter their 10-digit account number on the keypad. It is optional; if the caller does not have it, move on.\n\nSTEP 2: OUTAGE ADDRESS\n- Ask for the street address and city where the power is out.\n\nSTEP 3: START TIME\n- Ask when the power went out: the date and the time of day. Today or an earlier date is fine, never a future date.\n\nSTEP 4: DOWNED LINES\n- Ask whether there are any downed power lines near the property.\n- If yes -> tell the caller to stay at least 30 feet away and call 911, then continue the report.\n\nHANDLING KNOWN OUTAGES:\n- If the address is inside a known outage area -> share the estimated restoration time and still finish the report.\n\nHANDLING BILLING QUESTIONS:\n- If the caller asks about their bill -> say this line handles outage reports only.\n\n## Boundaries\n- Never tell the caller to touch, move, or go near any electrical equipment.\n- Never promise an exact restoration time.",
+    "expect": {
+     "dropped": [
+      3
+     ]
+    }
+   },
+   {
+    "label": "Account number becomes required",
+    "after": "## Instructions\nTake power outage reports from residential and business customers of the electric utility.\n\nSTEP 1: ACCOUNT NUMBER\n- Ask the caller to enter their 10-digit account number on the keypad. It is required; if the caller does not have it handy, ask them to find it on a recent bill.\n\nSTEP 2: OUTAGE ADDRESS\n- Ask for the street address and city where the power is out.\n\nSTEP 3: START TIME\n- Ask when the power went out: the date and the time of day. Today or an earlier date is fine, never a future date.\n\nSTEP 4: SYMPTOMS\n- Ask which of these the caller noticed: lights out, flickering lights, a loud bang, or sparks. The caller may pick more than one.\n\nSTEP 5: DOWNED LINES\n- Ask whether there are any downed power lines near the property.\n- If yes -> tell the caller to stay at least 30 feet away and call 911, then continue the report.\n\nHANDLING KNOWN OUTAGES:\n- If the address is inside a known outage area -> share the estimated restoration time and still finish the report.\n\nHANDLING BILLING QUESTIONS:\n- If the caller asks about their bill -> say this line handles outage reports only.\n\n## Boundaries\n- Never tell the caller to touch, move, or go near any electrical equipment.\n- Never promise an exact restoration time.",
+    "expect": {
+     "affected": [
+      0
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "utilities-payment-arrangement",
+  "vertical": "utilities",
+  "instructions": "## Instructions\nSet up a payment arrangement for utility customers who are behind on their bill.\n\nSTEP 1: FIND THE ACCOUNT\n- Ask for the phone number on the account.\n\nSTEP 2: DOWN PAYMENT\n- Tell the caller the past-due balance.\n- Ask how much the caller can pay today as a down payment. It must be at least 10 percent of the past-due balance.\n\nSTEP 3: NUMBER OF INSTALLMENTS\n- Ask how many monthly installments the caller wants for the rest of the balance. It must be a whole number from 2 to 12.\n- Tell the caller the resulting monthly installment amount.\n\nSTEP 4: FIRST INSTALLMENT DATE\n- Ask for the date of the first installment. It must be a future date; today is not allowed.\n\nSTEP 5: AUTOPAY\n- Ask whether the caller wants to enroll in autopay for the installments.\n\nSTEP 6: EMAIL\n- Ask for an email address to send the arrangement terms to. This is optional; if they do not want to give one, skip it.\n\nHANDLING MISSED ARRANGEMENTS:\n- If the account shows a broken arrangement in the past year -> explain that a down payment of at least 25 percent is needed this time.\n\n## Boundaries\n- Never waive late fees or promise that service will not be disconnected.",
+  "expect": [
+   {
+    "type": "phone",
+    "about": "phone|account"
+   },
+   {
+    "type": "currency",
+    "about": "down"
+   },
+   {
+    "type": "number",
+    "settings": {
+     "allow_decimal": false
+    },
+    "about": "installment"
+   },
+   {
+    "type": "date",
+    "settings": {
+     "accept_past": false,
+     "accept_today": false
+    },
+    "about": "first|date"
+   },
+   {
+    "type": "boolean",
+    "about": "autopay"
+   },
+   {
+    "type": "email",
+    "settings": {
+     "required": false
+    },
+    "about": "email"
+   }
+  ],
+  "edits": [
+   {
+    "label": "Reword every step, same values and rules",
+    "after": "## Instructions\nArrange a payment plan for utility customers whose bill is past due.\n\nSTEP 1: ACCOUNT LOOKUP\n- Ask the caller which phone number is on the account.\n\nSTEP 2: DOWN PAYMENT\n- Let the caller know the past-due balance.\n- Ask what down payment the caller can make today. It has to be at least 10 percent of the past-due balance.\n\nSTEP 3: INSTALLMENTS\n- Ask over how many monthly installments the caller wants to spread the remaining balance. Only whole numbers from 2 to 12 are allowed.\n- Give the caller the monthly installment amount that results.\n\nSTEP 4: FIRST DUE DATE\n- Ask what date the first installment should be due. It has to be after today; today itself is not allowed.\n\nSTEP 5: AUTOPAY\n- Ask if the caller would like the installments paid by autopay.\n\nSTEP 6: EMAIL\n- Ask for an email address for the arrangement terms. Giving one is optional; if they do not want to, skip it.\n\nHANDLING MISSED ARRANGEMENTS:\n- If the account shows a broken arrangement within the past year -> explain that this time the down payment must be at least 25 percent.\n\n## Boundaries\n- Never waive late fees or promise that service will not be disconnected.",
+    "expect": {}
+   },
+   {
+    "label": "Add the account holder's name for verification",
+    "after": "## Instructions\nSet up a payment arrangement for utility customers who are behind on their bill.\n\nSTEP 1: FIND THE ACCOUNT\n- Ask for the phone number on the account.\n\nSTEP 2: ACCOUNT HOLDER NAME\n- Ask for the account holder's first and last name to verify the account.\n\nSTEP 3: DOWN PAYMENT\n- Tell the caller the past-due balance.\n- Ask how much the caller can pay today as a down payment. It must be at least 10 percent of the past-due balance.\n\nSTEP 4: NUMBER OF INSTALLMENTS\n- Ask how many monthly installments the caller wants for the rest of the balance. It must be a whole number from 2 to 12.\n- Tell the caller the resulting monthly installment amount.\n\nSTEP 5: FIRST INSTALLMENT DATE\n- Ask for the date of the first installment. It must be a future date; today is not allowed.\n\nSTEP 6: AUTOPAY\n- Ask whether the caller wants to enroll in autopay for the installments.\n\nSTEP 7: EMAIL\n- Ask for an email address to send the arrangement terms to. This is optional; if they do not want to give one, skip it.\n\nHANDLING MISSED ARRANGEMENTS:\n- If the account shows a broken arrangement in the past year -> explain that a down payment of at least 25 percent is needed this time.\n\n## Boundaries\n- Never waive late fees or promise that service will not be disconnected.",
+    "expect": {
+     "added": [
+      "name"
+     ]
+    }
+   },
+   {
+    "label": "Remove the autopay question",
+    "after": "## Instructions\nSet up a payment arrangement for utility customers who are behind on their bill.\n\nSTEP 1: FIND THE ACCOUNT\n- Ask for the phone number on the account.\n\nSTEP 2: DOWN PAYMENT\n- Tell the caller the past-due balance.\n- Ask how much the caller can pay today as a down payment. It must be at least 10 percent of the past-due balance.\n\nSTEP 3: NUMBER OF INSTALLMENTS\n- Ask how many monthly installments the caller wants for the rest of the balance. It must be a whole number from 2 to 12.\n- Tell the caller the resulting monthly installment amount.\n\nSTEP 4: FIRST INSTALLMENT DATE\n- Ask for the date of the first installment. It must be a future date; today is not allowed.\n\nSTEP 5: EMAIL\n- Ask for an email address to send the arrangement terms to. This is optional; if they do not want to give one, skip it.\n\nHANDLING MISSED ARRANGEMENTS:\n- If the account shows a broken arrangement in the past year -> explain that a down payment of at least 25 percent is needed this time.\n\n## Boundaries\n- Never waive late fees or promise that service will not be disconnected.",
+    "expect": {
+     "dropped": [
+      4
+     ]
+    }
+   },
+   {
+    "label": "Email address becomes required",
+    "after": "## Instructions\nSet up a payment arrangement for utility customers who are behind on their bill.\n\nSTEP 1: FIND THE ACCOUNT\n- Ask for the phone number on the account.\n\nSTEP 2: DOWN PAYMENT\n- Tell the caller the past-due balance.\n- Ask how much the caller can pay today as a down payment. It must be at least 10 percent of the past-due balance.\n\nSTEP 3: NUMBER OF INSTALLMENTS\n- Ask how many monthly installments the caller wants for the rest of the balance. It must be a whole number from 2 to 12.\n- Tell the caller the resulting monthly installment amount.\n\nSTEP 4: FIRST INSTALLMENT DATE\n- Ask for the date of the first installment. It must be a future date; today is not allowed.\n\nSTEP 5: AUTOPAY\n- Ask whether the caller wants to enroll in autopay for the installments.\n\nSTEP 6: EMAIL\n- Ask for an email address to send the arrangement terms to. It is required; the arrangement cannot be set up without it.\n\nHANDLING MISSED ARRANGEMENTS:\n- If the account shows a broken arrangement in the past year -> explain that a down payment of at least 25 percent is needed this time.\n\n## Boundaries\n- Never waive late fees or promise that service will not be disconnected.",
+    "expect": {
+     "affected": [
+      5
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "home-services-cleaning-booking",
+  "vertical": "home-services",
+  "instructions": "## Instructions\nBook a home cleaning visit for callers who want their house or apartment cleaned.\n\nSTEP 1: NAME\n- Ask for the caller's first and last name.\n\nSTEP 2: ADDRESS\n- Ask for the full address of the home to be cleaned, including any unit number.\n\nSTEP 3: CLEANING TYPE\n- Ask which cleaning they want: standard clean, deep clean, or move-out clean. Read all three options; they choose one.\n- If the caller is unsure -> explain that a deep clean also covers inside appliances.\n\nSTEP 4: BEDROOMS\n- Ask how many bedrooms the home has. It must be a whole number.\n\nSTEP 5: DATE AND TIME\n- Ask for the preferred cleaning date and start time. It must be a future date, today is not allowed, and a start time is required.\n\nSTEP 6: PETS\n- Ask whether there are any pets in the home.\n\nHANDLING PRICE QUESTIONS:\n- Say the price depends on home size and cleaning type, and the team confirms it before the visit.\n\n## Boundaries\n- Never quote an exact price.\n- Never promise a specific cleaner.",
+  "expect": [
+   {
+    "type": "name",
+    "settings": {
+     "first_name": true,
+     "last_name": true
+    },
+    "about": "name"
+   },
+   {
+    "type": "address",
+    "about": "address"
+   },
+   {
+    "type": "choice",
+    "settings": {
+     "present_options": true,
+     "multiple": false
+    },
+    "about": "type|clean"
+   },
+   {
+    "type": "number",
+    "settings": {
+     "allow_decimal": false
+    },
+    "about": "bedroom"
+   },
+   {
+    "type": "date",
+    "settings": {
+     "accept_past": false,
+     "accept_today": false,
+     "require_time": true
+    },
+    "about": "date|time|visit"
+   },
+   {
+    "type": "boolean",
+    "about": "pet"
+   }
+  ],
+  "edits": [
+   {
+    "label": "pure rewording",
+    "after": "## Instructions\nSchedule a home cleaning for callers who want a house or apartment cleaned.\n\nSTEP 1: NAME\n- Get the caller's first and last name.\n\nSTEP 2: ADDRESS\n- Get the complete address of the home that needs cleaning, with any unit number.\n\nSTEP 3: CLEANING TYPE\n- Ask which cleaning they would like: standard clean, deep clean, or move-out clean. Read out all three options; the caller picks one.\n- If they cannot decide -> mention that a deep clean also includes inside appliances.\n\nSTEP 4: BEDROOMS\n- Ask for the number of bedrooms in the home. Only a whole number is accepted.\n\nSTEP 5: DATE AND TIME\n- Ask which date and start time they prefer for the cleaning. The date must be in the future, today cannot be booked, and a start time is required.\n\nSTEP 6: PETS\n- Ask if any pets live in the home.\n\nHANDLING PRICE QUESTIONS:\n- Explain that the price depends on home size and cleaning type, and the team confirms it before the visit.\n\n## Boundaries\n- Never give an exact price.\n- Never promise a particular cleaner.",
+    "expect": {}
+   },
+   {
+    "label": "add email for the confirmation",
+    "after": "## Instructions\nBook a home cleaning visit for callers who want their house or apartment cleaned.\n\nSTEP 1: NAME\n- Ask for the caller's first and last name.\n\nSTEP 2: ADDRESS\n- Ask for the full address of the home to be cleaned, including any unit number.\n\nSTEP 3: CLEANING TYPE\n- Ask which cleaning they want: standard clean, deep clean, or move-out clean. Read all three options; they choose one.\n- If the caller is unsure -> explain that a deep clean also covers inside appliances.\n\nSTEP 4: BEDROOMS\n- Ask how many bedrooms the home has. It must be a whole number.\n\nSTEP 5: DATE AND TIME\n- Ask for the preferred cleaning date and start time. It must be a future date, today is not allowed, and a start time is required.\n\nSTEP 6: PETS\n- Ask whether there are any pets in the home.\n\nSTEP 7: EMAIL\n- Ask for an email address for the booking confirmation.\n\nHANDLING PRICE QUESTIONS:\n- Say the price depends on home size and cleaning type, and the team confirms it before the visit.\n\n## Boundaries\n- Never quote an exact price.\n- Never promise a specific cleaner.",
+    "expect": {
+     "added": [
+      "email"
+     ]
+    }
+   },
+   {
+    "label": "allow same-day cleaning",
+    "after": "## Instructions\nBook a home cleaning visit for callers who want their house or apartment cleaned.\n\nSTEP 1: NAME\n- Ask for the caller's first and last name.\n\nSTEP 2: ADDRESS\n- Ask for the full address of the home to be cleaned, including any unit number.\n\nSTEP 3: CLEANING TYPE\n- Ask which cleaning they want: standard clean, deep clean, or move-out clean. Read all three options; they choose one.\n- If the caller is unsure -> explain that a deep clean also covers inside appliances.\n\nSTEP 4: BEDROOMS\n- Ask how many bedrooms the home has. It must be a whole number.\n\nSTEP 5: DATE AND TIME\n- Ask for the preferred cleaning date and start time. It must be today or a future date, and a start time is required.\n\nSTEP 6: PETS\n- Ask whether there are any pets in the home.\n\nHANDLING PRICE QUESTIONS:\n- Say the price depends on home size and cleaning type, and the team confirms it before the visit.\n\n## Boundaries\n- Never quote an exact price.\n- Never promise a specific cleaner.",
+    "expect": {
+     "affected": [
+      4
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "home-services-plumbing-repair-visit",
+  "vertical": "home-services",
+  "instructions": "## General Instructions\n- If water near electrical outlets comes up at any point, tell the caller to stay away from it and switch off power only if it is safe.\n\n## Instructions\nArrange a plumber visit for homeowners and tenants who report a plumbing problem.\n\nSTEP 1: NAME\n- Ask for the caller's full name.\n\nSTEP 2: PHONE\n- Ask for the best phone number to reach them on the day of the visit.\n\nSTEP 3: ADDRESS\n- Ask for the address where the plumber is needed.\n\nSTEP 4: PROBLEM\n- Ask the caller to describe the plumbing problem in their own words.\n- If the caller brings up a smell of gas or burning -> tell them to leave the home and call the gas emergency line.\n\nSTEP 5: ACTIVE LEAK\n- Ask whether water is leaking right now.\n- If yes -> tell the caller to turn off the main water valve while they wait.\n\nSTEP 6: VISIT DATE\n- Ask for the preferred visit date. It must be today or a future date.\n\n## Boundaries\n- Never diagnose the cause of the problem.\n- Never promise an exact arrival time.",
+  "expect": [
+   {
+    "type": "name",
+    "about": "name"
+   },
+   {
+    "type": "phone",
+    "about": "phone|number"
+   },
+   {
+    "type": "address",
+    "about": "address"
+   },
+   {
+    "type": "text",
+    "about": "problem|issue|descri"
+   },
+   {
+    "type": "boolean",
+    "about": "leak"
+   },
+   {
+    "type": "date",
+    "settings": {
+     "accept_past": false,
+     "accept_today": true
+    },
+    "about": "visit|date"
+   }
+  ],
+  "edits": [
+   {
+    "label": "pure rewording",
+    "after": "## General Instructions\n- If water close to electrical outlets comes up at any point, tell the caller to keep away from it and cut the power only if that is safe.\n\n## Instructions\nSet up a plumber visit for homeowners and tenants calling about a plumbing problem.\n\nSTEP 1: NAME\n- Get the caller's full name.\n\nSTEP 2: PHONE\n- Ask which phone number is best for reaching them on the visit day.\n\nSTEP 3: ADDRESS\n- Get the address where the plumber should go.\n\nSTEP 4: PROBLEM\n- Ask the caller to explain the plumbing problem in their own words.\n- If the caller brings up a smell of gas or burning -> tell them to leave the home and call the gas emergency line.\n\nSTEP 5: ACTIVE LEAK\n- Ask if water is leaking at this moment.\n- If yes -> tell them to shut the main water valve while they wait.\n\nSTEP 6: VISIT DATE\n- Ask which date they would like the visit. Only today or a future date is accepted.\n\n## Boundaries\n- Never guess what caused the problem.\n- Never commit to an exact arrival time.",
+    "expect": {}
+   },
+   {
+    "label": "remove the phone ask",
+    "after": "## General Instructions\n- If water near electrical outlets comes up at any point, tell the caller to stay away from it and switch off power only if it is safe.\n\n## Instructions\nArrange a plumber visit for homeowners and tenants who report a plumbing problem.\n\nSTEP 1: NAME\n- Ask for the caller's full name.\n\nSTEP 2: ADDRESS\n- Ask for the address where the plumber is needed.\n\nSTEP 3: PROBLEM\n- Ask the caller to describe the plumbing problem in their own words.\n- If the caller brings up a smell of gas or burning -> tell them to leave the home and call the gas emergency line.\n\nSTEP 4: ACTIVE LEAK\n- Ask whether water is leaking right now.\n- If yes -> tell the caller to turn off the main water valve while they wait.\n\nSTEP 5: VISIT DATE\n- Ask for the preferred visit date. It must be today or a future date.\n\n## Boundaries\n- Never diagnose the cause of the problem.\n- Never promise an exact arrival time.",
+    "expect": {
+     "dropped": [
+      1
+     ]
+    }
+   },
+   {
+    "label": "visit date now needs a time",
+    "after": "## General Instructions\n- If water near electrical outlets comes up at any point, tell the caller to stay away from it and switch off power only if it is safe.\n\n## Instructions\nArrange a plumber visit for homeowners and tenants who report a plumbing problem.\n\nSTEP 1: NAME\n- Ask for the caller's full name.\n\nSTEP 2: PHONE\n- Ask for the best phone number to reach them on the day of the visit.\n\nSTEP 3: ADDRESS\n- Ask for the address where the plumber is needed.\n\nSTEP 4: PROBLEM\n- Ask the caller to describe the plumbing problem in their own words.\n- If the caller brings up a smell of gas or burning -> tell them to leave the home and call the gas emergency line.\n\nSTEP 5: ACTIVE LEAK\n- Ask whether water is leaking right now.\n- If yes -> tell the caller to turn off the main water valve while they wait.\n\nSTEP 6: VISIT DATE\n- Ask for the preferred visit date and time of day. It must be today or a future date, and a time is required.\n\n## Boundaries\n- Never diagnose the cause of the problem.\n- Never promise an exact arrival time.",
+    "expect": {
+     "affected": [
+      5
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "hospitality-hotel-booking",
+  "vertical": "hospitality",
+  "instructions": "## Instructions\nTake hotel room bookings for guests calling to reserve a stay.\n\nSTEP 1: GUEST NAME\n- Ask for the guest's first and last name. Spell it back letter by letter to confirm.\n\nSTEP 2: CHECK-IN\n- Ask for the check-in date. It must be today or a future date.\n\nSTEP 3: CHECK-OUT\n- Ask for the check-out date. It must be a future date after the check-in date.\n- If it is on or before the check-in date -> explain and ask again.\n\nSTEP 4: GUESTS\n- Ask how many guests will stay. It must be a whole number.\n- If more than four -> explain that more than one room may be needed.\n\nSTEP 5: ROOM TYPE\n- Ask which room type they want: single, double, or suite. Read all the options.\n\nSTEP 6: BUDGET\n- Ask for their maximum budget per night. They must say which currency it is in.\n\nSTEP 7: EMAIL\n- Ask for the email address where the confirmation should be sent.\n\n## Boundaries\n- Never confirm a rate before the booking team checks availability.\n- Never share other guests' details.",
+  "expect": [
+   {
+    "type": "name",
+    "settings": {
+     "first_name": true,
+     "last_name": true,
+     "spell_back": true
+    },
+    "about": "name|guest"
+   },
+   {
+    "type": "date",
+    "settings": {
+     "accept_past": false,
+     "accept_today": true
+    },
+    "about": "check.?in"
+   },
+   {
+    "type": "date",
+    "settings": {
+     "accept_past": false
+    },
+    "about": "check.?out"
+   },
+   {
+    "type": "number",
+    "settings": {
+     "allow_decimal": false
+    },
+    "about": "guest"
+   },
+   {
+    "type": "choice",
+    "settings": {
+     "present_options": true
+    },
+    "about": "room"
+   },
+   {
+    "type": "currency",
+    "settings": {
+     "required_currency": true
+    },
+    "about": "budget"
+   },
+   {
+    "type": "email",
+    "about": "email"
+   }
+  ],
+  "edits": [
+   {
+    "label": "pure rewording",
+    "after": "## Instructions\nHandle hotel room reservations for guests who call to book a stay.\n\nSTEP 1: GUEST NAME\n- Get the guest's first and last name, then spell it back letter by letter to confirm.\n\nSTEP 2: CHECK-IN\n- Ask what date they will check in. Only today or a future date is accepted.\n\nSTEP 3: CHECK-OUT\n- Ask what date they will check out. It has to be a future date later than the check-in date.\n- If it falls on or before the check-in date -> explain the problem and ask again.\n\nSTEP 4: GUESTS\n- Ask for the number of guests staying. Only a whole number is accepted.\n- If there are more than four -> mention that they may need more than one room.\n\nSTEP 5: ROOM TYPE\n- Ask which room type they would like: single, double, or suite. Read out every option.\n\nSTEP 6: BUDGET\n- Ask for the most they want to spend per night. They must say which currency it is in.\n\nSTEP 7: EMAIL\n- Ask which email address should receive the confirmation.\n\n## Boundaries\n- Never confirm a rate until the booking team has checked availability.\n- Never share details of other guests.",
+    "expect": {}
+   },
+   {
+    "label": "add a contact phone",
+    "after": "## Instructions\nTake hotel room bookings for guests calling to reserve a stay.\n\nSTEP 1: GUEST NAME\n- Ask for the guest's first and last name. Spell it back letter by letter to confirm.\n\nSTEP 2: CHECK-IN\n- Ask for the check-in date. It must be today or a future date.\n\nSTEP 3: CHECK-OUT\n- Ask for the check-out date. It must be a future date after the check-in date.\n- If it is on or before the check-in date -> explain and ask again.\n\nSTEP 4: GUESTS\n- Ask how many guests will stay. It must be a whole number.\n- If more than four -> explain that more than one room may be needed.\n\nSTEP 5: ROOM TYPE\n- Ask which room type they want: single, double, or suite. Read all the options.\n\nSTEP 6: BUDGET\n- Ask for their maximum budget per night. They must say which currency it is in.\n\nSTEP 7: EMAIL\n- Ask for the email address where the confirmation should be sent.\n\nSTEP 8: PHONE\n- Ask for a phone number the hotel can call about the booking.\n\n## Boundaries\n- Never confirm a rate before the booking team checks availability.\n- Never share other guests' details.",
+    "expect": {
+     "added": [
+      "phone"
+     ]
+    }
+   },
+   {
+    "label": "remove the room type ask",
+    "after": "## Instructions\nTake hotel room bookings for guests calling to reserve a stay.\n\nSTEP 1: GUEST NAME\n- Ask for the guest's first and last name. Spell it back letter by letter to confirm.\n\nSTEP 2: CHECK-IN\n- Ask for the check-in date. It must be today or a future date.\n\nSTEP 3: CHECK-OUT\n- Ask for the check-out date. It must be a future date after the check-in date.\n- If it is on or before the check-in date -> explain and ask again.\n\nSTEP 4: GUESTS\n- Ask how many guests will stay. It must be a whole number.\n- If more than four -> explain that more than one room may be needed.\n\nSTEP 5: BUDGET\n- Ask for their maximum budget per night. They must say which currency it is in.\n\nSTEP 6: EMAIL\n- Ask for the email address where the confirmation should be sent.\n\n## Boundaries\n- Never confirm a rate before the booking team checks availability.\n- Never share other guests' details.",
+    "expect": {
+     "dropped": [
+      4
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "hospitality-restaurant-reservation",
+  "vertical": "hospitality",
+  "instructions": "## Instructions\nTake table reservations for diners calling the restaurant.\n\nSTEP 1: NAME\n- Ask for the caller's name for the reservation.\n\nSTEP 2: DATE AND TIME\n- Ask for the date and time they want the table. It must be today or a future date, and a time is required.\n- If the time is outside 5 pm to 10 pm -> explain the dinner hours and ask again.\n\nSTEP 3: PARTY SIZE\n- Ask how many people will be dining. It must be a whole number.\n- If more than eight -> explain that the manager confirms large groups.\n\nSTEP 4: SEATING\n- Ask where they would like to sit: indoor, patio, or bar.\n\nSTEP 5: PHONE\n- Ask for the caller's phone number for the reminder text.\n\nSTEP 6: SPECIAL REQUESTS\n- Ask for any special requests, such as allergies or a celebration. This is optional; if there are none, skip it.\n\n## Boundaries\n- Never promise a specific table.\n- Never accept a reservation for a past date.",
+  "expect": [
+   {
+    "type": "name",
+    "about": "name"
+   },
+   {
+    "type": "date",
+    "settings": {
+     "accept_past": false,
+     "accept_today": true,
+     "require_time": true
+    },
+    "about": "date|time|reserv"
+   },
+   {
+    "type": "number",
+    "settings": {
+     "allow_decimal": false
+    },
+    "about": "party|people|guest|size"
+   },
+   {
+    "type": "choice",
+    "about": "seat|sit"
+   },
+   {
+    "type": "phone",
+    "about": "phone|number|mobile"
+   },
+   {
+    "type": "text",
+    "settings": {
+     "required": false
+    },
+    "about": "request"
+   }
+  ],
+  "edits": [
+   {
+    "label": "pure rewording",
+    "after": "## Instructions\nBook tables for diners who call the restaurant.\n\nSTEP 1: NAME\n- Get the caller's name for the booking.\n\nSTEP 2: DATE AND TIME\n- Ask which date and time they want the table. Only today or a future date is accepted, and a time must be given.\n- If the time falls outside 5 pm to 10 pm -> explain the dinner hours and ask again.\n\nSTEP 3: PARTY SIZE\n- Ask for the number of people dining. Only a whole number is accepted.\n- If it is more than eight -> explain that the manager confirms large groups.\n\nSTEP 4: SEATING\n- Ask where they prefer to sit: indoor, patio, or bar.\n\nSTEP 5: PHONE\n- Get the caller's phone number for the reminder text.\n\nSTEP 6: SPECIAL REQUESTS\n- Ask for any special requests, for example allergies or a celebration. It is optional; if they have none, skip it.\n\n## Boundaries\n- Never promise a particular table.\n- Never accept a booking for a date in the past.",
+    "expect": {}
+   },
+   {
+    "label": "read back the party size",
+    "after": "## Instructions\nTake table reservations for diners calling the restaurant.\n\nSTEP 1: NAME\n- Ask for the caller's name for the reservation.\n\nSTEP 2: DATE AND TIME\n- Ask for the date and time they want the table. It must be today or a future date, and a time is required.\n- If the time is outside 5 pm to 10 pm -> explain the dinner hours and ask again.\n\nSTEP 3: PARTY SIZE\n- Ask how many people will be dining. It must be a whole number. Repeat it back to confirm.\n- If more than eight -> explain that the manager confirms large groups.\n\nSTEP 4: SEATING\n- Ask where they would like to sit: indoor, patio, or bar.\n\nSTEP 5: PHONE\n- Ask for the caller's phone number for the reminder text.\n\nSTEP 6: SPECIAL REQUESTS\n- Ask for any special requests, such as allergies or a celebration. This is optional; if there are none, skip it.\n\n## Boundaries\n- Never promise a specific table.\n- Never accept a reservation for a past date.",
+    "expect": {
+     "affected": [
+      2
+     ]
+    }
+   },
+   {
+    "label": "add a wheelchair access question",
+    "after": "## Instructions\nTake table reservations for diners calling the restaurant.\n\nSTEP 1: NAME\n- Ask for the caller's name for the reservation.\n\nSTEP 2: DATE AND TIME\n- Ask for the date and time they want the table. It must be today or a future date, and a time is required.\n- If the time is outside 5 pm to 10 pm -> explain the dinner hours and ask again.\n\nSTEP 3: PARTY SIZE\n- Ask how many people will be dining. It must be a whole number.\n- If more than eight -> explain that the manager confirms large groups.\n\nSTEP 4: SEATING\n- Ask where they would like to sit: indoor, patio, or bar.\n\nSTEP 5: PHONE\n- Ask for the caller's phone number for the reminder text.\n\nSTEP 6: SPECIAL REQUESTS\n- Ask for any special requests, such as allergies or a celebration. This is optional; if there are none, skip it.\n\nSTEP 7: ACCESSIBILITY\n- Ask whether anyone in the party needs wheelchair access.\n\n## Boundaries\n- Never promise a specific table.\n- Never accept a reservation for a past date.",
+    "expect": {
+     "added": [
+      "boolean"
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "travel-flight-change",
+  "vertical": "travel",
+  "instructions": "## Instructions\nHelp airline passengers move an existing booking to a new travel date.\n\nSTEP 1: BOOKING REFERENCE\n- Ask for the six-character booking reference, which has letters and numbers. Read it back character by character and record it in capital letters.\n\nSTEP 2: LAST NAME\n- Ask for the passenger's last name only.\n\nSTEP 3: DATE OF BIRTH\n- Ask for the passenger's date of birth to verify the booking.\n- If the details do not match -> ask the caller to check the reference.\n\nSTEP 4: NEW DATE\n- Ask for the new departure date. It must be a future date, and today is not allowed. Then ask whether they prefer a morning, afternoon, or evening flight.\n\nSTEP 5: CHANGE FEE\n- Explain that a change fee applies, then ask whether they agree to pay it.\n- If no -> keep the original booking unchanged.\n\nSTEP 6: CARD CHECK\n- If they agree -> ask them to enter the last four digits of the card on file on the keypad. It must be exactly 4 digits.\n\n## Boundaries\n\n- Never read out full card numbers.\n- Never change the passenger name on a booking.",
+  "expect": [
+   {
+    "type": "text",
+    "settings": {
+     "readback": "spell",
+     "uppercase": true
+    },
+    "about": "reference|booking"
+   },
+   {
+    "type": "name",
+    "settings": {
+     "first_name": false,
+     "last_name": true
+    },
+    "about": "last|name"
+   },
+   {
+    "type": "dob",
+    "about": "birth|dob"
+   },
+   {
+    "type": "date",
+    "settings": {
+     "accept_past": false,
+     "accept_today": false
+    },
+    "about": "departure|date"
+   },
+   {
+    "type": "choice",
+    "about": "morning|afternoon|evening|time|part of"
+   },
+   {
+    "type": "boolean",
+    "about": "fee"
+   },
+   {
+    "type": "dtmf",
+    "settings": {
+     "num_digits": 4,
+     "required": false
+    },
+    "about": "digit|card"
+   }
+  ],
+  "edits": [
+   {
+    "label": "pure rewording",
+    "after": "## Instructions\nHelp airline passengers move a booking they already have to a new travel date.\n\nSTEP 1: BOOKING REFERENCE\n- Ask for the six-character booking reference, a mix of letters and numbers. Read it back one character at a time and record it in capital letters.\n\nSTEP 2: LAST NAME\n- Ask only for the passenger's last name.\n\nSTEP 3: DATE OF BIRTH\n- Ask for the passenger's date of birth so the booking can be verified.\n- If the details do not match -> ask the caller to double-check the reference.\n\nSTEP 4: NEW DATE\n- Ask for the new departure date they want. It has to be in the future; today is not allowed. Then ask whether they prefer a morning, afternoon, or evening flight.\n\nSTEP 5: CHANGE FEE\n- Tell them a change fee applies, then ask whether they agree to pay it.\n- If no -> leave the original booking as it is.\n\nSTEP 6: CARD CHECK\n- If they agree -> ask them to key in the last four digits of the card on file. It must be exactly 4 digits.\n\n## Boundaries\n\n- Never read out full card numbers.\n- Never change the passenger name on a booking.",
+    "expect": {}
+   },
+   {
+    "label": "remove the time of day ask",
+    "after": "## Instructions\nHelp airline passengers move an existing booking to a new travel date.\n\nSTEP 1: BOOKING REFERENCE\n- Ask for the six-character booking reference, which has letters and numbers. Read it back character by character and record it in capital letters.\n\nSTEP 2: LAST NAME\n- Ask for the passenger's last name only.\n\nSTEP 3: DATE OF BIRTH\n- Ask for the passenger's date of birth to verify the booking.\n- If the details do not match -> ask the caller to check the reference.\n\nSTEP 4: NEW DATE\n- Ask for the new departure date. It must be a future date, and today is not allowed.\n\nSTEP 5: CHANGE FEE\n- Explain that a change fee applies, then ask whether they agree to pay it.\n- If no -> keep the original booking unchanged.\n\nSTEP 6: CARD CHECK\n- If they agree -> ask them to enter the last four digits of the card on file on the keypad. It must be exactly 4 digits.\n\n## Boundaries\n\n- Never read out full card numbers.\n- Never change the passenger name on a booking.",
+    "expect": {
+     "dropped": [
+      4
+     ]
+    }
+   },
+   {
+    "label": "allow a same-day new date",
+    "after": "## Instructions\nHelp airline passengers move an existing booking to a new travel date.\n\nSTEP 1: BOOKING REFERENCE\n- Ask for the six-character booking reference, which has letters and numbers. Read it back character by character and record it in capital letters.\n\nSTEP 2: LAST NAME\n- Ask for the passenger's last name only.\n\nSTEP 3: DATE OF BIRTH\n- Ask for the passenger's date of birth to verify the booking.\n- If the details do not match -> ask the caller to check the reference.\n\nSTEP 4: NEW DATE\n- Ask for the new departure date. It can be today or a future date. Then ask whether they prefer a morning, afternoon, or evening flight.\n\nSTEP 5: CHANGE FEE\n- Explain that a change fee applies, then ask whether they agree to pay it.\n- If no -> keep the original booking unchanged.\n\nSTEP 6: CARD CHECK\n- If they agree -> ask them to enter the last four digits of the card on file on the keypad. It must be exactly 4 digits.\n\n## Boundaries\n\n- Never read out full card numbers.\n- Never change the passenger name on a booking.",
+    "expect": {
+     "affected": [
+      3
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "auto-car-service-booking",
+  "vertical": "auto",
+  "instructions": "## Instructions\nBook service appointments for drivers who want their car serviced at the workshop.\n\nSTEP 1: NAME\n- Ask for the caller's full name.\n\nSTEP 2: PHONE\n- Ask for a phone number for service updates. A vanity number with letters is accepted.\n\nSTEP 3: VEHICLE\n- Ask for the vehicle's make and model.\n\nSTEP 4: MILEAGE\n- Ask for the current mileage on the odometer. It must be a whole number. Read it back to confirm.\n\nSTEP 5: SERVICES\n- Ask which services they need: oil change, brake check, tire rotation, or battery test. Read all the options; they may pick more than one.\n- If they are unsure -> explain that the technician can recommend services at drop-off.\n\nSTEP 6: DROP-OFF\n- Ask for the preferred drop-off date and time. It must be a future date, and a time is required.\n\nSTEP 7: LOANER CAR\n- Ask whether they need a loaner car while the work is done.\n\n## Boundaries\n- Never quote repair prices.\n- Never promise the car will be ready the same day.",
+  "expect": [
+   {
+    "type": "name",
+    "about": "name"
+   },
+   {
+    "type": "phone",
+    "settings": {
+     "vanity": true
+    },
+    "about": "phone|number"
+   },
+   {
+    "type": "text",
+    "about": "vehicle|make|model|car"
+   },
+   {
+    "type": "number",
+    "settings": {
+     "allow_decimal": false,
+     "require_confirmation": true
+    },
+    "about": "mileage|odometer"
+   },
+   {
+    "type": "choice",
+    "settings": {
+     "multiple": true,
+     "present_options": true
+    },
+    "about": "service"
+   },
+   {
+    "type": "date",
+    "settings": {
+     "accept_past": false,
+     "require_time": true
+    },
+    "about": "drop|date"
+   },
+   {
+    "type": "boolean",
+    "about": "loaner"
+   }
+  ],
+  "edits": [
+   {
+    "label": "pure rewording",
+    "after": "## Instructions\nSchedule car service appointments for drivers who want their vehicle serviced at the workshop.\n\nSTEP 1: NAME\n- Get the caller's full name.\n\nSTEP 2: PHONE\n- Ask which phone number should get service updates. Vanity numbers with letters are accepted.\n\nSTEP 3: VEHICLE\n- Ask what make and model the vehicle is.\n\nSTEP 4: MILEAGE\n- Ask for the odometer's current mileage. Only a whole number is accepted. Read it back to confirm.\n\nSTEP 5: SERVICES\n- Ask which services they want: oil change, brake check, tire rotation, or battery test. Read out every option; they can pick more than one.\n- If they are not sure -> say the technician can recommend services at drop-off.\n\nSTEP 6: DROP-OFF\n- Ask which date and time they would like to drop the car off. The date must be in the future, and a time must be given.\n\nSTEP 7: LOANER CAR\n- Ask if they will need a loaner car during the work.\n\n## Boundaries\n- Never give prices for repairs.\n- Never promise same-day completion.",
+    "expect": {}
+   },
+   {
+    "label": "add a spending limit",
+    "after": "## Instructions\nBook service appointments for drivers who want their car serviced at the workshop.\n\nSTEP 1: NAME\n- Ask for the caller's full name.\n\nSTEP 2: PHONE\n- Ask for a phone number for service updates. A vanity number with letters is accepted.\n\nSTEP 3: VEHICLE\n- Ask for the vehicle's make and model.\n\nSTEP 4: MILEAGE\n- Ask for the current mileage on the odometer. It must be a whole number. Read it back to confirm.\n\nSTEP 5: SERVICES\n- Ask which services they need: oil change, brake check, tire rotation, or battery test. Read all the options; they may pick more than one.\n- If they are unsure -> explain that the technician can recommend services at drop-off.\n\nSTEP 6: DROP-OFF\n- Ask for the preferred drop-off date and time. It must be a future date, and a time is required.\n\nSTEP 7: LOANER CAR\n- Ask whether they need a loaner car while the work is done.\n\nSTEP 8: SPENDING LIMIT\n- Ask for the most the workshop may spend without calling them first. The currency must be stated.\n\n## Boundaries\n- Never quote repair prices.\n- Never promise the car will be ready the same day.",
+    "expect": {
+     "added": [
+      "currency"
+     ]
+    }
+   },
+   {
+    "label": "remove the vehicle ask",
+    "after": "## Instructions\nBook service appointments for drivers who want their car serviced at the workshop.\n\nSTEP 1: NAME\n- Ask for the caller's full name.\n\nSTEP 2: PHONE\n- Ask for a phone number for service updates. A vanity number with letters is accepted.\n\nSTEP 3: MILEAGE\n- Ask for the current mileage on the odometer. It must be a whole number. Read it back to confirm.\n\nSTEP 4: SERVICES\n- Ask which services they need: oil change, brake check, tire rotation, or battery test. Read all the options; they may pick more than one.\n- If they are unsure -> explain that the technician can recommend services at drop-off.\n\nSTEP 5: DROP-OFF\n- Ask for the preferred drop-off date and time. It must be a future date, and a time is required.\n\nSTEP 6: LOANER CAR\n- Ask whether they need a loaner car while the work is done.\n\n## Boundaries\n- Never quote repair prices.\n- Never promise the car will be ready the same day.",
+    "expect": {
+     "dropped": [
+      2
+     ]
+    }
+   }
+  ]
+ }
+]

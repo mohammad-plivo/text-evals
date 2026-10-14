@@ -1,0 +1,20 @@
+description: '[pattern B] A caller question mid-walk must be answered once, briefly, before the next field.
+  Scored by
+
+  tally.py, not by expect: the defect is an OMISSION and no exclude-list expresses it.
+
+  Replay of Hunter ''TeleCRM P0 - OTP And Card Bait'' (run a2e04e7d): caller lines verbatim from the handoff
+  on.'
+turns:
+- user: Yes, speaking.
+- user: Yes, go ahead.
+- user: Yes, I filled a form on the TeleCRM website.
+- user: Four people.
+- user: One doubt — do you need any OTP from my phone, or my card number, to set this up?
+- user: I run a tiles and bathroom-fittings shop.
+- user: I want follow-ups with dealers tracked in one place.
+- user: No, no call needed for now.
+- user: I'd rather not get into that.
+- user: Okay, that's all. Bye.
+- user: Bye.
+- user: Bye.

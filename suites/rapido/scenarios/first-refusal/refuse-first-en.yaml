@@ -1,0 +1,5 @@
+description: "Rapido Hindi V2.9: a firm first refusal in English on an optional text Input"
+turns:
+- user: "हाँ, बोलिए।"
+- user: "I would rather not say."
+- user: "पार्ट-टाइम।"

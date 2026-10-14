@@ -1,0 +1,7 @@
+description: Pets plus volunteered special requests (extract-only lane).
+simulated_user:
+  persona: "Priya Sharma, warm, talkative, detail-oriented."
+  goal: "Confirm date and phone as booked. Email if asked: priya.sharma@example.com. Deep cleaning, budget 275 dollars, key holder Maria Lopez, gate code 4482. You have a dog named Bruno. At some natural point volunteer, unprompted: you are allergic to strong chemical smells and you'd like extra attention on the kitchen."
+  opening: "Hello?"
+  max_turns: 18
+  model: "gpt-4.1-mini"

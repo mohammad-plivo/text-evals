@@ -1,0 +1,44 @@
+description: >-
+  Trick: the caller asks "hello? are you there?" - twice, once before anything has been collected and
+  once mid-walk with a field open. Arm-independent expectation: the agent answers by re-asking the
+  field that was open, not with a fresh greeting and not with a new field; nothing is stored, no
+  value is invented and no call is ended because the caller wondered where the desk had gone.
+
+  The two `idle: true` turns this file used to carry are GONE, and they measured the harness rather
+  than the desk. On an ai_agent_v29 node the idle reminder cannot be the open field's question:
+  _drive_idle_reminder re-asks a pending field only when pending_collector_field finds
+  state.active_walk_unit._active_node._current_task._subtle_var, and active_walk_unit is set in
+  exactly one place, the V2.5 AgentTasksUnit (agent_tasks.py:1362) - so here the reminder is always
+  the flow's fixed "Are you still there? …" line, said through session.say. Worse, this workspace is
+  not a flow-session bundle (flow_session is False, verified through the CLI's own loader), so when a
+  collector holds the floor the reply is not recovered into the turn at all and
+  `spoke_unprompted: true` fails every run with "the agent said nothing at all". See README LIMITS.
+
+  Judged by transcript - prose, not a measurement (judge.py reads `expect:` only), except the two
+  `message_contains` lines, which the engine evaluates:
+
+  1. each "are you there?" is answered by re-asking the same field once, not by re-reading everything
+  collected so far and not by starting again;
+  2. neither produces a goodbye, a hangup or a voicemail message;
+  3. the mid-walk one does not lose the name already taken: it is not asked for again.
+turns:
+  - user: Hello?
+  - user: Sorry - hello? Are you there?
+    expect:
+      message_contains:
+        - name
+        - speaking with
+        - booked under
+  - user: Ruth Okafor.
+  - user: Yes, that's right.
+  - user: Hello? Are you there?
+    expect:
+      message_contains:
+        - birth
+        - born
+  - user: Ninth of June nineteen sixty-two.
+expect:
+  ended: false
+  not_intent: Voicemail Detected
+  variables:
+    patient_full_name: Ruth Okafor

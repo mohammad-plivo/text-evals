@@ -1,0 +1,236 @@
+description: '[pattern A] Same code echo. The source Hunter rubric ALSO expects a reconsideration prompt
+  the flow
+
+  deliberately does not do — only the code echo is asserted here.
+
+  Replay of Hunter ''TeleCRM P0 - Below Three Recovers To Three'' (run a2e04e7d): caller lines verbatim
+  from the handoff on.'
+turns:
+- user: Yes, speaking.
+  expect:
+    message_excludes:
+    - Upto 2
+    - up to two
+    - upto two
+    - 3-5
+    - three to five
+    - 6-10
+    - six to ten
+    - 11-20
+    - eleven to twenty
+    - 21-50
+    - twenty one to fifty
+    - 51-100
+    - fifty one to one hundred
+    - 100plus
+    - 100 plus
+    - more than one hundred
+- user: Yes, go ahead.
+  expect:
+    message_excludes:
+    - Upto 2
+    - up to two
+    - upto two
+    - 3-5
+    - three to five
+    - 6-10
+    - six to ten
+    - 11-20
+    - eleven to twenty
+    - 21-50
+    - twenty one to fifty
+    - 51-100
+    - fifty one to one hundred
+    - 100plus
+    - 100 plus
+    - more than one hundred
+- user: Yes, I did.
+  expect:
+    message_excludes:
+    - Upto 2
+    - up to two
+    - upto two
+    - 3-5
+    - three to five
+    - 6-10
+    - six to ten
+    - 11-20
+    - eleven to twenty
+    - 21-50
+    - twenty one to fifty
+    - 51-100
+    - fifty one to one hundred
+    - 100plus
+    - 100 plus
+    - more than one hundred
+- user: Right now just me and one more person.
+  expect:
+    message_excludes:
+    - Upto 2
+    - up to two
+    - upto two
+    - 3-5
+    - three to five
+    - 6-10
+    - six to ten
+    - 11-20
+    - eleven to twenty
+    - 21-50
+    - twenty one to fifty
+    - 51-100
+    - fifty one to one hundred
+    - 100plus
+    - 100 plus
+    - more than one hundred
+- user: Home interiors.
+  expect:
+    message_excludes:
+    - Upto 2
+    - up to two
+    - upto two
+    - 3-5
+    - three to five
+    - 6-10
+    - six to ten
+    - 11-20
+    - eleven to twenty
+    - 21-50
+    - twenty one to fifty
+    - 51-100
+    - fifty one to one hundred
+    - 100plus
+    - 100 plus
+    - more than one hundred
+- user: I want client follow-ups organized.
+  expect:
+    message_excludes:
+    - Upto 2
+    - up to two
+    - upto two
+    - 3-5
+    - three to five
+    - 6-10
+    - six to ten
+    - 11-20
+    - eleven to twenty
+    - 21-50
+    - twenty one to fifty
+    - 51-100
+    - fifty one to one hundred
+    - 100plus
+    - 100 plus
+    - more than one hundred
+- user: Yes.
+  expect:
+    message_excludes:
+    - Upto 2
+    - up to two
+    - upto two
+    - 3-5
+    - three to five
+    - 6-10
+    - six to ten
+    - 11-20
+    - eleven to twenty
+    - 21-50
+    - twenty one to fifty
+    - 51-100
+    - fifty one to one hundred
+    - 100plus
+    - 100 plus
+    - more than one hundred
+- user: I don't have that information.
+  expect:
+    message_excludes:
+    - Upto 2
+    - up to two
+    - upto two
+    - 3-5
+    - three to five
+    - 6-10
+    - six to ten
+    - 11-20
+    - eleven to twenty
+    - 21-50
+    - twenty one to fifty
+    - 51-100
+    - fifty one to one hundred
+    - 100plus
+    - 100 plus
+    - more than one hundred
+- user: I don't have that information.
+  expect:
+    message_excludes:
+    - Upto 2
+    - up to two
+    - upto two
+    - 3-5
+    - three to five
+    - 6-10
+    - six to ten
+    - 11-20
+    - eleven to twenty
+    - 21-50
+    - twenty one to fifty
+    - 51-100
+    - fifty one to one hundred
+    - 100plus
+    - 100 plus
+    - more than one hundred
+- user: I don't have that information.
+  expect:
+    message_excludes:
+    - Upto 2
+    - up to two
+    - upto two
+    - 3-5
+    - three to five
+    - 6-10
+    - six to ten
+    - 11-20
+    - eleven to twenty
+    - 21-50
+    - twenty one to fifty
+    - 51-100
+    - fifty one to one hundred
+    - 100plus
+    - 100 plus
+    - more than one hundred
+- user: We plan to start within a month or so.
+  expect:
+    message_excludes:
+    - Upto 2
+    - up to two
+    - upto two
+    - 3-5
+    - three to five
+    - 6-10
+    - six to ten
+    - 11-20
+    - eleven to twenty
+    - 21-50
+    - twenty one to fifty
+    - 51-100
+    - fifty one to one hundred
+    - 100plus
+    - 100 plus
+    - more than one hundred
+- user: That's all from me. Thanks, bye.
+  expect:
+    message_excludes:
+    - Upto 2
+    - up to two
+    - upto two
+    - 3-5
+    - three to five
+    - 6-10
+    - six to ten
+    - 11-20
+    - eleven to twenty
+    - 21-50
+    - twenty one to fifty
+    - 51-100
+    - fifty one to one hundred
+    - 100plus
+    - 100 plus
+    - more than one hundred

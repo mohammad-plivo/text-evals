@@ -1,0 +1,5 @@
+description: 'no-screening opening: wrong-person'
+turns:
+- user: Hello?
+- user: No, wrong number. There is nobody by that name here.
+- user: Okay, bye.

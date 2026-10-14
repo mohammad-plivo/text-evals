@@ -1,0 +1,31 @@
+description: >-
+  The caller corrects the date and then the journey time, each right after it was spoken. There is
+  no read-back to correct in either arm - date and number are shaped types and the router passes
+  require_confirmation=False in both modes (collect_input.py:1005) - so each correction lands on the
+  NEXT collector's floor. A corrected record is not clean_completed, so the frame is declined and
+  the correction re-enters with require_confirmation=True (collect_input.py:1012-1018): the value
+  the caller hears last has to be the corrected one. The two pins below are the point of the file -
+  without them a desk that ignored both corrections stored 12 March and 35, ended through Reschedule
+  Booked and passed, because judge rule 2 only fires when a second write exists.
+simulated_user:
+  persona: >-
+    Ruth Okafor, a Ridgeway Clinic patient moving an appointment. Decisive but changes her mind once
+    she hears a date said out loud.
+  goal: >-
+    Give your name Ruth Okafor and date of birth the ninth of June nineteen sixty-two. Ask for the
+    twelfth of March twenty twenty-eight; as soon as that date is said back to you, say you meant the
+    nineteenth of March instead and hold to it. Say late morning. Say the journey takes thirty-five
+    minutes, then once that is said back, correct it to fifty minutes. Then no interpreter, nothing
+    about access, forty pounds unpaid, mobile 07700 900123, email ruth.okafor@example.com. Agree with
+    the read-backs once they carry your corrected answers, and say yes when the appointment is
+    confirmed.
+  max_turns: 32
+world_state:
+  Update Lead Record:
+    outcome: success
+expect:
+  ended: true
+  stop_reason: end_conversation
+  variables:
+    new_appointment_date: "2028-03-19"
+    journey_time_minutes: "50"

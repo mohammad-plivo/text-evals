@@ -1,0 +1,961 @@
+{
+ "name": "Acme Insurance Claims Line [sim]",
+ "flowId": "23795122-798f-4b7a-b0e8-53ba8ae3ee26",
+ "nodes": [
+  {
+   "id": "9998a561-9094-4b29-9d50-8f416461bbea",
+   "type": "start",
+   "data": {
+    "meta": {
+     "name": "Start"
+    },
+    "_meta": null,
+    "config": {
+     "name": "Start",
+     "triggers": [
+      "http"
+     ],
+     "description": "",
+     "record_stop": null,
+     "record_start": null,
+     "payload_format": {
+      "contact_name": "string",
+      "phone_number": "string"
+     },
+     "slack_channel_id": null,
+     "require_http_auth": true,
+     "slack_workspace_id": null,
+     "slack_trigger_event": "on_direct_mention",
+     "slack_reply_in_thread": null,
+     "enable_quick_responses": false,
+     "quick_response_questions": []
+    }
+   }
+  },
+  {
+   "id": "ab4681fe-2ea6-40c8-b43b-15165b9e29f8",
+   "type": "initiate_call",
+   "data": {
+    "meta": {
+     "name": "Hunter Call Bridge"
+    },
+    "_meta": null,
+    "config": {
+     "to": "{{9998a561-9094-4b29-9d50-8f416461bbea.http.params.phone_number}}",
+     "from": "+17016996015",
+     "name": "Hunter Call Bridge",
+     "events": {
+      "answer": {
+       "url": "",
+       "method": "POST"
+      },
+      "hangup": {
+       "url": "",
+       "method": "POST"
+      },
+      "record": {
+       "url": "",
+       "method": "POST"
+      },
+      "ringing": {
+       "url": "",
+       "method": "POST"
+      },
+      "machine_detection": {
+       "url": "",
+       "method": "POST"
+      }
+     },
+     "record": null,
+     "description": "Dial half of the outbound screening node.",
+     "send_digits": "",
+     "ring_timeout": 30,
+     "extra_headers": "",
+     "detect_voicemail": false,
+     "max_call_duration": 600,
+     "is_validate_caller_id": true
+    }
+   }
+  },
+  {
+   "id": "f7d20916-7fd2-4506-aa02-fd21e5d275c2",
+   "type": "call_forward",
+   "data": {
+    "meta": {
+     "name": "Transfer To Agent"
+    },
+    "_meta": null,
+    "config": {
+     "to": "+14582909685",
+     "from": "+18062320255",
+     "name": "Transfer To Agent",
+     "record": true,
+     "time_limit": 43000,
+     "caller_name": "",
+     "description": "",
+     "send_digits": "",
+     "ring_timeout": 20,
+     "confirm_sound": false,
+     "extra_headers": "",
+     "forwarding_option": "parallel",
+     "sip_auth_password": "",
+     "sip_auth_username": "",
+     "is_validate_caller_id": true
+    }
+   }
+  },
+  {
+   "id": "b33134c9-c01f-43bf-8618-951cd75fca85",
+   "type": "ai_agent_v2",
+   "data": {
+    "meta": {
+     "name": "Intake"
+    },
+    "_meta": null,
+    "config": {
+     "name": "Intake",
+     "actions": [
+      {
+       "id": "ea7b2953-5f21-4359-b539-e5f5b9a14bc7",
+       "http_url": "http://v29-wiremock:8080/acme/lookup_policy",
+       "code_body": null,
+       "code_name": null,
+       "action_name": null,
+       "action_type": "HTTP",
+       "http_method": "post",
+       "app_provider": null,
+       "http_headers": null,
+       "org_app_uuid": null,
+       "action_schema": null,
+       "http_auth_type": "no_auth",
+       "http_body_type": "json",
+       "http_tool_name": "lookup_policy",
+       "http_auth_token": null,
+       "http_timeout_ms": 8000,
+       "code_description": null,
+       "http_retry_limit": 3,
+       "http_auth_password": null,
+       "http_auth_username": null,
+       "http_body_template": "{\"full_name\": \"{{full_name}}\", \"date_of_birth\": \"{{date_of_birth}}\"}",
+       "action_instructions": null,
+       "code_function_schema": null,
+       "http_function_schema": {
+        "name": "lookup_policy",
+        "parameters": {
+         "type": "object",
+         "required": [
+          "full_name",
+          "date_of_birth"
+         ],
+         "properties": {
+          "full_name": {
+           "type": "string"
+          },
+          "date_of_birth": {
+           "type": "string"
+          }
+         }
+        },
+        "description": "Look up the caller's policy by full name and date of birth; returns policy_number and policy_status."
+       },
+       "http_tool_description": "Look up the caller's policy by full name and date of birth; returns policy_number and policy_status."
+      }
+     ],
+     "channel": "call",
+     "intents": [
+      {
+       "id": "696243ef-6b5a-4132-8591-21853ad46da2",
+       "intent_name": "New Claim",
+       "intent_speech": {
+        "speech_enabled": false,
+        "intent_speech_text": ""
+       },
+       "intent_instructions": "The caller wants to report a new incident or loss"
+      },
+      {
+       "id": "b5bbad7e-2f55-4e2f-9522-9147deb96f10",
+       "intent_name": "Claim Status",
+       "intent_speech": {
+        "speech_enabled": false,
+        "intent_speech_text": ""
+       },
+       "intent_instructions": "The caller asks about a claim already filed"
+      },
+      {
+       "id": "3fbc4eab-750e-48bf-9ec6-242f04d34434",
+       "intent_name": "Transfer To Agent",
+       "intent_speech": {
+        "speech_enabled": false,
+        "intent_speech_text": ""
+       },
+       "intent_instructions": "The caller asks for a human, or asks about premiums, coverage, billing or legal matters"
+      },
+      {
+       "id": "b2008029-fc7a-4b20-99bc-d7d3dcecafd5",
+       "intent_name": "Emergency",
+       "intent_speech": {
+        "speech_enabled": false,
+        "intent_speech_text": ""
+       },
+       "intent_instructions": "Anyone is injured or in danger right now"
+      },
+      {
+       "id": "e10de824-f70d-4c70-b98e-9674409b8688",
+       "intent_name": "Close Call",
+       "intent_speech": {
+        "speech_enabled": false,
+        "intent_speech_text": ""
+       },
+       "intent_instructions": "Wrong number, hostile caller, asks not to be contacted, or says goodbye with nothing else needed"
+      }
+     ],
+     "description": "",
+     "instructions": "[[v29]]\n## Role\nYou are Ava, the claims intake assistant for Acme Insurance. Keep every turn short and ask one question at a time. Speak only English.\n\n## Steps\nSTEP 1: IDENTIFY THE CALLER\n- Collect the caller's full name and confirm its spelling letter by letter (record as full_name).\n- Collect the caller's date of birth for verification (record as date_of_birth).\n- Call Lookup Policy with the name and date of birth. If a policy is found, say you found the policy and continue. If not found, say the account could not be found and continue anyway; a new claim can still be filed.\n\nSTEP 2: CONTACT DETAILS\n- Collect the best callback phone number (record as callback_phone). The number the caller is calling from may be used if they confirm it.\n- Ask for an email address for claim documents (record as email). Email is optional: if the caller declines, say that is fine and continue.\n- Collect the caller's home address (record as home_address).\n\nSTEP 3: ROUTE\n- Ask whether the caller wants to report a new claim or check an existing claim, then use the matching outcome.\n\n## Rules\n- If the caller gives several details in one sentence, take each of them; never ask again for something already given.\n- If the caller corrects a detail given earlier, update it and read the corrected value back once.\n- If the caller asks a side question, answer it in one sentence and return to the step you were on. Office hours are 9 am to 6 pm Monday to Friday; the claims line is open 24 hours; the mailing address is 100 Market Street, Denver, Colorado.\n- If the caller asks for a human at any point, or asks about premiums, coverage, billing or legal matters, use Transfer To Agent.\n- If anyone is injured or in danger right now, use Emergency immediately.\n- If the caller says it is a wrong number, is hostile, or asks not to be contacted, use Close Call.\n- Never invent policy numbers, claim numbers or amounts.",
+     "first_response": "Thank you for calling the Acme Insurance claims line, this is Ava. May I have your full name to get started?",
+     "screening_name": null,
+     "screening_reason": null,
+     "extract_variables": [
+      {
+       "variable_name": "full_name",
+       "variable_type": "string",
+       "variable_enum_values": [],
+       "configure_data_format": false,
+       "variable_instructions": "Extract the caller's full name as a string.",
+       "variable_format_instructions": ""
+      },
+      {
+       "variable_name": "date_of_birth",
+       "variable_type": "string",
+       "variable_enum_values": [],
+       "configure_data_format": false,
+       "variable_instructions": "Extract the caller's date of birth as a string in YYYY-MM-DD format.",
+       "variable_format_instructions": ""
+      },
+      {
+       "variable_name": "callback_phone",
+       "variable_type": "string",
+       "variable_enum_values": [],
+       "configure_data_format": false,
+       "variable_instructions": "Extract the best callback phone number as a string.",
+       "variable_format_instructions": ""
+      },
+      {
+       "variable_name": "email",
+       "variable_type": "string",
+       "variable_enum_values": [],
+       "configure_data_format": false,
+       "variable_instructions": "Extract the caller's email address as a string.",
+       "variable_format_instructions": ""
+      },
+      {
+       "variable_name": "home_address",
+       "variable_type": "string",
+       "variable_enum_values": [],
+       "configure_data_format": false,
+       "variable_instructions": "Extract the caller's home address as a string.",
+       "variable_format_instructions": ""
+      }
+     ],
+     "initial_wait_time": 3,
+     "allow_greeting_interruption": true
+    }
+   }
+  },
+  {
+   "id": "8a80c9d5-f84f-4cf9-b926-f83803cd89d1",
+   "type": "ai_agent_v2",
+   "data": {
+    "meta": {
+     "name": "Claim Status"
+    },
+    "_meta": null,
+    "config": {
+     "name": "Claim Status",
+     "actions": [
+      {
+       "id": "5998e8b9-0b28-4710-a995-7129ea877da3",
+       "http_url": "http://v29-wiremock:8080/acme/claim_status",
+       "code_body": null,
+       "code_name": null,
+       "action_name": null,
+       "action_type": "HTTP",
+       "http_method": "post",
+       "app_provider": null,
+       "http_headers": null,
+       "org_app_uuid": null,
+       "action_schema": null,
+       "http_auth_type": "no_auth",
+       "http_body_type": "json",
+       "http_tool_name": "claim_status",
+       "http_auth_token": null,
+       "http_timeout_ms": 8000,
+       "code_description": null,
+       "http_retry_limit": 3,
+       "http_auth_password": null,
+       "http_auth_username": null,
+       "http_body_template": "{\"claim_number\":\"{{claim_number}}\",\"claim_pin\":\"{{claim_pin}}\"}",
+       "action_instructions": null,
+       "code_function_schema": null,
+       "http_function_schema": {
+        "name": "claim_status",
+        "parameters": {
+         "type": "object",
+         "required": [
+          "claim_number",
+          "claim_pin"
+         ],
+         "properties": {
+          "claim_pin": {
+           "type": "string"
+          },
+          "claim_number": {
+           "type": "string"
+          }
+         }
+        },
+        "description": "Return status and next_step for a claim; returns error 'wrong_pin' when the PIN does not match."
+       },
+       "http_tool_description": "Return status and next_step for a claim; returns error 'wrong_pin' when the PIN does not match."
+      }
+     ],
+     "channel": "call",
+     "intents": [
+      {
+       "id": "8e257b45-c00a-472a-9d37-9ae698dbf64e",
+       "intent_name": "Done",
+       "intent_speech": {
+        "speech_enabled": false,
+        "intent_speech_text": ""
+       },
+       "intent_instructions": "Nothing else is needed"
+      },
+      {
+       "id": "5c2a6805-f321-4ed3-930b-3bbaea3cb83a",
+       "intent_name": "New Claim",
+       "intent_speech": {
+        "speech_enabled": false,
+        "intent_speech_text": ""
+       },
+       "intent_instructions": "The caller also wants to report a new incident"
+      },
+      {
+       "id": "84b3a171-5298-46c6-96e8-31324f95ae61",
+       "intent_name": "Transfer To Agent",
+       "intent_speech": {
+        "speech_enabled": false,
+        "intent_speech_text": ""
+       },
+       "intent_instructions": "The caller asks for a human"
+      },
+      {
+       "id": "2f3a0ced-bc3e-4169-b81e-723b1a8b42d5",
+       "intent_name": "Close Call",
+       "intent_speech": {
+        "speech_enabled": false,
+        "intent_speech_text": ""
+       },
+       "intent_instructions": "The caller becomes hostile, asks not to be contacted, or says goodbye with nothing else needed"
+      }
+     ],
+     "description": "",
+     "instructions": "[[v29]]\n## Role\nYou are Ava at Acme Insurance, helping {{b33134c9-c01f-43bf-8618-951cd75fca85.full_name}} check an existing claim. One question per turn. Speak only English.\n\n## Steps\n- Ask for the six-digit claim number (record as claim_number).\n- Ask the caller to enter their four-digit claim PIN on the phone keypad, not by voice (record as claim_pin).\n- Call Claim Status with the claim number and PIN. Read the status and next step from the response. If the response says the PIN is wrong, ask the caller to enter the PIN once more; if it is wrong again, use Transfer To Agent.\n- Ask if there is anything else. If the caller wants to report another incident, use New Claim. If not, use Done.\n\n## Rules\n- If the caller corrects the claim number, update it and read it back once.\n- If the caller asks a side question, answer it in one sentence and return to the step you were on. The claims line is open 24 hours.\n- If the caller asks for a human, use Transfer To Agent.\n- If the caller becomes hostile or asks not to be contacted, use Close Call.\n- Never invent a status; it comes only from the Claim Status response.",
+     "screening_name": null,
+     "screening_reason": null,
+     "extract_variables": [
+      {
+       "variable_name": "claim_number",
+       "variable_type": "string",
+       "variable_enum_values": [],
+       "configure_data_format": false,
+       "variable_instructions": "Extract the six-digit claim number as a string.",
+       "variable_format_instructions": ""
+      },
+      {
+       "variable_name": "claim_pin",
+       "variable_type": "string",
+       "variable_enum_values": [],
+       "configure_data_format": false,
+       "variable_instructions": "Extract the four-digit claim PIN entered on the phone keypad as a string.",
+       "variable_format_instructions": ""
+      },
+      {
+       "variable_name": "claim_status",
+       "variable_type": "string",
+       "variable_enum_values": [],
+       "configure_data_format": false,
+       "variable_instructions": "Extract the returned claim status as a string.",
+       "variable_format_instructions": ""
+      }
+     ],
+     "initial_wait_time": 3,
+     "allow_greeting_interruption": null
+    }
+   }
+  },
+  {
+   "id": "1c388cc4-90cf-44c4-895f-11b769fba16c",
+   "type": "ai_agent_v2",
+   "data": {
+    "meta": {
+     "name": "Claim Details"
+    },
+    "_meta": null,
+    "config": {
+     "name": "Claim Details",
+     "actions": [
+      {
+       "id": "9949830e-0ee2-4f0c-9996-398e6e72fc7e",
+       "http_url": "http://v29-wiremock:8080/acme/create_claim",
+       "code_body": null,
+       "code_name": null,
+       "action_name": null,
+       "action_type": "HTTP",
+       "http_method": "post",
+       "app_provider": null,
+       "http_headers": null,
+       "org_app_uuid": null,
+       "action_schema": null,
+       "http_auth_type": "no_auth",
+       "http_body_type": "json",
+       "http_tool_name": "create_claim",
+       "http_auth_token": null,
+       "http_timeout_ms": 8000,
+       "code_description": null,
+       "http_retry_limit": 3,
+       "http_auth_password": null,
+       "http_auth_username": null,
+       "http_body_template": "{\"claim_type\":\"{{claim_type}}\",\"incident_date\":\"{{incident_date}}\",\"loss_location\":\"{{loss_location}}\",\"incident_description\":\"{{incident_description}}\",\"estimated_amount\":\"{{estimated_amount}}\",\"people_involved\":\"{{people_involved}}\",\"police_report_filed\":\"{{police_report_filed}}\",\"full_name\":\"{{full_name}}\",\"date_of_birth\":\"{{date_of_birth}}\",\"callback_phone\":\"{{callback_phone}}\",\"email\":\"{{email}}\",\"home_address\":\"{{home_address}}\"}",
+       "action_instructions": null,
+       "code_function_schema": null,
+       "http_function_schema": {
+        "name": "create_claim",
+        "parameters": {
+         "type": "object",
+         "required": [
+          "claim_type",
+          "incident_date",
+          "loss_location",
+          "incident_description",
+          "estimated_amount",
+          "people_involved",
+          "police_report_filed"
+         ],
+         "properties": {
+          "email": {
+           "type": "string"
+          },
+          "full_name": {
+           "type": "string"
+          },
+          "claim_type": {
+           "type": "string"
+          },
+          "home_address": {
+           "type": "string"
+          },
+          "date_of_birth": {
+           "type": "string"
+          },
+          "incident_date": {
+           "type": "string"
+          },
+          "loss_location": {
+           "type": "string"
+          },
+          "callback_phone": {
+           "type": "string"
+          },
+          "people_involved": {
+           "type": "string"
+          },
+          "estimated_amount": {
+           "type": "string"
+          },
+          "police_report_filed": {
+           "type": "string"
+          },
+          "incident_description": {
+           "type": "string"
+          }
+         }
+        },
+        "description": "File the claim; returns claim_id and adjuster_callback_days."
+       },
+       "http_tool_description": "File the claim; returns claim_id and adjuster_callback_days."
+      }
+     ],
+     "channel": "call",
+     "intents": [
+      {
+       "id": "70b38e18-ca6c-4734-a10a-a9107a5786da",
+       "intent_name": "Done",
+       "intent_speech": {
+        "speech_enabled": false,
+        "intent_speech_text": ""
+       },
+       "intent_instructions": "The claim is filed and the caller needs nothing else"
+      },
+      {
+       "id": "fefb43b3-ac95-43d1-9258-241ab8101254",
+       "intent_name": "Transfer To Agent",
+       "intent_speech": {
+        "speech_enabled": false,
+        "intent_speech_text": ""
+       },
+       "intent_instructions": "The caller asks for a human, or asks about premiums, coverage, billing or legal matters"
+      },
+      {
+       "id": "ebb611b7-98f1-4886-9a9d-56043e5109db",
+       "intent_name": "Close Call",
+       "intent_speech": {
+        "speech_enabled": false,
+        "intent_speech_text": ""
+       },
+       "intent_instructions": "Wrong number, hostile caller, asks not to be contacted, or says goodbye with nothing else needed"
+      },
+      {
+       "id": "dec1b29d-94c9-4d27-a0f4-2c38f16e1414",
+       "intent_name": "Emergency",
+       "intent_speech": {
+        "speech_enabled": false,
+        "intent_speech_text": ""
+       },
+       "intent_instructions": "Anyone is injured or in danger right now; provide the emergency safety response and route to the dedicated emergency closure."
+      }
+     ],
+     "description": "",
+     "instructions": "[[v29]]\n## Role\nYou are Ava at Acme Insurance, continuing with {{b33134c9-c01f-43bf-8618-951cd75fca85.full_name}}, whose callback number is {{b33134c9-c01f-43bf-8618-951cd75fca85.callback_phone}}. Do not ask again for anything already collected. One question per turn. Speak only English.\n\n## Steps\nSTEP 1: WHAT HAPPENED\n- Ask which kind of claim this is: auto, home or travel (record as claim_type).\n- Collect the date of the incident (record as incident_date).\n- Collect the address where the loss happened (record as loss_location). If the caller says it happened at home, use the home address already on file and read it back.\n- Ask the caller to describe what happened in a sentence or two (record as incident_description).\n\nSTEP 2: DETAILS\n- Ask for the estimated amount of the loss in dollars (record as estimated_amount). A rough figure is fine.\n- Ask how many people were involved, including the caller (record as people_involved).\n- Ask whether a police report was filed, yes or no (record as police_report_filed).\n\nSTEP 3: FILE\n- Read back a one-sentence summary and ask the caller to confirm. If they correct anything, update it and confirm again.\n- Only after confirmation call Create Claim with every value. Tell the caller the claim id from the response, spoken clearly, and that an adjuster will call the callback number within two business days.\n- Ask if there is anything else. If not, use Done.\n\n## Rules\n- If the caller gives several details in one sentence, take each of them; never ask again for something already given.\n- If the caller corrects a detail given earlier, update it and read the corrected value back once.\n- If the caller asks a side question, answer it in one sentence and return to the step you were on. Office hours are 9 am to 6 pm Monday to Friday; the claims line is open 24 hours.\n- If the caller asks for a human, or asks about premiums, coverage, billing or legal matters, use Transfer To Agent.\n- If anyone is injured or in danger right now, tell them to hang up and dial 911, then use Close Call.\n- If the caller becomes hostile or asks not to be contacted, use Close Call.\n- Never invent claim numbers or amounts; the claim id comes only from the Create Claim response.",
+     "screening_name": null,
+     "screening_reason": null,
+     "extract_variables": [
+      {
+       "variable_name": "claim_type",
+       "variable_type": "string",
+       "variable_enum_values": [],
+       "configure_data_format": false,
+       "variable_instructions": "Extract the claim type as a string.",
+       "variable_format_instructions": ""
+      },
+      {
+       "variable_name": "incident_date",
+       "variable_type": "string",
+       "variable_enum_values": [],
+       "configure_data_format": false,
+       "variable_instructions": "Extract the incident date as a string in YYYY-MM-DD format.",
+       "variable_format_instructions": ""
+      },
+      {
+       "variable_name": "loss_location",
+       "variable_type": "string",
+       "variable_enum_values": [],
+       "configure_data_format": false,
+       "variable_instructions": "Extract the location of the loss as a string.",
+       "variable_format_instructions": ""
+      },
+      {
+       "variable_name": "incident_description",
+       "variable_type": "string",
+       "variable_enum_values": [],
+       "configure_data_format": false,
+       "variable_instructions": "Extract a concise description of what happened as a string.",
+       "variable_format_instructions": ""
+      },
+      {
+       "variable_name": "estimated_amount",
+       "variable_type": "string",
+       "variable_enum_values": [],
+       "configure_data_format": false,
+       "variable_instructions": "Extract the estimated loss amount in dollars as a string.",
+       "variable_format_instructions": ""
+      },
+      {
+       "variable_name": "people_involved",
+       "variable_type": "string",
+       "variable_enum_values": [],
+       "configure_data_format": false,
+       "variable_instructions": "Extract the number of people involved as a string.",
+       "variable_format_instructions": ""
+      },
+      {
+       "variable_name": "police_report_filed",
+       "variable_type": "string",
+       "variable_enum_values": [],
+       "configure_data_format": false,
+       "variable_instructions": "Extract whether a police report was filed as a string.",
+       "variable_format_instructions": ""
+      },
+      {
+       "variable_name": "claim_id",
+       "variable_type": "string",
+       "variable_enum_values": [],
+       "configure_data_format": false,
+       "variable_instructions": "Extract the returned claim ID as a string.",
+       "variable_format_instructions": ""
+      }
+     ],
+     "initial_wait_time": 3,
+     "allow_greeting_interruption": false
+    }
+   }
+  },
+  {
+   "id": "f77f61aa-79cd-45e6-b864-616c92822654",
+   "type": "end_conversation",
+   "data": {
+    "meta": {
+     "name": "Transfer Failed"
+    },
+    "_meta": null,
+    "config": {
+     "name": "Transfer Failed",
+     "description": "",
+     "end_message": "Apologise that no agent is available, say the claims team will call back at the callback number, and close. Under 20 words."
+    }
+   }
+  },
+  {
+   "id": "d36e1f5b-80ed-4954-b527-0ed9e0e0dae8",
+   "type": "end_conversation",
+   "data": {
+    "meta": {
+     "name": "Close Call"
+    },
+    "_meta": null,
+    "config": {
+     "name": "Close Call",
+     "description": "",
+     "end_message": "Thank the caller briefly and close the call courteously. Under 15 words."
+    }
+   }
+  },
+  {
+   "id": "ca784ab9-0eaa-4167-bd60-655b6d714124",
+   "type": "end_conversation",
+   "data": {
+    "meta": {
+     "name": "Emergency"
+    },
+    "_meta": null,
+    "config": {
+     "name": "Emergency",
+     "description": "",
+     "end_message": "If anyone is hurt or in danger, tell the caller to hang up and dial 911 now, and that the claim can wait until everyone is safe. Under 25 words."
+    }
+   }
+  }
+ ],
+ "edges": [
+  {
+   "id": "54de3581-89cc-4056-80d4-451f3ebba7fb",
+   "source": "b33134c9-c01f-43bf-8618-951cd75fca85",
+   "target": "1c388cc4-90cf-44c4-895f-11b769fba16c",
+   "sourceHandle": "696243ef-6b5a-4132-8591-21853ad46da2",
+   "data": {
+    "nodeVars": []
+   }
+  },
+  {
+   "id": "8fd000c3-1177-4dfe-b784-8dc8aee5c5a9",
+   "source": "b33134c9-c01f-43bf-8618-951cd75fca85",
+   "target": "8a80c9d5-f84f-4cf9-b926-f83803cd89d1",
+   "sourceHandle": "b5bbad7e-2f55-4e2f-9522-9147deb96f10",
+   "data": {
+    "nodeVars": []
+   }
+  },
+  {
+   "id": "1976afc2-b32c-405f-95e1-a07b6a52fa96",
+   "source": "b33134c9-c01f-43bf-8618-951cd75fca85",
+   "target": "f7d20916-7fd2-4506-aa02-fd21e5d275c2",
+   "sourceHandle": "3fbc4eab-750e-48bf-9ec6-242f04d34434",
+   "data": {
+    "nodeVars": []
+   }
+  },
+  {
+   "id": "93c1fbf8-812c-4dbb-a03f-35943ab7520d",
+   "source": "b33134c9-c01f-43bf-8618-951cd75fca85",
+   "target": "ca784ab9-0eaa-4167-bd60-655b6d714124",
+   "sourceHandle": "b2008029-fc7a-4b20-99bc-d7d3dcecafd5",
+   "data": {
+    "nodeVars": []
+   }
+  },
+  {
+   "id": "de386305-0c1c-465d-b741-e122e1d9f66e",
+   "source": "b33134c9-c01f-43bf-8618-951cd75fca85",
+   "target": "d36e1f5b-80ed-4954-b527-0ed9e0e0dae8",
+   "sourceHandle": "e10de824-f70d-4c70-b98e-9674409b8688",
+   "data": {
+    "nodeVars": []
+   }
+  },
+  {
+   "id": "a2cea9b0-ca83-48fd-939d-e0dccbae9d93",
+   "source": "1c388cc4-90cf-44c4-895f-11b769fba16c",
+   "target": "d36e1f5b-80ed-4954-b527-0ed9e0e0dae8",
+   "sourceHandle": "70b38e18-ca6c-4734-a10a-a9107a5786da",
+   "data": {
+    "nodeVars": []
+   }
+  },
+  {
+   "id": "d22d0577-f1bb-4b72-9bc4-d54294987ff6",
+   "source": "1c388cc4-90cf-44c4-895f-11b769fba16c",
+   "target": "f7d20916-7fd2-4506-aa02-fd21e5d275c2",
+   "sourceHandle": "fefb43b3-ac95-43d1-9258-241ab8101254",
+   "data": {
+    "nodeVars": []
+   }
+  },
+  {
+   "id": "3016a6ee-61de-47d3-a884-7549579996b5",
+   "source": "1c388cc4-90cf-44c4-895f-11b769fba16c",
+   "target": "d36e1f5b-80ed-4954-b527-0ed9e0e0dae8",
+   "sourceHandle": "ebb611b7-98f1-4886-9a9d-56043e5109db",
+   "data": {
+    "nodeVars": []
+   }
+  },
+  {
+   "id": "34bb01d3-d86e-4788-8e06-9d874333e8ca",
+   "source": "8a80c9d5-f84f-4cf9-b926-f83803cd89d1",
+   "target": "d36e1f5b-80ed-4954-b527-0ed9e0e0dae8",
+   "sourceHandle": "8e257b45-c00a-472a-9d37-9ae698dbf64e",
+   "data": {
+    "nodeVars": []
+   }
+  },
+  {
+   "id": "667b0255-796f-4ba6-9225-f8c1794d50e5",
+   "source": "8a80c9d5-f84f-4cf9-b926-f83803cd89d1",
+   "target": "1c388cc4-90cf-44c4-895f-11b769fba16c",
+   "sourceHandle": "5c2a6805-f321-4ed3-930b-3bbaea3cb83a",
+   "data": {
+    "nodeVars": []
+   }
+  },
+  {
+   "id": "825d7ac9-f9ff-4aac-b3bb-f450a2fa299e",
+   "source": "8a80c9d5-f84f-4cf9-b926-f83803cd89d1",
+   "target": "f7d20916-7fd2-4506-aa02-fd21e5d275c2",
+   "sourceHandle": "84b3a171-5298-46c6-96e8-31324f95ae61",
+   "data": {
+    "nodeVars": []
+   }
+  },
+  {
+   "id": "d63074e2-0bc1-4f64-9b10-4b273fee37ec",
+   "source": "8a80c9d5-f84f-4cf9-b926-f83803cd89d1",
+   "target": "d36e1f5b-80ed-4954-b527-0ed9e0e0dae8",
+   "sourceHandle": "2f3a0ced-bc3e-4169-b81e-723b1a8b42d5",
+   "data": {
+    "nodeVars": []
+   }
+  },
+  {
+   "id": "6eef8851-31de-46c2-92ec-b4bc7d951151",
+   "source": "f7d20916-7fd2-4506-aa02-fd21e5d275c2",
+   "target": "d36e1f5b-80ed-4954-b527-0ed9e0e0dae8",
+   "sourceHandle": "completed",
+   "data": {
+    "nodeVars": []
+   }
+  },
+  {
+   "id": "d9afedb7-217f-4175-8193-59a834b5dcab",
+   "source": "f7d20916-7fd2-4506-aa02-fd21e5d275c2",
+   "target": "f77f61aa-79cd-45e6-b864-616c92822654",
+   "sourceHandle": "failed",
+   "data": {
+    "nodeVars": []
+   }
+  },
+  {
+   "id": "9d39877f-a169-44cc-88ec-bc4dcd2147b5",
+   "source": "f7d20916-7fd2-4506-aa02-fd21e5d275c2",
+   "target": "f77f61aa-79cd-45e6-b864-616c92822654",
+   "sourceHandle": "no_answer",
+   "data": {
+    "nodeVars": []
+   }
+  },
+  {
+   "id": "44bd8164-b47a-48e8-ad06-caac3addf354",
+   "source": "f7d20916-7fd2-4506-aa02-fd21e5d275c2",
+   "target": "f77f61aa-79cd-45e6-b864-616c92822654",
+   "sourceHandle": "busy_rejected",
+   "data": {
+    "nodeVars": []
+   }
+  },
+  {
+   "id": "581067d4-645f-402f-b086-8ceeeed3ea7e",
+   "source": "9998a561-9094-4b29-9d50-8f416461bbea",
+   "target": "ab4681fe-2ea6-40c8-b43b-15165b9e29f8",
+   "sourceHandle": "http",
+   "data": {
+    "nodeVars": []
+   }
+  },
+  {
+   "id": "a043641d-93e4-44e7-ab3d-4cfcdbe2ca6d",
+   "source": "ab4681fe-2ea6-40c8-b43b-15165b9e29f8",
+   "target": "d36e1f5b-80ed-4954-b527-0ed9e0e0dae8",
+   "sourceHandle": "no_answer",
+   "data": {
+    "nodeVars": []
+   }
+  },
+  {
+   "id": "c0f9b5a6-0bdd-4f6d-8dd8-dcc589de2ff5",
+   "source": "ab4681fe-2ea6-40c8-b43b-15165b9e29f8",
+   "target": "d36e1f5b-80ed-4954-b527-0ed9e0e0dae8",
+   "sourceHandle": "busy_rejected",
+   "data": {
+    "nodeVars": []
+   }
+  },
+  {
+   "id": "db55177b-0996-403d-84ec-2a73da8c092c",
+   "source": "ab4681fe-2ea6-40c8-b43b-15165b9e29f8",
+   "target": "d36e1f5b-80ed-4954-b527-0ed9e0e0dae8",
+   "sourceHandle": "failed",
+   "data": {
+    "nodeVars": []
+   }
+  },
+  {
+   "id": "71134e85-d900-4f07-b4fc-b2796b5d9370",
+   "source": "1c388cc4-90cf-44c4-895f-11b769fba16c",
+   "target": "ca784ab9-0eaa-4167-bd60-655b6d714124",
+   "sourceHandle": "dec1b29d-94c9-4d27-a0f4-2c38f16e1414",
+   "data": {
+    "nodeVars": []
+   }
+  },
+  {
+   "id": "9f238d97-74cc-4cff-a53b-47e7577f5c8e",
+   "source": "ab4681fe-2ea6-40c8-b43b-15165b9e29f8",
+   "target": "b33134c9-c01f-43bf-8618-951cd75fca85",
+   "sourceHandle": "answered",
+   "data": {
+    "nodeVars": []
+   }
+  }
+ ],
+ "systemPrompt": null,
+ "sttGuidance": null,
+ "agentName": null,
+ "agentPersona": null,
+ "conversationGoals": [],
+ "agentSettings": {
+  "schedule": {
+   "timezone": "America/New_York"
+  },
+  "knowledge_base_ids": [],
+  "voice_ai_config": {
+   "language": "en-US,es",
+   "text_to_speech": {
+    "provider": "elevenlabs",
+    "model": "eleven_turbo_v2_5",
+    "voice": "x5IDPSl4ZUbhosMmVFTk",
+    "voice_label": "Spanish Female 1",
+    "pronunciation": []
+   },
+   "speech_to_text": {
+    "provider": "deepgram",
+    "model": "nova-3",
+    "keyterms": [
+     "Kylie",
+     "Quick Quote",
+     "lower 48 states",
+     "Alaska",
+     "Hawaii",
+     "do-not-call list",
+     "full-service move",
+     "down payment",
+     "studio",
+     "one bedroom",
+     "two bedroom",
+     "three bedroom",
+     "four bedroom",
+     "pods",
+     "containers",
+     "labor only",
+     "commercial move",
+     "apartment locating",
+     "storage",
+     "packing"
+    ]
+   },
+   "user_idle_config": {
+    "hangup_msg": "Since I'm not hearing a response, I'll go ahead and disconnect the call. If you need further assistance, please don't hesitate to contact us again.",
+    "hold_timeout": 30,
+    "idling_timeout": 15,
+    "reminder_msg": "Are you still there? I'm happy to assist whenever you're ready",
+    "retries": 3
+   },
+   "allow_greeting_interruption": true,
+   "background_audio": {
+    "type": "call_center",
+    "volume": 0.24,
+    "thinking_sound_enabled": true,
+    "thinking_sound_volume": 0.7
+   }
+  },
+  "event_callbacks": {
+   "HANGUP": {
+    "url": "https://example.com/webhook",
+    "method": "POST",
+    "auth": "no_auth",
+    "username": "",
+    "password": "",
+    "token": "",
+    "type": "url"
+   },
+   "RECORDING": {
+    "url": "https://example.com/webhook",
+    "method": "POST",
+    "auth": "no_auth",
+    "username": "",
+    "password": "",
+    "token": "",
+    "transcription": false
+   },
+   "ERROR": {
+    "url": "",
+    "method": "POST",
+    "auth": "no_auth",
+    "username": "",
+    "password": "",
+    "token": ""
+   },
+   "SMS_STATUS": {
+    "url": "",
+    "method": "POST",
+    "auth": "no_auth",
+    "username": "",
+    "password": "",
+    "token": ""
+   },
+   "WHATSAPP_STATUS": {
+    "url": "",
+    "method": "POST",
+    "auth": "no_auth",
+    "username": "",
+    "password": "",
+    "token": ""
+   },
+   "CONVERSATION_CLOSURE": {
+    "url": "",
+    "method": "POST",
+    "auth": "no_auth",
+    "username": "",
+    "password": "",
+    "token": ""
+   }
+  },
+  "conversation_goals": []
+ }
+}

@@ -1,0 +1,39 @@
+description: >-
+  The caller asks for a scheduling coordinator partway through, so the walk leaves by the handoff
+  exit: Transfer To Coordinator -> the Log Lead Transfer http hop (mocked) -> the call forward.
+
+  BOTH edges of that hop reach that same call forward (ws/flow.json) and the hop never speaks to the
+  agent, so pinning it to `failed` cannot change the transcript - the scenario that did so was this
+  walk with two extra pins, and those pins are now here.
+
+  The first handoff call is refused while a required Input is empty (exit_blocked_on_required,
+  collect_input.py:106-113); its directive offers "call the collect tool for it and let the
+  specialist ask, then take this exit … or call this same handoff again straight away", so one more
+  Input question, or two handoff calls in one turn, is the gate, not a stall.
+simulated_user:
+  persona: >-
+    Ruth Okafor, a Ridgeway Clinic patient moving an appointment. Polite but in a hurry, and sure her
+    case needs a person rather than the desk.
+  goal: >-
+    Give your name Ruth Okafor and date of birth the ninth of June nineteen sixty-two. Ask for the
+    twelfth of March twenty twenty-eight and say late morning suits you. Then say your case is
+    complicated - it is tied to a test at another clinic - and ask to be put through to a scheduling
+    coordinator, and keep asking until you are. Say yes when you are asked whether to connect you,
+    and give nothing else after that.
+  max_turns: 22
+world_state:
+  Log Lead Transfer:
+    outcome: success
+expect:
+  ended: true
+  stop_reason: call_forward
+  intent: Transfer To Coordinator
+  variables:
+    patient_full_name: Ruth Okafor
+    date_of_birth: '1962-06-09'
+    new_appointment_date: '2028-03-12'
+    preferred_time_of_day: Late morning
+  variables_absent:
+    - journey_time_minutes
+    - mobile_number
+    - confirmation_email

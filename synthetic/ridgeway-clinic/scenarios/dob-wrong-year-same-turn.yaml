@@ -1,0 +1,33 @@
+description: >-
+  Trick: a garbled date of birth - the wrong year, taken back inside the same breath. Scripted,
+  because the exact wording is the trick. Arm-independent expectation: only the corrected year is
+  ever staged, spoken or stored; the discarded year never reaches the caller's ear.
+  There is no date-of-birth read-back to agree with in EITHER arm - dob is a shaped type and the
+  router passes require_confirmation=False in both modes (collect_input.py:1005) - so the tolerant
+  "yes, that's right" that used to sit after the date of birth answered the DATE question instead.
+  It is gone; the per-turn message_excludes it carried now sit on the date turn, which is where they
+  measure something.
+  Judged by transcript:
+  1. no agent turn contains the discarded year, in digits or in words;
+  2. the agent does not ask which of the two years was meant - the caller's own "no" settles it;
+  3. the corrected date of birth is spoken once, in the arm's own shape;
+  4. the name collected before it is not read back or asked again because of the correction.
+turns:
+  - user: Hello?
+  - user: Ruth Okafor.
+  - user: Yes, that's right.
+  - user: Ninth of June nineteen seventy-two - sorry, no, nineteen sixty-two.
+    expect:
+      message_excludes:
+        - seventy-two
+        - "1972"
+  - user: The twelfth of March, twenty twenty-eight.
+    expect:
+      message_excludes:
+        - seventy-two
+        - "1972"
+expect:
+  ended: false
+  variables:
+    patient_full_name: Ruth Okafor
+    date_of_birth: "1962-06-09"

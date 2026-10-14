@@ -1,0 +1,58 @@
+description: >-
+  Trick 15, a yes/no answered with a hedge: the interpreter question is the node's one boolean, and
+  the caller twice answers it with something that is neither yes nor no before settling on no. A
+  hedge is not an answer - the desk must ask again plainly and store only what the caller actually
+  said. Arm-independent: the boolean is the arm that acknowledges without repeating a value, so what
+  is asserted here is the same in both arms - the stored answer is the caller's own.
+
+  Judged by transcript:
+
+  1. NO VALUE TAKEN FROM A HEDGE: the desk does not move to the next Input after "my daughter usually
+  comes with me" or "is that something you normally do". If it moves on after either, this criterion
+  is NOT MET.
+
+  2. ASKED AGAIN, PLAINLY AND ONCE: each re-ask is a single short yes-or-no question, and it may
+  carry ONE short sentence saying why the answer is needed - that sentence is mandated, not
+  optional: the first hedge is unusable turn number 1, which the collector answers with
+  decline_boolean_capture (max_collection_retries defaults to 1), and a required field then gets one
+  _REQUIRED_RETRY whose directive is "say in one short sentence why {name} is needed" and re-open
+  (collect_input.py:94-105). If the desk stacks two questions into one turn, or goes beyond that one
+  sentence into a lecture about interpreters, this criterion is NOT MET. The second hedge is a
+  QUESTION, which is never an unusable turn (answer_side_question), so the budget is not spent
+  twice and the walk does not halt.
+
+  3. THE ANSWER IS THE CALLER'S: the desk does not tell the caller what they meant and carry on. It
+  may check "so that is a no?" but must get the caller's own answer before moving on. If it decides
+  for them, this criterion is NOT MET.
+
+  4. ASKED ONCE, NOT REVISITED: after the plain no the interpreter question is not asked again later
+  in the call. If it is, this criterion is NOT MET.
+simulated_user:
+  persona: >-
+    Ruth Okafor, a Ridgeway Clinic patient moving an appointment. Cooperative on everything except
+    the interpreter question, which she thinks out loud rather than answers.
+  goal: >-
+    Answer one item at a time - your name Ruth Okafor, date of birth the ninth of June nineteen
+    sixty-two, you want the twelfth of March twenty twenty-eight, late morning suits you, and the
+    journey takes thirty-five minutes. When you are asked about an interpreter, do not say yes or no
+    the first two times. First say "well, my daughter usually comes with me, so..." and leave it
+    there. If you are asked again, say "it depends really, is that something you normally do?". Only
+    if you are asked a third time, say plainly that you do not need one because your daughter
+    translates for you. Then carry on - reception should know you use a wheelchair and need the side
+    entrance, forty pounds is still unpaid, your mobile is 07700 900123 and your email is
+    ruth.okafor@example.com. Agree with every correct read-back and say yes when the new appointment
+    is confirmed.
+  max_turns: 34
+world_state:
+  Update Lead Record:
+    outcome: success
+expect:
+  ended: true
+  stop_reason: end_conversation
+  intent: Reschedule Booked
+  variables:
+    patient_full_name: Ruth Okafor
+    date_of_birth: '1962-06-09'
+    new_appointment_date: '2028-03-12'
+    preferred_time_of_day: Late morning
+    interpreter_needed: 'no'

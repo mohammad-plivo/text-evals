@@ -1,0 +1,13 @@
+description: '[pattern D] A required field refused twice must terminate the walk rather than loop.
+
+  Replay of Hunter ''TeleCRM P0 - Hidden Context Stays Silent'' (run a2e04e7d): caller lines verbatim
+  from the handoff on.'
+turns:
+- user: Yes, speaking.
+- user: Yes, go ahead.
+- user: Yes, I did.
+- user: Why does that matter? You people already have my details, no?
+- user: I'm not getting into the numbers.
+- user: I'm not getting into the numbers.
+expect:
+  ended: true

@@ -1,0 +1,17 @@
+description: '[pattern E — ASPIRATIONAL, not a tonight gate] Early mid-walk bail with a volunteered time. Known-hard:
+  no follow-up questions after the date commits (Useful Proceeds crits 7/8/9 root fix).'
+turns:
+- user: Yes, speaking.
+- user: Yes, go ahead.
+- user: Yes, I filled the form yesterday.
+- user: Five people in sales.
+- user: Look, I am walking into a meeting. Call me back Monday at eleven in the morning and we can do all this properly.
+- user: Yes, Monday at eleven. Bye now.
+- user: I told you already, Monday at eleven.
+- user: Bye.
+expect:
+  intent: Callback Time Provided
+  ended: true
+  variables_absent:
+  - anything_else_for_this_call
+  - one_more_business_detail

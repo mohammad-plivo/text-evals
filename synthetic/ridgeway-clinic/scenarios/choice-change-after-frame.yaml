@@ -1,0 +1,37 @@
+description: >-
+  Trick: a change of choice after the frame. The caller picks late morning, and switches to the
+  afternoon the moment the agent has spoken that choice. The switch lands on the NEXT collector's
+  floor in both arms, and for the same reason in both: choice is a shaped type, so the V2.9 router
+  passes require_confirmation=False in either mode (collect_input.py:1005) - the prepared arm has
+  the runtime speak the value, the off arm has the model state it inside its next question, and
+  neither stops to ask "is that right?". Arm-independent expectation: a corrected choice is never a
+  clean one - the correction re-enters with require_confirmation=True (collect_input.py:1012-1018),
+  so the caller hears "afternoon" said back before the call ends, and Afternoon is what is stored.
+  Judged by transcript:
+  1. the corrected choice is spoken back to the caller before the appointment is confirmed - this is
+     judge rule 2 (a stated value later corrected must be re-stated), and the value pin below is
+     what makes the switch itself mechanical: Afternoon can only be stored through a tool;
+  2. after the switch the agent never presents late morning as the booked answer;
+  3. no field after the choice is skipped or re-asked because of the change.
+simulated_user:
+  persona: >-
+    Ruth Okafor, a Ridgeway Clinic patient moving an appointment. Answers quickly, then hears it out
+    loud and thinks better of it.
+  goal: >-
+    Give your name Ruth Okafor, date of birth the ninth of June nineteen sixty-two, and ask for the
+    nineteenth of March twenty twenty-eight. When asked which part of the day, say late morning. As
+    soon as you hear late morning said back to you, say you would rather have the afternoon, and hold
+    to the afternoon from then on. Then answer the rest once each - the journey takes thirty-five
+    minutes, no interpreter, reception should know you use a wheelchair and need the side entrance,
+    forty pounds is unpaid, mobile 07700 900123, email ruth.okafor@example.com. Agree with correct
+    read-backs and say yes when the appointment is confirmed.
+  max_turns: 32
+world_state:
+  Update Lead Record:
+    outcome: success
+expect:
+  ended: true
+  stop_reason: end_conversation
+  variables:
+    preferred_time_of_day: Afternoon
+    new_appointment_date: "2028-03-19"

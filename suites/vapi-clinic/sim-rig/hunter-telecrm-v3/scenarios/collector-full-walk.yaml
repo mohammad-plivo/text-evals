@@ -1,0 +1,18 @@
+description: >
+  A cooperative lead who clears screening and should be FULLY qualified. Measures the collect
+  node only — screening is exercised just enough to hand off.
+
+  Three defects to watch, all reproduced locally on config 7:
+    1. the collector RE-ASKS identity that screening already confirmed
+    2. it files the CRM outcome after ONE field, with lead_id/lead_name/phone_number "unknown"
+    3. after filing it stops asking, so industry and crm_need are never collected
+       (Hunter run 70f18683: industry 0/28, crm process 1/28)
+turns:
+  - user: "Yeah, this is Arjun."
+  - user: "Yes, I can talk now."
+  - user: "We have six people in sales."
+  - user: "We sell two-wheelers and service plans."
+  - user: "Right now we track leads in spreadsheets and follow-ups get missed."
+  - user: "Yes, that works."
+  - user: "Next Monday at three in the afternoon."
+  - user: "No, nothing else."

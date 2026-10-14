@@ -1,0 +1,57 @@
+description: >-
+  Trick 14, the caller talks over the handoff OFFER: the desk offers to put the caller through and
+  the caller cuts across it with a yes before the offer is finished. The node's own Transfer To
+  Coordinator instruction says an offer the caller was interrupted over was not made, so that yes is
+  not consent - the desk must offer again and only then hand over. Arm-independent: an interrupted
+  offer is the desk's behaviour, not the mode's.
+
+  Turn 5 is a problem the desk cannot place rather than a direct request for a coordinator. A direct
+  request fires the intent's FIRST clause on its own, and the exit gate's refusal says "call this
+  same handoff again straight away and it will go through" - so a desk that transfers on that turn
+  is behaving correctly, the call ends there, and turn 6's expect is never evaluated (the engine
+  fails a run whose declared expectations could not be evaluated, engine.py:316-324). Anchoring on
+  "coordinator" had the same hole: an offer worded without that word aborts the scenario. The anchor
+  is now "through", the verb every offer carries.
+
+  What holds the desk to one offer per turn is also a gate: exit_blocked_on_question refuses an exit
+  taken in a turn that ended with a question (collect_input.py:150-215).
+
+  Judged by transcript - prose, not a measurement (judge.py reads `expect:` only):
+
+  1. THE OFFER IS MADE AGAIN: after the interruption the desk puts the offer to the caller once
+  more, whole. If it treats the interrupting yes as consent and hands over on that turn, this
+  criterion is NOT MET.
+
+  2. RE-OFFERED, NOT RE-EXPLAINED: the second offer is one short question. If the desk explains the
+  transfer again from the top, this criterion is NOT MET.
+
+  3. NOTHING ELSE IS RE-ASKED: the name and date of birth already on record are not asked again.
+
+  4. THE HANDOFF LINE IS SAID ONCE: after the clear yes, one short line and the caller is put
+  through. If the desk keeps collecting Inputs after the yes, this criterion is NOT MET.
+turns:
+- user: Hello?
+- user: Ruth Okafor.
+- user: Yes, that's right.
+- user: Ninth of June nineteen sixty-two.
+- user: Before we go on - this appointment is tied to a test at another clinic, can this desk move both together?
+- user: Yes, please, put me through.
+  interrupt_after: through
+  expect:
+    not_intent: Transfer To Coordinator
+    ended: false
+- user: Yes. Put me through.
+world_state:
+  Log Lead Transfer:
+    outcome: success
+expect:
+  ended: true
+  stop_reason: call_forward
+  intent: Transfer To Coordinator
+  variables:
+    patient_full_name: Ruth Okafor
+    date_of_birth: "1962-06-09"
+  variables_absent:
+    - new_appointment_date
+    - mobile_number
+    - confirmation_email

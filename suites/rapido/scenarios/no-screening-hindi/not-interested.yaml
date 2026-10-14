@@ -1,0 +1,6 @@
+description: 'no-screening opening: not-interested'
+turns:
+- user: Hello?
+- user: Yes.
+- user: No, I am not interested in talking.
+- user: Okay, bye.

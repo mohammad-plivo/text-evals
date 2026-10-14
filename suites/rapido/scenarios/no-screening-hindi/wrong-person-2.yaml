@@ -1,0 +1,5 @@
+description: "wrong number, said differently"
+turns:
+- user: "Hello?"
+- user: "Who? You have the wrong number."
+- user: "Okay, bye."

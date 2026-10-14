@@ -1,0 +1,2269 @@
+{
+  "task": "address",
+  "tier": "subtle",
+  "description": "Collecting locations over the phone: city, country, neighbourhood, pickup point, service, delivery and billing addresses, landmarks, floors and unit numbers. Most of these are whole-word values that a caller will correct instantly if the agent gets them wrong, so they settle inside the next question. A full postal address is the exception: it gets one consolidated readback at the end with the postcode or zip read character by character, in both labels.",
+  "style_rules": {
+    "subtle": [
+      "Echo-and-advance is the default: fold the line just given into the next question.",
+      "Collect the whole address first, then read it back once, cleanly, at the end.",
+      "Standalone city, country, neighbourhood and landmark settle inside the next question, no round trip.",
+      "Bare value-as-question for short corrections: Three B, thanks.",
+      "Silent accept when the caller stated it twice or emphatically.",
+      "Postcode or zip in the final readback is always character by character.",
+      "First word of an agent turn never repeats consecutively and rarely at all; value-first openers.",
+      "Check tags (right? yeah? correct?) at most twice per call; most fields carry no tag.",
+      "Contractions throughout, short clauses, commas not dashes.",
+      "No praise, no status phrases, no I heard, no chatbot closer."
+    ],
+    "non_subtle_tells": [
+      "One identical template on every field: Just to confirm, X. Is that correct?",
+      "Every address line confirmed separately instead of one consolidated readback.",
+      "Praise on trivial answers, status phrases like I have recorded that.",
+      "No contractions, over-formal register, I will now proceed to.",
+      "Chatbot closer at the end.",
+      "Wrong direction: over-casual agent that skips the consolidated readback, drops the unit number, or mumbles the postcode as a whole word instead of character by character."
+    ]
+  },
+  "conversations": [
+    {
+      "id": "address_01_subtle",
+      "pair_id": "address_01",
+      "label": "subtle",
+      "language": "en",
+      "scenario": "Furniture delivery scheduling; the caller gives the postcode before the street and can't remember her flat number until halfway through the call.",
+      "fields": [
+        {
+          "name": "delivery_address",
+          "value": "Flat 3B, 12 Naylor Street, Manchester M4 5BD",
+          "tier": "strict",
+          "strategy": "collected in pieces with no round trips, then one consolidated readback, postcode character by character"
+        },
+        {
+          "name": "property_floor",
+          "value": "second floor, no usable lift",
+          "tier": "subtle",
+          "strategy": "echo-and-advance into the crew decision"
+        },
+        {
+          "name": "delivery_date",
+          "value": "Thursday the 6th, morning slot",
+          "tier": "subtle",
+          "strategy": "echo-and-advance into the phone question"
+        },
+        {
+          "name": "contact_phone",
+          "value": "07700 900412",
+          "tier": "strict",
+          "strategy": "digit by digit in groups"
+        },
+        {
+          "name": "parking_note",
+          "value": "loading bay out front, twenty minutes",
+          "tier": "subtle",
+          "strategy": "bare echo, no tag, call ends on it"
+        }
+      ],
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Hi, you're through to Halden Furniture deliveries. Whereabouts are we bringing the sofa?"
+        },
+        {
+          "speaker": "caller",
+          "text": "M4 5BD. Sorry, I always do the postcode first."
+        },
+        {
+          "speaker": "agent",
+          "text": "M4 5BD, no problem. What's the street?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Naylor Street, number twelve. It's a flat, new build."
+        },
+        {
+          "speaker": "agent",
+          "text": "Twelve Naylor Street, Manchester, yeah? New builds can be tight for the drivers, which floor are you?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Yeah, Manchester. Second floor. There's a lift but it's tiny, the sofa won't go in it."
+        },
+        {
+          "speaker": "agent",
+          "text": "Second floor, stairs then. I'll put two men on it instead of one. Do you know your flat number?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Oh, hang on. I've only just moved in. It's, right, three B. Flat three B."
+        },
+        {
+          "speaker": "agent",
+          "text": "Three B, thanks. When would suit you for the delivery?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Thursday if you've got it. The sixth."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thursday the sixth, there's a morning slot and an afternoon one."
+        },
+        {
+          "speaker": "caller",
+          "text": "Morning, please. I've got work in the afternoon."
+        },
+        {
+          "speaker": "agent",
+          "text": "Morning it is, eight till one. Best number to reach you on the day?"
+        },
+        {
+          "speaker": "caller",
+          "text": "07700 900 412."
+        },
+        {
+          "speaker": "agent",
+          "text": "Let me read that back, 0 7 7 0 0, 9 0 0, 4 1 2.",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "That's the one."
+        },
+        {
+          "speaker": "agent",
+          "text": "Okay, the whole address before I book it. Flat 3B, 12 Naylor Street, Manchester, and the postcode is M, 4, 5, B, D.",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "Yep, that's right."
+        },
+        {
+          "speaker": "agent",
+          "text": "Anything the driver needs to know about parking?"
+        },
+        {
+          "speaker": "caller",
+          "text": "There's a loading bay out front, they can use it for twenty minutes."
+        },
+        {
+          "speaker": "agent",
+          "text": "Loading bay, twenty minutes. You'll get a text the night before with a two hour window."
+        }
+      ],
+      "notes": "Rotation across five values: the postcode arrives out of order and rides straight into the street question, the city gets the call's only yeah? tag folded into the same breath, the floor is echo-and-advance, the late flat number is a bare value-as-question, and parking is echoed once with nothing hung on it. No address line is confirmed twice on the spot; street, unit, city and postcode land together in one readback with the postcode character by character, next to the digit-by-digit phone."
+    },
+    {
+      "id": "address_01_non_subtle",
+      "pair_id": "address_01",
+      "label": "non_subtle",
+      "language": "en",
+      "scenario": "Furniture delivery scheduling; the caller gives the postcode before the street and can't remember her flat number until halfway through the call.",
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Good afternoon. You are through to Halden Furniture deliveries. I will now proceed to schedule your delivery. May I have the delivery address?"
+        },
+        {
+          "speaker": "caller",
+          "text": "M4 5BD. Sorry, I always do the postcode first."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you. Just to confirm, the postcode you have provided is M4 5BD. May I now have the street name and the house number?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Naylor Street, number twelve. It's a flat, new build."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you. Just to confirm, the street you have provided is Naylor Street and the number you have provided is twelve. That has been recorded. May I confirm the city and ask which floor the flat is on?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Yeah, Manchester. Second floor. There's a lift but it's tiny, the sofa won't go in it."
+        },
+        {
+          "speaker": "agent",
+          "text": "Excellent. Just to confirm, the city you have provided is Manchester and the floor you have provided is the second floor. I will now proceed to assign two delivery operatives. May I have the flat number?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Oh, hang on. I've only just moved in. It's, right, three B. Flat three B."
+        },
+        {
+          "speaker": "agent",
+          "text": "Perfect! Just to confirm, the flat number you have provided is three B. That has been recorded. May I ask which date you would prefer for delivery?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Thursday if you've got it. The sixth."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you. Just to confirm, the date you have requested is Thursday the sixth. We have a morning slot and an afternoon slot available."
+        },
+        {
+          "speaker": "caller",
+          "text": "Morning, please. I've got work in the afternoon."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you. Just to confirm, you have selected the morning slot, eight until one. May I have a contact telephone number?"
+        },
+        {
+          "speaker": "caller",
+          "text": "07700 900 412."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you. I will read that back to you, 0 7 7 0 0, 9 0 0, 4 1 2.",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "That's the one."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you. I will now read the complete address. Flat 3B, 12 Naylor Street, Manchester, postcode M, 4, 5, B, D.",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "Yep, that's right."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you. Just to confirm, is there any parking information you wish to provide?"
+        },
+        {
+          "speaker": "caller",
+          "text": "There's a loading bay out front, they can use it for twenty minutes."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you. Just to confirm, you have indicated a loading bay for twenty minutes. That has been recorded. Is there anything else I can help you with today?"
+        }
+      ],
+      "notes": "Identical caller side. One template on every field, Just to confirm, X, plus has been recorded. Each address line gets its own round trip and then the same address is read again at the end, so the caller verifies it twice. Praise lands on a flat number, there are no contractions, and it shuts with the chatbot closer."
+    },
+    {
+      "id": "address_02_subtle",
+      "pair_id": "address_02",
+      "label": "subtle",
+      "language": "en",
+      "scenario": "Taxi booking; the caller can only describe a landmark, not a street, then moves the pickup point halfway through the call.",
+      "fields": [
+        {
+          "name": "pickup_landmark",
+          "value": "the old Corn Exchange, Leeds city centre",
+          "tier": "subtle",
+          "strategy": "whole-word value settled with the call's only yeah? tag"
+        },
+        {
+          "name": "pickup_point",
+          "value": "Duncan Street outside the barber, moved from the Call Lane rank",
+          "tier": "subtle",
+          "strategy": "one-beat correction, new value re-echoed against the old one and dropped"
+        },
+        {
+          "name": "passenger_count",
+          "value": "three plus a suitcase",
+          "tier": "subtle",
+          "strategy": "echo-and-advance into the destination question"
+        },
+        {
+          "name": "dropoff_point",
+          "value": "outside the Skyrack, Cardigan Road, Headingley",
+          "tier": "subtle",
+          "strategy": "arrives in one breath, echoed once, no readback because there's no postal address here"
+        },
+        {
+          "name": "contact_phone",
+          "value": "07700 900209",
+          "tier": "strict",
+          "strategy": "digit by digit in groups"
+        }
+      ],
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Bramley Cars, where are we picking you up from?"
+        },
+        {
+          "speaker": "caller",
+          "text": "I'm outside the Corn Exchange. The old one, in town."
+        },
+        {
+          "speaker": "agent",
+          "text": "Corn Exchange, Leeds city centre, yeah?"
+        },
+        {
+          "speaker": "caller",
+          "text": "That's it. I don't know the street name, sorry."
+        },
+        {
+          "speaker": "agent",
+          "text": "Doesn't matter, the drivers all know it. Are you on the Call Lane side or the Duncan Street side?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Uh, Call Lane, I think. There's a taxi rank."
+        },
+        {
+          "speaker": "agent",
+          "text": "Call Lane rank, that's the easy one. How many of you?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Three. Well, three of us and a suitcase."
+        },
+        {
+          "speaker": "agent",
+          "text": "Three and a case, I'll send the bigger car. Where are you heading?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Headingley. Cardigan Road, down by the cricket ground."
+        },
+        {
+          "speaker": "agent",
+          "text": "Cardigan Road by the ground. Have you got a house number for him?"
+        },
+        {
+          "speaker": "caller",
+          "text": "It's a pub, actually. The Skyrack. He can just drop us outside."
+        },
+        {
+          "speaker": "agent",
+          "text": "Skyrack it is. Sorry, one thing, are you still at the rank?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Actually no, my mate says meet him round the corner on Duncan Street instead."
+        },
+        {
+          "speaker": "agent",
+          "text": "Duncan Street then, not Call Lane. Anywhere in particular on it?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Outside the Turkish place. The barber."
+        },
+        {
+          "speaker": "agent",
+          "text": "Outside the barber's on Duncan Street. Number for the driver?"
+        },
+        {
+          "speaker": "caller",
+          "text": "07700 900 209."
+        },
+        {
+          "speaker": "agent",
+          "text": "Reading that back, 0 7 7 0 0, 9 0 0, 2 0 9.",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "Correct."
+        },
+        {
+          "speaker": "agent",
+          "text": "He's in a silver Skoda, five minutes out. He'll ring you when he's on Duncan Street."
+        }
+      ],
+      "notes": "No postal address exists in this call, so nothing earns a readback: the landmark, the destination and the passenger count all settle inside the next question. The mid-call pickup change is repaired in one beat, Duncan Street then, not Call Lane, with no announcement that anything was amended. The phone number is the only strict field. One yeah? tag in the whole call and eight agent turns carrying none."
+    },
+    {
+      "id": "address_02_non_subtle",
+      "pair_id": "address_02",
+      "label": "non_subtle",
+      "language": "en",
+      "scenario": "Taxi booking; the caller can only describe a landmark, not a street, then moves the pickup point halfway through the call.",
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Good day. You have reached Bramley Cars. I will now proceed to take your booking. May I have your pickup location?"
+        },
+        {
+          "speaker": "caller",
+          "text": "I'm outside the Corn Exchange. The old one, in town."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you. Just to confirm, the landmark you have provided is the Corn Exchange. May I confirm that the city is Leeds?"
+        },
+        {
+          "speaker": "caller",
+          "text": "That's it. I don't know the street name, sorry."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you. Just to confirm, you have indicated that you do not have a street name. That has been recorded. May I ask whether you are on the Call Lane side or the Duncan Street side?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Uh, Call Lane, I think. There's a taxi rank."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you. Just to confirm, the pickup point you have provided is the taxi rank on Call Lane. May I ask how many passengers are travelling?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Three. Well, three of us and a suitcase."
+        },
+        {
+          "speaker": "agent",
+          "text": "Excellent. Just to confirm, you have indicated three passengers and one item of luggage. I have recorded that. May I have your destination?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Headingley. Cardigan Road, down by the cricket ground."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you. Just to confirm, the destination area you have provided is Headingley and the destination street you have provided is Cardigan Road. May I have the house number at the destination?"
+        },
+        {
+          "speaker": "caller",
+          "text": "It's a pub, actually. The Skyrack. He can just drop us outside."
+        },
+        {
+          "speaker": "agent",
+          "text": "Perfect! Just to confirm, the destination landmark you have provided is the Skyrack public house. That has been recorded. May I confirm that you remain at the taxi rank?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Actually no, my mate says meet him round the corner on Duncan Street instead."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you for that update. Just to confirm, you have now changed the pickup point to Duncan Street. The previous pickup point has been removed. May I ask for a precise location on Duncan Street?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Outside the Turkish place. The barber."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you. Just to confirm, the pickup point you have provided is outside the barber shop on Duncan Street. That has been recorded. May I have a contact telephone number?"
+        },
+        {
+          "speaker": "caller",
+          "text": "07700 900 209."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you. I will read that back to you, 0 7 7 0 0, 9 0 0, 2 0 9.",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "Correct."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you. Your vehicle is a silver Skoda and it is five minutes away. Your booking has been recorded. Is there anything else I can help you with today?"
+        }
+      ],
+      "notes": "Identical caller side. The agent runs Just to confirm on a city, a landmark and a passenger count, treats the pickup change as a formal record amendment with a removal notice, drops has been recorded five times, uses no contractions and closes with the chatbot line."
+    },
+    {
+      "id": "address_03_subtle",
+      "pair_id": "address_03",
+      "label": "subtle",
+      "language": "en",
+      "scenario": "Emergency plumber dispatch; the street name has two spellings and the caller misreads one character of her own postcode.",
+      "fields": [
+        {
+          "name": "service_address",
+          "value": "Ground floor flat, 14 Ashleigh Road, Clifton, Bristol BS8 2LX",
+          "tier": "strict",
+          "strategy": "ambiguous street spelled out as two candidates, postcode repaired in one beat, whole thing read back once with the postcode character by character"
+        },
+        {
+          "name": "property_access",
+          "value": "shared front door, buzzer broken, engineer rings instead",
+          "tier": "subtle",
+          "strategy": "echo-and-advance, the fix offered rather than confirmed"
+        },
+        {
+          "name": "appointment_window",
+          "value": "tomorrow afternoon, one till five",
+          "tier": "subtle",
+          "strategy": "one-beat correction after the caller talks herself out of the morning"
+        },
+        {
+          "name": "contact_phone",
+          "value": "0117 496 0038",
+          "tier": "strict",
+          "strategy": "digit by digit in groups"
+        },
+        {
+          "name": "job_reference",
+          "value": "CP4192",
+          "tier": "strict",
+          "strategy": "value once, then character by character"
+        }
+      ],
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Cotham Plumbing, what's gone wrong?"
+        },
+        {
+          "speaker": "caller",
+          "text": "The kitchen tap's dripping and it's not shutting off properly. Can someone come out to fourteen Ashleigh Road, Bristol?"
+        },
+        {
+          "speaker": "agent",
+          "text": "Ashleigh Road, is that A S H L E I G H, or the short one, A S H L E Y?",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "The long one. E I G H at the end."
+        },
+        {
+          "speaker": "agent",
+          "text": "Long one, fourteen Ashleigh Road. Postcode?"
+        },
+        {
+          "speaker": "caller",
+          "text": "BS8 2LS."
+        },
+        {
+          "speaker": "agent",
+          "text": "BS8 2LS. Is that S for Sierra on the end?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Sorry, no, it's LX. L, X ray."
+        },
+        {
+          "speaker": "agent",
+          "text": "L X ray, so BS8 2LX. Which bit of Bristol does that put you in?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Clifton. Ground floor flat, and there's a shared front door."
+        },
+        {
+          "speaker": "agent",
+          "text": "Ground floor in Clifton, shared door. Buzzer, or should he knock?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Buzzer's broken. He can knock, or ring me."
+        },
+        {
+          "speaker": "agent",
+          "text": "He'll ring you then. When are you free?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Tomorrow morning? Or, wait, no. Tomorrow afternoon. I've got a delivery in the morning."
+        },
+        {
+          "speaker": "agent",
+          "text": "Tomorrow afternoon, one till five. Number for the engineer?"
+        },
+        {
+          "speaker": "caller",
+          "text": "0117 496 0038."
+        },
+        {
+          "speaker": "agent",
+          "text": "0 1 1 7, 4 9 6, 0 0 3 8.",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "Yes."
+        },
+        {
+          "speaker": "agent",
+          "text": "Before I book it, here's the address in full. Ground floor flat, 14 Ashleigh Road, that's A S H L E I G H, Clifton, Bristol, postcode B S 8, 2, L X.",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "Perfect, yeah."
+        },
+        {
+          "speaker": "agent",
+          "text": "Your job number's CP4192, that's C P, 4 1 9 2. Someone'll be with you between one and five.",
+          "tier": "strict"
+        }
+      ],
+      "notes": "Two strict beats sit inside a light call: the ambiguous street is offered as two spellings letter by letter, and the job reference is value then characters. The wrong postcode is repaired without ceremony, L X ray, so BS8 2LX, and the agent moves straight on to the next question. Clifton, the flat type and the broken buzzer settle inside the following turn with no round trip, and the address is spoken back once at the end. Nine agent turns, no check tags at all."
+    },
+    {
+      "id": "address_03_non_subtle",
+      "pair_id": "address_03",
+      "label": "non_subtle",
+      "language": "en",
+      "scenario": "Emergency plumber dispatch; the street name has two spellings and the caller misreads one character of her own postcode.",
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Good morning. You have reached Cotham Plumbing. I will now proceed to log your fault. Kindly describe the problem."
+        },
+        {
+          "speaker": "caller",
+          "text": "The kitchen tap's dripping and it's not shutting off properly. Can someone come out to fourteen Ashleigh Road, Bristol?"
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you. For verification purposes, may I confirm the spelling. Is it A S H L E I G H, or is it A S H L E Y?",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "The long one. E I G H at the end."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you. Just to confirm, the street you have provided is Ashleigh Road and the house number you have provided is fourteen. That has been recorded. May I now have the postcode?"
+        },
+        {
+          "speaker": "caller",
+          "text": "BS8 2LS."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you. Just to confirm, the postcode you have provided is B S 8 2 L S. Is that correct?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Sorry, no, it's LX. L, X ray."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you for that correction. Just to confirm, the postcode has been amended to B S 8 2 L X. The previous entry has been removed. May I ask which area of Bristol this is?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Clifton. Ground floor flat, and there's a shared front door."
+        },
+        {
+          "speaker": "agent",
+          "text": "Excellent. Just to confirm, the area you have provided is Clifton and you have indicated a ground floor flat with a shared entrance. May I ask whether there is a functioning door buzzer?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Buzzer's broken. He can knock, or ring me."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you. Just to confirm, you have indicated that the buzzer is not functioning. I have recorded that. May I ask when you would be available for the engineer to attend?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Tomorrow morning? Or, wait, no. Tomorrow afternoon. I've got a delivery in the morning."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you for that amendment. Just to confirm, you have selected tomorrow afternoon, one until five. May I have a contact telephone number?"
+        },
+        {
+          "speaker": "caller",
+          "text": "0117 496 0038."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you. I will read that back to you, 0 1 1 7, 4 9 6, 0 0 3 8.",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "Yes."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you. I will now read the complete service address. Ground floor flat, 14 Ashleigh Road, spelled A S H L E I G H, Clifton, Bristol, postcode B S 8, 2, L X.",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "Perfect, yeah."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you. Your job reference is CP4192, that is C P, 4 1 9 2. Your booking has been recorded. Is there anything else I can help you with today?"
+        }
+      ],
+      "notes": "The strict fields stay strict, which is right; the error is the same ceremony landing on an area name, a flat type and a broken buzzer. Every address line is confirmed on the spot and then read again in full at the end, so the caller verifies the same address twice. The postcode fix is announced as a formal amendment with a removal notice. Kindly, no contractions, and the closer."
+    },
+    {
+      "id": "address_04_subtle",
+      "pair_id": "address_04",
+      "label": "subtle",
+      "language": "en",
+      "scenario": "International shipping quote; the delivery address is in Germany with a dotted apartment number, and the billing address is a different company site in the sender's own city.",
+      "fields": [
+        {
+          "name": "delivery_address",
+          "value": "Anke Vogel, Karl Liebknecht Strasse 42, apt 3.2, 04275 Leipzig, Germany",
+          "tier": "strict",
+          "strategy": "country, city, street, apartment and zip all ride into the next question, then one consolidated readback with the zip digit by digit"
+        },
+        {
+          "name": "recipient_name",
+          "value": "Anke Vogel",
+          "tier": "strict",
+          "strategy": "surname spelled letter by letter as the caller gives it"
+        },
+        {
+          "name": "collection_address",
+          "value": "22 Fenwick Road, Sheffield S7 1PJ",
+          "tier": "subtle",
+          "strategy": "value-first echo including the postcode, folded into the billing question"
+        },
+        {
+          "name": "billing_address",
+          "value": "Ridgeline Design, unit 4, Bramall Business Park, Sheffield S9 2TA",
+          "tier": "strict",
+          "strategy": "second consolidated readback, postcode character by character"
+        },
+        {
+          "name": "collection_date",
+          "value": "Friday morning",
+          "tier": "subtle",
+          "strategy": "silent accept, carried into the readback turn"
+        }
+      ],
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Redwing Freight, are you sending or receiving?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Sending. It's a parcel to Germany, I need a price."
+        },
+        {
+          "speaker": "agent",
+          "text": "Germany, whereabouts?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Leipzig. Karl Liebknecht Strasse, forty two."
+        },
+        {
+          "speaker": "agent",
+          "text": "Karl Liebknecht Strasse forty two. Is there a flat or a building number after that?"
+        },
+        {
+          "speaker": "caller",
+          "text": "There's an apartment number, hang on, it's 3.2. That's how they write it."
+        },
+        {
+          "speaker": "agent",
+          "text": "Apartment three point two. And the postcode?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Oh four two seven five."
+        },
+        {
+          "speaker": "agent",
+          "text": "Zero four two seven five, Leipzig. Who's it going to?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Anke Vogel. V O G E L."
+        },
+        {
+          "speaker": "agent",
+          "text": "V O G E L, Anke Vogel.",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "That's her. It's a medium box, books and clothes."
+        },
+        {
+          "speaker": "agent",
+          "text": "Books and clothes, medium box. Where are we collecting from?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Twenty two Fenwick Road, Sheffield. S7 1PJ."
+        },
+        {
+          "speaker": "agent",
+          "text": "Twenty two Fenwick Road, S7 1PJ. Is the billing address the same?"
+        },
+        {
+          "speaker": "caller",
+          "text": "No, bill it to my work. Ridgeline Design, unit 4, Bramall Business Park, Sheffield, S9 2TA."
+        },
+        {
+          "speaker": "agent",
+          "text": "Unit 4 at Bramall, same city, different postcode. When do you want it picked up?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Friday if you can."
+        },
+        {
+          "speaker": "agent",
+          "text": "Friday's a morning run. Delivery address back to you, Anke Vogel, Karl Liebknecht Strasse 42, apartment 3 point 2, Leipzig, Germany, and the postcode is 0, 4, 2, 7, 5.",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "That's right."
+        },
+        {
+          "speaker": "agent",
+          "text": "And the billing one, Ridgeline Design, unit 4, Bramall Business Park, Sheffield, postcode S, 9, 2, T, A. Driver'll come between nine and twelve.",
+          "tier": "strict"
+        }
+      ],
+      "notes": "Country and city are one word each and get one word back, Germany, whereabouts? and the street, apartment and zip each ride into the following question rather than stopping the call. The leading zero the caller dropped is quietly restored on the echo. Two complete addresses are held back and read once each at the end, the German zip digit by digit and the UK postcode character by character, so the caller confirms two addresses instead of eight fragments. No check tags anywhere."
+    },
+    {
+      "id": "address_04_non_subtle",
+      "pair_id": "address_04",
+      "label": "non_subtle",
+      "language": "en",
+      "scenario": "International shipping quote; the delivery address is in Germany with a dotted apartment number, and the billing address is a different company site in the sender's own city.",
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Redwing Freight, sending or receiving?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Sending. It's a parcel to Germany, I need a price."
+        },
+        {
+          "speaker": "agent",
+          "text": "Germany, whereabouts?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Leipzig. Karl Liebknecht Strasse, forty two."
+        },
+        {
+          "speaker": "agent",
+          "text": "Karl Liebknecht, forty two. Anything else on that line, flat number or anything?"
+        },
+        {
+          "speaker": "caller",
+          "text": "There's an apartment number, hang on, it's 3.2. That's how they write it."
+        },
+        {
+          "speaker": "agent",
+          "text": "Ah, they do it like that over there. Postcode?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Oh four two seven five."
+        },
+        {
+          "speaker": "agent",
+          "text": "Fourtwoseventyfive, yep. Who's it going to?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Anke Vogel. V O G E L."
+        },
+        {
+          "speaker": "agent",
+          "text": "Anke Vogel, so she's the one signing for it?"
+        },
+        {
+          "speaker": "caller",
+          "text": "That's her. It's a medium box, books and clothes."
+        },
+        {
+          "speaker": "agent",
+          "text": "Books and clothes, medium. Where are we collecting?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Twenty two Fenwick Road, Sheffield. S7 1PJ."
+        },
+        {
+          "speaker": "agent",
+          "text": "Twenty two Fenwick Road, Ssevenonepeejay. Billing address the same?"
+        },
+        {
+          "speaker": "caller",
+          "text": "No, bill it to my work. Ridgeline Design, unit 4, Bramall Business Park, Sheffield, S9 2TA."
+        },
+        {
+          "speaker": "agent",
+          "text": "Ridgeline Design at Bramall, I'll stick that on the invoice. When do you want it picked up?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Friday if you can."
+        },
+        {
+          "speaker": "agent",
+          "text": "Friday, morning run. That's thirty eight quid, two to three days."
+        },
+        {
+          "speaker": "caller",
+          "text": "That's right."
+        },
+        {
+          "speaker": "agent",
+          "text": "Invoice goes to your work, not the house. Driver'll come between nine and twelve on Friday."
+        }
+      ],
+      "notes": "wrong-direction: over-casual, dropped a fidelity floor. The agent is warm and brisk and uses contractions, so it sounds like the good twin, but it never reads either address back as a whole. It drops the apartment number 3.2 entirely, loses the leading zero on the German zip and never reads it digit by digit, mumbles the UK postcode as one run-together word, skips the spell-back of the recipient's surname, and confirms the billing address by company name with no postcode at all. Subtle is not the same as sloppy."
+    },
+    {
+      "id": "address_05_subtle",
+      "pair_id": "address_05",
+      "label": "subtle",
+      "language": "en",
+      "scenario": "Estate agent booking a property viewing; the caller asks a question back about the area and never gives a full postal address, only neighbourhoods and a landmark.",
+      "fields": [
+        {
+          "name": "property_of_interest",
+          "value": "61 Loughborough Road, West Bridgford",
+          "tier": "subtle",
+          "strategy": "agent supplies it, the caller answers with a landmark, and it's left alone"
+        },
+        {
+          "name": "second_area",
+          "value": "Sherwood",
+          "tier": "subtle",
+          "strategy": "value-first echo, no tag, folded into the budget question"
+        },
+        {
+          "name": "budget",
+          "value": "375 stretching to 390 thousand",
+          "tier": "subtle",
+          "strategy": "echo-and-advance into the viewing question"
+        },
+        {
+          "name": "viewing_slot",
+          "value": "Saturday at eleven",
+          "tier": "subtle",
+          "strategy": "silent accept, caller picked from two"
+        },
+        {
+          "name": "name_and_email",
+          "value": "Dermot Fahey, dfahey9 at grovemail.co.uk",
+          "tier": "strict",
+          "strategy": "surname letter by letter, email spelled out with the symbols named"
+        }
+      ],
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Hallam Residential, are you calling about a listing?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Yeah, I saw a place on your website, the one on Loughborough Road. Is it still available?"
+        },
+        {
+          "speaker": "agent",
+          "text": "Loughborough Road, West Bridgford, the three bed? That one's still on."
+        },
+        {
+          "speaker": "caller",
+          "text": "Yeah, that's the one. Can I ask, is it near the tram?"
+        },
+        {
+          "speaker": "agent",
+          "text": "Nearest tram's a fifteen minute walk. Buses are every ten, though."
+        },
+        {
+          "speaker": "caller",
+          "text": "Okay. And what's the exact address? The listing just says West Bridgford."
+        },
+        {
+          "speaker": "agent",
+          "text": "It's 61 Loughborough Road, down the Trent Bridge end."
+        },
+        {
+          "speaker": "caller",
+          "text": "Right, near the cricket ground. That works."
+        },
+        {
+          "speaker": "agent",
+          "text": "Near the ground, yeah. Are you only looking at West Bridgford?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Mostly. We'd look at Sherwood as well if something came up."
+        },
+        {
+          "speaker": "agent",
+          "text": "Sherwood too, I'll flag anything that lands there. What's your ceiling on price?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Three seventy five. We could stretch to three ninety for the right one."
+        },
+        {
+          "speaker": "agent",
+          "text": "Three seventy five, stretching to three ninety. When are you free to see the Loughborough Road one?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Saturday morning?"
+        },
+        {
+          "speaker": "agent",
+          "text": "Saturday we've got eleven and twelve thirty."
+        },
+        {
+          "speaker": "caller",
+          "text": "Eleven. It's Dermot Fahey, by the way."
+        },
+        {
+          "speaker": "agent",
+          "text": "Eleven it is. Fahey, is that F A H E Y?",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "F A H E Y, yes."
+        },
+        {
+          "speaker": "agent",
+          "text": "And an email, so I can send the details over?"
+        },
+        {
+          "speaker": "caller",
+          "text": "dfahey, then the number nine, at grovemail dot co dot uk."
+        },
+        {
+          "speaker": "agent",
+          "text": "So that's D F A H E Y, nine, at grovemail, dot co dot uk. I'll send the Sherwood ones as they come, and see you Saturday at eleven.",
+          "tier": "strict"
+        }
+      ],
+      "notes": "This call deliberately has no postal address to collect, so nothing gets a readback: West Bridgford, the Trent Bridge end and Sherwood are whole-word values that settle inside the next question, and the eleven o'clock slot is accepted in silence. The strict work goes where it belongs, on the surname and the email. The caller's question back about the tram is answered flat and the call keeps moving. Nine agent turns, no check tags."
+    },
+    {
+      "id": "address_05_non_subtle",
+      "pair_id": "address_05",
+      "label": "non_subtle",
+      "language": "en",
+      "scenario": "Estate agent booking a property viewing; the caller asks a question back about the area and never gives a full postal address, only neighbourhoods and a landmark.",
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Good afternoon and welcome to Hallam Residential. I will now proceed to assist you. Are you calling regarding a listing?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Yeah, I saw a place on your website, the one on Loughborough Road. Is it still available?"
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you. Just to confirm, the property you have requested is the three bedroom house on Loughborough Road in West Bridgford. That property is available."
+        },
+        {
+          "speaker": "caller",
+          "text": "Yeah, that's the one. Can I ask, is it near the tram?"
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you for your question. I understand your concern regarding transport. The nearest tram stop is a fifteen minute walk and buses operate every ten minutes."
+        },
+        {
+          "speaker": "caller",
+          "text": "Okay. And what's the exact address? The listing just says West Bridgford."
+        },
+        {
+          "speaker": "agent",
+          "text": "Certainly. The address is 61 Loughborough Road, West Bridgford. Just to confirm, that is number sixty one. Is that clear?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Right, near the cricket ground. That works."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you. Just to confirm, you have indicated the cricket ground as a landmark. I have recorded that. May I ask whether you are searching only in West Bridgford?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Mostly. We'd look at Sherwood as well if something came up."
+        },
+        {
+          "speaker": "agent",
+          "text": "Excellent. Just to confirm, the second area you have provided is Sherwood. That has been recorded. May I ask what your maximum budget is?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Three seventy five. We could stretch to three ninety for the right one."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you. Just to confirm, the budget you have provided is three hundred and seventy five thousand pounds, with a maximum of three hundred and ninety thousand pounds. May I ask when you would be available to view the property?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Saturday morning?"
+        },
+        {
+          "speaker": "agent",
+          "text": "Perfect! Just to confirm, you have requested Saturday morning. We have availability at eleven and at twelve thirty."
+        },
+        {
+          "speaker": "caller",
+          "text": "Eleven. It's Dermot Fahey, by the way."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you. For verification purposes, may I confirm the spelling of the surname. Is it F A H E Y?",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "F A H E Y, yes."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you. The name has been recorded. May I have an email address so that I can forward the details?"
+        },
+        {
+          "speaker": "caller",
+          "text": "dfahey, then the number nine, at grovemail dot co dot uk."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you. I will read that back to you, D F A H E Y, nine, at grovemail, dot co dot uk. Your viewing has been scheduled. Is there anything else I can help you with today?",
+          "tier": "strict"
+        }
+      ],
+      "notes": "Same call, and the tell is that a landmark, a second neighbourhood, a budget and a Saturday slot all get the same Just to confirm, X treatment that only the email actually needs. Status phrases on every second turn, praise on a viewing time, I understand your concern, no contractions anywhere, and the closer."
+    },
+    {
+      "id": "address_06_subtle",
+      "pair_id": "address_06",
+      "label": "subtle",
+      "language": "en",
+      "scenario": "Office lunch delivery; the caller volunteers two fields at once, then interrupts himself to correct which entrance the driver has to use after midday.",
+      "fields": [
+        {
+          "name": "delivery_address",
+          "value": "Kestrel Group, Suite 4B, 4th floor, 47 Fargate, Sheffield S1 2HE",
+          "tier": "strict",
+          "strategy": "street, floor, company, suite and postcode all taken without a round trip, then one consolidated readback with the postcode character by character"
+        },
+        {
+          "name": "headcount",
+          "value": "twelve covers",
+          "tier": "subtle",
+          "strategy": "volunteered alongside the street and echoed in the same breath"
+        },
+        {
+          "name": "entrance_note",
+          "value": "main entrance on Fargate after twelve, side door locked",
+          "tier": "subtle",
+          "strategy": "one-beat correction after the caller interrupts himself"
+        },
+        {
+          "name": "reception_contact",
+          "value": "Bea on reception",
+          "tier": "subtle",
+          "strategy": "bare echo, no tag, no spell-back asked for"
+        },
+        {
+          "name": "order_reference",
+          "value": "KG7734",
+          "tier": "strict",
+          "strategy": "value once, then character by character"
+        }
+      ],
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Sunder Kitchen, are you ordering for delivery?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Yeah, it's a big one, office lunch. Twelve people, and we're on Fargate."
+        },
+        {
+          "speaker": "agent",
+          "text": "Twelve covers on Fargate, what number?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Forty seven. It's the Kestrel Group, fourth floor."
+        },
+        {
+          "speaker": "agent",
+          "text": "Forty seven Fargate, fourth floor, Kestrel Group. Sheffield city centre, yeah?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Yeah, S1 2HE."
+        },
+        {
+          "speaker": "agent",
+          "text": "S1 2HE. Is the whole floor yours or is there a suite number?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Suite 4B. There's another company up there, Marchmont something, so it matters."
+        },
+        {
+          "speaker": "agent",
+          "text": "Suite 4B, not Marchmont. How does the driver get in?"
+        },
+        {
+          "speaker": "caller",
+          "text": "There's a reception on the ground floor, they'll buzz him up. Actually no, after twelve they lock the side door, so he needs the main entrance on Fargate."
+        },
+        {
+          "speaker": "agent",
+          "text": "Main entrance on Fargate after twelve, not the side. Who does he ask for?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Ask for Bea. B E A."
+        },
+        {
+          "speaker": "agent",
+          "text": "Bea on reception. What time do you want it there?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Half twelve. It's for a one o'clock meeting, so that gives us a buffer."
+        },
+        {
+          "speaker": "agent",
+          "text": "Half twelve is fine. What are we making?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Six of the chicken boxes, four veg, two of the lamb. And twenty flatbreads."
+        },
+        {
+          "speaker": "agent",
+          "text": "Six chicken, four veg, two lamb, twenty flatbreads. Any allergies?"
+        },
+        {
+          "speaker": "caller",
+          "text": "One of them's coeliac, so a gluten free box if you can."
+        },
+        {
+          "speaker": "agent",
+          "text": "Gluten free box, bagged separate. Address back to you before I send it through. Kestrel Group, suite 4B, fourth floor, 47 Fargate, Sheffield, postcode S, 1, 2, H, E.",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "Spot on."
+        },
+        {
+          "speaker": "agent",
+          "text": "Your order number's KG7734, that's K G, 7 7 3 4. Driver'll be with Bea for half twelve.",
+          "tier": "strict"
+        }
+      ],
+      "notes": "The caller hands over headcount and street in one breath and the agent takes both at once. Floor, company and suite ride inside the street echo, the postcode is a bare value-as-question, and the self-interrupted entrance correction is answered in one beat with the old instruction named rather than announced as deleted. Everything lands once at the end in a single readback, postcode character by character, next to the spelled order number. One yeah? tag across nine agent turns."
+    },
+    {
+      "id": "address_06_non_subtle",
+      "pair_id": "address_06",
+      "label": "non_subtle",
+      "language": "en",
+      "scenario": "Office lunch delivery; the caller volunteers two fields at once, then interrupts himself to correct which entrance the driver has to use after midday.",
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Good morning. You have reached Sunder Kitchen. I will now proceed to take your order. Are you ordering for delivery?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Yeah, it's a big one, office lunch. Twelve people, and we're on Fargate."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you. Just to confirm, you have indicated twelve covers. That has been recorded. Separately, just to confirm, the street you have provided is Fargate. May I have the building number?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Forty seven. It's the Kestrel Group, fourth floor."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you. Just to confirm, the building number you have provided is forty seven, the company name you have provided is Kestrel Group and the floor you have provided is the fourth floor. May I confirm that the city is Sheffield?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Yeah, S1 2HE."
+        },
+        {
+          "speaker": "agent",
+          "text": "Excellent. Just to confirm, the postcode you have provided is S1 2HE. That has been recorded. May I ask whether you occupy the entire floor, or whether there is a suite number?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Suite 4B. There's another company up there, Marchmont something, so it matters."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you. Just to confirm, the suite number you have provided is four B. I have recorded that. May I ask how the driver will gain access to the building?"
+        },
+        {
+          "speaker": "caller",
+          "text": "There's a reception on the ground floor, they'll buzz him up. Actually no, after twelve they lock the side door, so he needs the main entrance on Fargate."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you for that amendment. Just to confirm, the access instruction has been updated to the main entrance on Fargate. The previous instruction has been removed. May I ask who the driver should ask for?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Ask for Bea. B E A."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you. Just to confirm, the contact name you have provided is Bea, spelled B E A. That has been recorded. May I ask what time the delivery is required?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Half twelve. It's for a one o'clock meeting, so that gives us a buffer."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you. Just to confirm, the delivery time you have requested is twelve thirty. May I take your food order?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Six of the chicken boxes, four veg, two of the lamb. And twenty flatbreads."
+        },
+        {
+          "speaker": "agent",
+          "text": "Perfect! Just to confirm, you have selected six chicken boxes, four vegetarian boxes, two lamb boxes and twenty flatbreads. May I ask whether there are any allergies?"
+        },
+        {
+          "speaker": "caller",
+          "text": "One of them's coeliac, so a gluten free box if you can."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you. Just to confirm, one gluten free box has been recorded. I will now read the complete delivery address. Kestrel Group, suite 4B, fourth floor, 47 Fargate, Sheffield, postcode S, 1, 2, H, E.",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "Spot on."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you. Your order reference is KG7734, that is K G, 7 7 3 4. Your order has been recorded and the driver will attend at twelve thirty. Is there anything else I can help you with today?"
+        }
+      ],
+      "notes": "Every line of the address gets its own confirm round trip, building number, company, floor, postcode, suite, and then the whole thing is read again at the end, so the caller verifies the same address twice. The template never varies, praise lands on a food order, the entrance correction is filed out loud as a record update with a deletion notice, there are no contractions, and it ends on the closer."
+    },
+    {
+      "id": "address_07_subtle",
+      "pair_id": "address_07",
+      "label": "subtle",
+      "language": "en",
+      "scenario": "Removals survey for a long distance move; the caller gives the destination address first because it is the one he knows, and defers a decision about the cellar.",
+      "fields": [
+        {
+          "name": "destination_address",
+          "value": "9 Bracondale Court, first floor, Norwich NR1 2AN",
+          "tier": "strict",
+          "strategy": "arrives out of order, echoed once as a whole and left alone until the joint readback"
+        },
+        {
+          "name": "origin_address",
+          "value": "41 Wyeverne Road, Cathays, Cardiff CF24 4BG",
+          "tier": "strict",
+          "strategy": "street, district and postcode taken in one breath, echoed once, held for the joint readback"
+        },
+        {
+          "name": "origin_property",
+          "value": "three bed terrace plus a cellar, packing decision deferred",
+          "tier": "subtle",
+          "strategy": "echo-and-advance, the deferral answered without a round trip"
+        },
+        {
+          "name": "move_date",
+          "value": "Friday 18 September",
+          "tier": "subtle",
+          "strategy": "echo-and-advance, agent supplies the day of the week"
+        },
+        {
+          "name": "contact_phone",
+          "value": "07700 900118",
+          "tier": "strict",
+          "strategy": "digit by digit in groups"
+        }
+      ],
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Ashcroft Removals, are you moving locally or a distance?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Distance. Cardiff to Norwich, which I'm told is a nightmare."
+        },
+        {
+          "speaker": "agent",
+          "text": "Cardiff to Norwich, it's a long one but we run it weekly. Which end do you want to start with?"
+        },
+        {
+          "speaker": "caller",
+          "text": "The Norwich end, because that's the bit I actually know. It's 9 Bracondale Court, NR1 2AN."
+        },
+        {
+          "speaker": "agent",
+          "text": "Nine Bracondale Court, NR1 2AN, that's the new place."
+        },
+        {
+          "speaker": "caller",
+          "text": "Yeah. It's a first floor flat, no lift, which I imagine you'll charge me for."
+        },
+        {
+          "speaker": "agent",
+          "text": "First floor, no lift, it adds a bit. And the Cardiff address?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Forty one Wyeverne Road. Cathays. CF24 4BG."
+        },
+        {
+          "speaker": "agent",
+          "text": "Wyeverne Road in Cathays, CF24 4BG. House or flat at that end?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Terraced house. Three bedrooms, and there's a cellar full of junk."
+        },
+        {
+          "speaker": "agent",
+          "text": "Terraced, three bed, plus a cellar. Are we packing the cellar or are you clearing it?"
+        },
+        {
+          "speaker": "caller",
+          "text": "God. Clearing it, probably. Can I decide later?"
+        },
+        {
+          "speaker": "agent",
+          "text": "You can decide on the day, the crew'll price it there and then. When's the move?"
+        },
+        {
+          "speaker": "caller",
+          "text": "The eighteenth of September. It's a Friday I think."
+        },
+        {
+          "speaker": "agent",
+          "text": "Eighteenth of September, that is a Friday. Best number for you?"
+        },
+        {
+          "speaker": "caller",
+          "text": "07700 900 118."
+        },
+        {
+          "speaker": "agent",
+          "text": "0 7 7 0 0, 9 0 0, 1 1 8.",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "Correct."
+        },
+        {
+          "speaker": "agent",
+          "text": "Both addresses back to you. Collection is 41 Wyeverne Road, Cathays, Cardiff, postcode C, F, 2, 4, 4, B, G. Delivery is 9 Bracondale Court, first floor, Norwich, postcode N, R, 1, 2, A, N.",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "That's all correct."
+        },
+        {
+          "speaker": "agent",
+          "text": "I'll email the quote tonight and we'll do the survey on video before the day."
+        }
+      ],
+      "notes": "Two full addresses arrive in the wrong order and neither is picked apart line by line: each gets one echo as a whole, then both are read back together at the end with both postcodes character by character. The floor, the property type and the cellar settle inside the following question, and the deferred cellar decision is simply granted rather than filed. Nine agent turns, no check tags, openers never repeat."
+    },
+    {
+      "id": "address_07_non_subtle",
+      "pair_id": "address_07",
+      "label": "non_subtle",
+      "language": "en",
+      "scenario": "Removals survey for a long distance move; the caller gives the destination address first because it is the one he knows, and defers a decision about the cellar.",
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Good morning. You have reached Ashcroft Removals. I will now proceed to collect your move details. Are you moving locally or over a distance?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Distance. Cardiff to Norwich, which I'm told is a nightmare."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you. Just to confirm, the route you have provided is Cardiff to Norwich. That has been recorded. Which address would you like to provide first?"
+        },
+        {
+          "speaker": "caller",
+          "text": "The Norwich end, because that's the bit I actually know. It's 9 Bracondale Court, NR1 2AN."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you. Just to confirm, the destination street you have provided is Bracondale Court, the number you have provided is nine and the postcode you have provided is N R 1 2 A N. May I ask about the property type?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Yeah. It's a first floor flat, no lift, which I imagine you'll charge me for."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you. Just to confirm, you have indicated a first floor flat with no lift. A surcharge will apply. May I now have the Cardiff address?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Forty one Wyeverne Road. Cathays. CF24 4BG."
+        },
+        {
+          "speaker": "agent",
+          "text": "Excellent. Just to confirm, the collection street you have provided is Wyeverne Road, the number is forty one, the district is Cathays and the postcode is C F 2 4 4 B G. That has been recorded. May I ask whether that property is a house or a flat?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Terraced house. Three bedrooms, and there's a cellar full of junk."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you. Just to confirm, you have indicated a three bedroom terraced house with a cellar. May I ask whether the cellar contents are to be packed by us?"
+        },
+        {
+          "speaker": "caller",
+          "text": "God. Clearing it, probably. Can I decide later?"
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you. Just to confirm, you have indicated that a decision is pending. I have recorded that as undecided. The crew will price it on the day. May I have the date of the move?"
+        },
+        {
+          "speaker": "caller",
+          "text": "The eighteenth of September. It's a Friday I think."
+        },
+        {
+          "speaker": "agent",
+          "text": "Perfect! Just to confirm, the date you have requested is the eighteenth of September, which is a Friday. May I have a contact telephone number?"
+        },
+        {
+          "speaker": "caller",
+          "text": "07700 900 118."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you. I will read that back to you, 0 7 7 0 0, 9 0 0, 1 1 8.",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "Correct."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you. I will now read both addresses. Collection, 41 Wyeverne Road, Cathays, Cardiff, postcode C, F, 2, 4, 4, B, G. Delivery, 9 Bracondale Court, first floor, Norwich, postcode N, R, 1, 2, A, N.",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "That's all correct."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you. Your survey has been recorded and the link will be emailed this evening. Is there anything else I can help you with today?"
+        }
+      ],
+      "notes": "Both postcodes are confirmed on the spot and then read again in full at the end, so the caller verifies each address twice. Just to confirm opens nearly every turn, praise lands on a calendar date, the deferred cellar decision is recorded out loud as undecided, there are no contractions, and it finishes on the closer."
+    },
+    {
+      "id": "address_08_subtle",
+      "pair_id": "address_08",
+      "label": "subtle",
+      "language": "en",
+      "scenario": "New electricity supply setup; the agent mishears the last character of the postcode, and the caller wants bills going to her mother's address in a different town.",
+      "fields": [
+        {
+          "name": "supply_address",
+          "value": "Flat 2, 88 Grange Loan, Edinburgh EH9 2ER",
+          "tier": "strict",
+          "strategy": "flat, number and street taken as one line, mishear repaired in one beat, held for the joint readback with the postcode character by character"
+        },
+        {
+          "name": "meter_location",
+          "value": "stair cupboard, ground floor, marked 2 in pen",
+          "tier": "subtle",
+          "strategy": "value-first echo, no tag, the label detail folded in"
+        },
+        {
+          "name": "opening_reading",
+          "value": "23408",
+          "tier": "subtle",
+          "strategy": "silent accept, read straight into the account action"
+        },
+        {
+          "name": "billing_address",
+          "value": "14 Lauder Place, Musselburgh EH21 7RJ",
+          "tier": "subtle",
+          "strategy": "bare echo of house number and town, characters saved for the joint readback"
+        },
+        {
+          "name": "account_number",
+          "value": "NG40118",
+          "tier": "strict",
+          "strategy": "value once, then character by character"
+        }
+      ],
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Northgate Energy, are you setting up a new supply?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Yeah, I've just moved in. I need to get the electric in my name."
+        },
+        {
+          "speaker": "agent",
+          "text": "New tenancy, or have you bought it?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Renting. Started on the first."
+        },
+        {
+          "speaker": "agent",
+          "text": "From the first, fine. What's the supply address?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Flat 2, 88 Grange Loan, Edinburgh."
+        },
+        {
+          "speaker": "agent",
+          "text": "Flat 2, 88 Grange Loan. Postcode?"
+        },
+        {
+          "speaker": "caller",
+          "text": "EH9 2ER."
+        },
+        {
+          "speaker": "agent",
+          "text": "EH9 2EA?"
+        },
+        {
+          "speaker": "caller",
+          "text": "E R. Romeo. E H nine, two E R."
+        },
+        {
+          "speaker": "agent",
+          "text": "E R, my mistake, EH9 2ER. Is the meter inside the flat?"
+        },
+        {
+          "speaker": "caller",
+          "text": "It's in the stair. There's a cupboard on the ground floor with all four in it, and mine says 2 on it in marker pen."
+        },
+        {
+          "speaker": "agent",
+          "text": "Second one along, marked in pen. Have you got a reading from the day you moved in?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Yeah, hang on. Twenty three thousand four hundred and eight."
+        },
+        {
+          "speaker": "agent",
+          "text": "23408, I'll open the account from there. Are the bills coming to the flat, or somewhere else?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Somewhere else, actually. Send them to my mum's, I'm only here a year. It's 14 Lauder Place, Musselburgh, EH21 7RJ."
+        },
+        {
+          "speaker": "agent",
+          "text": "Fourteen Lauder Place, Musselburgh, that's the billing one."
+        },
+        {
+          "speaker": "caller",
+          "text": "Yeah."
+        },
+        {
+          "speaker": "agent",
+          "text": "Two addresses to read back. Supply is Flat 2, 88 Grange Loan, Edinburgh, postcode E, H, 9, 2, E, R. Billing is 14 Lauder Place, Musselburgh, postcode E, H, 2, 1, 7, R, J.",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "Both right."
+        },
+        {
+          "speaker": "agent",
+          "text": "Your account number's NG40118, that's N, G, 4, 0, 1, 1, 8. First bill'll come in about six weeks.",
+          "tier": "strict"
+        }
+      ],
+      "notes": "The agent's own mishear is repaired in one beat with the phonetic the caller offered, E R, my mistake, and the next question follows in the same turn. Meter location, opening reading and the billing town all settle without a round trip, and the reading is accepted in silence. The two addresses are held back and read once together at the end with both postcodes character by character, alongside the spelled account number. Nine agent turns, no check tags."
+    },
+    {
+      "id": "address_08_non_subtle",
+      "pair_id": "address_08",
+      "label": "non_subtle",
+      "language": "en",
+      "scenario": "New electricity supply setup; the agent mishears the last character of the postcode, and the caller wants bills going to her mother's address in a different town.",
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Good afternoon. You have reached Northgate Energy. I will now proceed to open a new supply account. Are you setting up a new supply?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Yeah, I've just moved in. I need to get the electric in my name."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you. Just to confirm, you have requested a change of supply into your name. That has been recorded. May I ask whether you are renting or whether you have purchased the property?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Renting. Started on the first."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you. Just to confirm, you have indicated a tenancy commencing on the first. May I have the supply address?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Flat 2, 88 Grange Loan, Edinburgh."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you. Just to confirm, the flat number you have provided is two. Just to confirm, the building number you have provided is eighty eight. Just to confirm, the street you have provided is Grange Loan. May I have the postcode?"
+        },
+        {
+          "speaker": "caller",
+          "text": "EH9 2ER."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you. Just to confirm, the postcode you have provided is E H 9 2 E A. Is that correct?"
+        },
+        {
+          "speaker": "caller",
+          "text": "E R. Romeo. E H nine, two E R."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you for that correction. Just to confirm, the postcode has been amended to E H 9 2 E R. The previous entry has been removed. May I ask where the meter is located?"
+        },
+        {
+          "speaker": "caller",
+          "text": "It's in the stair. There's a cupboard on the ground floor with all four in it, and mine says 2 on it in marker pen."
+        },
+        {
+          "speaker": "agent",
+          "text": "Excellent. Just to confirm, you have indicated a communal cupboard on the ground floor containing four meters, and that your meter is marked with the number two. That has been recorded. May I have an opening meter reading?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Yeah, hang on. Twenty three thousand four hundred and eight."
+        },
+        {
+          "speaker": "agent",
+          "text": "Perfect! Just to confirm, the reading you have provided is two three four zero eight. May I ask whether billing correspondence should be sent to the supply address?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Somewhere else, actually. Send them to my mum's, I'm only here a year. It's 14 Lauder Place, Musselburgh, EH21 7RJ."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you. Just to confirm, the billing house number you have provided is fourteen, the street is Lauder Place, the town is Musselburgh and the postcode is E H 2 1 7 R J. That has been recorded."
+        },
+        {
+          "speaker": "caller",
+          "text": "Yeah."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you. I will now read both addresses. Supply address, Flat 2, 88 Grange Loan, Edinburgh, postcode E, H, 9, 2, E, R. Billing address, 14 Lauder Place, Musselburgh, postcode E, H, 2, 1, 7, R, J.",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "Both right."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you. Your account number is NG40118, that is N, G, 4, 0, 1, 1, 8. Your account has been recorded and your first bill will arrive in approximately six weeks. Is there anything else I can help you with today?"
+        }
+      ],
+      "notes": "Three address lines get three separate Just to confirm clauses inside a single turn, and then the same address is read again at the end. The agent's own mishear is handled as a formal amendment with a removal notice rather than a one beat repair. Same template on the meter cupboard and the billing preference, praise on a meter reading, no contractions, closer at the end."
+    },
+    {
+      "id": "address_09_subtle",
+      "pair_id": "address_09",
+      "label": "subtle",
+      "language": "en",
+      "scenario": "Insurance surveyor booking a property inspection; the property has no street number, the caller navigates by a pub, and there is a separately named annexe on the deeds.",
+      "fields": [
+        {
+          "name": "policy_number",
+          "value": "MP-880419",
+          "tier": "strict",
+          "strategy": "value once, then character by character including the dash"
+        },
+        {
+          "name": "property_address",
+          "value": "Hollytree Farm and Annexe 1, Fishmore Lane, Ludlow SY8 3DP",
+          "tier": "strict",
+          "strategy": "no street number exists, so name, lane, annexe and postcode are gathered loosely then read back once with the postcode character by character"
+        },
+        {
+          "name": "access_landmark",
+          "value": "up the lane past the Cross Keys, out of Ludlow",
+          "tier": "subtle",
+          "strategy": "echoed once and worked forward from, no round trip"
+        },
+        {
+          "name": "gate_code",
+          "value": "1947",
+          "tier": "strict",
+          "strategy": "digit by digit"
+        },
+        {
+          "name": "dogs_on_site",
+          "value": "two, shut in when the owner is out",
+          "tier": "subtle",
+          "strategy": "volunteered alongside the sticking gate, both taken in one echo"
+        }
+      ],
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Marlow Insurance here, I'm ringing about the survey on your property. Is now alright?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Yeah, now's fine. Go ahead."
+        },
+        {
+          "speaker": "agent",
+          "text": "Can I take the policy number off the letter?"
+        },
+        {
+          "speaker": "caller",
+          "text": "MP dash 8 8 0 4 1 9."
+        },
+        {
+          "speaker": "agent",
+          "text": "MP dash 880419, so that's M, P, dash, 8, 8, 0, 4, 1, 9.",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "That's it. It's the house and the annexe, both."
+        },
+        {
+          "speaker": "agent",
+          "text": "House and annexe together. What's the address?"
+        },
+        {
+          "speaker": "caller",
+          "text": "That's the awkward bit. It's not really on a street. We're up the lane past the Cross Keys pub, out of Ludlow."
+        },
+        {
+          "speaker": "agent",
+          "text": "Past the Cross Keys, out of Ludlow. Does the post come to a name rather than a number?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Yeah, Hollytree Farm. And the lane's called Fishmore Lane, but there's no sign."
+        },
+        {
+          "speaker": "agent",
+          "text": "Hollytree Farm, Fishmore Lane, no sign on it. Postcode?"
+        },
+        {
+          "speaker": "caller",
+          "text": "SY8 3DP."
+        },
+        {
+          "speaker": "agent",
+          "text": "SY8 3DP. Is the annexe a separate building or attached?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Attached, but it's got its own door round the side. It's Annexe 1 on the deeds."
+        },
+        {
+          "speaker": "agent",
+          "text": "Annexe 1, own door round the side. How does the surveyor get onto the land?"
+        },
+        {
+          "speaker": "caller",
+          "text": "There's a gate. Code's 1 9 4 7."
+        },
+        {
+          "speaker": "agent",
+          "text": "1, 9, 4, 7 on the gate.",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "Yeah, then push it hard, it sticks. Watch for the dogs too, two of them, but I'll shut them in if I'm out."
+        },
+        {
+          "speaker": "agent",
+          "text": "Two dogs shut in, and he'll shove the gate. Say Tuesday the eleventh, morning?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Tuesday's fine."
+        },
+        {
+          "speaker": "agent",
+          "text": "Before I let you go, the address in full. Hollytree Farm and Annexe 1, Fishmore Lane, Ludlow, postcode S, Y, 8, 3, D, P. He'll ring the day before with a window.",
+          "tier": "strict"
+        }
+      ],
+      "notes": "A property with no street number still earns the full treatment: the pub, the lane and the annexe settle inside the next question with no ceremony, but the whole address is held and read once at the end with Annexe 1 and Fishmore Lane in it and the postcode character by character. The policy number and the gate code stay strict inside an otherwise light call, which is exactly the boundary the model needs. Eight agent turns, no check tags."
+    },
+    {
+      "id": "address_09_non_subtle",
+      "pair_id": "address_09",
+      "label": "non_subtle",
+      "language": "en",
+      "scenario": "Insurance surveyor booking a property inspection; the property has no street number, the caller navigates by a pub, and there is a separately named annexe on the deeds.",
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Marlow Insurance here, ringing about the survey on your place. Good time?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Yeah, now's fine. Go ahead."
+        },
+        {
+          "speaker": "agent",
+          "text": "Lovely. Policy number off the letter?"
+        },
+        {
+          "speaker": "caller",
+          "text": "MP dash 8 8 0 4 1 9."
+        },
+        {
+          "speaker": "agent",
+          "text": "MP dash 880419, so that's M, P, dash, 8, 8, 0, 4, 1, 9.",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "That's it. It's the house and the annexe, both."
+        },
+        {
+          "speaker": "agent",
+          "text": "Both, no bother. Where is it?"
+        },
+        {
+          "speaker": "caller",
+          "text": "That's the awkward bit. It's not really on a street. We're up the lane past the Cross Keys pub, out of Ludlow."
+        },
+        {
+          "speaker": "agent",
+          "text": "Past the Cross Keys, he'll find that. Does the post come to a name?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Yeah, Hollytree Farm. And the lane's called Fishmore Lane, but there's no sign."
+        },
+        {
+          "speaker": "agent",
+          "text": "Hollytree Farm, that's easy enough. Postcode?"
+        },
+        {
+          "speaker": "caller",
+          "text": "SY8 3DP."
+        },
+        {
+          "speaker": "agent",
+          "text": "Essexwythreedeepee, yep. Is the annexe attached or separate?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Attached, but it's got its own door round the side. It's Annexe 1 on the deeds."
+        },
+        {
+          "speaker": "agent",
+          "text": "Side door, fine. How does he get onto the land?"
+        },
+        {
+          "speaker": "caller",
+          "text": "There's a gate. Code's 1 9 4 7."
+        },
+        {
+          "speaker": "agent",
+          "text": "Nineteen forty seven, got it."
+        },
+        {
+          "speaker": "caller",
+          "text": "Yeah, then push it hard, it sticks. Watch for the dogs too, two of them, but I'll shut them in if I'm out."
+        },
+        {
+          "speaker": "agent",
+          "text": "Two dogs shut in, and he'll shove the gate. Tuesday the eleventh, morning?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Tuesday's fine."
+        },
+        {
+          "speaker": "agent",
+          "text": "So that's Hollytree Farm out past the Cross Keys, Tuesday morning, gate code nineteen forty seven. He'll ring the day before."
+        }
+      ],
+      "notes": "wrong-direction: over-casual, dropped a fidelity floor. The agent sounds exactly like the good twin, warm and brisk with contractions and varied openers, but there is no consolidated address readback at all. The closing summary drops Annexe 1 and Fishmore Lane, the postcode is mumbled as one run-together word instead of character by character, and the gate code is echoed as nineteen forty seven rather than digit by digit. Subtle is not the same as sloppy."
+    },
+    {
+      "id": "address_10_subtle",
+      "pair_id": "address_10",
+      "label": "subtle",
+      "language": "en",
+      "scenario": "Community nursing arranging home visits for the caller's father; explicit permission to discuss his care, and the caller declines to give the key safe code over the phone.",
+      "fields": [
+        {
+          "name": "permission_to_discuss",
+          "value": "daughter has his permission",
+          "tier": "strict",
+          "strategy": "explicit ask and explicit answer, then a second explicit question about him confirming it himself"
+        },
+        {
+          "name": "patient_dob",
+          "value": "14 March 1938",
+          "tier": "strict",
+          "strategy": "full date read back, month as a word"
+        },
+        {
+          "name": "patient_address",
+          "value": "Flat 3, ground floor, 90 Sanderling Way, Plymouth PL5 3QN",
+          "tier": "strict",
+          "strategy": "street, city and postcode arrive in one breath and get one echo, unit and floor folded in later, all read back once with the postcode character by character"
+        },
+        {
+          "name": "key_safe_code",
+          "value": "refused over the phone",
+          "tier": "subtle",
+          "strategy": "one reason, an alternative offered, then dropped"
+        },
+        {
+          "name": "visit_time",
+          "value": "mornings, before eleven",
+          "tier": "subtle",
+          "strategy": "value-first echo with the practical limit attached"
+        }
+      ],
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "This is Devon calling from Rosehill Community Nursing, are you able to talk?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Yes, I've been expecting you."
+        },
+        {
+          "speaker": "agent",
+          "text": "We're setting up the home visits for your dad. Before I take any details, can you confirm he's happy for me to discuss his care with you?",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "Yes, he is. I'm his daughter and he's asked me to sort it."
+        },
+        {
+          "speaker": "agent",
+          "text": "Fine, and can he say that himself if the nurse asks on the day?"
+        },
+        {
+          "speaker": "caller",
+          "text": "He can, yeah. He's just not good on the phone."
+        },
+        {
+          "speaker": "agent",
+          "text": "Not good on the phone, understood. Can I take his date of birth?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Fourteenth of March, nineteen thirty eight."
+        },
+        {
+          "speaker": "agent",
+          "text": "The fourteenth of March, nineteen thirty eight.",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "That's right."
+        },
+        {
+          "speaker": "agent",
+          "text": "Where's he living?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Ninety Sanderling Way, Plymouth. PL5 3QN."
+        },
+        {
+          "speaker": "agent",
+          "text": "Ninety Sanderling Way, PL5 3QN. Is that a house?"
+        },
+        {
+          "speaker": "caller",
+          "text": "It's a flat. Ground floor, thank god, he can't do stairs. Flat 3, and the buzzer says Wheeler."
+        },
+        {
+          "speaker": "agent",
+          "text": "Flat 3, ground floor, buzzer marked Wheeler. Has he got a key safe?"
+        },
+        {
+          "speaker": "caller",
+          "text": "There is one, but I'd rather not give the code out over the phone, if that's alright."
+        },
+        {
+          "speaker": "agent",
+          "text": "That's alright, you don't have to. She can ring the buzzer and you can give it at the door if it's ever needed. When's best for the visits?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Mornings. He's sharper in the mornings."
+        },
+        {
+          "speaker": "agent",
+          "text": "Mornings then, we'll aim for before eleven."
+        },
+        {
+          "speaker": "caller",
+          "text": "That'd suit him."
+        },
+        {
+          "speaker": "agent",
+          "text": "Let me read his address back. Flat 3, ground floor, 90 Sanderling Way, Plymouth, postcode P, L, 5, 3, Q, N. First visit'll be Thursday morning.",
+          "tier": "strict"
+        }
+      ],
+      "notes": "Permission to discuss is asked and answered explicitly and the date of birth is read back in full with the month as a word, both strict inside an otherwise light call. Street, city and postcode arrive together and get one echo between them; the flat number and floor are folded in on the next turn rather than confirmed separately. The key safe refusal gets one line, a workaround, and nothing more. The address lands once at the end with the postcode character by character. Eight agent turns, no check tags."
+    },
+    {
+      "id": "address_10_non_subtle",
+      "pair_id": "address_10",
+      "label": "non_subtle",
+      "language": "en",
+      "scenario": "Community nursing arranging home visits for the caller's father; explicit permission to discuss his care, and the caller declines to give the key safe code over the phone.",
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Good morning. This is Devon calling from Rosehill Community Nursing. I will now proceed with your enquiry. Are you able to talk?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Yes, I've been expecting you."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you. We are setting up the home visits for your father. Before I take any details, can you confirm that he is happy for me to discuss his care with you?",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "Yes, he is. I'm his daughter and he's asked me to sort it."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you. Just to confirm, you have indicated that you are his daughter and that consent has been given. That has been recorded. May I ask whether he can confirm this himself if required?"
+        },
+        {
+          "speaker": "caller",
+          "text": "He can, yeah. He's just not good on the phone."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you. Just to confirm, you have indicated that he has difficulty with telephone calls. I have recorded that. May I have his date of birth?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Fourteenth of March, nineteen thirty eight."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you. I will read that back to you, the fourteenth of March, nineteen thirty eight.",
+          "tier": "strict"
+        },
+        {
+          "speaker": "caller",
+          "text": "That's right."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you. The date of birth has been recorded. May I have his home address?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Ninety Sanderling Way, Plymouth. PL5 3QN."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you. Just to confirm, the house number you have provided is ninety, the street you have provided is Sanderling Way, the city you have provided is Plymouth and the postcode you have provided is P L 5 3 Q N. May I ask whether the property is a house?"
+        },
+        {
+          "speaker": "caller",
+          "text": "It's a flat. Ground floor, thank god, he can't do stairs. Flat 3, and the buzzer says Wheeler."
+        },
+        {
+          "speaker": "agent",
+          "text": "Excellent. Just to confirm, you have indicated a ground floor flat, the flat number you have provided is three and the buzzer label you have provided is Wheeler. That has been recorded. May I ask whether a key safe is installed?"
+        },
+        {
+          "speaker": "caller",
+          "text": "There is one, but I'd rather not give the code out over the phone, if that's alright."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you. Just to confirm, you have declined to provide the key safe code. That refusal has been recorded on the file. The nurse will use the door buzzer instead. May I ask which time of day is preferable for the visits?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Mornings. He's sharper in the mornings."
+        },
+        {
+          "speaker": "agent",
+          "text": "Perfect! Just to confirm, you have selected morning visits. That is a great choice."
+        },
+        {
+          "speaker": "caller",
+          "text": "That'd suit him."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you. I will now read the complete address. Flat 3, ground floor, 90 Sanderling Way, Plymouth, postcode P, L, 5, 3, Q, N. The first visit has been scheduled for Thursday morning. Is there anything else I can help you with today?",
+          "tier": "strict"
+        }
+      ],
+      "notes": "Consent and the date of birth stay strict, which is correct; the failure is that a ground floor flat, a buzzer label and a preference for mornings all get the same Just to confirm, X machinery. The address is confirmed line by line and then read again in full. The refusal is announced out loud as a recorded refusal on the file, there are no contractions anywhere, praise lands on a time of day, and it ends on the closer."
+    }
+  ]
+}

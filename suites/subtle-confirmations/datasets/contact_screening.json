@@ -1,0 +1,2239 @@
+{
+  "task": "contact_screening",
+  "tier": "subtle",
+  "description": "The opening stretch of an outbound call: reaching the right party, identifying yourself, getting permission to continue, handling a gatekeeper or a wrong number, honouring a do-not-call request, offering a callback, and only then collecting four or five business fields. Most of those values are recoverable and belong in short human wrappers; permission, do-not-call, recording disclosure and identity verification are not, and stay explicit in both labels.",
+  "style_rules": {
+    "subtle": [
+      "Permission to continue is asked outright and comes with a real out: now or later, either is fine.",
+      "A do-not-call request gets an explicit ask about scope and an explicit confirmation of the removal. Never softened into an implication.",
+      "Recording disclosure and identity verification are said plainly, but inside ordinary speech rather than a legal paragraph.",
+      "Dispositions close short. A wrong number gets a quick sorry and an exit, not an apology paragraph.",
+      "Confirmation moves rotate across the four or five fields: echo-and-advance, bare value as a question, silent accept, a value folded into the closing line, one-beat correction.",
+      "One reason after a refusal, then a drop. Never push after a no.",
+      "'How did you get this number?' is answered straight, in one sentence.",
+      "Contractions throughout, short clauses, no status phrases."
+    ],
+    "non_subtle_tells": [
+      "'Just to confirm' and 'is that correct' hung on every single field.",
+      "'Is now a good time to talk?' asked after the caller has already started answering.",
+      "Status phrases: your request has been noted, your preference has been updated.",
+      "Thanking the caller for their time three or four times in one short call.",
+      "Formal register with no contractions, and a three-sentence apology paragraph for a wrong number.",
+      "A chatbot closer at the end of a screening call.",
+      "Wrong-direction failure: warm and casual, but assumes permission instead of asking, or nods at a do-not-call request without ever confirming the removal, or keeps collecting data after the caller said stop."
+    ]
+  },
+  "conversations": [
+    {
+      "id": "contact_screening_01_subtle",
+      "pair_id": "contact_screening_01",
+      "label": "subtle",
+      "language": "en",
+      "scenario": "Debt-collection right-party contact. The wife answers, is not authorised on the account, and wants to know what it's about.",
+      "fields": [
+        {
+          "name": "right_party_present",
+          "value": "no, at work until six",
+          "strategy": "silent accept"
+        },
+        {
+          "name": "authorisation_status",
+          "value": "wife not authorised on the account",
+          "tier": "strict",
+          "strategy": "explicit ask, explicit answer"
+        },
+        {
+          "name": "best_callback_time",
+          "value": "weekdays after six",
+          "strategy": "echo-and-advance"
+        },
+        {
+          "name": "callback_number",
+          "value": "0491 570 156",
+          "tier": "strict",
+          "strategy": "digit-by-digit readback in groups"
+        },
+        {
+          "name": "landline_removal",
+          "value": "stop calling the landline",
+          "strategy": "one-beat accept"
+        }
+      ],
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Hi there, I'm calling for Raymond Ellis. Is he around?"
+        },
+        {
+          "speaker": "caller",
+          "text": "He's at work till six. This is his wife, Colleen."
+        },
+        {
+          "speaker": "agent",
+          "tier": "strict",
+          "text": "Colleen, I have to be direct on this one. I can't discuss the account with anyone but Raymond unless he's named you as authorised. Has he done that?"
+        },
+        {
+          "speaker": "caller",
+          "text": "No, I don't think so. What's it about?"
+        },
+        {
+          "speaker": "agent",
+          "text": "Can't get into it with you, sorry. He'll know what it's about once I explain it to him."
+        },
+        {
+          "speaker": "caller",
+          "text": "Is he in trouble?"
+        },
+        {
+          "speaker": "agent",
+          "text": "Nothing I can answer today. I'd rather try him directly. When's he easiest to catch?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Weekdays after six, or Saturday morning."
+        },
+        {
+          "speaker": "agent",
+          "text": "Weekdays after six. Would he pick up this line, or has he got his own?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Try his mobile. It's 0491 570 156."
+        },
+        {
+          "speaker": "agent",
+          "tier": "strict",
+          "text": "Reading that back, 0-4-1-7, then 6-6-2, then 3-8-4."
+        },
+        {
+          "speaker": "caller",
+          "text": "That's it. And can you stop ringing the landline? It wakes the baby."
+        },
+        {
+          "speaker": "agent",
+          "text": "Will do. I'll drop the landline from here and only use the mobile."
+        },
+        {
+          "speaker": "caller",
+          "text": "Thank you. Who did you say you were again?"
+        },
+        {
+          "speaker": "agent",
+          "tier": "strict",
+          "text": "Dana, from Meridian Recovery. We're a debt recovery firm, and reference HX492 is Raymond's, not yours."
+        },
+        {
+          "speaker": "caller",
+          "text": "Right. I'll tell him you rang."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thanks Colleen. I'll try him after six tomorrow."
+        },
+        {
+          "speaker": "caller",
+          "text": "Fine."
+        }
+      ],
+      "notes": "Five values. The authorisation question is explicit in both directions and the refusal to disclose is one line, not a policy speech. Rotation: silent accept on the right party being out, explicit ask on authorisation, echo-and-advance on the callback window, strict digit readback on the mobile, one-beat accept on dropping the landline."
+    },
+    {
+      "id": "contact_screening_01_non_subtle",
+      "pair_id": "contact_screening_01",
+      "label": "non_subtle",
+      "language": "en",
+      "scenario": "Debt-collection right-party contact. The wife answers, is not authorised on the account, and wants to know what it's about.",
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Good afternoon. My name is Dana and I am calling from Meridian Recovery. May I please speak with Raymond Ellis?"
+        },
+        {
+          "speaker": "caller",
+          "text": "He's at work till six. This is his wife, Colleen."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you for that information. Just to confirm, you have stated that you are not Raymond Ellis. Is that correct? I am unable to discuss the account with any party who is not the account holder. Please confirm whether Mr Ellis has authorised you."
+        },
+        {
+          "speaker": "caller",
+          "text": "No, I don't think so. What's it about?"
+        },
+        {
+          "speaker": "agent",
+          "text": "I appreciate your patience. Unfortunately I am not permitted to disclose the purpose of this call to an unauthorised party. I do apologise for any inconvenience this may cause you. I do understand that this may be frustrating."
+        },
+        {
+          "speaker": "caller",
+          "text": "Is he in trouble?"
+        },
+        {
+          "speaker": "agent",
+          "text": "I am unable to comment on that matter. Thank you for your understanding. May I confirm when Mr Ellis will next be available?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Weekdays after six, or Saturday morning."
+        },
+        {
+          "speaker": "agent",
+          "text": "Just to confirm, you have indicated weekdays after six. Is that correct? Would he answer this line, or does he have an alternative contact number?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Try his mobile. It's 0491 570 156."
+        },
+        {
+          "speaker": "agent",
+          "text": "I will now read back the number you have provided for verification purposes. Zero four nine one, five seven zero, one five six. Is that correct?"
+        },
+        {
+          "speaker": "caller",
+          "text": "That's it. And can you stop ringing the landline? It wakes the baby."
+        },
+        {
+          "speaker": "agent",
+          "text": "Your request has been noted. The landline number will be removed from the dialling list in due course."
+        },
+        {
+          "speaker": "caller",
+          "text": "Thank you. Who did you say you were again?"
+        },
+        {
+          "speaker": "agent",
+          "text": "As stated at the outset of this call, my name is Dana and I am calling from Meridian Recovery, a debt recovery agency. The reference number is HX492 and it relates to Mr Ellis."
+        },
+        {
+          "speaker": "caller",
+          "text": "Right. I'll tell him you rang."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you very much for your time today, Mrs Ellis. Thank you for your cooperation. Thank you again for your assistance. Is there anything else I can help you with?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Fine."
+        }
+      ],
+      "notes": "Robotic twin. Same caller turns. Every field gets 'just to confirm' and 'is that correct', the removal becomes 'has been noted', the refusal swells into a three-sentence apology, and the call ends on three thank-yous and a chatbot closer."
+    },
+    {
+      "id": "contact_screening_02_subtle",
+      "pair_id": "contact_screening_02",
+      "label": "subtle",
+      "language": "en",
+      "scenario": "Motor insurance renewal outreach. The right party is hostile and busy, and asks to come off the marketing list.",
+      "fields": [
+        {
+          "name": "right_party_confirmed",
+          "value": "Marcus Doyle",
+          "strategy": "bare value as a question"
+        },
+        {
+          "name": "permission_to_continue",
+          "value": "two minutes now, with a callback offered",
+          "tier": "strict",
+          "strategy": "explicit ask with a real out"
+        },
+        {
+          "name": "recording_disclosure",
+          "value": "calls are recorded",
+          "tier": "strict",
+          "strategy": "plain disclosure, no legal paragraph"
+        },
+        {
+          "name": "best_callback_time",
+          "value": "tomorrow before nine",
+          "strategy": "echo-and-advance"
+        },
+        {
+          "name": "marketing_list_removal",
+          "value": "marketing off, policy calls stay",
+          "tier": "strict",
+          "strategy": "explicit scope ask, explicit confirmation"
+        }
+      ],
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Hi, is that Marcus Doyle?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Speaking. Who's this?"
+        },
+        {
+          "speaker": "agent",
+          "tier": "strict",
+          "text": "Priya, from Halden Insurance. Your car policy ending 4471 renews next month. Have you got two minutes now, or should I ring back? Either's fine."
+        },
+        {
+          "speaker": "caller",
+          "text": "I'm in the middle of something. What do you actually want?"
+        },
+        {
+          "speaker": "agent",
+          "text": "Renewal's gone from six hundred to six eighty. I can talk you through why, or leave it."
+        },
+        {
+          "speaker": "caller",
+          "text": "Go on then. Quickly."
+        },
+        {
+          "speaker": "agent",
+          "tier": "strict",
+          "text": "Also, we record these calls, just so you know."
+        },
+        {
+          "speaker": "caller",
+          "text": "Of course you do. Everyone does."
+        },
+        {
+          "speaker": "agent",
+          "text": "Two things pushed it up. A claim on the street where you park, and the excess band moved."
+        },
+        {
+          "speaker": "caller",
+          "text": "That's not my claim though."
+        },
+        {
+          "speaker": "agent",
+          "text": "It isn't. It's postcode based. I can't undo that, but I can look at the excess."
+        },
+        {
+          "speaker": "caller",
+          "text": "Not now. I've got someone waiting."
+        },
+        {
+          "speaker": "agent",
+          "text": "When suits? I'll do one call and no more."
+        },
+        {
+          "speaker": "caller",
+          "text": "Tomorrow morning, before nine."
+        },
+        {
+          "speaker": "agent",
+          "text": "Tomorrow before nine. Same number?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Yes. And take me off whatever marketing list you've got me on."
+        },
+        {
+          "speaker": "agent",
+          "tier": "strict",
+          "text": "Understood. To be clear, that's marketing only. You'd still get calls about the policy itself, like this one. Is that what you want?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Yes. Marketing off, policy stuff fine."
+        },
+        {
+          "speaker": "agent",
+          "tier": "strict",
+          "text": "Marketing off, policy calls stay. I'll set that now and speak to you before nine."
+        },
+        {
+          "speaker": "caller",
+          "text": "Right."
+        }
+      ],
+      "notes": "Five values. Permission and the recording disclosure are explicit and still short; the marketing removal gets a real scope question and a real confirmation, because a vague nod there is the failure. Rotation: bare value question on the name, explicit ask on permission, plain disclosure on recording, echo-and-advance on the callback, scope ask plus confirmation on the removal."
+    },
+    {
+      "id": "contact_screening_02_non_subtle",
+      "pair_id": "contact_screening_02",
+      "label": "non_subtle",
+      "language": "en",
+      "scenario": "Motor insurance renewal outreach. The right party is hostile and busy, and asks to come off the marketing list.",
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Good morning. Am I speaking with Marcus Doyle? Please confirm."
+        },
+        {
+          "speaker": "caller",
+          "text": "Speaking. Who's this?"
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you for confirming. My name is Priya and I am calling from Halden Insurance regarding your motor policy ending four four seven one. This call will take approximately two minutes."
+        },
+        {
+          "speaker": "caller",
+          "text": "I'm in the middle of something. What do you actually want?"
+        },
+        {
+          "speaker": "agent",
+          "text": "I appreciate your patience. Your renewal premium has increased from six hundred pounds to six hundred and eighty pounds. I would like to explain the contributing factors."
+        },
+        {
+          "speaker": "caller",
+          "text": "Go on then. Quickly."
+        },
+        {
+          "speaker": "agent",
+          "text": "Before I proceed, please be advised that this call is being recorded for training and quality purposes. Is now a good time to talk?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Of course you do. Everyone does."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you. There are two contributing factors. A claim recorded in the postcode where the vehicle is parked, and a revision to the excess band."
+        },
+        {
+          "speaker": "caller",
+          "text": "That's not my claim though."
+        },
+        {
+          "speaker": "agent",
+          "text": "That is correct. The adjustment is postcode based. I am unable to reverse it, however I am able to review the excess."
+        },
+        {
+          "speaker": "caller",
+          "text": "Not now. I've got someone waiting."
+        },
+        {
+          "speaker": "agent",
+          "text": "Kindly provide a preferred time and I will schedule a callback accordingly."
+        },
+        {
+          "speaker": "caller",
+          "text": "Tomorrow morning, before nine."
+        },
+        {
+          "speaker": "agent",
+          "text": "Just to confirm, you have requested a callback tomorrow before nine. Is that correct? May I confirm that this is the correct contact number?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Yes. And take me off whatever marketing list you've got me on."
+        },
+        {
+          "speaker": "agent",
+          "text": "Your request has been noted. Just to confirm, you have requested removal from marketing communications only. Service communications relating to your policy will continue. Please confirm."
+        },
+        {
+          "speaker": "caller",
+          "text": "Yes. Marketing off, policy stuff fine."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you. Your marketing preference has been updated. Thank you for your time today and thank you for your cooperation."
+        },
+        {
+          "speaker": "caller",
+          "text": "Right."
+        }
+      ],
+      "notes": "Robotic twin. Same caller turns. 'Is now a good time to talk?' arrives after the caller has already told the agent to get on with it, every value is bracketed by 'just to confirm' and 'is that correct', and the removal is reported as a status update rather than confirmed back."
+    },
+    {
+      "id": "contact_screening_03_subtle",
+      "pair_id": "contact_screening_03",
+      "label": "subtle",
+      "language": "en",
+      "scenario": "Clinic appointment reminder. The patient's wife answers and wants the details; the agent holds the line until the patient himself verifies.",
+      "fields": [
+        {
+          "name": "third_party_disclosure_consent",
+          "value": "message only, no details to the wife",
+          "tier": "strict",
+          "strategy": "explicit ask, explicit answer"
+        },
+        {
+          "name": "patient_dob",
+          "value": "3 March 1978",
+          "tier": "strict",
+          "strategy": "full readback with the month as a word"
+        },
+        {
+          "name": "appointment_confirmation",
+          "value": "Thursday 14th, 10:15 with Dr Amara, needs moving",
+          "strategy": "value as a question"
+        },
+        {
+          "name": "callback_number",
+          "value": "07700 900118",
+          "tier": "strict",
+          "strategy": "digit-by-digit readback"
+        },
+        {
+          "name": "preferred_channel",
+          "value": "text",
+          "strategy": "echo-and-advance folded into the close"
+        }
+      ],
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Hi, this is Nadia at Bridgeway Family Clinic. Could I speak to Thomas Okafor?"
+        },
+        {
+          "speaker": "caller",
+          "text": "He's in the shower. I'm Grace, his wife. Is it about his results?"
+        },
+        {
+          "speaker": "agent",
+          "tier": "strict",
+          "text": "I can't say what it's about to anyone but Thomas. I can leave a message that the clinic rang, and nothing more than that. Is that alright with you?"
+        },
+        {
+          "speaker": "caller",
+          "text": "That's a bit much. I book all his appointments."
+        },
+        {
+          "speaker": "agent",
+          "text": "I know it's annoying. Same rule for everyone, including my own family."
+        },
+        {
+          "speaker": "caller",
+          "text": "Fine. Hang on, he's out now. Thomas! He's coming."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thanks Grace."
+        },
+        {
+          "speaker": "caller",
+          "text": "Hello, Thomas here."
+        },
+        {
+          "speaker": "agent",
+          "tier": "strict",
+          "text": "Thomas, before I go on, can you give me your date of birth?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Third of March, nineteen seventy eight."
+        },
+        {
+          "speaker": "agent",
+          "tier": "strict",
+          "text": "Third of March, nineteen seventy eight. That matches what I've got."
+        },
+        {
+          "speaker": "caller",
+          "text": "So what is it?"
+        },
+        {
+          "speaker": "agent",
+          "text": "You've got an appointment Thursday the fourteenth, quarter past ten, with Dr Amara. Still good for you?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Thursday's tight. Can you ring me later to move it?"
+        },
+        {
+          "speaker": "agent",
+          "text": "Sure. Best number for you?"
+        },
+        {
+          "speaker": "caller",
+          "text": "It's 07700 900118."
+        },
+        {
+          "speaker": "agent",
+          "tier": "strict",
+          "text": "0-7-7-0-0, then 9-0-0-1-1-8."
+        },
+        {
+          "speaker": "caller",
+          "text": "That's right. Text is better than ringing, actually."
+        },
+        {
+          "speaker": "agent",
+          "text": "Text it is. I'll send you a couple of options Thursday morning."
+        },
+        {
+          "speaker": "caller",
+          "text": "And don't discuss my stuff with my wife. No offence to her."
+        },
+        {
+          "speaker": "agent",
+          "tier": "strict",
+          "text": "Nothing goes to Grace. Only you, and only by text unless you tell me otherwise."
+        },
+        {
+          "speaker": "caller",
+          "text": "Good."
+        }
+      ],
+      "notes": "Five values. The third-party block and the date of birth check are explicit and unmissable, but each is one sentence. Rotation: explicit consent ask with the wife, strict full readback on the date of birth, value-as-a-question on the appointment, digit readback on the mobile, echo folded into the closing line for the channel."
+    },
+    {
+      "id": "contact_screening_03_non_subtle",
+      "pair_id": "contact_screening_03",
+      "label": "non_subtle",
+      "language": "en",
+      "scenario": "Clinic appointment reminder. The patient's wife answers and wants the details; the agent holds the line until the patient himself verifies.",
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Good afternoon. This is Nadia calling from Bridgeway Family Clinic. May I please speak with Thomas Okafor?"
+        },
+        {
+          "speaker": "caller",
+          "text": "He's in the shower. I'm Grace, his wife. Is it about his results?"
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you for that information. Just to confirm, you have stated that you are not the patient. For verification purposes I am unable to disclose any clinical information to a third party. I am able to leave a message only. Please confirm that this is acceptable."
+        },
+        {
+          "speaker": "caller",
+          "text": "That's a bit much. I book all his appointments."
+        },
+        {
+          "speaker": "agent",
+          "text": "I do apologise for any inconvenience. I do understand that this may be frustrating for you. Unfortunately this is a mandatory requirement and I am not able to make an exception on this occasion."
+        },
+        {
+          "speaker": "caller",
+          "text": "Fine. Hang on, he's out now. Thomas! He's coming."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you very much for your assistance, Mrs Okafor."
+        },
+        {
+          "speaker": "caller",
+          "text": "Hello, Thomas here."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you for taking the call. Before we proceed, for verification purposes, kindly provide your date of birth."
+        },
+        {
+          "speaker": "caller",
+          "text": "Third of March, nineteen seventy eight."
+        },
+        {
+          "speaker": "agent",
+          "text": "I will now read back the information you have provided. Third of March, nineteen seventy eight. Is that correct?"
+        },
+        {
+          "speaker": "caller",
+          "text": "So what is it?"
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you for confirming. Is now a good time to talk? You have an appointment scheduled for Thursday the fourteenth at ten fifteen with Dr Amara."
+        },
+        {
+          "speaker": "caller",
+          "text": "Thursday's tight. Can you ring me later to move it?"
+        },
+        {
+          "speaker": "agent",
+          "text": "Certainly. Kindly provide the best contact number for the callback."
+        },
+        {
+          "speaker": "caller",
+          "text": "It's 07700 900118."
+        },
+        {
+          "speaker": "agent",
+          "text": "Just to confirm, the number you have provided is zero seven seven zero zero, nine zero zero one one eight. Is that correct?"
+        },
+        {
+          "speaker": "caller",
+          "text": "That's right. Text is better than ringing, actually."
+        },
+        {
+          "speaker": "agent",
+          "text": "Your preference has been noted. You have selected text as your preferred communication channel."
+        },
+        {
+          "speaker": "caller",
+          "text": "And don't discuss my stuff with my wife. No offence to her."
+        },
+        {
+          "speaker": "agent",
+          "text": "Your instruction has been recorded on your file. Thank you for your patience today, thank you for your cooperation, and thank you for choosing Bridgeway Family Clinic."
+        },
+        {
+          "speaker": "caller",
+          "text": "Good."
+        }
+      ],
+      "notes": "Robotic twin. Same caller turns. The disclosure block becomes a policy recital with an apology paragraph, 'is now a good time to talk?' lands after the patient has already asked what the call is about, and the third-party instruction is filed as a status rather than confirmed back to him."
+    },
+    {
+      "id": "contact_screening_04_subtle",
+      "pair_id": "contact_screening_04",
+      "label": "subtle",
+      "language": "en",
+      "scenario": "B2B prospecting. A receptionist will not put the call through, so the agent negotiates the smallest thing she is allowed to do.",
+      "fields": [
+        {
+          "name": "right_party_name",
+          "value": "Derek Mahoney",
+          "strategy": "value as a question"
+        },
+        {
+          "name": "gatekeeper_email_permission",
+          "value": "may pass on an email, no transfers",
+          "tier": "strict",
+          "strategy": "explicit ask, explicit answer"
+        },
+        {
+          "name": "contact_email",
+          "value": "dmahoney@example.co.uk",
+          "tier": "strict",
+          "strategy": "letter-by-letter spellback with symbols named"
+        },
+        {
+          "name": "best_callback_time",
+          "value": "Tuesday afternoons",
+          "strategy": "echo-and-advance"
+        },
+        {
+          "name": "switchboard_removal",
+          "value": "switchboard off the calling list, email only",
+          "tier": "strict",
+          "strategy": "explicit scope ask, explicit confirmation"
+        }
+      ],
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Morning, Sam Whitlock at Arden Fleet Services. Could you put me through to whoever runs your vehicles?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Can I ask what it's regarding?"
+        },
+        {
+          "speaker": "agent",
+          "text": "Fleet maintenance contracts. We look after the depot next door to you."
+        },
+        {
+          "speaker": "caller",
+          "text": "He doesn't take cold calls. That's a firm rule here."
+        },
+        {
+          "speaker": "agent",
+          "text": "Fair enough. Is it Derek Mahoney I'd be after?"
+        },
+        {
+          "speaker": "caller",
+          "text": "It is, but I'm not putting you through."
+        },
+        {
+          "speaker": "agent",
+          "tier": "strict",
+          "text": "That's fine, I won't push. Can I ask you straight though, are you allowed to pass an email on to him, or is that off limits too?"
+        },
+        {
+          "speaker": "caller",
+          "text": "I can pass an email. That's about it."
+        },
+        {
+          "speaker": "agent",
+          "text": "Good. What's the best address for him?"
+        },
+        {
+          "speaker": "caller",
+          "text": "It's dmahoney@example.co.uk."
+        },
+        {
+          "speaker": "agent",
+          "tier": "strict",
+          "text": "Let me spell that back. D, M, A, H, O, N, E, Y, at sign, B, R, A, N, T, F, O, R, D, then haulage, all one word, dot, C, O, dot, U, K."
+        },
+        {
+          "speaker": "caller",
+          "text": "Correct."
+        },
+        {
+          "speaker": "agent",
+          "text": "If he does want a call, when's he about?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Tuesday afternoons he's in the office. Other days he's out on sites."
+        },
+        {
+          "speaker": "agent",
+          "text": "Tuesday afternoon. I'll put that in the email rather than ring blind."
+        },
+        {
+          "speaker": "caller",
+          "text": "Please do."
+        },
+        {
+          "speaker": "agent",
+          "tier": "strict",
+          "text": "One last thing. Do you want this switchboard number taken off our calling list altogether, or is a call in a few months alright?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Take the switchboard off. Email him if you must."
+        },
+        {
+          "speaker": "agent",
+          "tier": "strict",
+          "text": "Switchboard off the list, email only. That's done at my end."
+        },
+        {
+          "speaker": "caller",
+          "text": "Thanks."
+        },
+        {
+          "speaker": "agent",
+          "text": "No trouble. Have a good one."
+        },
+        {
+          "speaker": "caller",
+          "text": "You too."
+        }
+      ],
+      "notes": "Five values. The gatekeeper says no once and the agent drops it, then asks the smaller question outright. The removal scope is a real question with a real confirmation. Rotation: value-as-a-question on the name, explicit permission ask, strict spellback on the email, echo-and-advance on the Tuesday window, scope ask plus confirmation on the removal."
+    },
+    {
+      "id": "contact_screening_04_non_subtle",
+      "pair_id": "contact_screening_04",
+      "label": "non_subtle",
+      "language": "en",
+      "scenario": "B2B prospecting. A receptionist will not put the call through, so the agent negotiates the smallest thing she is allowed to do.",
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Good morning. My name is Sam Whitlock and I am calling from Arden Fleet Services. Kindly transfer me to the individual responsible for your vehicle fleet."
+        },
+        {
+          "speaker": "caller",
+          "text": "Can I ask what it's regarding?"
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you for your question. The purpose of my call relates to fleet maintenance contracts. We currently service the depot adjacent to your premises."
+        },
+        {
+          "speaker": "caller",
+          "text": "He doesn't take cold calls. That's a firm rule here."
+        },
+        {
+          "speaker": "agent",
+          "text": "I appreciate your patience. Just to confirm, the relevant contact is Derek Mahoney. Is that correct?"
+        },
+        {
+          "speaker": "caller",
+          "text": "It is, but I'm not putting you through."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you for confirming. Is now a good time to talk? Please confirm whether you are authorised to forward an email communication to Mr Mahoney."
+        },
+        {
+          "speaker": "caller",
+          "text": "I can pass an email. That's about it."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you. Kindly provide the email address for Mr Mahoney."
+        },
+        {
+          "speaker": "caller",
+          "text": "It's dmahoney@example.co.uk."
+        },
+        {
+          "speaker": "agent",
+          "text": "I will now read back the email address you have provided for verification purposes. D, M, A, H, O, N, E, Y, at, B, R, A, N, T, F, O, R, D, haulage, dot, C, O, dot, U, K. Is that correct?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Correct."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you for confirming. Kindly provide Mr Mahoney's general availability."
+        },
+        {
+          "speaker": "caller",
+          "text": "Tuesday afternoons he's in the office. Other days he's out on sites."
+        },
+        {
+          "speaker": "agent",
+          "text": "Just to confirm, you have indicated Tuesday afternoons. Is that correct? This information has been noted on the record."
+        },
+        {
+          "speaker": "caller",
+          "text": "Please do."
+        },
+        {
+          "speaker": "agent",
+          "text": "May I confirm your contact preference for this switchboard number going forward?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Take the switchboard off. Email him if you must."
+        },
+        {
+          "speaker": "agent",
+          "text": "Your request has been noted and your preference has been updated on the system accordingly."
+        },
+        {
+          "speaker": "caller",
+          "text": "Thanks."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you very much for your time and your cooperation this morning. Thank you for your assistance. Is there anything else I can help you with today?"
+        },
+        {
+          "speaker": "caller",
+          "text": "You too."
+        }
+      ],
+      "notes": "Robotic twin. Same caller turns. 'Is now a good time to talk?' arrives after the receptionist has already refused, the removal is reported as an updated preference instead of confirmed back with its scope, and the call closes on stacked thank-yous plus a help-desk closer."
+    },
+    {
+      "id": "contact_screening_05_subtle",
+      "pair_id": "contact_screening_05",
+      "label": "subtle",
+      "language": "en",
+      "scenario": "Failed-delivery callback. The right party is walking into a meeting and suspects a parcel scam.",
+      "fields": [
+        {
+          "name": "permission_to_continue",
+          "value": "two minutes now, callback offered",
+          "tier": "strict",
+          "strategy": "explicit ask with a real out"
+        },
+        {
+          "name": "redelivery_day",
+          "value": "Friday before twelve",
+          "strategy": "echo-and-advance"
+        },
+        {
+          "name": "tracking_reference",
+          "value": "KL744029",
+          "tier": "strict",
+          "strategy": "value once, then character by character"
+        },
+        {
+          "name": "preferred_channel",
+          "value": "text only",
+          "strategy": "one-beat accept"
+        },
+        {
+          "name": "marketing_removal",
+          "value": "off marketing entirely, delivery texts stay",
+          "tier": "strict",
+          "strategy": "explicit scope ask, explicit confirmation"
+        }
+      ],
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Hi, is that Amira Haddad?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Yes, but I'm just walking into a meeting."
+        },
+        {
+          "speaker": "agent",
+          "tier": "strict",
+          "text": "Rob at Kestrel Logistics. This is about a parcel we couldn't deliver, and it'll take two minutes. Do you want to do it now, or shall I ring back?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Two minutes is fine. Go."
+        },
+        {
+          "speaker": "agent",
+          "text": "Driver came yesterday, nobody in. Which day suits for another go?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Friday, but only before twelve."
+        },
+        {
+          "speaker": "agent",
+          "text": "Friday before twelve. He'll be with you inside that window."
+        },
+        {
+          "speaker": "caller",
+          "text": "How do I know this is genuine? I've had scam calls about parcels."
+        },
+        {
+          "speaker": "agent",
+          "text": "Sensible question. Your tracking number's on the card he left. It's KL744029."
+        },
+        {
+          "speaker": "caller",
+          "text": "Hang on. Yes, that matches."
+        },
+        {
+          "speaker": "agent",
+          "tier": "strict",
+          "text": "I'll go through it anyway so we're on the same one. K, L, then 7-4-4-0-2-9."
+        },
+        {
+          "speaker": "caller",
+          "text": "Same. Alright, I believe you."
+        },
+        {
+          "speaker": "agent",
+          "text": "Do you want the Friday update by text, or a call?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Text. I'm in meetings all week."
+        },
+        {
+          "speaker": "agent",
+          "text": "Text only then."
+        },
+        {
+          "speaker": "caller",
+          "text": "And I don't want marketing texts either. Just the delivery."
+        },
+        {
+          "speaker": "agent",
+          "tier": "strict",
+          "text": "Clear. Do you want off marketing entirely, or only the texts? Delivery messages would carry on either way."
+        },
+        {
+          "speaker": "caller",
+          "text": "Entirely. Nothing at all."
+        },
+        {
+          "speaker": "agent",
+          "tier": "strict",
+          "text": "Off marketing entirely, delivery texts stay. Friday before twelve."
+        },
+        {
+          "speaker": "caller",
+          "text": "Great, bye."
+        }
+      ],
+      "notes": "Five values. The permission ask offers a genuine callback, and the scam worry is answered by handing over the reference rather than by reassurance. Rotation: explicit permission ask, echo-and-advance on Friday, strict character readback on the tracking number, one-beat accept on the channel, scope ask plus confirmation on marketing."
+    },
+    {
+      "id": "contact_screening_05_non_subtle",
+      "pair_id": "contact_screening_05",
+      "label": "non_subtle",
+      "language": "en",
+      "scenario": "Failed-delivery callback. The right party is walking into a meeting and suspects a parcel scam.",
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Good afternoon. Am I speaking with Amira Haddad? Please confirm."
+        },
+        {
+          "speaker": "caller",
+          "text": "Yes, but I'm just walking into a meeting."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you for confirming. My name is Rob and I am calling from Kestrel Logistics regarding an attempted delivery. This call will take approximately two minutes of your time."
+        },
+        {
+          "speaker": "caller",
+          "text": "Two minutes is fine. Go."
+        },
+        {
+          "speaker": "agent",
+          "text": "Is now a good time to talk? Our driver attempted delivery yesterday and no one was available. Kindly provide a preferred redelivery day."
+        },
+        {
+          "speaker": "caller",
+          "text": "Friday, but only before twelve."
+        },
+        {
+          "speaker": "agent",
+          "text": "Just to confirm, you have selected Friday before twelve. Is that correct?"
+        },
+        {
+          "speaker": "caller",
+          "text": "How do I know this is genuine? I've had scam calls about parcels."
+        },
+        {
+          "speaker": "agent",
+          "text": "I appreciate your patience and I do understand your concern. I do apologise for any inconvenience. For verification purposes, the tracking reference is K L seven four four zero two nine."
+        },
+        {
+          "speaker": "caller",
+          "text": "Hang on. Yes, that matches."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you for confirming. I will now read back the reference to ensure accuracy. K, L, seven, four, four, zero, two, nine. Is that correct?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Same. Alright, I believe you."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you. Kindly confirm your preferred communication channel for the Friday update."
+        },
+        {
+          "speaker": "caller",
+          "text": "Text. I'm in meetings all week."
+        },
+        {
+          "speaker": "agent",
+          "text": "You have selected text message. Your preference has been noted on the system."
+        },
+        {
+          "speaker": "caller",
+          "text": "And I don't want marketing texts either. Just the delivery."
+        },
+        {
+          "speaker": "agent",
+          "text": "Your request has been noted. Just to confirm, you have requested the removal of marketing messages. Is that correct?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Entirely. Nothing at all."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you for your time today. Thank you for your patience and thank you for your cooperation. Your marketing preference has been updated accordingly."
+        },
+        {
+          "speaker": "caller",
+          "text": "Great, bye."
+        }
+      ],
+      "notes": "Robotic twin. Same caller turns. 'Is now a good time to talk?' comes after she has already said go, the scam worry gets an apology paragraph instead of a straight answer, and the marketing scope is never actually resolved, only reported as updated."
+    },
+    {
+      "id": "contact_screening_06_subtle",
+      "pair_id": "contact_screening_06",
+      "label": "subtle",
+      "language": "en",
+      "scenario": "Survey outreach lands on a reassigned number. The new owner is tired of the previous holder's calls and asks how they got it.",
+      "fields": [
+        {
+          "name": "right_party_confirmed",
+          "value": "no, wrong number",
+          "strategy": "silent accept, short disposition"
+        },
+        {
+          "name": "dialled_number_check",
+          "value": "0161 496 0334",
+          "tier": "strict",
+          "strategy": "digit-by-digit readback in groups"
+        },
+        {
+          "name": "removal_scope",
+          "value": "off everything the firm holds, not just this survey",
+          "tier": "strict",
+          "strategy": "explicit scope ask, explicit confirmation"
+        },
+        {
+          "name": "removal_timeline",
+          "value": "off today, allow a week for print",
+          "strategy": "value as a plain answer"
+        },
+        {
+          "name": "suppression_reference",
+          "value": "the number itself, quoted to the data team",
+          "tier": "strict",
+          "strategy": "readback folded into the close"
+        }
+      ],
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Hello, could I speak to Bernard Kirkwood?"
+        },
+        {
+          "speaker": "caller",
+          "text": "There's no Bernard here. You've got the wrong number."
+        },
+        {
+          "speaker": "agent",
+          "text": "Sorry to bother you. Can I check which number I've dialled, so I fix it properly?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Go on."
+        },
+        {
+          "speaker": "agent",
+          "tier": "strict",
+          "text": "0-1-6-1, then 4-9-6, then 0-3-3-4."
+        },
+        {
+          "speaker": "caller",
+          "text": "That's mine, yes. I've had it about a year."
+        },
+        {
+          "speaker": "agent",
+          "text": "Reassigned then. It's still down to Bernard on our side."
+        },
+        {
+          "speaker": "caller",
+          "text": "I keep getting his calls. It's constant."
+        },
+        {
+          "speaker": "agent",
+          "tier": "strict",
+          "text": "I'll take the number off. Do you want it off this survey only, or off everything Halloway Research holds?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Everything. I never asked for any of it."
+        },
+        {
+          "speaker": "agent",
+          "tier": "strict",
+          "text": "Everything, so no surveys and no follow ups either. Doing that now."
+        },
+        {
+          "speaker": "caller",
+          "text": "How long does that take?"
+        },
+        {
+          "speaker": "agent",
+          "text": "Off my list today. Anything already printed for tomorrow might still go out, so give it a week to settle."
+        },
+        {
+          "speaker": "caller",
+          "text": "And how did you get this number?"
+        },
+        {
+          "speaker": "agent",
+          "text": "Bernard gave it when he joined a panel in twenty twenty two. It came to us with that panel."
+        },
+        {
+          "speaker": "caller",
+          "text": "Right. Well it's not his now."
+        },
+        {
+          "speaker": "agent",
+          "tier": "strict",
+          "text": "Understood. If you ever need a reference for the removal, it's the number itself, 0-1-6-1, 4-9-6, 0-3-3-4, quoted to our data team."
+        },
+        {
+          "speaker": "caller",
+          "text": "Fine. Just stop calling."
+        },
+        {
+          "speaker": "agent",
+          "text": "We will. Sorry again for the trouble."
+        },
+        {
+          "speaker": "caller",
+          "text": "Bye."
+        }
+      ],
+      "notes": "Five values. The wrong-number disposition closes short, and 'how did you get this number?' gets one straight sentence with no defensiveness. Rotation: silent accept on the wrong number, strict digit readback on the dialled number, scope ask plus confirmation on the removal, plain answer on the timeline, reference readback folded into the close."
+    },
+    {
+      "id": "contact_screening_06_non_subtle",
+      "pair_id": "contact_screening_06",
+      "label": "non_subtle",
+      "language": "en",
+      "scenario": "Survey outreach lands on a reassigned number. The new owner is tired of the previous holder's calls and asks how they got it.",
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Hey there, is Bernard Kirkwood about?"
+        },
+        {
+          "speaker": "caller",
+          "text": "There's no Bernard here. You've got the wrong number."
+        },
+        {
+          "speaker": "agent",
+          "text": "Ah, no worries at all, happens loads. Let me just double check the number I've got here."
+        },
+        {
+          "speaker": "caller",
+          "text": "Go on."
+        },
+        {
+          "speaker": "agent",
+          "text": "It's oh one six one, four nine six oh three three four. That you?"
+        },
+        {
+          "speaker": "caller",
+          "text": "That's mine, yes. I've had it about a year."
+        },
+        {
+          "speaker": "agent",
+          "text": "Probably been reassigned then. Our data's a bit old, sorry about that."
+        },
+        {
+          "speaker": "caller",
+          "text": "I keep getting his calls. It's constant."
+        },
+        {
+          "speaker": "agent",
+          "text": "Ugh, that's annoying. I'll pop a note on to stop the survey ones for you."
+        },
+        {
+          "speaker": "caller",
+          "text": "Everything. I never asked for any of it."
+        },
+        {
+          "speaker": "agent",
+          "text": "Yeah, totally. Anyway, while I've got you, do you fancy doing the survey yourself? There's a voucher in it."
+        },
+        {
+          "speaker": "caller",
+          "text": "How long does that take?"
+        },
+        {
+          "speaker": "agent",
+          "text": "Five minutes, tops. So first one, which age bracket are you in?"
+        },
+        {
+          "speaker": "caller",
+          "text": "And how did you get this number?"
+        },
+        {
+          "speaker": "agent",
+          "text": "Bernard stuck it on a form somewhere a while back, I think. Don't quote me on that one."
+        },
+        {
+          "speaker": "caller",
+          "text": "Right. Well it's not his now."
+        },
+        {
+          "speaker": "agent",
+          "text": "Yeah, fair. I'll get it flagged to someone at some point."
+        },
+        {
+          "speaker": "caller",
+          "text": "Fine. Just stop calling."
+        },
+        {
+          "speaker": "agent",
+          "text": "Course. And if you change your mind about the survey, we'll give you a bell."
+        },
+        {
+          "speaker": "caller",
+          "text": "Bye."
+        }
+      ],
+      "notes": "wrong-direction: over-casual, dropped a fidelity floor. Warm and chatty, no script, no thank-you stack. It still fails, and worse than the stiff twin: the dialled number is read as a lump instead of digit by digit, the removal is never scoped or confirmed, the agent keeps collecting survey data after the caller said everything should stop, and the call ends promising to ring again."
+    },
+    {
+      "id": "contact_screening_07_subtle",
+      "pair_id": "contact_screening_07",
+      "label": "subtle",
+      "language": "en",
+      "scenario": "Subscription win-back call. The right party demands to be put on the do-not-call list and says she has asked before.",
+      "fields": [
+        {
+          "name": "permission_to_continue",
+          "value": "refused, bad time now and later",
+          "tier": "strict",
+          "strategy": "explicit ask with a real out"
+        },
+        {
+          "name": "do_not_call_request",
+          "value": "permanent do not call",
+          "tier": "strict",
+          "strategy": "explicit ask, explicit confirmation of the removal"
+        },
+        {
+          "name": "suppressed_numbers",
+          "value": "07700 900903 and 01632 960210",
+          "tier": "strict",
+          "strategy": "digit-by-digit readback of both"
+        },
+        {
+          "name": "removal_channels",
+          "value": "calls, email and post all off",
+          "tier": "strict",
+          "strategy": "explicit scope ask, explicit confirmation"
+        },
+        {
+          "name": "removal_timeline",
+          "value": "calls today, print within a fortnight",
+          "strategy": "value as a plain answer"
+        }
+      ],
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Hi, is that Ines Vargas?"
+        },
+        {
+          "speaker": "caller",
+          "text": "It is."
+        },
+        {
+          "speaker": "agent",
+          "tier": "strict",
+          "text": "Beth from Larkfield Media. Your subscription lapsed in March and I've got an offer to bring you back. Have you got a minute, or is it a bad time?"
+        },
+        {
+          "speaker": "caller",
+          "text": "It's a bad time and it'll be a bad time next week too. I don't want the calls."
+        },
+        {
+          "speaker": "agent",
+          "tier": "strict",
+          "text": "That's clear. Do you want me to put you on our do not call list, so nobody from Larkfield rings you again?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Yes. Do not call me. Ever."
+        },
+        {
+          "speaker": "agent",
+          "tier": "strict",
+          "text": "Do not call, permanently. That's going on now."
+        },
+        {
+          "speaker": "caller",
+          "text": "You've said that before and it didn't happen."
+        },
+        {
+          "speaker": "agent",
+          "text": "Then let's do it properly this time."
+        },
+        {
+          "speaker": "caller",
+          "text": "How?"
+        },
+        {
+          "speaker": "agent",
+          "tier": "strict",
+          "text": "I'll suppress both numbers we hold. The mobile, 0-7-7-0-0, 9-0-0-9-0-3, and the landline, 0-1-6-3-2, 9-6-0-2-1-0. Are they both yours?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Both mine, yes."
+        },
+        {
+          "speaker": "agent",
+          "tier": "strict",
+          "text": "Both suppressed. Do you want email and post stopped as well, or only the calls?"
+        },
+        {
+          "speaker": "caller",
+          "text": "All of it. Calls, email, post."
+        },
+        {
+          "speaker": "agent",
+          "tier": "strict",
+          "text": "Calls, email and post, all off. That's the whole record shut down."
+        },
+        {
+          "speaker": "caller",
+          "text": "When does it actually take effect?"
+        },
+        {
+          "speaker": "agent",
+          "text": "Calls stop today. Anything already at the printer could land within a fortnight, then nothing."
+        },
+        {
+          "speaker": "caller",
+          "text": "It had better be nothing."
+        },
+        {
+          "speaker": "agent",
+          "text": "Sorry we got to this point. You won't hear from us."
+        },
+        {
+          "speaker": "caller",
+          "text": "Right."
+        },
+        {
+          "speaker": "agent",
+          "text": "Bye now."
+        },
+        {
+          "speaker": "caller",
+          "text": "Bye."
+        }
+      ],
+      "notes": "Five values. The do-not-call request is asked outright, answered outright and confirmed back once, then the agent stops selling immediately. No push after the no, no second offer, no apology paragraph. Rotation: explicit permission ask, explicit DNC ask plus confirmation, strict digit readback of both numbers, scope ask on the channels, plain answer on the timeline."
+    },
+    {
+      "id": "contact_screening_07_non_subtle",
+      "pair_id": "contact_screening_07",
+      "label": "non_subtle",
+      "language": "en",
+      "scenario": "Subscription win-back call. The right party demands to be put on the do-not-call list and says she has asked before.",
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Hiya, is that Ines?"
+        },
+        {
+          "speaker": "caller",
+          "text": "It is."
+        },
+        {
+          "speaker": "agent",
+          "text": "Great, it's Beth from Larkfield. So your subscription lapsed back in March and I've got a cracking little offer for you, half price for six months."
+        },
+        {
+          "speaker": "caller",
+          "text": "It's a bad time and it'll be a bad time next week too. I don't want the calls."
+        },
+        {
+          "speaker": "agent",
+          "text": "Aw, that's a shame. It's only a couple of quid a month though, honestly, and you were reading it every week."
+        },
+        {
+          "speaker": "caller",
+          "text": "Yes. Do not call me. Ever."
+        },
+        {
+          "speaker": "agent",
+          "text": "Yeah, no problem, I'll sort that out for you."
+        },
+        {
+          "speaker": "caller",
+          "text": "You've said that before and it didn't happen."
+        },
+        {
+          "speaker": "agent",
+          "text": "I know, sorry about that. Systems, you know how it is."
+        },
+        {
+          "speaker": "caller",
+          "text": "How?"
+        },
+        {
+          "speaker": "agent",
+          "text": "I'll pop a note on your record. Oh, we've got two numbers down for you, 07700 900903 and 01632 960210. Both yours?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Both mine, yes."
+        },
+        {
+          "speaker": "agent",
+          "text": "Lovely. And while I'm here, is your email still the same one? I'll ping the offer over in case you change your mind."
+        },
+        {
+          "speaker": "caller",
+          "text": "All of it. Calls, email, post."
+        },
+        {
+          "speaker": "agent",
+          "text": "Ha, fair enough. I'll tick the box."
+        },
+        {
+          "speaker": "caller",
+          "text": "When does it actually take effect?"
+        },
+        {
+          "speaker": "agent",
+          "text": "Should be pretty quick. Give it a bit and you'll see."
+        },
+        {
+          "speaker": "caller",
+          "text": "It had better be nothing."
+        },
+        {
+          "speaker": "agent",
+          "text": "You'll be fine, honestly. Between you and me, these things usually sort themselves out."
+        },
+        {
+          "speaker": "caller",
+          "text": "Right."
+        },
+        {
+          "speaker": "agent",
+          "text": "Anyway, lovely talking to you. If the offer tempts you later, you know where we are."
+        },
+        {
+          "speaker": "caller",
+          "text": "Bye."
+        }
+      ],
+      "notes": "wrong-direction: over-casual, dropped a fidelity floor. No script and no thank-you stack, and it is the worst call in the file. Permission is never asked, the pitch continues after a refusal, the do-not-call request gets a shrug instead of a scoped confirmation, the two numbers are read as lumps, the agent asks for an email after she said stop everything, and the close promises another contact."
+    },
+    {
+      "id": "contact_screening_08_subtle",
+      "pair_id": "contact_screening_08",
+      "label": "subtle",
+      "language": "en",
+      "scenario": "Bank fraud-alert verification. The right party suspects the caller is the fraud, so the agent hands him a way to verify them first.",
+      "fields": [
+        {
+          "name": "case_reference",
+          "value": "4482",
+          "tier": "strict",
+          "strategy": "value once, then digit by digit"
+        },
+        {
+          "name": "right_party_confirmed",
+          "value": "Owen Petrakis",
+          "tier": "strict",
+          "strategy": "verification offered before disclosure"
+        },
+        {
+          "name": "permission_and_recording",
+          "value": "recording disclosed, go-ahead given",
+          "tier": "strict",
+          "strategy": "explicit ask, explicit answer"
+        },
+        {
+          "name": "date_of_birth",
+          "value": "9 July 1991",
+          "tier": "strict",
+          "strategy": "full readback with the month as a word"
+        },
+        {
+          "name": "preferred_channel",
+          "value": "app notifications, not text",
+          "strategy": "echo folded into the close"
+        }
+      ],
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Hello, am I speaking with Owen Petrakis?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Who's asking?"
+        },
+        {
+          "speaker": "agent",
+          "text": "Fraud team at Sandbrook Bank. There's a case open on your card, and I need to know it's you before I say any more."
+        },
+        {
+          "speaker": "caller",
+          "text": "How do I know you're the bank? Anyone can say that."
+        },
+        {
+          "speaker": "agent",
+          "tier": "strict",
+          "text": "Fair. Hang up and ring the number on the back of your card, then quote case 4482. Or carry on with me. Your choice."
+        },
+        {
+          "speaker": "caller",
+          "text": "Give me the case number again."
+        },
+        {
+          "speaker": "agent",
+          "tier": "strict",
+          "text": "Four, four, eight, two."
+        },
+        {
+          "speaker": "caller",
+          "text": "Alright, I'll carry on. It's Owen."
+        },
+        {
+          "speaker": "agent",
+          "tier": "strict",
+          "text": "Two things before we start. We record these calls, and I'll need your date of birth. Happy to go ahead?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Yes, go ahead. Ninth of July, ninety one."
+        },
+        {
+          "speaker": "agent",
+          "tier": "strict",
+          "text": "Ninth of July, nineteen ninety one. That's a match."
+        },
+        {
+          "speaker": "caller",
+          "text": "So what's happened?"
+        },
+        {
+          "speaker": "agent",
+          "text": "Three attempts on your card last night. All declined, all abroad."
+        },
+        {
+          "speaker": "caller",
+          "text": "That wasn't me. I've been home all week."
+        },
+        {
+          "speaker": "agent",
+          "text": "Right, then we'll stop the card and send a new one."
+        },
+        {
+          "speaker": "caller",
+          "text": "How long will that take?"
+        },
+        {
+          "speaker": "agent",
+          "text": "Three working days, to your home address, which I'm not going to read out over the phone."
+        },
+        {
+          "speaker": "caller",
+          "text": "Sensible."
+        },
+        {
+          "speaker": "agent",
+          "text": "One more thing. Updates by text, or by app notification?"
+        },
+        {
+          "speaker": "caller",
+          "text": "App. I never read texts."
+        },
+        {
+          "speaker": "agent",
+          "text": "App only then. You'll see the first one inside the hour."
+        },
+        {
+          "speaker": "caller",
+          "text": "Thanks."
+        }
+      ],
+      "notes": "Five values. Identity verification runs both ways: the agent gives him the case number so he can verify the bank, then verifies him. Recording disclosure and the go-ahead sit in one short sentence. Rotation: strict digit readback on the case reference, verification-before-disclosure on the name, explicit ask on recording and permission, strict full readback on the date of birth, echo folded into the close on the channel."
+    },
+    {
+      "id": "contact_screening_08_non_subtle",
+      "pair_id": "contact_screening_08",
+      "label": "non_subtle",
+      "language": "en",
+      "scenario": "Bank fraud-alert verification. The right party suspects the caller is the fraud, so the agent hands him a way to verify them first.",
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Good evening. Am I speaking with Owen Petrakis? Please confirm."
+        },
+        {
+          "speaker": "caller",
+          "text": "Who's asking?"
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you for your enquiry. This is the fraud prevention department at Sandbrook Bank. For verification purposes I am required to confirm your identity before any account information can be disclosed."
+        },
+        {
+          "speaker": "caller",
+          "text": "How do I know you're the bank? Anyone can say that."
+        },
+        {
+          "speaker": "agent",
+          "text": "I appreciate your patience and I do understand your concern. I do apologise for any inconvenience this may cause. The case reference is four four eight two."
+        },
+        {
+          "speaker": "caller",
+          "text": "Give me the case number again."
+        },
+        {
+          "speaker": "agent",
+          "text": "I will now repeat the case reference for verification purposes. Four, four, eight, two. Is that correct?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Alright, I'll carry on. It's Owen."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you for confirming. Please be advised this call is being recorded for training and quality purposes. Kindly provide your date of birth."
+        },
+        {
+          "speaker": "caller",
+          "text": "Yes, go ahead. Ninth of July, ninety one."
+        },
+        {
+          "speaker": "agent",
+          "text": "Just to confirm, you have provided the ninth of July, nineteen ninety one. Is that correct?"
+        },
+        {
+          "speaker": "caller",
+          "text": "So what's happened?"
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you. Is now a good time to talk? Three transaction attempts were recorded on your card overnight. All three were declined."
+        },
+        {
+          "speaker": "caller",
+          "text": "That wasn't me. I've been home all week."
+        },
+        {
+          "speaker": "agent",
+          "text": "Just to confirm, you have stated that you did not authorise these transactions. Is that correct? The card will be blocked and a replacement issued."
+        },
+        {
+          "speaker": "caller",
+          "text": "How long will that take?"
+        },
+        {
+          "speaker": "agent",
+          "text": "The replacement will arrive within three working days at the address held on file."
+        },
+        {
+          "speaker": "caller",
+          "text": "Sensible."
+        },
+        {
+          "speaker": "agent",
+          "text": "Kindly confirm your preferred notification channel. The available options are text message or application notification."
+        },
+        {
+          "speaker": "caller",
+          "text": "App. I never read texts."
+        },
+        {
+          "speaker": "agent",
+          "text": "You have selected application notification. Your preference has been recorded. Thank you for your time, thank you for your patience, and thank you for banking with Sandbrook."
+        },
+        {
+          "speaker": "caller",
+          "text": "Thanks."
+        }
+      ],
+      "notes": "Robotic twin. Same caller turns. His scam worry gets an apology paragraph rather than the invitation to hang up and ring the card, 'is now a good time to talk?' lands after he has asked what happened, every value carries 'just to confirm' and 'is that correct', and the close stacks three thank-yous."
+    },
+    {
+      "id": "contact_screening_09_subtle",
+      "pair_id": "contact_screening_09",
+      "label": "subtle",
+      "language": "en",
+      "scenario": "Warranty expiry outreach to a small bakery. The owner is the decision maker but is mid-bake and cannot decide on the spot.",
+      "fields": [
+        {
+          "name": "authority_to_decide",
+          "value": "owner signs off, nobody else",
+          "tier": "strict",
+          "strategy": "explicit ask, explicit answer"
+        },
+        {
+          "name": "permission_to_continue",
+          "value": "three minutes now, later offered",
+          "tier": "strict",
+          "strategy": "explicit ask with a real out"
+        },
+        {
+          "name": "unit_serial",
+          "value": "VCC48712",
+          "tier": "strict",
+          "strategy": "value once, then character by character"
+        },
+        {
+          "name": "best_callback_time",
+          "value": "before eleven, any weekday",
+          "strategy": "echo-and-advance"
+        },
+        {
+          "name": "marketing_removal",
+          "value": "no newsletter, service calls stay",
+          "tier": "strict",
+          "strategy": "explicit scope ask, explicit confirmation"
+        }
+      ],
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Hi, Vantage Cold Chain here. Who looks after the walk in freezer at Bellamy Bakeries?"
+        },
+        {
+          "speaker": "caller",
+          "text": "That'd be me. Martin. I own the place."
+        },
+        {
+          "speaker": "agent",
+          "tier": "strict",
+          "text": "Martin, so I'm not wasting your time, are you the one who'd sign off a service contract, or is there someone else?"
+        },
+        {
+          "speaker": "caller",
+          "text": "It's me. Nobody else."
+        },
+        {
+          "speaker": "agent",
+          "tier": "strict",
+          "text": "Your warranty runs out on the twelfth. Can I take three minutes now, or would later be easier?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Three minutes, but I've got dough proving."
+        },
+        {
+          "speaker": "agent",
+          "text": "Which unit's yours? I've got a serial on the record here."
+        },
+        {
+          "speaker": "caller",
+          "text": "Should be the one from twenty twenty one."
+        },
+        {
+          "speaker": "agent",
+          "tier": "strict",
+          "text": "That's VCC48712. V, C, C, then 4-8-7-1-2."
+        },
+        {
+          "speaker": "caller",
+          "text": "That's the one."
+        },
+        {
+          "speaker": "agent",
+          "text": "Cover's eleven forty a year, or ninety eight a month."
+        },
+        {
+          "speaker": "caller",
+          "text": "Monthly's easier on cash flow. But I can't decide standing here."
+        },
+        {
+          "speaker": "agent",
+          "text": "No rush at all. When's quiet for you?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Before eleven, any weekday. After that it's chaos."
+        },
+        {
+          "speaker": "agent",
+          "text": "Before eleven. I'll ring Tuesday."
+        },
+        {
+          "speaker": "caller",
+          "text": "Fine. And I don't want the newsletter or any of that."
+        },
+        {
+          "speaker": "agent",
+          "tier": "strict",
+          "text": "Newsletter off. To be clear, you'd still get the Tuesday call and anything about the warranty itself. Is that alright?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Yes, that's fine. Just no marketing."
+        },
+        {
+          "speaker": "agent",
+          "tier": "strict",
+          "text": "No marketing, service calls stay. Speak Tuesday before eleven."
+        },
+        {
+          "speaker": "caller",
+          "text": "Cheers."
+        }
+      ],
+      "notes": "Five values. The authority question comes first so neither side wastes the three minutes, and the newsletter opt-out is scoped explicitly so service calls are not accidentally cut. Rotation: explicit authority ask, explicit permission ask, strict character readback on the serial, echo-and-advance on the callback window, scope ask plus confirmation on marketing."
+    },
+    {
+      "id": "contact_screening_09_non_subtle",
+      "pair_id": "contact_screening_09",
+      "label": "non_subtle",
+      "language": "en",
+      "scenario": "Warranty expiry outreach to a small bakery. The owner is the decision maker but is mid-bake and cannot decide on the spot.",
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Good morning. My name is calling from Vantage Cold Chain. Kindly confirm who is responsible for the walk in freezer unit at Bellamy Bakeries."
+        },
+        {
+          "speaker": "caller",
+          "text": "That'd be me. Martin. I own the place."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you for confirming. Just to confirm, you are the authorised decision maker for service contracts at this premises. Is that correct?"
+        },
+        {
+          "speaker": "caller",
+          "text": "It's me. Nobody else."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you. Your warranty is due to expire on the twelfth of this month. This call will take approximately three minutes of your time."
+        },
+        {
+          "speaker": "caller",
+          "text": "Three minutes, but I've got dough proving."
+        },
+        {
+          "speaker": "agent",
+          "text": "Is now a good time to talk? Kindly confirm the serial number of the unit currently in operation."
+        },
+        {
+          "speaker": "caller",
+          "text": "Should be the one from twenty twenty one."
+        },
+        {
+          "speaker": "agent",
+          "text": "I will now read back the serial number held on the record for verification purposes. V, C, C, four, eight, seven, one, two. Is that correct?"
+        },
+        {
+          "speaker": "caller",
+          "text": "That's the one."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you for confirming. The available options are eleven hundred and forty pounds annually, or ninety eight pounds on a monthly basis."
+        },
+        {
+          "speaker": "caller",
+          "text": "Monthly's easier on cash flow. But I can't decide standing here."
+        },
+        {
+          "speaker": "agent",
+          "text": "You have indicated a preference for the monthly option. Kindly provide a convenient time for a follow up call."
+        },
+        {
+          "speaker": "caller",
+          "text": "Before eleven, any weekday. After that it's chaos."
+        },
+        {
+          "speaker": "agent",
+          "text": "Just to confirm, you have requested a callback before eleven on a weekday. Is that correct? This has been noted."
+        },
+        {
+          "speaker": "caller",
+          "text": "Fine. And I don't want the newsletter or any of that."
+        },
+        {
+          "speaker": "agent",
+          "text": "Your request has been noted and your marketing preference has been updated on the system."
+        },
+        {
+          "speaker": "caller",
+          "text": "Yes, that's fine. Just no marketing."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you very much for your time this morning. Thank you for your patience and thank you for your cooperation. Is there anything else I can help you with?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Cheers."
+        }
+      ],
+      "notes": "Robotic twin. Same caller turns. 'Is now a good time to talk?' arrives after he has already granted the three minutes, every value is bracketed by 'just to confirm' and 'is that correct', the newsletter opt-out is never scoped so the service calls are left ambiguous, and the close is three thank-yous plus a help-desk line."
+    },
+    {
+      "id": "contact_screening_10_subtle",
+      "pair_id": "contact_screening_10",
+      "label": "subtle",
+      "language": "en",
+      "scenario": "Recruitment outreach reaching a candidate at her work desk with colleagues in earshot.",
+      "fields": [
+        {
+          "name": "availability_to_talk",
+          "value": "not now, colleagues present",
+          "tier": "strict",
+          "strategy": "explicit ask built for a one-word answer"
+        },
+        {
+          "name": "best_callback_time",
+          "value": "after six",
+          "strategy": "echo-and-advance"
+        },
+        {
+          "name": "callback_number",
+          "value": "07700 900641",
+          "tier": "strict",
+          "strategy": "digit-by-digit readback"
+        },
+        {
+          "name": "remove_work_number",
+          "value": "work desk number off the system",
+          "tier": "strict",
+          "strategy": "explicit ask, explicit confirmation"
+        },
+        {
+          "name": "data_retention_consent",
+          "value": "name and mobile kept six months",
+          "tier": "strict",
+          "strategy": "explicit ask with a delete option"
+        }
+      ],
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Hi, is that Sofia Nkemdirim?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Yes. Sorry, who is this?"
+        },
+        {
+          "speaker": "agent",
+          "tier": "strict",
+          "text": "Ravi at Halloran Talent. I'm ringing about a role. Are you free to talk, or are there people around you?"
+        },
+        {
+          "speaker": "caller",
+          "text": "There are people around. This is my work desk."
+        },
+        {
+          "speaker": "agent",
+          "text": "Say yes or no and I'll keep it short. Do you want me to ring another time?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Yes. Later."
+        },
+        {
+          "speaker": "agent",
+          "text": "When works?"
+        },
+        {
+          "speaker": "caller",
+          "text": "After six, on my mobile."
+        },
+        {
+          "speaker": "agent",
+          "text": "After six. Which number's the mobile?"
+        },
+        {
+          "speaker": "caller",
+          "text": "It's 07700 900641."
+        },
+        {
+          "speaker": "agent",
+          "tier": "strict",
+          "text": "0-7-5-3-3, then 2-0-8-6-4-1."
+        },
+        {
+          "speaker": "caller",
+          "text": "That's it."
+        },
+        {
+          "speaker": "agent",
+          "tier": "strict",
+          "text": "And I'll take this work number off our system, so nobody here rings your desk again. Is that what you want?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Please. That's exactly what I want."
+        },
+        {
+          "speaker": "agent",
+          "tier": "strict",
+          "text": "Work number off. Only the mobile from now on."
+        },
+        {
+          "speaker": "caller",
+          "text": "How did you get my details anyway?"
+        },
+        {
+          "speaker": "agent",
+          "text": "Your profile's public on the industry directory. That's where I found you."
+        },
+        {
+          "speaker": "caller",
+          "text": "I see. Are you keeping my details on file somewhere?"
+        },
+        {
+          "speaker": "agent",
+          "tier": "strict",
+          "text": "Only if you say so. Can I hold your name and mobile for six months, or would you rather I delete everything after this call?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Six months is fine."
+        },
+        {
+          "speaker": "agent",
+          "text": "Six months, then it goes. I'll ring after six."
+        },
+        {
+          "speaker": "caller",
+          "text": "Thanks."
+        }
+      ],
+      "notes": "Five values. The agent reads the risk of the setting and builds every question so a one-word answer works, but the retention consent and the work-number removal are still asked outright and confirmed. 'How did you get my details?' gets one straight sentence. Rotation: explicit availability ask, echo-and-advance on the time, strict digit readback on the mobile, explicit ask plus confirmation on the work number, explicit consent ask with a delete option on retention."
+    },
+    {
+      "id": "contact_screening_10_non_subtle",
+      "pair_id": "contact_screening_10",
+      "label": "non_subtle",
+      "language": "en",
+      "scenario": "Recruitment outreach reaching a candidate at her work desk with colleagues in earshot.",
+      "turns": [
+        {
+          "speaker": "agent",
+          "text": "Good afternoon. Am I speaking with Sofia Nkemdirim? Please confirm."
+        },
+        {
+          "speaker": "caller",
+          "text": "Yes. Sorry, who is this?"
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you for confirming. My name is Ravi and I am calling from Halloran Talent regarding a senior operations vacancy with one of our clients in the logistics sector."
+        },
+        {
+          "speaker": "caller",
+          "text": "There are people around. This is my work desk."
+        },
+        {
+          "speaker": "agent",
+          "text": "I appreciate your patience. Is now a good time to talk? The position offers a competitive package and I would like to talk you through the specification."
+        },
+        {
+          "speaker": "caller",
+          "text": "Yes. Later."
+        },
+        {
+          "speaker": "agent",
+          "text": "Certainly. Kindly provide a convenient time for me to call you back."
+        },
+        {
+          "speaker": "caller",
+          "text": "After six, on my mobile."
+        },
+        {
+          "speaker": "agent",
+          "text": "Just to confirm, you have requested a callback after six on your mobile. Is that correct? Kindly provide the mobile number."
+        },
+        {
+          "speaker": "caller",
+          "text": "It's 07700 900641."
+        },
+        {
+          "speaker": "agent",
+          "text": "I will now read back the number you have provided for verification purposes. Zero seven seven zero zero, nine zero zero six four one. Is that correct?"
+        },
+        {
+          "speaker": "caller",
+          "text": "That's it."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you for confirming. Please confirm whether you would like this workplace number to remain on our contact database."
+        },
+        {
+          "speaker": "caller",
+          "text": "Please. That's exactly what I want."
+        },
+        {
+          "speaker": "agent",
+          "text": "Your request has been noted and your record has been updated accordingly."
+        },
+        {
+          "speaker": "caller",
+          "text": "How did you get my details anyway?"
+        },
+        {
+          "speaker": "agent",
+          "text": "Your details were obtained from a publicly accessible professional directory in accordance with our data sourcing policy. I do apologise for any inconvenience this may have caused you today."
+        },
+        {
+          "speaker": "caller",
+          "text": "I see. Are you keeping my details on file somewhere?"
+        },
+        {
+          "speaker": "agent",
+          "text": "Your details will be retained on file for a period of six months in line with our retention schedule. Is that correct?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Six months is fine."
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you for your time today. Thank you for your patience and thank you for your cooperation. Is there anything else I can help you with?"
+        },
+        {
+          "speaker": "caller",
+          "text": "Thanks."
+        }
+      ],
+      "notes": "Robotic twin. Same caller turns. 'Is now a good time to talk?' arrives after she has said her colleagues can hear, the pitch keeps going anyway, the work-number removal is asked as an ambiguous yes-or-no and then reported as an update, and retention is announced as policy rather than asked as a consent question with a delete option."
+    }
+  ]
+}

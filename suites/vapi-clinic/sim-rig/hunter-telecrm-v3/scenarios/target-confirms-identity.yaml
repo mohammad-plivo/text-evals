@@ -1,0 +1,22 @@
+description: >
+  The simplest possible screening case: the intended contact answers and confirms it is them.
+  This MUST route to `reached` and hand off to the collector.
+
+  Hunter run 70f18683 shows it hanging up instead:
+      AGENT : Hello, is this Arjun?
+      CALLER: Yeah, this is Arjun.
+      AGENT : Sorry for any inconvenience, and thank you for your time. Goodbye.
+  tagged TARGET-NOT-REACHED. 13 of 28 calls ended within 3 agent turns.
+
+  Hypothesis under test: the screening node's identify step has no configured target to
+  confirm against, because the builder never populates `target_name` on the node.
+turns:
+  - user: "Yeah, this is Arjun."
+    expect:
+      message_excludes:
+        - "sorry for any inconvenience"
+        - "thank you for your time"
+        - "goodbye"
+  - user: "Yes, I can talk now."
+  - user: "Yes, I filled the form on your website."
+  - user: "We have six people in sales."

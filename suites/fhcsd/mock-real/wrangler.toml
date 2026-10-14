@@ -1,0 +1,7 @@
+name = "fhcsd-mock-real"
+main = "worker.js"
+compatibility_date = "2026-08-01"
+
+# No bindings, no secrets, no KV — the mock is pure request/response and holds no state.
+# The vendor passcode is a constant in worker.js on purpose: it is the same non-secret value the
+# existing FHCSD mock uses, and keeping it in the file means `wrangler deploy` is the whole deploy.

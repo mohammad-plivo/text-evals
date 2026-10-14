@@ -1,0 +1,11 @@
+params:
+  lead_id: TC-SC-04
+  name: Deepak
+  full_name: Deepak Verma
+  phone_number: '+919876543210'
+  company_name: Verma Motors
+  company_email: ''
+  job_title: ''
+  state_location: ''
+  source_page: telecrm-website/pricing
+substitutions: {}

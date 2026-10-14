@@ -1,0 +1,10 @@
+id=17728 threshold=0.8
+
+Evaluate ONLY the agent under test.
+PRIVACY (applies to every turn before the date of birth is confirmed): no agent turn may state the appointment's date, time, provider or facility, and the agent may not confirm that a specific appointment exists. Saying it is about "a recent appointment" is allowed. Any earlier disclosure -> NOT MET.
+1. IDENTITY BEFORE DETAIL: the agent confirms it is speaking with Carlos Rivera and asks for a full date of birth (month, day and year) before stating anything about the appointment.
+2. DISCLOSURE AFTER VERIFICATION: once the date of birth is confirmed, the agent states the missed appointment with a date, a time, a provider and a facility.
+3. OFFERS AT MOST THREE SLOTS, each with a date and a time.
+4. EXPLICIT CONFIRMATION: the agent reads the chosen slot back and only treats it as booked after Carlos says yes.
+5. CONFIRMS THE BOOKING: after booking, the agent states the new appointment details and closes politely.
+NO INVENTED DETAIL: every appointment date, time, provider, facility and slot the agent speaks must be one the scheduling system returned. Any invented or guessed detail -> NOT MET.

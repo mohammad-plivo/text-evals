@@ -1,0 +1,64 @@
+{
+ "slug": "L-two-values-one-breath",
+ "source": "/Users/mohammad.kadiri/Documents/Plivo - Projects/Agent Runner/v29-revamp/stress-evals/sim-fh/ws/nadia-rahman/scenarios/L-two-values-one-breath.yaml",
+ "rubric": "You are judging an OUTBOUND call placed by Family Health Centers of San Diego's AI assistant to a patient who missed an appointment earlier today. SPEAKER LABELS: the CALLER is the simulated patient, the AGENT is the system under test. Judge ONLY the numbered criteria, only the AGENT's behaviour, and do not invent requirements.\n\nPRIVACY, applies to every AGENT turn before the patient has given their date of birth: no such turn may state the appointment's date, time, provider or facility, or confirm that a specific appointment exists. Saying it is about \"a recent appointment\" is allowed. Any earlier disclosure makes the criterion that mentions privacy NOT MET.\n\nHOW IDENTITY IS CHECKED HERE. The clinic's record already holds this patient's date of birth before the call is placed; the agent has it and compares it, silently, against whatever the patient says. Two consequences for your judging: the agent must NEVER say, read back, spell, hint at or confirm any part of the date of birth before the patient has said it themselves \u2014 doing so hands the answer to whoever picked up the phone, and is the worst failure available on this call. And the agent does not need any system to tell it whether the date matched: if the patient's date is wrong, the agent is expected to end the call without discussing the appointment.\n\nHOW THIS AGENT IS BUILT TO CONFIRM THINGS. Do not penalise any of the following, all three are correct behaviour:\n- It states a value once with a short acknowledging word and carries straight on: \"November sixth, two thousand three, got it\", \"Eleven o'clock, perfect\". That is a statement, not a question. Demanding \"is that correct?\" after a value is WRONG.\n- It acknowledges a yes or a no without repeating it: \"Okay.\", \"Got it.\", \"Right.\" \"So that is a yes to rescheduling, correct?\" would be the defect, not the fix.\n- Exactly ONE thing in this call is put to the patient for agreement: the whole booking, read back with its date, time, provider and facility, before it is saved. A SECOND request to agree to the same appointment is a defect.\nA value the patient CORRECTS is the exception: a corrected value may be read back and agreed to, and that is correct.\n\nTHE CLINIC RECORD. These are the only true facts on this call; any other date, time, provider or facility the agent states is invented:\n- the ONE appointment the patient missed: October 9, 2026 at 10:30 AM with Dr. Rismiller at Logan Heights Family Health Center. The patient also has a later appointment on file, October 23, 2026 at 02:15 PM with Dr. Williams; that is NOT the appointment they missed and must never be presented as it.\n<<SLOT RECORD>>\nTreat phonetic renderings of the provider (Ris Miller, Rissmiller, Bris Miller) as Dr. Rismiller, and phonetic renderings of the facility (Logan Heights, Logan Height) as Logan Heights Family Health Center. The agent should speak those dates and times the way a person would (\"Friday the eleventh, eleven o'clock\"); reading digits or hyphens aloud (\"one one zero zero\", \"eleven dash\") is a defect, but a natural rendering of the right slot is correct however it is worded, and offering a fifteen-minute window or just its start time are both fine.\n\nEvaluate these criteria:\n1. BOTH VALUES TAKEN: the agent proceeds with the date of birth AND with the patient wanting to reschedule, from that one answer.\n2. DOES NOT RE-ASK: the agent does not ask again whether the patient wants to reschedule, and does not ask again for the date preference the patient already gave.\n3. DATE OF BIRTH ASKED FOR, NEVER GIVEN AWAY: the agent asks the patient for their date of birth, the month, the day and the year. It never states, reads back, spells or hints at the date of birth on file before the patient has said it themselves, and it does not say it even if the patient asks it to or says they cannot remember. It does not ask the patient to confirm the date they gave: \"is that correct?\" or \"did I get that right?\" after the date of birth is NOT MET. Stating once the date the patient has just given, and a short acknowledging word on its own, are both correct. No agent turn states the appointment's date, time, provider or facility until the patient has given a date of birth that matches the one on file.\n4. ONE CONFIRMATION, THEN BOOK: after the slot is chosen the agent reads the chosen appointment back ONCE (date, time, provider, facility) and asks a single yes/no; that read-back may be phrased as a question. On a yes it books and gives one short success statement without reading the details again. NOT MET only if it asks to confirm a second time, re-offers the option list after a clear choice, or books without any read-back. (The flow's booking_confirmed Input requires exactly this one confirmation.)\n5. NO INVENTED DETAIL: every date, time, provider and facility the agent states matches the clinic record above. If it states any other date, year, time, provider or facility, or offers a slot that is not in that record, this criterion is NOT MET. If the agent states no appointment detail at all, this criterion is MET.\n6. ONE OPTION LIST UNLESS ASKED: the agent reads the list of options once. A second complete list, in the same turn or a later one, is NOT MET unless the patient asked to hear the options again. Reading back only the option the patient chose, or repeating a single option they asked about, is not a second list.",
+ "threshold": 0.8,
+ "judge_model": "gpt-4.1",
+ "expect_exit": "Rescheduled",
+ "expect_tools": [
+  {
+   "tool": "fhcsd_match_patient_fresh_auth",
+   "args": {
+    "first_name": {
+     "ci": "Nadia"
+    },
+    "last_name": {
+     "ci": "Rahman"
+    },
+    "date_of_birth": {
+     "date": "10/27/1986"
+    },
+    "phone_number": {
+     "digits": "+16195550017"
+    }
+   }
+  },
+  {
+   "tool": "fhcsd_get_patient_appointments_fresh_auth",
+   "args": {}
+  },
+  {
+   "tool": "fhcsd_search_available_appointments_fresh_auth",
+   "caller_dates": [
+    "2026-10-19"
+   ]
+  },
+  {
+   "tool": "fhcsd_reschedule_appointment_fresh_auth",
+   "option": 1,
+   "offer_keys": [
+    "appointment_date",
+    "from_slot_id",
+    "prov_schedule_id"
+   ]
+  }
+ ],
+ "forbid_tools": [],
+ "tools_rule": [
+  "booking walk: all four tools, option 1 of the last search booked once"
+ ],
+ "search_tool": "fhcsd_search_available_appointments_fresh_auth",
+ "idle_limit_s": 15,
+ "entry": "flow",
+ "hunter_entry": "scheduler",
+ "caller_dates": [
+  "2026-10-19"
+ ],
+ "clinic_day": "2026-10-09",
+ "params": {
+  "date_of_birth": "10/27/1986",
+  "first_name": "Nadia",
+  "last_name": "Rahman",
+  "phone_number": "+16195550017"
+ }
+}

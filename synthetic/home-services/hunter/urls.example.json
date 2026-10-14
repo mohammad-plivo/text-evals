@@ -1,0 +1,9 @@
+{
+ "_comment": "Copy to urls.json and fill in. build.py reads it; create.py refuses to run while flow_uuid is the placeholder.",
+ "runner_share": "https://<runner-host>",
+ "auth_id": "<AUTH_ID>",
+ "flow_uuid": "__SET_AFTER_PUBLISH__",
+ "webhook_base_url": "https://<hunter-webhook-host>",
+ "from_number": "+15550100000",
+ "category": "v29-hunter-example"
+}

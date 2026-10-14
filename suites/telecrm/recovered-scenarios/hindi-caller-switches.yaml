@@ -1,0 +1,28 @@
+description: >
+  The other half of english-only-caller, and the regression this change most risks.
+
+  english-only-caller asserts the agent does NOT reach for Hindi before the caller does.
+  On its own that is a dangerous thing to optimise: the cheapest way to pass it is to
+  strip the Hindi vocabulary entirely, which would silently break every genuine Hinglish
+  call. Hunter run 4ee2410e shows that path currently WORKS — "TeleCRM HI - Hindi Qualify
+  With Definition" passed with the judge noting the agent "switches to Hindi/Hinglish
+  after the caller's request, never announces the language switch".
+
+  So this scenario is the guard. The caller answers in Hindi from their first real turn,
+  and the agent must FOLLOW them — the opposite assertion, on the same config.
+
+  The opening "Hello?" is deliberate: the node's own instructions treat a bare repeated
+  hello as a signal to ask one short language question, so this also exercises that
+  branch. Hunter #13 failed by asking it TWICE; that is a separate defect and this
+  scenario does not assert on it.
+
+  Scored by scripts/tally_language.py --mode switch, which inverts the test: a run FAILS
+  if the agent is still in English after the caller has plainly moved to Hindi.
+turns:
+  - user: "Hello?"
+  - user: "हाँ, मैं प्रिया बोल रही हूँ।"
+  - user: "हाँ, मैंने आपकी website पर form भरा था।"
+  - user: "हमारी sales team में करीब बारह लोग हैं।"
+  - user: "हम travel agency चलाते हैं।"
+  - user: "हाँ, कल शाम को follow up call ठीक रहेगा।"
+  - user: "नहीं, और कुछ नहीं। धन्यवाद।"

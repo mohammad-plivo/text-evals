@@ -1,0 +1,935 @@
+{
+ "name": "Northwind example flow: all 12 collectors (sim, leader)",
+ "flowId": "example-northwind-v1",
+ "agentName": "Nora",
+ "nodes": [
+  {
+   "id": "start",
+   "type": "start",
+   "data": {
+    "config": {
+     "name": "Start",
+     "events": [],
+     "triggers": [
+      "http"
+     ],
+     "payload_format": {
+      "lead_id": "string"
+     }
+    }
+   }
+  },
+  {
+   "id": "agent",
+   "type": "ai_agent_v29",
+   "data": {
+    "config": {
+     "name": "Northwind Booking Assistant",
+     "channel": "call",
+     "brand_name": "Northwind Home Services",
+     "timezone": "America/New_York",
+     "voice_config": {
+      "language": "en"
+     },
+     "initial_wait_time": 0,
+     "allow_greeting_interruption": true,
+     "instruction_attachments": [],
+     "instructions": "You are Nora, the booking assistant for Northwind Home Services. This is an outbound call to someone who asked for a home-service quote on our website yesterday. Greet them, say who you are and why you are calling, and offer to set up their first visit now; it takes about five minutes.\n\nCollect the details one at a time, in this order: full name, best phone number, email, service, service address, number of rooms, pets at home, visit date, monthly budget for upkeep, the account holder's date of birth, a referral code (optional), then a 4-digit account PIN typed on the phone keypad.\n\nOnce the phone number is saved, the account lookup runs by itself. Never read out anything the lookup returns.\n\nWhen every detail is saved, sum up the service, visit date and address in one sentence and ask for the go-ahead to book. Book only after a clear yes. After a successful booking, give the arrival window and ask if there is anything else.\n\nWe offer four services: deep cleaning, gutter cleaning, window washing and carpet cleaning. Nothing else. If they ask for something else, say we don't offer it and ask them to pick one of the four.\n\nIf they ask why we need something, answer in one sentence and ask again: the email is for the booking confirmation; the budget lets us suggest the right upkeep plan; the date of birth is needed because the account holder must be 18 or older; the PIN protects the account when they call us.\n\nNever promise a price, a discount or a technician's name. Our phone number is 5 5 5, 0 1 0, 0 1 4 2.",
+     "leader_profile": {
+      "version": 1,
+      "engine": "jev",
+      "fault_policy": "gemma_autonomous",
+      "scribe_close_permit": false,
+      "amd": "off"
+     },
+     "extract_variables": [
+      {
+       "variable_name": "full_name",
+       "variable_instructions": "Ask for the caller's first and last name.",
+       "variable_type": "string",
+       "variable_format_instructions": "",
+       "variable_enum_values": [],
+       "configure_data_format": false,
+       "collection": {
+        "type": "name",
+        "options": {
+         "first_name": true,
+         "last_name": true,
+         "middle_name": false
+        },
+        "spell_back": true,
+        "required": true,
+        "instructions": "First and last name of the account holder. Spell it back and wait for a yes."
+       }
+      },
+      {
+       "variable_name": "phone",
+       "variable_instructions": "Ask for the best phone number to reach them.",
+       "variable_type": "string",
+       "variable_format_instructions": "",
+       "variable_enum_values": [],
+       "configure_data_format": false,
+       "collection": {
+        "type": "phone",
+        "options": {
+         "vanity": false
+        },
+        "required": true,
+        "instructions": "A US number with its area code. Read it back and wait for a yes."
+       }
+      },
+      {
+       "variable_name": "email",
+       "variable_instructions": "Ask for the email address for the booking confirmation.",
+       "variable_type": "string",
+       "variable_format_instructions": "",
+       "variable_enum_values": [],
+       "configure_data_format": false,
+       "collection": {
+        "type": "email",
+        "required": true,
+        "instructions": "Spell the address back and wait for a yes."
+       }
+      },
+      {
+       "variable_name": "service_type",
+       "variable_instructions": "Ask which service they want.",
+       "variable_type": "string",
+       "variable_format_instructions": "",
+       "variable_enum_values": [],
+       "configure_data_format": false,
+       "collection": {
+        "type": "choice",
+        "choices": [
+         "deep cleaning",
+         "gutter cleaning",
+         "window washing",
+         "carpet cleaning"
+        ],
+        "options": {
+         "multiple": false,
+         "present_options": true,
+         "require_confirmation": false
+        },
+        "required": true,
+        "instructions": "Read the four services. Anything else is not offered: say so and ask again."
+       }
+      },
+      {
+       "variable_name": "service_address",
+       "variable_instructions": "Ask for the address where the visit will take place.",
+       "variable_type": "string",
+       "variable_format_instructions": "",
+       "variable_enum_values": [],
+       "configure_data_format": false,
+       "collection": {
+        "type": "address",
+        "options": {
+         "required_fields": [
+          "street_address",
+          "city",
+          "state"
+         ]
+        },
+        "required": true,
+        "instructions": "Street, city and state, plus a unit number if they have one. Ask only for a missing part."
+       }
+      },
+      {
+       "variable_name": "rooms_count",
+       "variable_instructions": "Ask how many rooms the team should cover.",
+       "variable_type": "string",
+       "variable_format_instructions": "",
+       "variable_enum_values": [],
+       "configure_data_format": false,
+       "collection": {
+        "type": "number",
+        "options": {
+         "allow_decimal": false,
+         "allow_negative": false,
+         "require_confirmation": true
+        },
+        "required": true,
+        "instructions": "A whole number from 1 to 12. Read it back and wait for a yes."
+       }
+      },
+      {
+       "variable_name": "has_pets",
+       "variable_instructions": "Ask whether any pets will be at home during the visit.",
+       "variable_type": "string",
+       "variable_format_instructions": "",
+       "variable_enum_values": [],
+       "configure_data_format": false,
+       "collection": {
+        "type": "boolean",
+        "options": {
+         "require_confirmation": true
+        },
+        "required": true,
+        "instructions": "A plain yes or no. If the answer depends on something, ask for a plain yes or no."
+       }
+      },
+      {
+       "variable_name": "visit_date",
+       "variable_instructions": "Ask which date they would like the visit.",
+       "variable_type": "string",
+       "variable_format_instructions": "",
+       "variable_enum_values": [],
+       "configure_data_format": false,
+       "collection": {
+        "type": "date",
+        "options": {
+         "accept_past": false,
+         "accept_today": false,
+         "require_time": false
+        },
+        "required": true,
+        "instructions": "A future date. Today and past dates are not possible."
+       }
+      },
+      {
+       "variable_name": "monthly_budget",
+       "variable_instructions": "Ask what budget they have in mind for regular upkeep.",
+       "variable_type": "string",
+       "variable_format_instructions": "",
+       "variable_enum_values": [],
+       "configure_data_format": false,
+       "collection": {
+        "type": "currency",
+        "options": {
+         "required_currency": true,
+         "required_period": true
+        },
+        "required": true,
+        "instructions": "An amount in US dollars and how often: per week, per month or per year."
+       }
+      },
+      {
+       "variable_name": "birth_date",
+       "variable_instructions": "Ask for the account holder's date of birth.",
+       "variable_type": "string",
+       "variable_format_instructions": "",
+       "variable_enum_values": [],
+       "configure_data_format": false,
+       "collection": {
+        "type": "dob",
+        "options": {
+         "include_time": false,
+         "require_time": false
+        },
+        "required": true,
+        "instructions": "Month, day and year."
+       }
+      },
+      {
+       "variable_name": "referral_code",
+       "variable_instructions": "Ask whether they have a referral code. It is optional.",
+       "variable_type": "string",
+       "variable_format_instructions": "",
+       "variable_enum_values": [],
+       "configure_data_format": false,
+       "collection": {
+        "type": "text",
+        "options": {
+         "uppercase": true
+        },
+        "readback": "spell",
+        "required": false,
+        "instructions": "Letters and digits, stored in capitals. If they have none or would rather not say, move on."
+       }
+      },
+      {
+       "variable_name": "account_pin",
+       "variable_instructions": "Ask them to type a 4-digit PIN on their phone keypad to protect the account.",
+       "variable_type": "string",
+       "variable_format_instructions": "",
+       "variable_enum_values": [],
+       "configure_data_format": false,
+       "collection": {
+        "type": "dtmf",
+        "num_digits": 4,
+        "options": {
+         "ask_for_confirmation": false
+        },
+        "required": true,
+        "instructions": "Keypad only. Never say the digits back."
+       }
+      },
+      {
+       "variable_name": "confirm_booking",
+       "variable_instructions": "Ask: Shall I go ahead and book this visit for you? The summary was just spoken; do not repeat it.",
+       "variable_type": "string",
+       "variable_format_instructions": "",
+       "variable_enum_values": [],
+       "configure_data_format": false,
+       "collection": {
+        "type": "boolean",
+        "options": {
+         "require_confirmation": false
+        },
+        "required": true,
+        "instructions": "Only a clear yes books the visit. A no means do not book."
+       },
+       "leader_contract": {
+        "version": 1,
+        "prerequisites": {
+         "all": [
+          {
+           "kind": "speech",
+           "id": "booking_summary"
+          }
+         ]
+        }
+       }
+      }
+     ],
+     "actions": [
+      {
+       "action_type": "HTTP",
+       "http_tool_name": "lookup_account",
+       "http_tool_description": "Look up the caller's existing Northwind account by phone number. Reads only.",
+       "http_method": "get",
+       "http_url": "https://example.invalid/northwind/lookup_account",
+       "http_auth_type": "no_auth",
+       "http_function_schema": {
+        "type": "object",
+        "properties": {
+         "phone": {
+          "type": "string",
+          "description": "Phone number in E.164 form"
+         }
+        },
+        "required": [
+         "phone"
+        ],
+        "additionalProperties": false
+       },
+       "leader_contract": {
+        "version": 1,
+        "transport": "http",
+        "consent_fields": [],
+        "effect_kind": "read_only",
+        "arguments": {
+         "phone": {
+          "field": "phone"
+         }
+        },
+        "required_fields": [
+         "phone"
+        ],
+        "success": {
+         "schema": {
+          "type": "object",
+          "required": [
+           "ok",
+           "result"
+          ],
+          "properties": {
+           "ok": {
+            "const": true
+           },
+           "result": {
+            "type": "object",
+            "required": [
+             "account_id"
+            ]
+           }
+          }
+         }
+        },
+        "reject": {
+         "path": [
+          "ok"
+         ],
+         "value": false
+        }
+       }
+      },
+      {
+       "action_type": "HTTP",
+       "http_tool_name": "book_visit",
+       "http_tool_description": "Book the first home-service visit with the saved details, after the caller's go-ahead.",
+       "http_method": "post",
+       "http_url": "https://example.invalid/northwind/book_visit",
+       "http_auth_type": "no_auth",
+       "http_function_schema": {
+        "type": "object",
+        "properties": {
+         "account_id": {
+          "type": "string"
+         },
+         "full_name": {
+          "type": "string"
+         },
+         "phone": {
+          "type": "string"
+         },
+         "email": {
+          "type": "string"
+         },
+         "service": {
+          "type": "string"
+         },
+         "address": {
+          "type": "string"
+         },
+         "rooms": {
+          "type": "string"
+         },
+         "pets": {
+          "type": "string"
+         },
+         "visit_date": {
+          "type": "string"
+         },
+         "budget": {
+          "type": "string"
+         },
+         "birth_date": {
+          "type": "string"
+         },
+         "pin": {
+          "type": "string"
+         }
+        },
+        "required": [
+         "account_id",
+         "full_name",
+         "phone",
+         "email",
+         "service",
+         "address",
+         "rooms",
+         "pets",
+         "visit_date",
+         "budget",
+         "birth_date",
+         "pin"
+        ],
+        "additionalProperties": false
+       },
+       "leader_contract": {
+        "version": 1,
+        "transport": "http",
+        "consent_fields": [
+         "confirm_booking"
+        ],
+        "effect_kind": "write",
+        "arguments": {
+         "account_id": {
+          "result": {
+           "action_id": "lookup_account",
+           "path": [
+            "result",
+            "account_id"
+           ]
+          }
+         },
+         "full_name": {
+          "field": "full_name"
+         },
+         "phone": {
+          "field": "phone"
+         },
+         "email": {
+          "field": "email"
+         },
+         "service": {
+          "field": "service_type"
+         },
+         "address": {
+          "field": "service_address"
+         },
+         "rooms": {
+          "field": "rooms_count"
+         },
+         "pets": {
+          "field": "has_pets"
+         },
+         "visit_date": {
+          "field": "visit_date"
+         },
+         "budget": {
+          "field": "monthly_budget"
+         },
+         "birth_date": {
+          "field": "birth_date"
+         },
+         "pin": {
+          "field": "account_pin"
+         }
+        },
+        "required_fields": [
+         "full_name",
+         "phone",
+         "email",
+         "service_type",
+         "service_address",
+         "rooms_count",
+         "has_pets",
+         "visit_date",
+         "monthly_budget",
+         "birth_date",
+         "account_pin",
+         "confirm_booking"
+        ],
+        "success": {
+         "schema": {
+          "type": "object",
+          "required": [
+           "ok",
+           "result"
+          ],
+          "properties": {
+           "ok": {
+            "const": true
+           },
+           "result": {
+            "type": "object",
+            "required": [
+             "booking_id"
+            ]
+           }
+          }
+         }
+        },
+        "reject": {
+         "path": [
+          "ok"
+         ],
+         "value": false
+        }
+       }
+      },
+      {
+       "action_type": "HTTP",
+       "http_tool_name": "log_call_note",
+       "http_tool_description": "Log a short record of every call in the CRM before the call ends, whatever the outcome. The caller never hears about it. Columns in this order: call time, call outcome, full name, phone, service, referral code, source.",
+       "http_method": "post",
+       "http_url": "https://example.invalid/northwind/log_call_note",
+       "http_auth_type": "no_auth",
+       "http_function_schema": {
+        "type": "object",
+        "properties": {
+         "lead_id": {
+          "type": "string"
+         },
+         "values": {
+          "type": "array",
+          "items": {
+           "type": "array",
+           "items": {
+            "type": "string"
+           }
+          }
+         }
+        },
+        "required": [
+         "lead_id",
+         "values"
+        ],
+        "additionalProperties": false
+       },
+       "leader_contract": {
+        "version": 1,
+        "transport": "http",
+        "consent_fields": [],
+        "effect_kind": "write",
+        "arguments": {
+         "lead_id": {
+          "node_var": "start.http.params.lead_id"
+         },
+         "values": {
+          "row": [
+           {
+            "fact": "call_started_at"
+           },
+           {
+            "fact": "call_outcome"
+           },
+           {
+            "field": "full_name"
+           },
+           {
+            "field": "phone"
+           },
+           {
+            "field": "service_type"
+           },
+           {
+            "field": "referral_code"
+           },
+           {
+            "literal": "outbound-quote"
+           }
+          ]
+         }
+        },
+        "required_fields": [],
+        "success": {
+         "path": [
+          "ok"
+         ],
+         "value": true
+        },
+        "reject": {
+         "path": [
+          "ok"
+         ],
+         "value": false
+        },
+        "tool": {
+         "label": "write_a_note",
+         "starts": "flow",
+         "asks_first": false,
+         "by_end": true,
+         "source": "code"
+        }
+       }
+      }
+     ],
+     "intents": [
+      {
+       "id": "visit_booked",
+       "intent_name": "visit_booked",
+       "intent_instructions": "The visit was booked, the booking was confirmed to the caller and their last question, if any, was answered. Never before the booking succeeded.",
+       "intent_speech": {
+        "speech_enabled": false,
+        "intent_speech_text": ""
+       },
+       "leader_contract": {
+        "version": 1,
+        "kind": "routine",
+        "required_fields": [],
+        "required_actions": {
+         "book_visit": [
+          "SUCCEEDED"
+         ]
+        },
+        "prerequisites": {
+         "all": [
+          {
+           "kind": "followup",
+           "id": "booking_success"
+          }
+         ]
+        }
+       }
+      },
+      {
+       "id": "human_transfer",
+       "intent_name": "human_transfer",
+       "intent_instructions": "The caller asks to speak to a person.",
+       "intent_speech": {
+        "speech_enabled": true,
+        "intent_speech_text": "Let me get someone from our team on the line for you."
+       },
+       "leader_contract": {
+        "version": 1,
+        "kind": "human",
+        "required_fields": [],
+        "required_actions": {}
+       }
+      },
+      {
+       "id": "do_not_call",
+       "intent_name": "do_not_call",
+       "intent_instructions": "The caller asks us to stop calling them or to take them off the list.",
+       "intent_speech": {
+        "speech_enabled": false,
+        "intent_speech_text": ""
+       },
+       "leader_contract": {
+        "version": 1,
+        "kind": "do_not_contact",
+        "required_fields": [],
+        "required_actions": {}
+       }
+      },
+      {
+       "id": "not_interested",
+       "intent_name": "not_interested",
+       "intent_instructions": "The caller does not want the service, or says no when asked for the go-ahead to book. Not a request to stop all calls, and not a request to be called back later.",
+       "intent_speech": {
+        "speech_enabled": false,
+        "intent_speech_text": ""
+       },
+       "leader_contract": {
+        "version": 1,
+        "kind": "exception",
+        "required_fields": [],
+        "required_actions": {}
+       }
+      },
+      {
+       "id": "callback_requested",
+       "intent_name": "callback_requested",
+       "intent_instructions": "The caller says now is not a good time or asks to be called back later.",
+       "intent_speech": {
+        "speech_enabled": false,
+        "intent_speech_text": ""
+       },
+       "leader_contract": {
+        "version": 1,
+        "kind": "exception",
+        "required_fields": [],
+        "required_actions": {}
+       }
+      },
+      {
+       "id": "booking_failed",
+       "intent_name": "booking_failed",
+       "intent_instructions": "The booking or the account lookup did not succeed. Never when the caller simply said no.",
+       "intent_speech": {
+        "speech_enabled": false,
+        "intent_speech_text": ""
+       },
+       "leader_contract": {
+        "version": 1,
+        "kind": "conditional",
+        "required_fields": [],
+        "required_actions": {},
+        "prerequisites": {
+         "any": [
+          {
+           "kind": "action",
+           "action_id": "book_visit",
+           "statuses": [
+            "REJECTED",
+            "UNKNOWN"
+           ]
+          },
+          {
+           "kind": "action",
+           "action_id": "lookup_account",
+           "statuses": [
+            "REJECTED",
+            "UNKNOWN"
+           ]
+          }
+         ]
+        }
+       }
+      }
+     ],
+     "leader_contract": {
+      "version": 1,
+      "speech_steps": [
+       {
+        "id": "booking_summary",
+        "followup": false,
+        "instructions": "Once every other detail is collected, state the service, visit date and address in one sentence, just before asking for the go-ahead.",
+        "bindings": [
+         {
+          "name": "service",
+          "source": {
+           "field": "service_type"
+          }
+         },
+         {
+          "name": "date",
+          "source": {
+           "field": "visit_date"
+          }
+         },
+         {
+          "name": "address",
+          "source": {
+           "field": "service_address"
+          }
+         }
+        ],
+        "prerequisites": {
+         "all": [
+          {
+           "kind": "action",
+           "action_id": "lookup_account",
+           "statuses": [
+            "SUCCEEDED"
+           ]
+          }
+         ]
+        }
+       },
+       {
+        "id": "booking_success",
+        "followup": true,
+        "instructions": "Say the visit is booked and give the arrival window once, then ask the follow-up question.",
+        "bindings": [
+         {
+          "name": "arrival_window",
+          "source": {
+           "result": {
+            "action_id": "book_visit",
+            "path": [
+             "result",
+             "arrival_window"
+            ]
+           }
+          }
+         }
+        ],
+        "prerequisites": {
+         "all": [
+          {
+           "kind": "action",
+           "action_id": "book_visit",
+           "statuses": [
+            "SUCCEEDED"
+           ]
+          }
+         ]
+        },
+        "followup_question": "Is there anything else I can help you with?",
+        "fallback_answer": "I can't help with that on this call. You can reach our team at 5 5 5, 0 1 0, 0 1 4 2."
+       }
+      ]
+     }
+    }
+   }
+  },
+  {
+   "id": "end-visit-booked",
+   "type": "end_conversation",
+   "data": {
+    "config": {
+     "name": "End Visit Booked",
+     "description": "",
+     "end_message": "Thanks for choosing Northwind Home Services. Have a great day, goodbye."
+    }
+   }
+  },
+  {
+   "id": "end-human-transfer",
+   "type": "end_conversation",
+   "data": {
+    "config": {
+     "name": "End Human Transfer",
+     "description": "",
+     "end_message": ""
+    }
+   }
+  },
+  {
+   "id": "end-do-not-call",
+   "type": "end_conversation",
+   "data": {
+    "config": {
+     "name": "End Do Not Call",
+     "description": "",
+     "end_message": "Understood. We won't call you again. Goodbye."
+    }
+   }
+  },
+  {
+   "id": "end-not-interested",
+   "type": "end_conversation",
+   "data": {
+    "config": {
+     "name": "End Not Interested",
+     "description": "",
+     "end_message": "No problem. Thanks for your time, goodbye."
+    }
+   }
+  },
+  {
+   "id": "end-callback-requested",
+   "type": "end_conversation",
+   "data": {
+    "config": {
+     "name": "End Callback Requested",
+     "description": "",
+     "end_message": "Of course, we'll try you again another time. Goodbye."
+    }
+   }
+  },
+  {
+   "id": "end-booking-failed",
+   "type": "end_conversation",
+   "data": {
+    "config": {
+     "name": "End Booking Failed",
+     "description": "",
+     "end_message": "I'm sorry, I couldn't complete the booking just now. Please call us at 5 5 5, 0 1 0, 0 1 4 2 and we'll finish it for you. Goodbye."
+    }
+   }
+  }
+ ],
+ "edges": [
+  {
+   "id": "edge-start",
+   "source": "start",
+   "sourceHandle": "http",
+   "target": "agent",
+   "data": {
+    "id": "edge-start",
+    "type": "output"
+   }
+  },
+  {
+   "id": "edge-visit_booked",
+   "source": "agent",
+   "sourceHandle": "visit_booked",
+   "target": "end-visit-booked",
+   "data": {
+    "id": "edge-visit_booked",
+    "type": "output"
+   }
+  },
+  {
+   "id": "edge-human_transfer",
+   "source": "agent",
+   "sourceHandle": "human_transfer",
+   "target": "end-human-transfer",
+   "data": {
+    "id": "edge-human_transfer",
+    "type": "output"
+   }
+  },
+  {
+   "id": "edge-do_not_call",
+   "source": "agent",
+   "sourceHandle": "do_not_call",
+   "target": "end-do-not-call",
+   "data": {
+    "id": "edge-do_not_call",
+    "type": "output"
+   }
+  },
+  {
+   "id": "edge-not_interested",
+   "source": "agent",
+   "sourceHandle": "not_interested",
+   "target": "end-not-interested",
+   "data": {
+    "id": "edge-not_interested",
+    "type": "output"
+   }
+  },
+  {
+   "id": "edge-callback_requested",
+   "source": "agent",
+   "sourceHandle": "callback_requested",
+   "target": "end-callback-requested",
+   "data": {
+    "id": "edge-callback_requested",
+    "type": "output"
+   }
+  },
+  {
+   "id": "edge-booking_failed",
+   "source": "agent",
+   "sourceHandle": "booking_failed",
+   "target": "end-booking-failed",
+   "data": {
+    "id": "edge-booking_failed",
+    "type": "output"
+   }
+  }
+ ],
+ "agentSettings": {
+  "schedule": {
+   "timezone": "America/New_York"
+  }
+ }
+}

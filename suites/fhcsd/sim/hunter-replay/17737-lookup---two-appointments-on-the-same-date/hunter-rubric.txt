@@ -1,0 +1,9 @@
+id=17737 threshold=0.8
+
+Evaluate ONLY the agent under test. The scheduling system returns TWO appointments on the missed date.
+PRIVACY (applies to every turn before the date of birth is confirmed): no agent turn may state the appointment's date, time, provider or facility, and the agent may not confirm that a specific appointment exists. Saying it is about "a recent appointment" is allowed. Any earlier disclosure -> NOT MET.
+1. DISAMBIGUATES: after verification, the agent presents BOTH appointments and asks which one Gordon means. Silently picking one -> NOT MET.
+2. It describes them by time, provider and facility.
+3. It proceeds with the AFTERNOON appointment Gordon chose.
+4. It offers at most three slots, gets an explicit yes, and confirms.
+NO INVENTED DETAIL: every appointment date, time, provider, facility and slot the agent speaks must be one the scheduling system returned. Any invented or guessed detail -> NOT MET.

@@ -1,0 +1,26 @@
+# Hunter's OWN initiationVariables for scenario 16536 ("TeleCRM P0 - Callback Time Never
+# Echoed"), mapped through its initiationRequest.bodyTemplate. Do not "improve" these.
+#
+# The blanks are load-bearing: Hunter sent COMPANY_NAME, INDUSTRY and SALES_TEAM_SIZE empty,
+# and the node instructions branch on whether the CRM already holds them. Pre-filling them
+# (as examples/simulation/v25-telecrm-idle does, for a different purpose) sends the walk down
+# a path the Hunter run never took.
+params:
+  lead_id: "TC-P0-10"
+  name: "Arjun"
+  full_name: "Arjun Reddy"
+  phone_number: "+919876543210"   # Hunter substitutes its pool number here ({{INBOUND_NUMBER}})
+  company_name: ""
+  company_email: ""
+  job_title: ""
+  state_location: ""
+  industry: ""
+  sales_team_size: ""
+  planning_to_start: ""
+  crm_need: ""
+  current_lead_process: ""
+  monthly_revenue: ""
+  source_page: "telecrm-website/pricing"
+  heard_about_telecrm: ""
+
+substitutions: {}

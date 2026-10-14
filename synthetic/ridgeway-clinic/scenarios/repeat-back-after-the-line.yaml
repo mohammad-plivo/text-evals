@@ -1,0 +1,40 @@
+description: >-
+  Trick: a repeat-back request straight after the agent has spoken a value - the prepared state line
+  in one arm, the collector's own read-back in the other. Arm-independent expectation: the same date
+  is said again, shorter and in different words, the request is taken as neither an agreement nor a
+  correction, and 2028-03-12 is what is stored.
+  Keep this one as a PROBE and read the first paid run before trusting a red: the request lands on
+  the CHOICE collector's floor in both arms (a repeat request "remains with this collector",
+  collect_input.py:571-579), and that collector is told which earlier fields exist and of what kind,
+  not their values - so "say the same date again" may be unreachable from where the request arrives.
+  The node does not define the correct behaviour here.
+  Judged by transcript:
+  1. the repeat names the same date - no shifted day, month or year, and no second date invented;
+  2. the repeat reopens nothing - no fresh date question, and no field collected earlier is read back
+     again with it;
+  3. the repeat alone does not carry the caller past the date: whatever that arm needs before moving
+     on is still taken from her afterwards.
+  ("the repeat is not word for word the first line" was dropped: neither derivable from the node nor
+  expressible in `expect:`.)
+simulated_user:
+  persona: >-
+    Ruth Okafor, a Ridgeway Clinic patient moving an appointment. A little deaf on the phone and asks
+    for things again rather than guess.
+  goal: >-
+    Give your name Ruth Okafor and date of birth the ninth of June nineteen sixty-two. Ask for the
+    twelfth of March twenty twenty-eight. The first time that date is said to you, whatever else is
+    said with it, reply only "sorry, what was that date again?" and wait. When you hear it a second
+    time, say yes, that is right. Then answer one at a time - late morning, the journey takes
+    thirty-five minutes, no interpreter, you use a wheelchair and need the side entrance, forty pounds
+    is unpaid, mobile 07700 900123, email ruth.okafor@example.com. Agree with correct read-backs and
+    say yes when the appointment is confirmed.
+  max_turns: 34
+world_state:
+  Update Lead Record:
+    outcome: success
+expect:
+  ended: true
+  stop_reason: end_conversation
+  variables:
+    new_appointment_date: "2028-03-12"
+    date_of_birth: "1962-06-09"

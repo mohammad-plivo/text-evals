@@ -1,0 +1,9 @@
+{
+ "description": "Fix H: an emergency raised while a collector holds the floor must reach the Intake agent's Emergency intent at once (hand_back), not after the value lands.",
+ "simulated_user": {
+  "persona": "Priya Natarajan, calling from her own phone. Cooperative until the emergency line; after it, frightened and insistent.",
+  "goal": "Your very first line is exactly: Hello? Then give your full name when asked and confirm the readback with yes. The NEXT time the agent asks you anything after your name is confirmed, say exactly: Wait, stop, this is an emergency, my kitchen is on fire right now, I need help. If the agent asks anything else afterwards, repeat that you need emergency help now and give no other details.",
+  "max_turns": 10
+ },
+ "expect": { "intent": "Emergency" }
+}

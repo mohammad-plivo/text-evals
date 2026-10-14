@@ -1,0 +1,34 @@
+description: >
+  The regression guard for the terminal-action handoff.
+
+  dnc-then-goodbye asserts the walk LEAVES once a disposition is submitted. On its
+  own that is a dangerous thing to optimise: the cheapest way to pass it is to end
+  the walk whenever the action tool fires, which would cut every ordinary call short
+  the moment an outcome is submitted — and on this flow the author's own instruction
+  is to "call the submit action FIRST and record this yes/no answer only after it
+  has returned", so a submit mid-walk is EXPECTED on the happy path.
+
+  So this scenario is the opposite assertion on the same mechanism: a caller who
+  qualifies normally must still be asked everything, and the values must land. If
+  the walk exits early here, the fix is trading a goodbye loop for lost data, which
+  is strictly worse — a truncated qualification looks like a successful call.
+
+  `qualified` deliberately does NOT name-match any configured intent (the intent is
+  "Qualification Complete"), so the wrapper should fail closed and behave exactly as
+  it did before. That is the case under test: the no-op path, demonstrated rather
+  than reasoned about.
+turns:
+  - user: "Hello?"
+  - user: "Yes, speaking."
+  - user: "Yes, I filled out the form on your website."
+  - user: "We have about twelve people in the sales team."
+  - user: "We run a travel agency."
+  - user: "Yes, tomorrow evening works for a follow-up call."
+  - user: "No, nothing else. Thanks."
+expect:
+  variables:
+    # sales_team_size is a CHOICE field with buckets, not a free number: twelve
+    # people is recorded as "11-20". Asserting "12" fails on correct behaviour.
+    sales_team_size: "11-20"
+    industry: "travel agency"
+    telecrm_form_status: "yes"

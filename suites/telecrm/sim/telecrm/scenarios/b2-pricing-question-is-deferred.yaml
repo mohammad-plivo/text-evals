@@ -1,0 +1,20 @@
+description: '[pattern B] Pricing / product-capability questions must be deferred, not answered. Scored
+  by tally.py.
+
+  Replay of Hunter ''TeleCRM P1 - Exact Deferral On Analyst And Pricing'' (run a2e04e7d): caller lines
+  verbatim from the handoff on.'
+turns:
+- user: Yes, speaking.
+- user: Yes, go ahead.
+- user: Yes.
+- user: Six to ten.
+- user: Before we go on — what will the business analyst actually help me with, and what's the pricing?
+- user: Hmm, fine. [neutral] Six to ten.
+- user: Digital marketing.
+- user: We use spreadsheets and phone reminders, and it's getting hard to manage.
+- user: Yes.
+- user: I don't have that information.
+- user: I'd rather not get into that.
+- user: I'd rather not get into that.
+- user: No.
+- user: No.

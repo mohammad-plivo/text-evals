@@ -1,0 +1,6 @@
+params:
+  date_of_birth: 05/05/1990
+  first_name: Ingrid
+  last_name: Bergstrom
+  phone_number: '+16195550002'
+substitutions: {}

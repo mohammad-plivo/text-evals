@@ -1,0 +1,11 @@
+description: >
+  The exact path NODE_PROMPT_TO_TASKS_ENABLED's comment calls unquantified: a caller corrects a value
+  the walk has already COMMITTED and moved past. Three tools can answer — the field's own update tool,
+  revise_completed_field, and out_of_scope — and two of them mishandle it. The flag's extra prompt
+  text shifts which one the model reaches for. Run both arms and compare; this is a measurement, not
+  a pass/fail gate.
+turns:
+  - user: "Hi, I'd like to book an office visit please."
+  - user: "It's Ramesh Kumar."
+  - user: "Yes, that's right."
+  - user: "Sorry, actually my surname is Kumaar, with two a's."

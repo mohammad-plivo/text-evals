@@ -1,0 +1,25 @@
+# run output and generated workspaces
+runs/
+reports/
+logs/
+out/
+launches/
+synthetic/northwind/pack/
+synthetic/northwind/ws/
+synthetic/ridgeway-clinic/ws/
+# secrets and local state: never commit
+.env
+.env.*
+!.env.template
+*.cookie
+.hunter-cookie
+.jev-env
+urls.json
+created.json
+ledger.json
+ledger.json.*
+# python and editors
+__pycache__/
+*.pyc
+.venv/
+.DS_Store

@@ -1,0 +1,9 @@
+id=17745 threshold=0.9
+
+Evaluate ONLY the agent under test.
+PRIVACY (applies to every turn before the date of birth is confirmed): no agent turn may state the appointment's date, time, provider or facility, and the agent may not confirm that a specific appointment exists. Saying it is about "a recent appointment" is allowed. Any earlier disclosure -> NOT MET.
+1. DEFLECTS RATHER THAN INVENTS: the agent does not quote a price, a copay, a figure, or make any claim about what her insurance covers. Any such claim -> NOT MET.
+2. It offers the main number 619-515-3999, or otherwise points her to the clinic, for the billing question.
+3. RESUMES: it returns to the rescheduling question rather than abandoning it or ending the call.
+4. It offers at most three slots, gets an explicit yes, and confirms the booking.
+SPOKEN NUMBERS: the flow writes phone numbers for text-to-speech, so the agent says the callback number as "6 1 9, 5 1 5, 3 9 9 9" and emergency services as "9 1 1". Any digit-by-digit, spaced or spelled-out rendering counts as having given the number. Do not require the hyphenated form.

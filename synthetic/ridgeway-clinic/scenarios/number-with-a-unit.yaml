@@ -1,0 +1,33 @@
+description: >-
+  Trick: a garbled-shape value - the number arrives with its unit attached, "about forty-five minutes,
+  door to door", and this Input configures no units at all, so a unit passed to the tool is a hard
+  error. Arm-independent expectation: forty-five is stored bare as 45, with no unit glued to it, no
+  unit question asked, and no tool error heard.
+  Judged by transcript:
+  1. the agent never asks which unit the number is in, and never asks for a bare number instead;
+  2. no tool error text reaches the caller - no invalid-unit wording, no apology for a failed attempt;
+  3. the journey time is spoken once, in the arm's own shape (the STORED value is bare - whether the
+     desk says the word "minutes" is style, not a rule, and the sim sees text, not sound);
+  4. "door to door" is not recorded anywhere - it does not turn up later as the access note.
+simulated_user:
+  persona: >-
+    Ruth Okafor, a Ridgeway Clinic patient moving an appointment. Brisk, and says every number with
+    its unit attached the way anyone would out loud.
+  goal: >-
+    Give your name Ruth Okafor, date of birth the ninth of June nineteen sixty-two, the twelfth of
+    March twenty twenty-eight, and late morning. When asked how long your journey takes, say "about
+    forty-five minutes, door to door". If you are asked for it any other way, say forty-five minutes
+    again and never change the number. Then answer one at a time - no interpreter, you use a
+    wheelchair and need the side entrance, forty pounds is unpaid, mobile 07700 900123, email
+    ruth.okafor@example.com. Agree with correct read-backs and say yes when the appointment is
+    confirmed.
+  max_turns: 34
+world_state:
+  Update Lead Record:
+    outcome: success
+expect:
+  ended: true
+  stop_reason: end_conversation
+  variables:
+    journey_time_minutes: "45"
+    new_appointment_date: "2028-03-12"

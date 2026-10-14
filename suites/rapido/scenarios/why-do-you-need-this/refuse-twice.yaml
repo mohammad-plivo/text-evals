@@ -1,0 +1,6 @@
+description: 'Rapido Hindi V2.9: refuse-twice'
+turns:
+- user: हाँ, बोलिए।
+- user: यह आपको क्यों जानना है?
+- user: नहीं, मैं नहीं बताऊँगा।
+- user: पार्ट-टाइम।

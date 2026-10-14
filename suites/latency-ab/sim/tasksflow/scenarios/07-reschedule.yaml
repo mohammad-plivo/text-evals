@@ -1,0 +1,7 @@
+description: Caller wants a different date entirely — reschedule intent.
+simulated_user:
+  persona: "Priya Sharma, apologetic, has a schedule conflict."
+  goal: "When the agent confirms Friday August 7 at 10 AM, say Friday no longer works at all and you need to move the visit to next Tuesday afternoon instead. You want the visit rescheduled — insist on the new day. Answer any other quick questions but the reschedule is the point of the call."
+  opening: "Hello?"
+  max_turns: 14
+  model: "gpt-4.1-mini"

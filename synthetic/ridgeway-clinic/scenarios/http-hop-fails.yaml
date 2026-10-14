@@ -1,0 +1,19 @@
+description: >-
+  Same walk as plain-walk, with the mid-walk http hop pinned to its failure edge. The call still ends
+  cleanly on the other end node, and the caller must hear nothing about a failed request.
+simulated_user:
+  persona: >-
+    Ruth Okafor, a Ridgeway Clinic patient moving an appointment. Cooperative and brief.
+  goal: >-
+    Answer one item at a time - your name Ruth Okafor, date of birth the ninth of June nineteen
+    sixty-two, the twelfth of March twenty twenty-eight, late morning, a journey of thirty-five
+    minutes, no interpreter, nothing about access, forty pounds unpaid, mobile 07700 900123, email
+    ruth.okafor@example.com. Agree with correct read-backs and say yes when the appointment is
+    confirmed.
+  max_turns: 30
+world_state:
+  Update Lead Record:
+    outcome: failed
+expect:
+  ended: true
+  stop_reason: end_conversation

@@ -1,0 +1,37 @@
+description: >-
+  Trick: a currency given in words and slang - "it's forty quid, I think" - with no figure and no
+  currency name spoken. Arm-independent expectation: the amount is taken as forty pounds and stored as
+  GBP 40.0, and the caller hears pounds said as a word.
+  This is NOT an arm difference: "quid" is a cultural-idiom inference (collect_currency.py:57) and an
+  inferred currency forces _confirmation_required (collect_currency.py:532-536), so the record is not
+  clean_completed, the frame is declined (prepared_state.py:318) and the collector reads "40 GBP"
+  back with a confirmation question in BOTH arms. What this scenario tests is the inference
+  read-back, and criterion 1 is the real risk - the model is handed the literal "40 GBP"
+  (collect_currency.py:374-376).
+  Judged by transcript:
+  1. the agent never says the ISO code aloud as letters and never reads a currency symbol out;
+  2. the amount is spoken once and names the currency it took;
+  3. the caller is not asked which currency she meant - quid is her own word for it;
+  4. "I think" is not treated as a refusal or an unusable turn: the fee is not re-asked once she has
+     agreed with it.
+simulated_user:
+  persona: >-
+    Ruth Okafor, a Ridgeway Clinic patient moving an appointment. Londoner, says money in slang and
+    never in figures.
+  goal: >-
+    Give your name Ruth Okafor, date of birth the ninth of June nineteen sixty-two, the twelfth of
+    March twenty twenty-eight, late morning, a journey of thirty-five minutes, no interpreter, and
+    that you use a wheelchair and need the side entrance. When asked about the unpaid amount, say
+    "it's forty quid, I think". If you are asked which currency that is, say pounds. Never give a
+    different amount. Then give your mobile 07700 900123 and email ruth.okafor@example.com. Agree
+    with correct read-backs and say yes when the appointment is confirmed.
+  max_turns: 34
+world_state:
+  Update Lead Record:
+    outcome: success
+expect:
+  ended: true
+  stop_reason: end_conversation
+  variables:
+    outstanding_fee: "GBP 40.0"
+    journey_time_minutes: "35"

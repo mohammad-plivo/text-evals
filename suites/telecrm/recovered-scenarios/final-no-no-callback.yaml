@@ -1,0 +1,19 @@
+description: >
+  After a final refusal, stop asking — do not offer a callback.
+
+  Hunter 4ee2410e "Below Three Cannot Manage Three":
+
+      [T15] CALLER  No, no chance. It's only the two of us, we can't add anyone.
+      [T16] AGENT   क्या आप अपने CRM requirement पर follow up call लेना चाहेंगे?
+
+  The caller has just closed the door on eligibility and the agent immediately asks
+  for a follow-up call, then two more qualification questions. The Minimum
+  Eligibility intent's own description says to close, not to continue.
+turns:
+  - user: "Hello?"
+  - user: "Yes, speaking."
+  - user: "Yes, I filled the form."
+  - user: "Just the two of us."
+  - user: "No, no chance. It's only the two of us, we can't add anyone."
+    expect:
+      message_excludes: ["follow up call", "follow-up call", "preferred time"]

@@ -1,0 +1,2101 @@
+{
+ "task": "currency",
+ "tier": "subtle",
+ "description": "CollectCurrency confirmations across short multi-field call segments. An amount is recoverable, so it should be settled the way a person settles it: the unit named once when it is inferred or the caller left it out, then dropped; the caller's idiom kept; ranges left as ranges; and most amounts riding into the next question. With only four or five values per call, each one has to earn a different move. The non_subtle twins run one template over every figure and restate the currency each time.",
+ "style_rules": {
+  "subtle": [
+   "Name the currency once, when it is inferred or the caller omitted it, then stop saying it.",
+   "Keep the caller's register: lakh, crore, quid, grand, bucks, k. Do not convert it into formal notation.",
+   "Confirm a range as a range unless the business genuinely needs one figure.",
+   "Fold the amount into the next question most of the time; a bare 'Twelve hundred dirhams?' is for corrections and garbled audio.",
+   "On a refusal give one reason and drop it, never a second or third push.",
+   "Vary the opener and the check word; some amounts get no confirmation at all, and several land together in one closing summary.",
+   "Contractions, short clauses, commas instead of em dashes, no praise on an amount."
+  ],
+  "non_subtle_tells": [
+   "'I heard X, is that correct?' or 'Just to confirm, X' on every single figure.",
+   "The currency name restated on every amount in a call where everyone already knows it.",
+   "The caller's idiom 'corrected' into formal notation (twenty two lakh becomes two million two hundred thousand).",
+   "Praise on an amount ('that is a generous budget!').",
+   "Pushing a second and third time after the caller refuses to give a figure.",
+   "Status phrases ('has been recorded'), no contractions, kindly, and a chatbot closer.",
+   "Wrong-direction failure: accepting 'a few grand' or a bare number with no currency and never resolving it."
+  ]
+ },
+ "conversations": [
+  {
+   "id": "currency_01_subtle",
+   "pair_id": "currency_01",
+   "label": "subtle",
+   "language": "en",
+   "scenario": "London letting agent qualifying a rental search; the caller answers a monthly question with a weekly figure and his budget is a range, not a number.",
+   "fields": [
+    {
+     "name": "monthly_budget",
+     "value": "GBP 1,800 to 2,000",
+     "tier": "subtle",
+     "strategy": "weekly figure converted once and offered back as a question, range kept as a range"
+    },
+    {
+     "name": "bills_included_ceiling",
+     "value": "GBP 2,150",
+     "tier": "subtle",
+     "strategy": "echo-and-advance, no tag"
+    },
+    {
+     "name": "upfront_cash",
+     "value": "GBP 4,000",
+     "tier": "subtle",
+     "strategy": "silent accept, folded into what it buys"
+    },
+    {
+     "name": "move_in_date",
+     "value": "15 September",
+     "tier": "subtle",
+     "strategy": "echo plus the derived earlier date"
+    },
+    {
+     "name": "phone",
+     "value": "07700 900 831",
+     "tier": "strict",
+     "strategy": "digit by digit readback in groups"
+    }
+   ],
+   "turns": [
+    {
+     "speaker": "agent",
+     "text": "Morning, you rang about a two bed in Walthamstow. What are you looking to spend a month?"
+    },
+    {
+     "speaker": "caller",
+     "text": "Uh, about four twenty a week is what we worked out."
+    },
+    {
+     "speaker": "agent",
+     "text": "Four twenty a week, so that's roughly eighteen hundred a month. Should I search up to eighteen hundred?"
+    },
+    {
+     "speaker": "caller",
+     "text": "We could stretch to two grand for the right place."
+    },
+    {
+     "speaker": "agent",
+     "text": "Eighteen hundred to two thousand then. Is two thousand a hard ceiling or can it move?"
+    },
+    {
+     "speaker": "caller",
+     "text": "That's hard. Two thousand and not a penny more."
+    },
+    {
+     "speaker": "agent",
+     "text": "Right. Does bills included change what you'd pay?"
+    },
+    {
+     "speaker": "caller",
+     "text": "If bills are in we'd go a bit over. Maybe another one fifty."
+    },
+    {
+     "speaker": "agent",
+     "text": "So up to twenty one fifty when bills are in. What have you got upfront for the deposit and first month?"
+    },
+    {
+     "speaker": "caller",
+     "text": "We've got four thousand put aside altogether."
+    },
+    {
+     "speaker": "agent",
+     "text": "Four thousand covers five weeks' deposit and the first month, just about. When do you want to move in?"
+    },
+    {
+     "speaker": "caller",
+     "text": "Fifteenth of September. We're out of our current place on the twelfth."
+    },
+    {
+     "speaker": "agent",
+     "text": "Fifteenth of September, and I'll flag anything free from the twelfth. Can I take a number for the listings?"
+    },
+    {
+     "speaker": "caller",
+     "text": "Yeah, zero seven seven zero zero, nine zero zero, eight three one."
+    },
+    {
+     "speaker": "agent",
+     "text": "Let me read that back, zero seven seven zero zero, nine zero zero, eight three one.",
+     "tier": "strict"
+    },
+    {
+     "speaker": "caller",
+     "text": "That's it."
+    },
+    {
+     "speaker": "agent",
+     "text": "You'll get three or four in the next hour, nothing over two thousand."
+    },
+    {
+     "speaker": "caller",
+     "text": "Cheers."
+    }
+   ],
+   "notes": "Four moves for four fields: the weekly figure is converted and handed back as a question, the range stays a range, the bills ceiling rides into the deposit question, and the four thousand is silent accepted by saying what it buys rather than repeating it. Pounds is never said once, because nobody would. The phone stays digit by digit."
+  },
+  {
+   "id": "currency_01_non_subtle",
+   "pair_id": "currency_01",
+   "label": "non_subtle",
+   "language": "en",
+   "scenario": "Same London rental qualification and the same weekly-figure friction, handled with one confirmation template on every field.",
+   "turns": [
+    {
+     "speaker": "agent",
+     "text": "Good morning. I will now assist you with your rental enquiry. What is your monthly budget?"
+    },
+    {
+     "speaker": "caller",
+     "text": "Uh, about four twenty a week is what we worked out."
+    },
+    {
+     "speaker": "agent",
+     "text": "I heard four hundred twenty pounds sterling per week. Is that correct?"
+    },
+    {
+     "speaker": "caller",
+     "text": "We could stretch to two grand for the right place."
+    },
+    {
+     "speaker": "agent",
+     "text": "Just to confirm, two thousand pounds sterling maximum. That is a very generous budget!"
+    },
+    {
+     "speaker": "caller",
+     "text": "That's hard. Two thousand and not a penny more."
+    },
+    {
+     "speaker": "agent",
+     "text": "I have recorded two thousand pounds sterling. Would bills included change your budget?"
+    },
+    {
+     "speaker": "caller",
+     "text": "If bills are in we'd go a bit over. Maybe another one fifty."
+    },
+    {
+     "speaker": "agent",
+     "text": "I heard one hundred fifty pounds sterling extra, totalling two thousand one hundred fifty pounds sterling. Is that correct?"
+    },
+    {
+     "speaker": "caller",
+     "text": "We've got four thousand put aside altogether."
+    },
+    {
+     "speaker": "agent",
+     "text": "Just to confirm, four thousand pounds sterling upfront. Is that correct?"
+    },
+    {
+     "speaker": "caller",
+     "text": "Fifteenth of September. We're out of our current place on the twelfth."
+    },
+    {
+     "speaker": "agent",
+     "text": "Just to confirm, your move in date is the fifteenth of September. Is that correct?"
+    },
+    {
+     "speaker": "caller",
+     "text": "Yeah, zero seven seven zero zero, nine zero zero, eight three one."
+    },
+    {
+     "speaker": "agent",
+     "text": "I will now read that back. Zero seven seven zero zero, nine zero zero, eight three one. Is that correct?",
+     "tier": "strict"
+    },
+    {
+     "speaker": "caller",
+     "text": "That's it."
+    },
+    {
+     "speaker": "agent",
+     "text": "Your requirements have been recorded. Is there anything else I can help you with today?"
+    },
+    {
+     "speaker": "caller",
+     "text": "Cheers."
+    }
+   ],
+   "notes": "One template on all four fields, pounds sterling restated on every amount, praise on a budget, status phrases, no contractions, chatbot closer. The phone readback is correct behaviour; the error is applying that ceremony to a rent range."
+  },
+  {
+   "id": "currency_02_subtle",
+   "pair_id": "currency_02",
+   "label": "subtle",
+   "language": "en",
+   "scenario": "US mortgage pre-qualification; the caller refuses to disclose his wife's income and the agent takes it once and works around it.",
+   "fields": [
+    {
+     "name": "purchase_price",
+     "value": "USD 450,000",
+     "tier": "subtle",
+     "strategy": "shorthand echoed in the caller's own register"
+    },
+    {
+     "name": "down_payment",
+     "value": "USD 90,000",
+     "tier": "subtle",
+     "strategy": "echo plus the consequence, no round trip"
+    },
+    {
+     "name": "max_monthly_payment",
+     "value": "USD 2,800 all in",
+     "tier": "subtle",
+     "strategy": "echo-and-advance"
+    },
+    {
+     "name": "spouse_income",
+     "value": "refused",
+     "tier": "subtle",
+     "strategy": "one reason, then dropped, never raised again"
+    },
+    {
+     "name": "date_of_birth",
+     "value": "4 March 1986",
+     "tier": "strict",
+     "strategy": "full date read back, month as a word"
+    }
+   ],
+   "turns": [
+    {
+     "speaker": "agent",
+     "text": "Thanks for holding. You want a pre-qualification, so what price range are you shopping in?"
+    },
+    {
+     "speaker": "caller",
+     "text": "Around four fifty. Four hundred fifty thousand."
+    },
+    {
+     "speaker": "agent",
+     "text": "Four fifty. How much are you putting down?"
+    },
+    {
+     "speaker": "caller",
+     "text": "Ninety thousand."
+    },
+    {
+     "speaker": "agent",
+     "text": "Ninety down on four fifty is twenty percent, so no mortgage insurance. What can you carry monthly?"
+    },
+    {
+     "speaker": "caller",
+     "text": "I don't want to go past twenty eight hundred a month, all in. Taxes, insurance, everything."
+    },
+    {
+     "speaker": "agent",
+     "text": "Twenty eight hundred with taxes and insurance inside it. Is anyone on the loan with you?"
+    },
+    {
+     "speaker": "caller",
+     "text": "My wife, but I'd rather not get into what she makes on this call."
+    },
+    {
+     "speaker": "agent",
+     "text": "That's fine. I'll run it on your income alone, it only moves the ceiling a little."
+    },
+    {
+     "speaker": "caller",
+     "text": "Works for me."
+    },
+    {
+     "speaker": "agent",
+     "text": "I need your date of birth for the credit pull."
+    },
+    {
+     "speaker": "caller",
+     "text": "March fourth, nineteen eighty six."
+    },
+    {
+     "speaker": "agent",
+     "text": "March the fourth, nineteen eighty six.",
+     "tier": "strict"
+    },
+    {
+     "speaker": "caller",
+     "text": "Correct."
+    },
+    {
+     "speaker": "agent",
+     "text": "On ninety down you're comfortable at four fifty, and that twenty eight hundred cap is what really sets it."
+    },
+    {
+     "speaker": "caller",
+     "text": "Then let's stay at four fifty."
+    },
+    {
+     "speaker": "agent",
+     "text": "Sticking at four fifty. I'll have the letter over within the hour."
+    },
+    {
+     "speaker": "caller",
+     "text": "Appreciate it."
+    }
+   ],
+   "notes": "Three money fields, three different handlings: shorthand echo, echo plus consequence, echo-and-advance. The refusal gets one sentence and the call moves on, and the amounts only reappear at the end as reasoning, not as a readback. Date of birth stays strict inside an otherwise light call."
+  },
+  {
+   "id": "currency_02_non_subtle",
+   "pair_id": "currency_02",
+   "label": "non_subtle",
+   "language": "en",
+   "scenario": "Same mortgage pre-qualification and the same refusal, but the agent pushes a third time for the spouse's income and confirms every figure identically.",
+   "turns": [
+    {
+     "speaker": "agent",
+     "text": "Thank you for holding. I will now assist you with your pre-qualification. What is your target purchase price?"
+    },
+    {
+     "speaker": "caller",
+     "text": "Around four fifty. Four hundred fifty thousand."
+    },
+    {
+     "speaker": "agent",
+     "text": "Just to confirm, four hundred fifty thousand US dollars. Is that correct?"
+    },
+    {
+     "speaker": "caller",
+     "text": "Ninety thousand."
+    },
+    {
+     "speaker": "agent",
+     "text": "I heard ninety thousand US dollars. That is an impressive down payment!"
+    },
+    {
+     "speaker": "caller",
+     "text": "I don't want to go past twenty eight hundred a month, all in. Taxes, insurance, everything."
+    },
+    {
+     "speaker": "agent",
+     "text": "Just to confirm, two thousand eight hundred US dollars per month. Is that correct?"
+    },
+    {
+     "speaker": "caller",
+     "text": "My wife, but I'd rather not get into what she makes on this call."
+    },
+    {
+     "speaker": "agent",
+     "text": "I understand. However, may I please have your spouse's annual income in US dollars?"
+    },
+    {
+     "speaker": "caller",
+     "text": "Works for me."
+    },
+    {
+     "speaker": "agent",
+     "text": "I apologize. Kindly note that her income would improve your borrowing capacity. Can you share an approximate figure?"
+    },
+    {
+     "speaker": "caller",
+     "text": "I said I'd rather not."
+    },
+    {
+     "speaker": "agent",
+     "text": "Understood. Would a range be acceptable, for example one hundred thousand to one hundred fifty thousand US dollars?"
+    },
+    {
+     "speaker": "caller",
+     "text": "No. Move on, please."
+    },
+    {
+     "speaker": "agent",
+     "text": "Very well. Kindly provide your date of birth."
+    },
+    {
+     "speaker": "caller",
+     "text": "March fourth, nineteen eighty six."
+    },
+    {
+     "speaker": "agent",
+     "text": "I will now read that back. March the fourth, nineteen eighty six. Is that correct?",
+     "tier": "strict"
+    },
+    {
+     "speaker": "caller",
+     "text": "Correct."
+    },
+    {
+     "speaker": "agent",
+     "text": "Your file has been recorded. Is there anything else I can help you with today?"
+    },
+    {
+     "speaker": "caller",
+     "text": "Appreciate it."
+    }
+   ],
+   "notes": "Three pushes on an income the caller has already declined, praise on a down payment, US dollars restated on every amount, and 'just to confirm' and 'I heard' alternating as the only two moves."
+  },
+  {
+   "id": "currency_03_subtle",
+   "pair_id": "currency_03",
+   "label": "subtle",
+   "language": "en",
+   "scenario": "Recruiter screening a backend engineer on pay in India; the caller states a salary with no unit at all and the agent settles it once, in the caller's lakh idiom.",
+   "fields": [
+    {
+     "name": "current_ctc",
+     "value": "INR 22 lakh per annum",
+     "tier": "subtle",
+     "strategy": "missing unit inferred and offered back once as a question"
+    },
+    {
+     "name": "fixed_component",
+     "value": "INR 18 lakh fixed",
+     "tier": "subtle",
+     "strategy": "bare value echo, then straight on"
+    },
+    {
+     "name": "expected_ctc",
+     "value": "INR 30 to 32 lakh, 28 fixed minimum",
+     "tier": "subtle",
+     "strategy": "range kept as a range and carried into the next question"
+    },
+    {
+     "name": "joining_bonus",
+     "value": "INR 2 lakh",
+     "tier": "subtle",
+     "strategy": "value plus its reason, deferred to the closing summary"
+    },
+    {
+     "name": "email",
+     "value": "rohit.menon@example.com",
+     "tier": "strict",
+     "strategy": "letter by letter with the symbols named"
+    }
+   ],
+   "turns": [
+    {
+     "speaker": "agent",
+     "text": "Hi, Ananya from TalentBridge about the backend role at Nimbus. What's your current CTC?"
+    },
+    {
+     "speaker": "caller",
+     "text": "Twenty two."
+    },
+    {
+     "speaker": "agent",
+     "text": "Twenty two lakh a year, I'm assuming, not monthly?"
+    },
+    {
+     "speaker": "caller",
+     "text": "Yeah, twenty two lakh per annum."
+    },
+    {
+     "speaker": "agent",
+     "text": "And how's that split, fixed and variable?"
+    },
+    {
+     "speaker": "caller",
+     "text": "Eighteen fixed, four is the variable component."
+    },
+    {
+     "speaker": "agent",
+     "text": "Eighteen fixed. What are you expecting for the move?"
+    },
+    {
+     "speaker": "caller",
+     "text": "I'm looking at thirty to thirty two."
+    },
+    {
+     "speaker": "agent",
+     "text": "Thirty to thirty two, and is that all fixed or are you fine with variable in there?"
+    },
+    {
+     "speaker": "caller",
+     "text": "Mostly fixed. I'd say at least twenty eight fixed."
+    },
+    {
+     "speaker": "agent",
+     "text": "So twenty eight fixed at minimum. Any joining bonus you're asking for?"
+    },
+    {
+     "speaker": "caller",
+     "text": "Two lakh would help, I've got a retention bonus to pay back."
+    },
+    {
+     "speaker": "agent",
+     "text": "Two lakh to cover the clawback. Can I have your email for the job description?"
+    },
+    {
+     "speaker": "caller",
+     "text": "rohit dot menon at gmail dot com."
+    },
+    {
+     "speaker": "agent",
+     "text": "Let me spell that, r o h i t, dot, m e n o n, at, g m a i l, dot com.",
+     "tier": "strict"
+    },
+    {
+     "speaker": "caller",
+     "text": "That's the one."
+    },
+    {
+     "speaker": "agent",
+     "text": "You'll have it in ten minutes. Thirty to thirty two, twenty eight fixed, two lakh joining, that's what I'm taking to them."
+    },
+    {
+     "speaker": "caller",
+     "text": "Sounds good."
+    }
+   ],
+   "notes": "The missing unit is resolved in one line and never named again across three more amounts. Lakh stays lakh, no conversion to formal notation. The expectation stays a range, and the three headline numbers are confirmed together in the closing line rather than one at a time. The email is still spelled out."
+  },
+  {
+   "id": "currency_03_non_subtle",
+   "pair_id": "currency_03",
+   "label": "non_subtle",
+   "language": "en",
+   "scenario": "Same compensation screen and the same missing unit, but every lakh figure is converted into formal rupee notation and read back with the same template.",
+   "turns": [
+    {
+     "speaker": "agent",
+     "text": "Hello, this is Ananya from TalentBridge. I will now screen you for the backend role. What is your current CTC?"
+    },
+    {
+     "speaker": "caller",
+     "text": "Twenty two."
+    },
+    {
+     "speaker": "agent",
+     "text": "Just to confirm, twenty two lakh Indian rupees per annum. Is that correct?"
+    },
+    {
+     "speaker": "caller",
+     "text": "Yeah, twenty two lakh per annum."
+    },
+    {
+     "speaker": "agent",
+     "text": "I have recorded two million two hundred thousand Indian rupees. What is the fixed and variable split?"
+    },
+    {
+     "speaker": "caller",
+     "text": "Eighteen fixed, four is the variable component."
+    },
+    {
+     "speaker": "agent",
+     "text": "I heard one million eight hundred thousand Indian rupees fixed and four hundred thousand Indian rupees variable. Is that correct?"
+    },
+    {
+     "speaker": "caller",
+     "text": "I'm looking at thirty to thirty two."
+    },
+    {
+     "speaker": "agent",
+     "text": "Just to confirm, three million to three million two hundred thousand Indian rupees. That is a very generous expectation!"
+    },
+    {
+     "speaker": "caller",
+     "text": "Mostly fixed. I'd say at least twenty eight fixed."
+    },
+    {
+     "speaker": "agent",
+     "text": "I have recorded two million eight hundred thousand Indian rupees as your fixed minimum. Do you require a joining bonus?"
+    },
+    {
+     "speaker": "caller",
+     "text": "Two lakh would help, I've got a retention bonus to pay back."
+    },
+    {
+     "speaker": "agent",
+     "text": "Just to confirm, two hundred thousand Indian rupees. Is that correct?"
+    },
+    {
+     "speaker": "caller",
+     "text": "rohit dot menon at gmail dot com."
+    },
+    {
+     "speaker": "agent",
+     "text": "I will now read that back. r o h i t, dot, m e n o n, at, g m a i l, dot com. Is that correct?",
+     "tier": "strict"
+    },
+    {
+     "speaker": "caller",
+     "text": "That's the one."
+    },
+    {
+     "speaker": "agent",
+     "text": "Your profile has been recorded. Is there anything else I can help you with today?"
+    },
+    {
+     "speaker": "caller",
+     "text": "Sounds good."
+    }
+   ],
+   "notes": "Indian rupees on all four amounts, the caller's lakh idiom overwritten with formal notation he never used, praise on an expectation, status phrases, and the same two sentence shapes for the whole call."
+  },
+  {
+   "id": "currency_04_subtle",
+   "pair_id": "currency_04",
+   "label": "subtle",
+   "language": "en",
+   "scenario": "Motor insurance quote in Dubai; the line breaks up in the middle of the excess amount and the agent takes one beat to guess it.",
+   "fields": [
+    {
+     "name": "sum_insured",
+     "value": "AED 80,000",
+     "tier": "subtle",
+     "strategy": "unit named once here and then never again"
+    },
+    {
+     "name": "excess",
+     "value": "AED 800",
+     "tier": "subtle",
+     "strategy": "one-beat guess on garbled audio, bare value-as-question"
+    },
+    {
+     "name": "premium_ceiling",
+     "value": "AED 3,500",
+     "tier": "subtle",
+     "strategy": "echo-and-advance into the add-on question"
+    },
+    {
+     "name": "roadside_addon",
+     "value": "AED 250, included",
+     "tier": "subtle",
+     "strategy": "priced inside the question, settled in two words"
+    },
+    {
+     "name": "policy_number",
+     "value": "ADN/447129",
+     "tier": "strict",
+     "strategy": "value once, then character by character with phonetics"
+    }
+   ],
+   "turns": [
+    {
+     "speaker": "agent",
+     "text": "Al Manara Insurance, Fadi speaking. You want comprehensive on the Pajero, so what's it worth today?"
+    },
+    {
+     "speaker": "caller",
+     "text": "The dealer said eighty five thousand."
+    },
+    {
+     "speaker": "agent",
+     "text": "Eighty five. Do you want to insure at eighty five or a bit under?"
+    },
+    {
+     "speaker": "caller",
+     "text": "Eighty is fine. Keeps the premium down."
+    },
+    {
+     "speaker": "agent",
+     "text": "Insured at eighty thousand dirhams then. What excess are you happy with?"
+    },
+    {
+     "speaker": "caller",
+     "text": "Uh, eight hun— kkzzt —dirhams."
+    },
+    {
+     "speaker": "agent",
+     "text": "You cut out. Eight hundred?"
+    },
+    {
+     "speaker": "caller",
+     "text": "Eight hundred, yes."
+    },
+    {
+     "speaker": "agent",
+     "text": "Eight hundred excess. What's the most you'd want to pay for the year?"
+    },
+    {
+     "speaker": "caller",
+     "text": "I don't want to go over three and a half thousand."
+    },
+    {
+     "speaker": "agent",
+     "text": "Three thousand five hundred ceiling. Roadside assistance is two fifty on top, in or out?"
+    },
+    {
+     "speaker": "caller",
+     "text": "Put it in."
+    },
+    {
+     "speaker": "agent",
+     "text": "It's in. I'll need your existing policy number."
+    },
+    {
+     "speaker": "caller",
+     "text": "It's ADN slash four four seven one two nine."
+    },
+    {
+     "speaker": "agent",
+     "text": "ADN four four seven one two nine, that's A for alpha, D for delta, N for november, slash, four, four, seven, one, two, nine.",
+     "tier": "strict"
+    },
+    {
+     "speaker": "caller",
+     "text": "Correct."
+    },
+    {
+     "speaker": "agent",
+     "text": "Comes to three thousand two hundred with roadside in, eight hundred excess. I'll send the payment link to your WhatsApp."
+    },
+    {
+     "speaker": "caller",
+     "text": "That works."
+    }
+   ],
+   "notes": "Dirhams is said exactly once, at the sum insured, and never again across three more amounts. The garbled excess gets a two word guess rather than a formal re-ask, the add-on is priced inside the question and settled with 'it's in', and the final premium is announced as a result instead of confirmed back. The policy number is still spelled out."
+  },
+  {
+   "id": "currency_04_non_subtle",
+   "pair_id": "currency_04",
+   "label": "non_subtle",
+   "language": "en",
+   "scenario": "Same Dubai motor quote and the same dropped audio, handled with a full confirmation round trip on every amount and the currency restated each time.",
+   "turns": [
+    {
+     "speaker": "agent",
+     "text": "Welcome to Al Manara Insurance. My name is Fadi and I will assist you today. What is the market value of the vehicle?"
+    },
+    {
+     "speaker": "caller",
+     "text": "The dealer said eighty five thousand."
+    },
+    {
+     "speaker": "agent",
+     "text": "Just to confirm, eighty five thousand UAE dirhams. Is that correct?"
+    },
+    {
+     "speaker": "caller",
+     "text": "Eighty is fine. Keeps the premium down."
+    },
+    {
+     "speaker": "agent",
+     "text": "I heard a sum insured of eighty thousand UAE dirhams. That has been recorded."
+    },
+    {
+     "speaker": "caller",
+     "text": "Uh, eight hun— kkzzt —dirhams."
+    },
+    {
+     "speaker": "agent",
+     "text": "I apologize, I did not catch that. Kindly repeat the excess amount in UAE dirhams."
+    },
+    {
+     "speaker": "caller",
+     "text": "Eight hundred, yes."
+    },
+    {
+     "speaker": "agent",
+     "text": "Just to confirm, eight hundred UAE dirhams excess. Is that correct?"
+    },
+    {
+     "speaker": "caller",
+     "text": "I don't want to go over three and a half thousand."
+    },
+    {
+     "speaker": "agent",
+     "text": "I heard three thousand five hundred UAE dirhams. That is a very generous budget!"
+    },
+    {
+     "speaker": "caller",
+     "text": "Put it in."
+    },
+    {
+     "speaker": "agent",
+     "text": "I have recorded roadside assistance at two hundred fifty UAE dirhams. Kindly provide your existing policy number."
+    },
+    {
+     "speaker": "caller",
+     "text": "It's ADN slash four four seven one two nine."
+    },
+    {
+     "speaker": "agent",
+     "text": "I will now read that back. ADN four four seven one two nine, that is A for alpha, D for delta, N for november, slash, four, four, seven, one, two, nine. Is that correct?",
+     "tier": "strict"
+    },
+    {
+     "speaker": "caller",
+     "text": "Correct."
+    },
+    {
+     "speaker": "agent",
+     "text": "Your premium is three thousand two hundred UAE dirhams. Your quotation has been recorded. Is there anything else I can help you with today?"
+    },
+    {
+     "speaker": "caller",
+     "text": "That works."
+    }
+   ],
+   "notes": "UAE dirhams on all five amounts, an apology and a formal re-ask where a one-beat guess would do, a confirm round trip on figures nobody would stop for, praise on the premium ceiling, and a chatbot closer."
+  },
+  {
+   "id": "currency_05_subtle",
+   "pair_id": "currency_05",
+   "label": "subtle",
+   "language": "en",
+   "scenario": "Debt collection call setting up a payment plan; the caller is irritated from the first sentence and flatly refuses to disclose his income.",
+   "fields": [
+    {
+     "name": "consent_to_discuss",
+     "value": "yes",
+     "tier": "strict",
+     "strategy": "explicit ask, explicit answer, before anything else is said"
+    },
+    {
+     "name": "balance",
+     "value": "GBP 1,240, of which 310 arrears",
+     "tier": "subtle",
+     "strategy": "agent states it, caller's own figure corrects the arrears in one beat"
+    },
+    {
+     "name": "monthly_affordable",
+     "value": "GBP 85",
+     "tier": "subtle",
+     "strategy": "echo plus how long it takes, caller's idiom kept"
+    },
+    {
+     "name": "first_payment",
+     "value": "GBP 200",
+     "tier": "subtle",
+     "strategy": "echo-and-advance, folded into the plan"
+    },
+    {
+     "name": "income",
+     "value": "refused",
+     "tier": "subtle",
+     "strategy": "one line, then the plan is rebuilt without it"
+    }
+   ],
+   "turns": [
+    {
+     "speaker": "agent",
+     "text": "Good afternoon, is that Mr Dalton?"
+    },
+    {
+     "speaker": "caller",
+     "text": "Speaking. Who's this?"
+    },
+    {
+     "speaker": "agent",
+     "text": "Ellis, from Ardent Recoveries about a Vodafone account. Are you happy for me to discuss it on this line?",
+     "tier": "strict"
+    },
+    {
+     "speaker": "caller",
+     "text": "Go on then. Though I've told you lot before, I can't pay it in one go."
+    },
+    {
+     "speaker": "agent",
+     "text": "Nobody's asking for it in one go. The balance is twelve hundred and forty pounds, does that match what you've got?"
+    },
+    {
+     "speaker": "caller",
+     "text": "Twelve forty, yeah. Three hundred odd of that is the arrears from last year."
+    },
+    {
+     "speaker": "agent",
+     "text": "Three hundred and ten is the arrears portion, the rest is the final bill. What could you manage a month?"
+    },
+    {
+     "speaker": "caller",
+     "text": "Look, I'm not made of money. Eighty five quid, and that's pushing it."
+    },
+    {
+     "speaker": "agent",
+     "text": "Eighty five a month works. At that rate you'd clear it in about fifteen months."
+    },
+    {
+     "speaker": "caller",
+     "text": "Fifteen months. Brilliant."
+    },
+    {
+     "speaker": "agent",
+     "text": "Could you put anything down to start?"
+    },
+    {
+     "speaker": "caller",
+     "text": "Maybe two hundred at the end of the month."
+    },
+    {
+     "speaker": "agent",
+     "text": "Two hundred first, then eighty five monthly. I do need to ask what you're bringing in."
+    },
+    {
+     "speaker": "caller",
+     "text": "I'm not telling you what I earn. It's got nothing to do with it."
+    },
+    {
+     "speaker": "agent",
+     "text": "That's your call. I'll set it up on what you've told me you can afford instead."
+    },
+    {
+     "speaker": "caller",
+     "text": "Right."
+    },
+    {
+     "speaker": "agent",
+     "text": "First payment two hundred on payday, eighty five after that. Ring me before you miss one, not after."
+    },
+    {
+     "speaker": "caller",
+     "text": "Fine."
+    }
+   ],
+   "notes": "Quid stays quid and pounds is said once, by the agent, on the only figure the caller did not supply. The refusal gets one sentence and the plan is rebuilt around it with no second attempt. Four different moves across four fields, no check tag anywhere, and consent is asked and answered explicitly before the account is discussed."
+  },
+  {
+   "id": "currency_05_non_subtle",
+   "pair_id": "currency_05",
+   "label": "non_subtle",
+   "language": "en",
+   "scenario": "Same debt collection plan and the same refusal, but the agent asks for income three times and confirms every pound with the same sentence.",
+   "turns": [
+    {
+     "speaker": "agent",
+     "text": "Good afternoon. Am I speaking with Mr Dalton?"
+    },
+    {
+     "speaker": "caller",
+     "text": "Speaking. Who's this?"
+    },
+    {
+     "speaker": "agent",
+     "text": "This is Ellis from Ardent Recoveries. Are you happy for me to discuss the account on this line?",
+     "tier": "strict"
+    },
+    {
+     "speaker": "caller",
+     "text": "Go on then. Though I've told you lot before, I can't pay it in one go."
+    },
+    {
+     "speaker": "agent",
+     "text": "Just to confirm, the outstanding balance is one thousand two hundred forty pounds sterling. Is that correct?"
+    },
+    {
+     "speaker": "caller",
+     "text": "Twelve forty, yeah. Three hundred odd of that is the arrears from last year."
+    },
+    {
+     "speaker": "agent",
+     "text": "I heard three hundred ten pounds sterling in arrears. That has been recorded."
+    },
+    {
+     "speaker": "caller",
+     "text": "Look, I'm not made of money. Eighty five quid, and that's pushing it."
+    },
+    {
+     "speaker": "agent",
+     "text": "Just to confirm, eighty five pounds sterling per month. Is that correct?"
+    },
+    {
+     "speaker": "caller",
+     "text": "Fifteen months. Brilliant."
+    },
+    {
+     "speaker": "agent",
+     "text": "Can you make an initial payment in pounds sterling to commence the arrangement?"
+    },
+    {
+     "speaker": "caller",
+     "text": "Maybe two hundred at the end of the month."
+    },
+    {
+     "speaker": "agent",
+     "text": "I heard two hundred pounds sterling. What is your monthly income?"
+    },
+    {
+     "speaker": "caller",
+     "text": "I'm not telling you what I earn. It's got nothing to do with it."
+    },
+    {
+     "speaker": "agent",
+     "text": "I understand. However, an income figure in pounds sterling is required for the affordability assessment."
+    },
+    {
+     "speaker": "caller",
+     "text": "I said no."
+    },
+    {
+     "speaker": "agent",
+     "text": "I apologize. Could you provide a range, for example one thousand to two thousand pounds sterling?"
+    },
+    {
+     "speaker": "caller",
+     "text": "Are you deaf? No."
+    },
+    {
+     "speaker": "agent",
+     "text": "Very well. Your payment arrangement has been recorded. Is there anything else I can help you with today?"
+    },
+    {
+     "speaker": "caller",
+     "text": "Fine."
+    }
+   ],
+   "notes": "Three pushes on an income refusal the caller has already made twice, pounds sterling on every amount, the caller's quid converted away, and one confirm template for the whole call. Consent stays explicit, which is correct; the ceremony on the recoverable amounts is the error."
+  },
+  {
+   "id": "currency_06_subtle",
+   "pair_id": "currency_06",
+   "label": "subtle",
+   "language": "en",
+   "scenario": "Freelance web project scoping; the caller opens with a vague 'a few grand' and the agent narrows it without turning it into an interrogation.",
+   "fields": [
+    {
+     "name": "project_budget",
+     "value": "USD 4,000 to 5,000",
+     "tier": "subtle",
+     "strategy": "vague amount pinned by offering two anchors, result kept as a range"
+    },
+    {
+     "name": "hourly_rate",
+     "value": "USD 95 per hour",
+     "tier": "subtle",
+     "strategy": "quoted as an alternative, never confirmed back"
+    },
+    {
+     "name": "deposit",
+     "value": "USD 1,500 on signature",
+     "tier": "subtle",
+     "strategy": "stated as the consequence of the thirty percent rule"
+    },
+    {
+     "name": "retainer",
+     "value": "USD 1,200 per month, declined for now",
+     "tier": "subtle",
+     "strategy": "silent accept of the decline, left open"
+    },
+    {
+     "name": "project_code",
+     "value": "FL229",
+     "tier": "strict",
+     "strategy": "character by character with phonetics on request"
+    }
+   ],
+   "turns": [
+    {
+     "speaker": "agent",
+     "text": "Hey, thanks for the brief. Before I quote, what have you set aside for this?"
+    },
+    {
+     "speaker": "caller",
+     "text": "Uh, a few grand? We haven't nailed it down."
+    },
+    {
+     "speaker": "agent",
+     "text": "A few grand could mean three or it could mean nine. Are we closer to three or closer to eight?"
+    },
+    {
+     "speaker": "caller",
+     "text": "Call it four to five thousand."
+    },
+    {
+     "speaker": "agent",
+     "text": "Four to five, that's workable for the scope you sent. My rate's ninety five an hour if you'd rather go hourly."
+    },
+    {
+     "speaker": "caller",
+     "text": "Fixed price is easier for finance."
+    },
+    {
+     "speaker": "agent",
+     "text": "Fixed it is. I take thirty percent up front, so fifteen hundred on signature."
+    },
+    {
+     "speaker": "caller",
+     "text": "Fifteen hundred, okay. Does that come off the total?"
+    },
+    {
+     "speaker": "agent",
+     "text": "It does, the balance is due on delivery. Do you want ongoing support after launch?"
+    },
+    {
+     "speaker": "caller",
+     "text": "Probably. What would that run?"
+    },
+    {
+     "speaker": "agent",
+     "text": "Twelve hundred a month covers updates and two hours of changes a week."
+    },
+    {
+     "speaker": "caller",
+     "text": "Twelve hundred's a bit rich. Can we start without it?"
+    },
+    {
+     "speaker": "agent",
+     "text": "You can add it later, no rush. Your project code for invoicing is FL two two nine."
+    },
+    {
+     "speaker": "caller",
+     "text": "Say that again?"
+    },
+    {
+     "speaker": "agent",
+     "text": "FL two two nine, that's F for foxtrot, L for lima, two, two, nine.",
+     "tier": "strict"
+    },
+    {
+     "speaker": "caller",
+     "text": "FL two two nine. Got it."
+    },
+    {
+     "speaker": "agent",
+     "text": "Put that on every purchase order. Deposit invoice goes out today, fifteen hundred."
+    },
+    {
+     "speaker": "caller",
+     "text": "Sounds right."
+    }
+   ],
+   "notes": "The vague amount is pinned by offering two anchors rather than demanding a figure, and the range that comes back stays a range. The rate is quoted and dropped, the deposit is derived rather than asked for, the retainer decline is silent accepted, and the code is still spelled character by character."
+  },
+  {
+   "id": "currency_06_non_subtle",
+   "pair_id": "currency_06",
+   "label": "non_subtle",
+   "language": "en",
+   "scenario": "Same freelance scoping call, but the agent is over-casual: 'a few grand' is never pinned, the deposit is never stated, and the project code is never spelled out.",
+   "turns": [
+    {
+     "speaker": "agent",
+     "text": "Hey, thanks for the brief. Before I quote, what have you set aside for this?"
+    },
+    {
+     "speaker": "caller",
+     "text": "Uh, a few grand? We haven't nailed it down."
+    },
+    {
+     "speaker": "agent",
+     "text": "A few grand, cool, that's plenty to work with."
+    },
+    {
+     "speaker": "caller",
+     "text": "Call it four to five thousand."
+    },
+    {
+     "speaker": "agent",
+     "text": "Somewhere in there, sure. My rate's ninety five an hour if you'd rather go hourly."
+    },
+    {
+     "speaker": "caller",
+     "text": "Fixed price is easier for finance."
+    },
+    {
+     "speaker": "agent",
+     "text": "Yeah, fixed is fine. I usually take a chunk up front, we can sort the exact number later."
+    },
+    {
+     "speaker": "caller",
+     "text": "Fifteen hundred, okay. Does that come off the total?"
+    },
+    {
+     "speaker": "agent",
+     "text": "Yeah, roughly, it all comes out in the wash."
+    },
+    {
+     "speaker": "caller",
+     "text": "Probably. What would that run?"
+    },
+    {
+     "speaker": "agent",
+     "text": "Support's like a grand or so a month, give or take."
+    },
+    {
+     "speaker": "caller",
+     "text": "Twelve hundred's a bit rich. Can we start without it?"
+    },
+    {
+     "speaker": "agent",
+     "text": "Totally, skip it. Your project code is FL two twenty nine."
+    },
+    {
+     "speaker": "caller",
+     "text": "Say that again?"
+    },
+    {
+     "speaker": "agent",
+     "text": "FL two twenty nine. It'll be on the email anyway."
+    },
+    {
+     "speaker": "caller",
+     "text": "FL two two nine. Got it."
+    },
+    {
+     "speaker": "agent",
+     "text": "Something like that. Stick it on the purchase order."
+    },
+    {
+     "speaker": "caller",
+     "text": "Sounds right."
+    }
+   ],
+   "notes": "Wrong-direction: over-casual, dropped a fidelity floor. The agent never pins 'a few grand' to a number, never states the deposit amount, guesses the retainer as 'a grand or so', and reads the project code back wrong twice without ever spelling it character by character. Subtle is not the same as sloppy."
+  },
+  {
+   "id": "currency_07_subtle",
+   "pair_id": "currency_07",
+   "label": "subtle",
+   "language": "en",
+   "scenario": "Car finance in Ireland; once the caller hears what the monthly and the balloon look like he drops to a cheaper model and cuts his deposit in the same breath.",
+   "fields": [
+    {
+     "name": "deposit",
+     "value": "EUR 5,000, revised to EUR 3,500",
+     "tier": "subtle",
+     "strategy": "revision absorbed straight into the recalculation, no round trip"
+    },
+    {
+     "name": "max_monthly",
+     "value": "EUR 350",
+     "tier": "subtle",
+     "strategy": "echo-and-advance into the term"
+    },
+    {
+     "name": "balloon_payment",
+     "value": "EUR 4,800, declined",
+     "tier": "subtle",
+     "strategy": "explained once and dropped when he opts out"
+    },
+    {
+     "name": "car_price",
+     "value": "EUR 24,500, revised to EUR 19,000",
+     "tier": "subtle",
+     "strategy": "one-beat correction, new figure carried into the quote"
+    },
+    {
+     "name": "licence_number",
+     "value": "147933622",
+     "tier": "strict",
+     "strategy": "digit by digit in groups"
+    }
+   ],
+   "turns": [
+    {
+     "speaker": "agent",
+     "text": "Afternoon, you were in about the Tucson. That one's twenty four five, are you financing it?"
+    },
+    {
+     "speaker": "caller",
+     "text": "Financing. Five thousand deposit, plus whatever the old car's worth."
+    },
+    {
+     "speaker": "agent",
+     "text": "Five down. What can you do monthly?"
+    },
+    {
+     "speaker": "caller",
+     "text": "Three fifty is my limit. Absolute limit."
+    },
+    {
+     "speaker": "agent",
+     "text": "Three fifty a month. Over four years that's tight on the Tucson unless we go PCP."
+    },
+    {
+     "speaker": "caller",
+     "text": "What's PCP?"
+    },
+    {
+     "speaker": "agent",
+     "text": "It leaves a lump at the end, about four thousand eight hundred on this car. You pay it, refinance it, or hand the car back."
+    },
+    {
+     "speaker": "caller",
+     "text": "And if I don't want a balloon?"
+    },
+    {
+     "speaker": "agent",
+     "text": "Hire purchase, nothing left at the end, but you're at four thirty a month."
+    },
+    {
+     "speaker": "caller",
+     "text": "That's over my three fifty. Look, maybe I'm being ambitious. What's the smaller one?"
+    },
+    {
+     "speaker": "agent",
+     "text": "The Kona, nineteen thousand for the same trim year."
+    },
+    {
+     "speaker": "caller",
+     "text": "Nineteen. Do that one instead, and make the deposit three and a half. I want to keep some back."
+    },
+    {
+     "speaker": "agent",
+     "text": "Nineteen on the Kona, three and a half down. That lands near three twenty a month, no balloon."
+    },
+    {
+     "speaker": "caller",
+     "text": "Under my limit. Good."
+    },
+    {
+     "speaker": "agent",
+     "text": "I'll need your driving licence number for the proposal."
+    },
+    {
+     "speaker": "caller",
+     "text": "It's one four seven nine three three six two two."
+    },
+    {
+     "speaker": "agent",
+     "text": "One four seven, nine three three, six two two.",
+     "tier": "strict"
+    },
+    {
+     "speaker": "caller",
+     "text": "Yeah."
+    },
+    {
+     "speaker": "agent",
+     "text": "Kona at nineteen, four years, no balloon. I'll ring you back before six."
+    },
+    {
+     "speaker": "caller",
+     "text": "Grand."
+    }
+   ],
+   "notes": "Euro is never named once, because the caller and the branch are both in it. Two revisions arrive in a single caller turn and are absorbed into one recalculation instead of two confirmations, the balloon is explained once and dropped the moment he says no, and the licence digits stay strict."
+  },
+  {
+   "id": "currency_07_non_subtle",
+   "pair_id": "currency_07",
+   "label": "non_subtle",
+   "language": "en",
+   "scenario": "Same car finance conversation and the same downward revision, handled with a confirm round trip on each figure and the currency named every time.",
+   "turns": [
+    {
+     "speaker": "agent",
+     "text": "Good afternoon. I will now assist you with your vehicle finance enquiry. The Tucson is twenty four thousand five hundred euros."
+    },
+    {
+     "speaker": "caller",
+     "text": "Financing. Five thousand deposit, plus whatever the old car's worth."
+    },
+    {
+     "speaker": "agent",
+     "text": "Just to confirm, a deposit of five thousand euros. Is that correct?"
+    },
+    {
+     "speaker": "caller",
+     "text": "Three fifty is my limit. Absolute limit."
+    },
+    {
+     "speaker": "agent",
+     "text": "I heard three hundred fifty euros per month. That has been recorded."
+    },
+    {
+     "speaker": "caller",
+     "text": "What's PCP?"
+    },
+    {
+     "speaker": "agent",
+     "text": "A personal contract plan leaves a final payment of four thousand eight hundred euros. Is that acceptable?"
+    },
+    {
+     "speaker": "caller",
+     "text": "And if I don't want a balloon?"
+    },
+    {
+     "speaker": "agent",
+     "text": "Hire purchase has no final payment. The monthly amount is four hundred thirty euros. Is that correct?"
+    },
+    {
+     "speaker": "caller",
+     "text": "That's over my three fifty. Look, maybe I'm being ambitious. What's the smaller one?"
+    },
+    {
+     "speaker": "agent",
+     "text": "The Kona is nineteen thousand euros for the same trim year."
+    },
+    {
+     "speaker": "caller",
+     "text": "Nineteen. Do that one instead, and make the deposit three and a half. I want to keep some back."
+    },
+    {
+     "speaker": "agent",
+     "text": "Just to confirm, nineteen thousand euros with a deposit of three thousand five hundred euros. Is that correct?"
+    },
+    {
+     "speaker": "caller",
+     "text": "Under my limit. Good."
+    },
+    {
+     "speaker": "agent",
+     "text": "Your monthly repayment is three hundred twenty euros. Kindly provide your driving licence number."
+    },
+    {
+     "speaker": "caller",
+     "text": "It's one four seven nine three three six two two."
+    },
+    {
+     "speaker": "agent",
+     "text": "I will now read that back. One four seven, nine three three, six two two. Is that correct?",
+     "tier": "strict"
+    },
+    {
+     "speaker": "caller",
+     "text": "Yeah."
+    },
+    {
+     "speaker": "agent",
+     "text": "Your application has been recorded. Is there anything else I can help you with today?"
+    },
+    {
+     "speaker": "caller",
+     "text": "Grand."
+    }
+   ],
+   "notes": "Euros restated on all six amounts in a country where nobody would say it once, the two revisions split into separate confirmations, status phrases throughout, no contractions, and a chatbot closer."
+  },
+  {
+   "id": "currency_08_subtle",
+   "pair_id": "currency_08",
+   "label": "subtle",
+   "language": "en",
+   "scenario": "Travel agency budgeting a Portugal package; the caller answers 'as low as possible' and then gives a bare number with no currency for a euro destination.",
+   "fields": [
+    {
+     "name": "total_budget",
+     "value": "USD 3,000",
+     "tier": "subtle",
+     "strategy": "'as low as possible' refused as an answer, then the unit named once with its reason"
+    },
+    {
+     "name": "flight_budget",
+     "value": "USD 1,400 for two",
+     "tier": "subtle",
+     "strategy": "agent supplies the market figure, caller adopts it, no readback"
+    },
+    {
+     "name": "hotel_per_night",
+     "value": "USD 180, revised to USD 140",
+     "tier": "subtle",
+     "strategy": "revision echoed once and folded into the next question"
+    },
+    {
+     "name": "excursion_budget",
+     "value": "USD 400",
+     "tier": "subtle",
+     "strategy": "value-first opener, all amounts landed together in one closing total"
+    },
+    {
+     "name": "booking_reference",
+     "value": "HTX416",
+     "tier": "strict",
+     "strategy": "character by character with phonetics"
+    }
+   ],
+   "turns": [
+    {
+     "speaker": "agent",
+     "text": "Hi there, Portugal for two in early October, seven nights. What's the total you want to stay inside?"
+    },
+    {
+     "speaker": "caller",
+     "text": "As low as possible, honestly."
+    },
+    {
+     "speaker": "agent",
+     "text": "Everyone says that. Give me a number you'd be uncomfortable going past and I'll work down from it."
+    },
+    {
+     "speaker": "caller",
+     "text": "Uh. Three thousand for the two of us, all in."
+    },
+    {
+     "speaker": "agent",
+     "text": "Three thousand dollars, since you're paying from the US, and I'll try to come in under. How much of that is flights?"
+    },
+    {
+     "speaker": "caller",
+     "text": "No idea. What's normal?"
+    },
+    {
+     "speaker": "agent",
+     "text": "Lisbon in October runs about seven hundred a head from Newark, so fourteen hundred for the pair."
+    },
+    {
+     "speaker": "caller",
+     "text": "Fourteen hundred bucks on flights. Fine, if that's the going rate."
+    },
+    {
+     "speaker": "agent",
+     "text": "That leaves sixteen hundred. Seven nights, so what's your ceiling per night on the hotel?"
+    },
+    {
+     "speaker": "caller",
+     "text": "One eighty? One eighty a night."
+    },
+    {
+     "speaker": "agent",
+     "text": "One eighty a night is twelve sixty for the week. Drop it to one forty and you free up nearly three hundred."
+    },
+    {
+     "speaker": "caller",
+     "text": "Do that. One forty."
+    },
+    {
+     "speaker": "agent",
+     "text": "Hotel cap's one forty. What are you setting aside for excursions?"
+    },
+    {
+     "speaker": "caller",
+     "text": "Four hundred. There's a day trip to Sintra we want."
+    },
+    {
+     "speaker": "agent",
+     "text": "Four hundred with Sintra in it. So fourteen hundred flights, nine eighty hotel, four hundred trips, twenty eight hundred all in."
+    },
+    {
+     "speaker": "caller",
+     "text": "Just under. Nice."
+    },
+    {
+     "speaker": "agent",
+     "text": "Your booking reference is HTX four one six."
+    },
+    {
+     "speaker": "caller",
+     "text": "Sorry, again?"
+    },
+    {
+     "speaker": "agent",
+     "text": "HTX four one six, that's H for hotel, T for tango, X for x-ray, four, one, six.",
+     "tier": "strict"
+    },
+    {
+     "speaker": "caller",
+     "text": "HTX four one six."
+    },
+    {
+     "speaker": "agent",
+     "text": "Quote that if you ring in. I'll hold the rooms for forty eight hours."
+    },
+    {
+     "speaker": "caller",
+     "text": "Thanks a lot."
+    }
+   ],
+   "notes": "'As low as possible' is politely refused as an answer and turned into a ceiling. The currency gap in a euro destination is closed once, with the reason, and never mentioned again across three more amounts. Bucks is echoed as bucks. Nothing is confirmed on the spot; the numbers land together in one total at the end, and the reference is still spelled out."
+  },
+  {
+   "id": "currency_08_non_subtle",
+   "pair_id": "currency_08",
+   "label": "non_subtle",
+   "language": "en",
+   "scenario": "Same Portugal package call, but the agent is over-casual: 'as low as possible' is taken as a budget, the bare three thousand is never resolved to a currency, and the reference is never spelled out.",
+   "turns": [
+    {
+     "speaker": "agent",
+     "text": "Hi there, Portugal for two in early October, seven nights. What's the budget?"
+    },
+    {
+     "speaker": "caller",
+     "text": "As low as possible, honestly."
+    },
+    {
+     "speaker": "agent",
+     "text": "Say no more, I'll find you the cheapest thing going."
+    },
+    {
+     "speaker": "caller",
+     "text": "Uh. Three thousand for the two of us, all in."
+    },
+    {
+     "speaker": "agent",
+     "text": "Three thousand, easy. Loads of options at that."
+    },
+    {
+     "speaker": "caller",
+     "text": "No idea. What's normal?"
+    },
+    {
+     "speaker": "agent",
+     "text": "Flights are around seven hundred each, give or take."
+    },
+    {
+     "speaker": "caller",
+     "text": "Fourteen hundred bucks on flights. Fine, if that's the going rate."
+    },
+    {
+     "speaker": "agent",
+     "text": "Yeah, roughly. What sort of nightly rate suits for the hotel?"
+    },
+    {
+     "speaker": "caller",
+     "text": "One eighty? One eighty a night."
+    },
+    {
+     "speaker": "agent",
+     "text": "One eighty, no problem at all."
+    },
+    {
+     "speaker": "caller",
+     "text": "Do that. One forty."
+    },
+    {
+     "speaker": "agent",
+     "text": "Sorted. Excursions?"
+    },
+    {
+     "speaker": "caller",
+     "text": "Four hundred. There's a day trip to Sintra we want."
+    },
+    {
+     "speaker": "agent",
+     "text": "Sintra's gorgeous. Should all come in around three thousand, maybe a touch under."
+    },
+    {
+     "speaker": "caller",
+     "text": "Just under. Nice."
+    },
+    {
+     "speaker": "agent",
+     "text": "Your reference is HTX four sixteen."
+    },
+    {
+     "speaker": "caller",
+     "text": "Sorry, again?"
+    },
+    {
+     "speaker": "agent",
+     "text": "HTX four sixteen. It'll be on the email, don't worry about it."
+    },
+    {
+     "speaker": "caller",
+     "text": "HTX four one six."
+    },
+    {
+     "speaker": "agent",
+     "text": "Something like that. I'll hold the rooms for you."
+    },
+    {
+     "speaker": "caller",
+     "text": "Thanks a lot."
+    }
+   ],
+   "notes": "Wrong-direction: over-casual, dropped a fidelity floor. 'As low as possible' is treated as a budget, the bare three thousand is never resolved to dollars or euros even though the trip prices in euros, the hotel revision is never restated, and the booking reference is misread twice and never spelled character by character."
+  },
+  {
+   "id": "currency_09_subtle",
+   "pair_id": "currency_09",
+   "label": "subtle",
+   "language": "en",
+   "scenario": "B2B procurement of filter cartridges; the buyer volunteers quantity and budget in one breath and keeps asking the agent questions back.",
+   "fields": [
+    {
+     "name": "budget",
+     "value": "EUR 18,400 for 400 units",
+     "tier": "subtle",
+     "strategy": "two values taken in one turn and answered as one derived unit price"
+    },
+    {
+     "name": "unit_price",
+     "value": "EUR 46 per unit",
+     "tier": "subtle",
+     "strategy": "negotiated, then carried through the arithmetic instead of confirmed"
+    },
+    {
+     "name": "early_settlement_discount",
+     "value": "2 percent, EUR 184",
+     "tier": "subtle",
+     "strategy": "value-first opener, named once"
+    },
+    {
+     "name": "shipping_cost",
+     "value": "EUR 900 across two shipments",
+     "tier": "subtle",
+     "strategy": "concession stated plainly, no ceremony"
+    },
+    {
+     "name": "purchase_order",
+     "value": "PO-7731B",
+     "tier": "strict",
+     "strategy": "value once, then character by character"
+    }
+   ],
+   "turns": [
+    {
+     "speaker": "agent",
+     "text": "Morning, Tomas at Vaskia Supplies. You emailed about the filter cartridges?"
+    },
+    {
+     "speaker": "caller",
+     "text": "Yes. We need four hundred units, and I've got a budget of eighteen thousand four hundred for it."
+    },
+    {
+     "speaker": "agent",
+     "text": "Four hundred units against eighteen four. That works out at forty six a unit."
+    },
+    {
+     "speaker": "caller",
+     "text": "Is forty six what you'd charge?"
+    },
+    {
+     "speaker": "agent",
+     "text": "At four hundred it's forty eight normally. Forty six I can do if you take five hundred."
+    },
+    {
+     "speaker": "caller",
+     "text": "Five hundred at forty six is twenty three thousand. That's over my number."
+    },
+    {
+     "speaker": "agent",
+     "text": "It is. Stay at four hundred and pay forty eight, or I hold forty six and you split the order over two quarters."
+    },
+    {
+     "speaker": "caller",
+     "text": "Split it. Two hundred now, three hundred in October."
+    },
+    {
+     "speaker": "agent",
+     "text": "Two hundred now, three hundred in October, forty six throughout. What are your terms with us, thirty days?"
+    },
+    {
+     "speaker": "caller",
+     "text": "Thirty. Although if there's a discount for paying early we'd look at it."
+    },
+    {
+     "speaker": "agent",
+     "text": "There's two percent for settling inside ten days. On nine thousand two hundred that saves you a hundred and eighty four."
+    },
+    {
+     "speaker": "caller",
+     "text": "Worth having. We'll do that. What's shipping?"
+    },
+    {
+     "speaker": "agent",
+     "text": "Nine hundred for the full run, or five fifty a shipment if we split, so eleven hundred."
+    },
+    {
+     "speaker": "caller",
+     "text": "Can you absorb the difference?"
+    },
+    {
+     "speaker": "agent",
+     "text": "I can do one charge of nine hundred spread over both. That's the best I've got."
+    },
+    {
+     "speaker": "caller",
+     "text": "Take it. Send me the paperwork, PO dash seven seven three one B."
+    },
+    {
+     "speaker": "agent",
+     "text": "PO seven seven three one B, that's seven, seven, three, one, B for bravo.",
+     "tier": "strict"
+    },
+    {
+     "speaker": "caller",
+     "text": "That's the one."
+    },
+    {
+     "speaker": "agent",
+     "text": "Quote's across this afternoon."
+    },
+    {
+     "speaker": "caller",
+     "text": "Thanks Tomas."
+    }
+   ],
+   "notes": "Quantity and budget arrive together and are answered as one line whose derived unit price is the confirmation. The negotiated forty six is never read back, it just keeps appearing in the arithmetic. The discount opens a turn with its own value, the shipping concession is stated flat, and the PO number is still spelled out."
+  },
+  {
+   "id": "currency_09_non_subtle",
+   "pair_id": "currency_09",
+   "label": "non_subtle",
+   "language": "en",
+   "scenario": "Same procurement negotiation and the same buyer questions, but each figure gets its own confirm round trip and the currency is named on every one.",
+   "turns": [
+    {
+     "speaker": "agent",
+     "text": "Good morning. This is Tomas at Vaskia Supplies. I will now assist you with your cartridge enquiry."
+    },
+    {
+     "speaker": "caller",
+     "text": "Yes. We need four hundred units, and I've got a budget of eighteen thousand four hundred for it."
+    },
+    {
+     "speaker": "agent",
+     "text": "I heard four hundred units. Is that correct?"
+    },
+    {
+     "speaker": "caller",
+     "text": "Is forty six what you'd charge?"
+    },
+    {
+     "speaker": "agent",
+     "text": "Just to confirm, your budget is eighteen thousand four hundred euros. The unit price is forty eight euros at four hundred units."
+    },
+    {
+     "speaker": "caller",
+     "text": "Five hundred at forty six is twenty three thousand. That's over my number."
+    },
+    {
+     "speaker": "agent",
+     "text": "I heard twenty three thousand euros exceeds your budget. That has been recorded."
+    },
+    {
+     "speaker": "caller",
+     "text": "Split it. Two hundred now, three hundred in October."
+    },
+    {
+     "speaker": "agent",
+     "text": "Just to confirm, two hundred units now and three hundred units in October at forty six euros per unit. Is that correct?"
+    },
+    {
+     "speaker": "caller",
+     "text": "Thirty. Although if there's a discount for paying early we'd look at it."
+    },
+    {
+     "speaker": "agent",
+     "text": "A two percent discount applies, which is one hundred eighty four euros on nine thousand two hundred euros. Is that correct?"
+    },
+    {
+     "speaker": "caller",
+     "text": "Worth having. We'll do that. What's shipping?"
+    },
+    {
+     "speaker": "agent",
+     "text": "Shipping is nine hundred euros for the full run, or five hundred fifty euros per shipment."
+    },
+    {
+     "speaker": "caller",
+     "text": "Can you absorb the difference?"
+    },
+    {
+     "speaker": "agent",
+     "text": "I can apply a single shipping charge of nine hundred euros. Just to confirm, nine hundred euros. Is that correct?"
+    },
+    {
+     "speaker": "caller",
+     "text": "Take it. Send me the paperwork, PO dash seven seven three one B."
+    },
+    {
+     "speaker": "agent",
+     "text": "I will now read that back. PO seven seven three one B, that is seven, seven, three, one, B for bravo. Is that correct?",
+     "tier": "strict"
+    },
+    {
+     "speaker": "caller",
+     "text": "That's the one."
+    },
+    {
+     "speaker": "agent",
+     "text": "Your order has been recorded. Is there anything else I can help you with today?"
+    },
+    {
+     "speaker": "caller",
+     "text": "Thanks Tomas."
+    }
+   ],
+   "notes": "Euros on all six amounts, the two values the buyer volunteered together split into separate confirmations, a round trip on a concession the agent himself just offered, status phrases and a chatbot closer."
+  },
+  {
+   "id": "currency_10_subtle",
+   "pair_id": "currency_10",
+   "label": "subtle",
+   "language": "en",
+   "scenario": "Home improvement loan in India; the caller corrects the project cost mid-sentence and later raises his own EMI to shorten the tenure.",
+   "fields": [
+    {
+     "name": "project_cost",
+     "value": "INR 8 lakh corrected to 8.5 lakh",
+     "tier": "subtle",
+     "strategy": "one-beat correction folded into a three part restatement"
+    },
+    {
+     "name": "loan_amount",
+     "value": "INR 6 lakh",
+     "tier": "subtle",
+     "strategy": "carried inside that restatement, never separately confirmed"
+    },
+    {
+     "name": "max_emi",
+     "value": "INR 12,000 revised to 14,000",
+     "tier": "subtle",
+     "strategy": "revision echoed with the tenure attached"
+    },
+    {
+     "name": "existing_emi",
+     "value": "INR 9,500 car loan",
+     "tier": "subtle",
+     "strategy": "shorthand echo with the remaining term, used to answer his question"
+    },
+    {
+     "name": "pan",
+     "value": "AFZPK3391L",
+     "tier": "strict",
+     "strategy": "character by character with phonetics"
+    }
+   ],
+   "turns": [
+    {
+     "speaker": "agent",
+     "text": "Hello, Kavya from Shreyas Housing Finance. What's the total cost of the work?"
+    },
+    {
+     "speaker": "caller",
+     "text": "Eight lakh. Kitchen and two bathrooms."
+    },
+    {
+     "speaker": "agent",
+     "text": "Eight lakh for a kitchen and two bathrooms. How much do you want to borrow?"
+    },
+    {
+     "speaker": "caller",
+     "text": "Six lakh. Actually hold on, the contractor revised it. Eight and a half, not eight."
+    },
+    {
+     "speaker": "agent",
+     "text": "Right, eight and a half total, six lakh borrowed, two and a half from your own funds."
+    },
+    {
+     "speaker": "caller",
+     "text": "Two and a half, yes. That's in an FD."
+    },
+    {
+     "speaker": "agent",
+     "text": "Fine. What EMI can you handle each month?"
+    },
+    {
+     "speaker": "caller",
+     "text": "Twelve thousand."
+    },
+    {
+     "speaker": "agent",
+     "text": "Twelve thousand a month. Any loans running already?"
+    },
+    {
+     "speaker": "caller",
+     "text": "Car loan. Nine thousand five hundred, two years left on it."
+    },
+    {
+     "speaker": "agent",
+     "text": "Nine five on the car with two years to go. Twelve thousand's comfortable, though you could go higher for a shorter tenure."
+    },
+    {
+     "speaker": "caller",
+     "text": "How much shorter?"
+    },
+    {
+     "speaker": "agent",
+     "text": "At fourteen thousand you'd finish in four years instead of five."
+    },
+    {
+     "speaker": "caller",
+     "text": "Do that. Fourteen thousand, four years."
+    },
+    {
+     "speaker": "agent",
+     "text": "Fourteen over four years, that's what I'll put in. I'll need your PAN."
+    },
+    {
+     "speaker": "caller",
+     "text": "AFZPK three three nine one L."
+    },
+    {
+     "speaker": "agent",
+     "text": "AFZPK three three nine one L, that's A for alpha, F for foxtrot, Z for zulu, P for papa, K for kilo, three, three, nine, one, L for lima.",
+     "tier": "strict"
+    },
+    {
+     "speaker": "caller",
+     "text": "Correct."
+    },
+    {
+     "speaker": "agent",
+     "text": "Six lakh, four years, fourteen thousand EMI. Someone will ring you about the site visit."
+    },
+    {
+     "speaker": "caller",
+     "text": "Thank you."
+    }
+   ],
+   "notes": "The mid-sentence correction is absorbed into one three part line that also settles the loan amount and the contribution, so three values land in a single breath. The EMI revision is echoed with the tenure attached, rupees is never said because lakh already carries it, and the PAN stays character by character."
+  },
+  {
+   "id": "currency_10_non_subtle",
+   "pair_id": "currency_10",
+   "label": "non_subtle",
+   "language": "en",
+   "scenario": "Same home improvement loan call and the same mid-call correction, but every lakh figure is converted to formal rupee notation and read back the same way.",
+   "turns": [
+    {
+     "speaker": "agent",
+     "text": "Hello, this is Kavya from Shreyas Housing Finance. I will now assist you with your loan application. What is the total cost of the work?"
+    },
+    {
+     "speaker": "caller",
+     "text": "Eight lakh. Kitchen and two bathrooms."
+    },
+    {
+     "speaker": "agent",
+     "text": "I heard eight lakh Indian rupees. Is that correct?"
+    },
+    {
+     "speaker": "caller",
+     "text": "Six lakh. Actually hold on, the contractor revised it. Eight and a half, not eight."
+    },
+    {
+     "speaker": "agent",
+     "text": "Just to confirm, the revised project cost is eight hundred fifty thousand Indian rupees. Is that correct?"
+    },
+    {
+     "speaker": "caller",
+     "text": "Two and a half, yes. That's in an FD."
+    },
+    {
+     "speaker": "agent",
+     "text": "I have recorded a loan amount of six hundred thousand Indian rupees and a contribution of two hundred fifty thousand Indian rupees. What EMI can you afford?"
+    },
+    {
+     "speaker": "caller",
+     "text": "Twelve thousand."
+    },
+    {
+     "speaker": "agent",
+     "text": "Just to confirm, twelve thousand Indian rupees per month. Is that correct?"
+    },
+    {
+     "speaker": "caller",
+     "text": "Car loan. Nine thousand five hundred, two years left on it."
+    },
+    {
+     "speaker": "agent",
+     "text": "I heard nine thousand five hundred Indian rupees per month with two years remaining. Is that correct?"
+    },
+    {
+     "speaker": "caller",
+     "text": "How much shorter?"
+    },
+    {
+     "speaker": "agent",
+     "text": "At fourteen thousand Indian rupees per month the tenure reduces to four years."
+    },
+    {
+     "speaker": "caller",
+     "text": "Do that. Fourteen thousand, four years."
+    },
+    {
+     "speaker": "agent",
+     "text": "Just to confirm, fourteen thousand Indian rupees per month over four years. Is that correct?"
+    },
+    {
+     "speaker": "caller",
+     "text": "AFZPK three three nine one L."
+    },
+    {
+     "speaker": "agent",
+     "text": "I will now read that back. AFZPK three three nine one L, that is A for alpha, F for foxtrot, Z for zulu, P for papa, K for kilo, three, three, nine, one, L for lima. Is that correct?",
+     "tier": "strict"
+    },
+    {
+     "speaker": "caller",
+     "text": "Correct."
+    },
+    {
+     "speaker": "agent",
+     "text": "Your application has been recorded. Is there anything else I can help you with today?"
+    },
+    {
+     "speaker": "caller",
+     "text": "Thank you."
+    }
+   ],
+   "notes": "Indian rupees repeated on all six amounts, the caller's lakh idiom rewritten into formal notation, the mid-call correction given two separate confirm round trips instead of one line, status phrases and a chatbot closer."
+  }
+ ]
+}

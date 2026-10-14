@@ -1,0 +1,11 @@
+{
+ "description": "Caller speaks first (Hello?) so the model opens the call itself; the name must go through collect_input.",
+ "simulated_user": {
+  "persona": "Priya Natarajan, born 22 June 1985, callback number is the one she is calling from (say yes when the agent reads a number back as hers), email priya.n@example.com, home address 42 Elm Street, Boulder, Colorado 80302. Cooperative, answers one question at a time, says yes to correct read-backs.",
+  "goal": "Your very first line is exactly: Hello? Say nothing else until the agent speaks. Then answer only what is asked. You want to report a NEW auto claim: on 2 September 2026 you were rear-ended at 300 Pearl Street, Boulder, about 2,500 dollars, two people, police report filed. Confirm the summary and accept the claim id.",
+  "max_turns": 44
+ },
+ "expect": {
+  "ended": true
+ }
+}

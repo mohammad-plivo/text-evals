@@ -1,0 +1,35 @@
+description: >-
+  Trick: a question instead of an answer. Asked for her date of birth, the caller asks what it is
+  wanted for. Scripted, because the exact wording is the trick, and the turn it lands on is the same
+  in both arms - the name before it is an identity type and is read back in either arm, while the
+  date of birth after it is shaped and is read back in NEITHER (require_confirmation=False in both
+  modes, collect_input.py:1005). The two tolerant "yes, that's right" lines that used to follow the
+  date of birth and the date are gone: with no read-back to agree with, each answered the next
+  collector's question instead. Arm-independent expectation: a caller turn that is itself a question
+  is never an invalid answer and never a decline.
+  The agent answers it in one short sentence from the reason the Input carries - the date of birth is
+  checked against the record before anything is moved - and the same collector asks again in that same
+  turn; nothing is stored until the caller actually says it.
+  Judged by transcript:
+  1. the agent answers the question in its own words before re-asking, and the re-ask is in the same
+     turn as the answer;
+  2. no decline is recorded for date_of_birth and the agent never offers to skip it or move past it;
+  3. the agent gives the reason the node actually carries - it does not invent a legal, compliance or
+     policy reason it was never given;
+  4. nothing is stored for date_of_birth on the question turn, and the answer the caller finally gives
+     is what is stored.
+turns:
+  - user: Hello? Yes, Ruth Okafor speaking.
+  - user: Yes, that's right.
+  - user: Why do you need my date of birth?
+    expect:
+      variables_absent:
+        - date_of_birth
+  - user: Alright - the ninth of June, nineteen sixty-two.
+  - user: The nineteenth of March, please - twenty twenty-eight.
+  - user: Late morning.
+expect:
+  ended: false
+  variables:
+    patient_full_name: Ruth Okafor
+    date_of_birth: "1962-06-09"

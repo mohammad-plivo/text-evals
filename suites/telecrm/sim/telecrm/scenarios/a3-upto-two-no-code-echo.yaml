@@ -1,0 +1,195 @@
+description: '[pattern A] Same code echo; the current count must also survive talk of future capacity.
+
+  Replay of Hunter ''TeleCRM P0 - Upto Two Future Capacity No Upgrade'' (run a2e04e7d): caller lines verbatim
+  from the handoff on.'
+turns:
+- user: Yes, speaking.
+  expect:
+    message_excludes:
+    - Upto 2
+    - up to two
+    - upto two
+    - 3-5
+    - three to five
+    - 6-10
+    - six to ten
+    - 11-20
+    - eleven to twenty
+    - 21-50
+    - twenty one to fifty
+    - 51-100
+    - fifty one to one hundred
+    - 100plus
+    - 100 plus
+    - more than one hundred
+- user: Yes, go ahead.
+  expect:
+    message_excludes:
+    - Upto 2
+    - up to two
+    - upto two
+    - 3-5
+    - three to five
+    - 6-10
+    - six to ten
+    - 11-20
+    - eleven to twenty
+    - 21-50
+    - twenty one to fifty
+    - 51-100
+    - fifty one to one hundred
+    - 100plus
+    - 100 plus
+    - more than one hundred
+- user: Yes, I did fill something on their site, that's right.
+  expect:
+    message_excludes:
+    - Upto 2
+    - up to two
+    - upto two
+    - 3-5
+    - three to five
+    - 6-10
+    - six to ten
+    - 11-20
+    - eleven to twenty
+    - 21-50
+    - twenty one to fifty
+    - 51-100
+    - fifty one to one hundred
+    - 100plus
+    - 100 plus
+    - more than one hundred
+- user: Just two of us — me and my brother.
+  expect:
+    message_excludes:
+    - Upto 2
+    - up to two
+    - upto two
+    - 3-5
+    - three to five
+    - 6-10
+    - six to ten
+    - 11-20
+    - eleven to twenty
+    - 21-50
+    - twenty one to fifty
+    - 51-100
+    - fifty one to one hundred
+    - 100plus
+    - 100 plus
+    - more than one hundred
+- user: Like I said, it's just the two of us right now.
+  expect:
+    message_excludes:
+    - Upto 2
+    - up to two
+    - upto two
+    - 3-5
+    - three to five
+    - 6-10
+    - six to ten
+    - 11-20
+    - eleven to twenty
+    - 21-50
+    - twenty one to fifty
+    - 51-100
+    - fifty one to one hundred
+    - 100plus
+    - 100 plus
+    - more than one hundred
+- user: Like I said, it's just the two of us right now.
+  expect:
+    message_excludes:
+    - Upto 2
+    - up to two
+    - upto two
+    - 3-5
+    - three to five
+    - 6-10
+    - six to ten
+    - 11-20
+    - eleven to twenty
+    - 21-50
+    - twenty one to fifty
+    - 51-100
+    - fifty one to one hundred
+    - 100plus
+    - 100 plus
+    - more than one hundred
+- user: Like I said, it's just the two of us right now.
+  expect:
+    message_excludes:
+    - Upto 2
+    - up to two
+    - upto two
+    - 3-5
+    - three to five
+    - 6-10
+    - six to ten
+    - 11-20
+    - eleven to twenty
+    - 21-50
+    - twenty one to fifty
+    - 51-100
+    - fifty one to one hundred
+    - 100plus
+    - 100 plus
+    - more than one hundred
+- user: Like I said, it's just the two of us right now.
+  expect:
+    message_excludes:
+    - Upto 2
+    - up to two
+    - upto two
+    - 3-5
+    - three to five
+    - 6-10
+    - six to ten
+    - 11-20
+    - eleven to twenty
+    - 21-50
+    - twenty one to fifty
+    - 51-100
+    - fifty one to one hundred
+    - 100plus
+    - 100 plus
+    - more than one hundred
+- user: Like I said, it's just the two of us right now.
+  expect:
+    message_excludes:
+    - Upto 2
+    - up to two
+    - upto two
+    - 3-5
+    - three to five
+    - 6-10
+    - six to ten
+    - 11-20
+    - eleven to twenty
+    - 21-50
+    - twenty one to fifty
+    - 51-100
+    - fifty one to one hundred
+    - 100plus
+    - 100 plus
+    - more than one hundred
+- user: Okay, understood. Bye.
+  expect:
+    message_excludes:
+    - Upto 2
+    - up to two
+    - upto two
+    - 3-5
+    - three to five
+    - 6-10
+    - six to ten
+    - 11-20
+    - eleven to twenty
+    - 21-50
+    - twenty one to fifty
+    - 51-100
+    - fifty one to one hundred
+    - 100plus
+    - 100 plus
+    - more than one hundred

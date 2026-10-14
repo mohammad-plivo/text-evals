@@ -1,0 +1,37 @@
+description: >-
+  Trick: two fields in one breath, mid-walk - the day and the part of the day answered together, when
+  only the day was asked. Arm-independent expectation: two answers land in two fields. The choice is
+  taken from what the caller already said and confirmed rather than re-offered from the top, the date
+  field holds only the date, and the agent goes back to one question at a time afterwards.
+  Judged by transcript - criterion 1 IS measured (judge.py SEEDED_FIELDS: the first collect_* for
+  preferred_time_of_day must carry a non-empty known_value); the rest is prose:
+  1. the collect_choice call for preferred_time_of_day carries a known_value, and the four options are
+     not read out as though nothing had been said;
+  2. nothing about the part of the day is stored inside new_appointment_date;
+  3. the agent does not ask the caller to repeat the date because two things arrived at once;
+  4. from the journey time onwards the agent asks one question per turn.
+  "late morning if you have it" rides in the DATE turn: require_time is false and it is not a clock
+  time, so the store should stay 2028-03-19. If a time were captured, the judge still matches
+  (ISO_DATE_RX is a prefix match) but the engine's literal check would not - read the first paid run.
+simulated_user:
+  persona: >-
+    Ruth Okafor, a Ridgeway Clinic patient moving an appointment. Practical, and says what she wants in
+    one go to save time.
+  goal: >-
+    Give your name Ruth Okafor and date of birth the ninth of June nineteen sixty-two. When asked which
+    day you want, give the day and the part of the day together in one breath - say "the nineteenth of
+    March twenty twenty-eight, late morning if you have it" - and do not repeat either unless you are
+    asked. Then answer the rest once each - the journey takes thirty-five minutes, no interpreter,
+    reception should know you use a wheelchair and need the side entrance, forty pounds is unpaid,
+    mobile 07700 900123, email ruth.okafor@example.com. Agree with correct read-backs and say yes when
+    the appointment is confirmed.
+  max_turns: 30
+world_state:
+  Update Lead Record:
+    outcome: success
+expect:
+  ended: true
+  stop_reason: end_conversation
+  variables:
+    new_appointment_date: "2028-03-19"
+    preferred_time_of_day: Late morning

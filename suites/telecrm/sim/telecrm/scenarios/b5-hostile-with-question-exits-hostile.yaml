@@ -1,0 +1,14 @@
+description: '[pattern B] Hostility routes the Hostile intent immediately. The rule lives only in the
+  node box.
+
+  Replay of Hunter ''TeleCRM P0 - Hostile With Question'' (run a2e04e7d): caller lines verbatim from the
+  handoff on.'
+turns:
+- user: Yes, speaking.
+- user: Yes, go ahead.
+- user: No, I didn't.
+- user: You people are shameless, calling again and again — this is harassment! What is this call even
+    about anyway?
+expect:
+  intent: Hostile
+  ended: true

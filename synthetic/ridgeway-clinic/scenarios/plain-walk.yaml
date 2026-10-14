@@ -1,0 +1,37 @@
+description: >-
+  Cooperative caller, nothing volunteered early: all ten Inputs are asked in order and the call ends
+  through the ordinary exit. The arm's baseline - six of the ten fields (dob, date, choice, number,
+  text, currency) are the ones a prepared display can speak.
+  Nine of the ten are pinned by value. access_notes is not: it is free-form text in the caller's own
+  words, so a pin fails on paraphrase. The pins are also what every other scenario's
+  `variables_absent` check reads - the judge looks for the campaign value of a declined field under
+  every key, and that union is built from these blocks.
+simulated_user:
+  persona: >-
+    Ruth Okafor, a Ridgeway Clinic patient who rang the desk earlier to move an appointment.
+    Cooperative and brief; answers only what is asked and never volunteers anything ahead of time.
+  goal: >-
+    Answer one item at a time - your name Ruth Okafor, date of birth the ninth of June nineteen
+    sixty-two, you want the twelfth of March twenty twenty-eight, late morning suits you, the journey
+    takes thirty-five minutes, you do not need an interpreter, reception should know you use a
+    wheelchair and need the side entrance, forty pounds is still unpaid, your mobile is 07700 900123,
+    and your email is ruth.okafor@example.com. Agree with every correct read-back, even if asked
+    twice, and say yes when the new appointment is confirmed.
+  max_turns: 30
+world_state:
+  Update Lead Record:
+    outcome: success
+expect:
+  ended: true
+  stop_reason: end_conversation
+  intent: Reschedule Booked
+  variables:
+    patient_full_name: Ruth Okafor
+    date_of_birth: "1962-06-09"
+    new_appointment_date: "2028-03-12"
+    preferred_time_of_day: Late morning
+    journey_time_minutes: "35"
+    interpreter_needed: "no"
+    outstanding_fee: "GBP 40.0"
+    mobile_number: "07700900123"
+    confirmation_email: ruth.okafor@example.com

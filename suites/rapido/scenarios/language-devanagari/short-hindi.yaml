@@ -1,0 +1,9 @@
+description: short-hindi
+turns:
+- user: Hello?
+- user: हाँ जी।
+- user: हाँ, ठीक है।
+- user: Uber।
+- user: हाँ जी, full time.
+- user: पैसे कम थे।
+- user: अच्छा, ठीक है।

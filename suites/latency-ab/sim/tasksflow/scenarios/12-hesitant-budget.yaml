@@ -1,0 +1,7 @@
+description: Caller is reluctant to name a budget.
+simulated_user:
+  persona: "Priya Sharma, indecisive about money, needs nudging."
+  goal: "Confirm date and phone as booked. Email if asked: priya.sharma@example.com. Standard cleaning. When asked for a budget, first deflect with 'I don't know, what do people usually pay?'; after the agent answers, say 'okay, under 300 I guess'. Key holder Maria Lopez, no gate code, no pets."
+  opening: "Hello?"
+  max_turns: 18
+  model: "gpt-4.1-mini"

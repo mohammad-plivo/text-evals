@@ -1,0 +1,9 @@
+description: 'language switching: short-hindi'
+turns:
+- user: Hello?
+- user: हाँ जी।
+- user: हाँ, ठीक है।
+- user: Uber।
+- user: Haan ji, full time.
+- user: Paise kam the.
+- user: अच्छा, ठीक है।
